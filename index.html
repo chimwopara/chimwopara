@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Life's Journey: A 3D Portfolio Game</title>
+<style>
+/* --- General Setup --- */
+body { 
+    margin: 0; 
+    overflow: hidden; 
+    background-color: #111; 
+    color: #fff; 
+    font-family: 'Inter', sans-serif; 
+}
+canvas { 
+    display: block; 
+}
+#ui-container { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    pointer-events: none; 
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+/* --- Car Selection Screen --- */
+#car-selection-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    pointer-events: auto;
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
+    z-index: 10;
+}
+#car-selection-screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+#car-selection-screen h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1em;
+    text-shadow: 0 0 15px rgba(255,255,255,0.5);
+}
+#car-options {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+}
+.car-option { 
+    background: rgba(40, 40, 40, 0.7);
+    border: 1px solid #444; 
+    padding: 1.5em; 
+    border-radius: 15px; 
+    cursor: pointer; 
+    transition: transform 0.3s, background 0.3s, border-color 0.3s;
+    width: 280px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.car-option:hover { 
+    transform: translateY(-10px);
+    background: rgba(60, 60, 60, 0.9);
+    border-color: #00aaff;
+}
+.car-preview-canvas {
+    width: 250px;
+    height: 150px;
+    margin-bottom: 1em;
+    border-radius: 10px;
+}
+.car-option h3 {
+    margin: 0 0 0.25em 0;
+    font-size: 1.5rem;
+    color: #00aaff;
+}
+.car-option p {
+    margin: 0;
+    color: #ccc;
+}
+
+/* --- Dashboard UI --- */
+#dashboard-ui {
+    display: none; /* Hidden by default */
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px 20px;
+    border-radius: 15px 15px 0 0;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 25px;
+    font-size: 1.2rem;
+    text-shadow: 0 0 5px #00aaff;
+    pointer-events: auto;
+    opacity: 0;
+    transition: opacity 0.5s ease-in;
+}
+#dashboard-ui.visible {
+    opacity: 1;
+}
+#speed-display, #distance-display, #checkpoint-display {
+    color: #00ddff;
+}
+
+/* --- Dialogue & Phone UI --- */
+#dialogue-container, #phone-container { 
+    display: none; 
+    position: absolute; 
+    bottom: 20px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    background: rgba(0,0,0,0.8); 
+    padding: 1em; 
+    border-radius: 10px; 
+    width: 90%; 
+    max-width: 500px; 
+    pointer-events: auto; 
+}
+#dialogue-text { margin-bottom: 1em; }
+.dialogue-option { background: #444; padding: 0.5em; margin-top: 0.5em; border-radius: 5px; cursor: pointer; }
+#phone-screen { background: #111; height: 300px; border-radius: 5px; margin-bottom: 1em; position: relative; }
+#video-player { width: 100%; height: 100%; object-fit: cover; display: none; }
+.phone-button-group { display: flex; justify-content: space-around; }
+.phone-button { background: #555; padding: 0.8em; border-radius: 5px; cursor: pointer; }
+/* --- Weather & Responsiveness --- */
+#weather-overlay { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    pointer-events: none; 
+    background: transparent; 
+    transition: background 2s; 
+}
+
+/* Mobile First - Adjustments for larger screens */
+@media (min-width: 768px) {
+    #car-selection-screen h1 {
+        font-size: 3.5rem;
+    }
+    #car-options {
+        flex-direction: row;
+        gap: 2em;
+    }
+    #dashboard-ui {
+        font-size: 1.5rem;
+        padding: 15px 30px;
+        gap: 40px;
+    }
+}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<!-- Main game canvas will be added here by Three.js -->
+
+<div id="ui-container">
+    <div id="car-selection-screen">
+        <h1>Choose Your Ride</h1>
+        <div id="car-options">
+            <div class="car-option" data-car="sedan">
+                <canvas class="car-preview-canvas"></canvas>
+                <h3>Sporty Sedan</h3>
+                <p>A fast-paced journey awaits.</p>
+            </div>
+            <div class="car-option" data-car="truck">
+                <canvas class="car-preview-canvas"></canvas>
+                <h3>Cyber Truck</h3>
+                <p>Ready for any obstacle ahead.</p>
+            </div>
+            <div class="car-option" data-car="van">
+                <canvas class="car-preview-canvas"></canvas>
+                <h3>Classic Van</h3>
+                <p>For the long, scenic route.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="dashboard-ui">
+        <div id="speed-display">Speed: 0 km/h</div>
+        <div id="distance-display">Trip: 0.0 km</div>
+        <div id="checkpoint-display">Next: 5.0 km</div>
+    </div>
+    
+    <!-- Other UI elements remain the same -->
+    <div id="dialogue-container"></div>
+    <div id="phone-container"></div>
+</div>
+<div id="weather-overlay"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// --- GLOBAL VARIABLES ---
+let mainRenderer, mainScene, mainCamera;
+let playerCar = null, steeringWheel = null;
+let gameStarted = false;
+let currentLane = 1; // 1 for right lane, -1 for left
+let roadSpeed = 0.2; 
+const carPreviews = [];
+
+// Game state variables
+let distanceTraveled = 0;
+let nextCheckpointDistance = 5; // in km
+
+// Camera animation variables
+let isCameraAnimating = false;
+let cameraAnimationStartTime;
+const cameraAnimationDuration = 4000; // 4 seconds for a smooth transition
+let startCamPos = new THREE.Vector3();
+let startCamQuat = new THREE.Quaternion();
+
+// --- INITIALIZATION ---
+function init() {
+    setupMainScene();
+    setupCarPreviews();
+    addEventListeners();
+    animate();
+}
+
+// --- MAIN 3D SCENE SETUP ---
+function setupMainScene() {
+    mainScene = new THREE.Scene();
+    mainScene.fog = new THREE.Fog(0x1a1a1a, 20, 100);
+
+    mainCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    // Start with a top-down view
+    mainCamera.position.set(0, 25, 10);
+    mainCamera.lookAt(0, 0, 0);
+
+    mainRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    mainRenderer.setSize(window.innerWidth, window.innerHeight);
+    mainRenderer.setClearColor(0x1a1a1a, 1);
+    document.body.insertBefore(mainRenderer.domElement, document.getElementById('ui-container'));
+
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+    mainScene.add(ambientLight);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.9);
+    directionalLight.position.set(0, 20, 10);
+    mainScene.add(directionalLight);
+
+    const road = createRoad();
+    mainScene.add(road);
+}
+
+// --- CAR PREVIEW SETUP ---
+function setupCarPreviews() {
+    const previewElements = document.querySelectorAll('.car-option');
+    previewElements.forEach(el => {
+        const canvas = el.querySelector('.car-preview-canvas');
+        const carType = el.dataset.car;
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(50, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
+        camera.position.set(0, 2, 6);
+        camera.lookAt(0, 0, 0);
+
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+        renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+        renderer.setClearColor(0x000000, 0);
+
+        const carMesh = createCarMesh(carType, false); // Don't create interior for previews
+        scene.add(carMesh);
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+        scene.add(ambientLight);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        directionalLight.position.set(5, 5, 5);
+        scene.add(directionalLight);
+
+        carPreviews.push({ renderer, scene, camera, carMesh });
+    });
+}
+
+// --- EVENT LISTENERS ---
+function addEventListeners() {
+    window.addEventListener('resize', onWindowResize, false);
+    document.getElementById('car-options').addEventListener('click', selectCar);
+}
+
+// --- GAME OBJECT CREATION ---
+function createRoad() {
+    const roadGroup = new THREE.Group();
+    roadGroup.name = "road";
+    const roadMaterial = new THREE.MeshStandardMaterial({ color: 0x2c2c2c, roughness: 0.8 });
+    const roadPlane = new THREE.Mesh(new THREE.PlaneGeometry(15, 1000), roadMaterial);
+    roadPlane.rotation.x = -Math.PI / 2;
+    roadPlane.position.y = -0.5;
+    roadGroup.add(roadPlane);
+    for (let i = -495; i < 500; i += 20) {
+        const mark = new THREE.Mesh(new THREE.PlaneGeometry(0.2, 8), new THREE.MeshBasicMaterial({ color: 0xffffff }));
+        mark.rotation.x = -Math.PI / 2;
+        mark.position.set(0, -0.49, i);
+        roadGroup.add(mark);
+    }
+    const shoulderLineMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    const shoulderLine1 = new THREE.Mesh(new THREE.PlaneGeometry(0.15, 1000), shoulderLineMat);
+    shoulderLine1.rotation.x = -Math.PI / 2;
+    shoulderLine1.position.set(-7, -0.49, 0);
+    const shoulderLine2 = new THREE.Mesh(new THREE.PlaneGeometry(0.15, 1000), shoulderLineMat);
+    shoulderLine2.rotation.x = -Math.PI / 2;
+    shoulderLine2.position.set(7, -0.49, 0);
+    roadGroup.add(shoulderLine1, shoulderLine2);
+    return roadGroup;
+}
+
+function createSteeringWheel() {
+    const wheel = new THREE.Group();
+    const rimMat = new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.6 });
+    const centerMat = new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.5 });
+    
+    const rim = new THREE.Mesh(new THREE.TorusGeometry(0.4, 0.05, 16, 50), rimMat);
+    const spoke1 = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.04, 0.04), rimMat);
+    spoke1.rotation.z = Math.PI / 2;
+    const center = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.08, 16), centerMat);
+    center.rotation.x = Math.PI / 2;
+
+    wheel.add(rim, spoke1, center);
+    return wheel;
+}
+
+function createCarMesh(type, createInterior = true) {
+    const car = new THREE.Group();
+    const carColor = { sedan: 0xdc3545, truck: 0xaaaaaa, van: 0x28a745 }[type];
+    const mainMaterial = new THREE.MeshStandardMaterial({ color: carColor, metalness: 0.8, roughness: 0.4 });
+    const wheelMaterial = new THREE.MeshStandardMaterial({ color: 0x111111, metalness: 0.1, roughness: 0.8 });
+    const glassMaterial = new THREE.MeshStandardMaterial({ color: 0x222222, metalness: 0.9, roughness: 0.2, transparent: true, opacity: 0.8 });
+    const lightMaterialFront = new THREE.MeshStandardMaterial({ color: 0x00aaff, emissive: 0x00aaff, emissiveIntensity: 0.8 });
+    const lightMaterialBack = new THREE.MeshStandardMaterial({ color: 0xff0000, emissive: 0xff0000, emissiveIntensity: 0.8 });
+
+    const wheelGeo = new THREE.CylinderGeometry(0.4, 0.4, 0.3, 24);
+    const wheelPositions = [
+        new THREE.Vector3(-1.2, -0.1, 1.8), new THREE.Vector3(1.2, -0.1, 1.8),
+        new THREE.Vector3(-1.2, -0.1, -1.8), new THREE.Vector3(1.2, -0.1, -1.8)
+    ];
+    wheelPositions.forEach(pos => {
+        const wheel = new THREE.Mesh(wheelGeo, wheelMaterial);
+        wheel.position.copy(pos);
+        wheel.rotation.z = Math.PI / 2;
+        car.add(wheel);
+    });
+
+    switch(type) {
+        case 'truck': // CORRECTED Cyber truck model
+            const cyberMaterial = new THREE.MeshStandardMaterial({ color: 0xC0C0C0, metalness: 1.0, roughness: 0.2 });
+            const body = new THREE.Group();
+            const vertices = new Float32Array([-1.2,0,2.5,1.2,0,2.5,-1.1,0.8,2,1.1,0.8,2,-1,1.8,0.5,1,1.8,0.5,-1,1.4,-2,1,1.4,-2,-1.2,0,-2.5,1.2,0,-2.5]);
+            const indices = [2,3,5,2,5,4,4,5,7,4,7,6,6,7,9,6,9,8,0,1,3,0,3,2,0,2,4,0,4,6,0,6,8,1,7,5,1,9,7,1,5,3,8,9,7,8,7,6,0,8,9,0,9,1];
+            const bodyGeo = new THREE.BufferGeometry();
+            bodyGeo.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+            bodyGeo.setIndex(indices);
+            bodyGeo.computeVertexNormals(); 
+            const bodyMesh = new THREE.Mesh(bodyGeo, cyberMaterial);
+            body.add(bodyMesh);
+            const frontLight = new THREE.Mesh(new THREE.BoxGeometry(2.2, 0.05, 0.05), lightMaterialFront);
+            frontLight.position.set(0, 0.8, 2.05);
+            const backLight = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.05, 0.05), lightMaterialBack);
+            backLight.position.set(0, 0.0, -2.5);
+            body.add(frontLight, backLight);
+            car.add(body);
+            break;
+        case 'sedan':
+            const bodySedan = new THREE.Mesh(new THREE.BoxGeometry(2.5, 0.8, 4.5), mainMaterial);
+            bodySedan.position.y = 0.3;
+            const cabinSedan = new THREE.Mesh(new THREE.BoxGeometry(2.3, 0.7, 2.2), mainMaterial);
+            cabinSedan.position.y = 1.05; cabinSedan.position.z = -0.4;
+            const windshield = new THREE.Mesh(new THREE.PlaneGeometry(2.1, 0.8), glassMaterial);
+            windshield.position.set(0, 1.1, 0.75); windshield.rotation.x = Math.PI / 3.5;
+            const rearWindow = new THREE.Mesh(new THREE.PlaneGeometry(2.1, 0.8), glassMaterial);
+            rearWindow.position.set(0, 1.1, -1.45); rearWindow.rotation.x = -Math.PI / 4;
+            const sideWindowL = new THREE.Mesh(new THREE.PlaneGeometry(2.1, 0.6), glassMaterial);
+            sideWindowL.position.set(-1.15, 1.05, -0.4); sideWindowL.rotation.y = Math.PI / 2;
+            const sideWindowR = new THREE.Mesh(new THREE.PlaneGeometry(2.1, 0.6), glassMaterial);
+            sideWindowR.position.set(1.15, 1.05, -0.4); sideWindowR.rotation.y = -Math.PI / 2;
+            car.add(bodySedan, cabinSedan, windshield, rearWindow, sideWindowL, sideWindowR);
+            break;
+        case 'van':
+            const bodyVan = new THREE.Mesh(new THREE.BoxGeometry(2.5, 1.6, 5), mainMaterial);
+            bodyVan.position.y = 0.7;
+            const windshieldVan = new THREE.Mesh(new THREE.PlaneGeometry(2.2, 1.2), glassMaterial);
+            windshieldVan.position.set(0, 1.1, 2.5); windshieldVan.rotation.x = Math.PI / 5;
+            car.add(bodyVan, windshieldVan);
+            break;
+    }
+
+    if (createInterior) {
+        const dashboardMat = new THREE.MeshStandardMaterial({ color: 0x252525, roughness: 0.7 });
+        const dashboard = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.6, 0.8), dashboardMat);
+        dashboard.position.set(0, 0.6, 2.0);
+        car.add(dashboard);
+
+        steeringWheel = createSteeringWheel();
+        steeringWheel.position.set(-0.5, 0.9, 1.6);
+        steeringWheel.rotation.x = Math.PI / 10;
+        car.add(steeringWheel);
+
+        const screenMat = new THREE.MeshStandardMaterial({ color: 0x050505, roughness: 0.2, metalness: 0.5 });
+        const passengerScreen = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.4, 0.05), screenMat);
+        passengerScreen.position.set(0.6, 0.9, 1.8);
+        car.add(passengerScreen);
+    }
+
+    car.scale.set(0.8, 0.8, 0.8);
+    return car;
+}
+
+// --- GAME LOGIC ---
+function selectCar(event) {
+    const carOption = event.target.closest('.car-option');
+    if (carOption) {
+        const carType = carOption.dataset.car;
+        playerCar = createCarMesh(carType, true); // Create with interior
+        playerCar.position.y = 0;
+        playerCar.position.x = currentLane * 3.75;
+        
+        playerCar.rotation.y = Math.PI; 
+        
+        mainScene.add(playerCar);
+        
+        const selectionScreen = document.getElementById('car-selection-screen');
+        selectionScreen.classList.add('hidden');
+        
+        setTimeout(() => {
+            gameStarted = true;
+            carPreviews.length = 0; // Free up resources
+            
+            isCameraAnimating = true;
+            cameraAnimationStartTime = performance.now();
+            startCamPos.copy(mainCamera.position);
+            startCamQuat.copy(mainCamera.quaternion);
+        }, 500);
+    }
+}
+
+function switchLaneTo(lane) {
+    if (!gameStarted) return;
+    if (lane === -1 || lane === 1) {
+        currentLane = lane;
+    }
+}
+
+function updateDashboard() {
+    const speed = Math.floor(roadSpeed * 400); // Arbitrary multiplier for display
+    const frameDistance = (speed / 3600) * (1/60); // A rough approximation of distance covered per frame
+    distanceTraveled += frameDistance;
+    nextCheckpointDistance -= frameDistance;
+
+    if (nextCheckpointDistance <= 0) {
+        nextCheckpointDistance += 5; // Reset for next checkpoint
+    }
+
+    document.getElementById('speed-display').textContent = `Speed: ${speed} km/h`;
+    document.getElementById('distance-display').textContent = `Trip: ${distanceTraveled.toFixed(1)} km`;
+    document.getElementById('checkpoint-display').textContent = `Next: ${nextCheckpointDistance.toFixed(1)} km`;
+}
+
+function onWindowResize() {
+    mainCamera.aspect = window.innerWidth / window.innerHeight;
+    mainCamera.updateProjectionMatrix();
+    mainRenderer.setSize(window.innerWidth, window.innerHeight);
+}
+
+// --- ANIMATION LOOP ---
+function animate() {
+    requestAnimationFrame(animate);
+
+    if (!gameStarted) {
+        carPreviews.forEach(preview => {
+            preview.carMesh.rotation.y += 0.01;
+            preview.renderer.render(preview.scene, preview.camera);
+        });
+    }
+
+    if (gameStarted && playerCar) {
+        const road = mainScene.getObjectByName("road");
+        if (road) {
+            road.position.z = (road.position.z + roadSpeed) % 20;
+        }
+
+        const targetX = currentLane * 3.75;
+        playerCar.position.x += (targetX - playerCar.position.x) * 0.1;
+
+        playerCar.traverse((child) => {
+            if (child.isMesh && child.geometry.type === 'CylinderGeometry') {
+                child.rotation.x += roadSpeed;
+            }
+        });
+        
+        if (steeringWheel) {
+            const targetRotation = (playerCar.position.x - targetX) * 0.1;
+            steeringWheel.rotation.z += (targetRotation - steeringWheel.rotation.z) * 0.2;
+        }
+        
+        updateDashboard();
+
+        if (isCameraAnimating) {
+            const elapsedTime = performance.now() - cameraAnimationStartTime;
+            let progress = Math.min(elapsedTime / cameraAnimationDuration, 1);
+            progress = 0.5 - 0.5 * Math.cos(progress * Math.PI);
+            
+            // --- FIX: Define the correct final camera position (in driver's seat) ---
+            const endCamPos = new THREE.Vector3();
+            playerCar.localToWorld(endCamPos.set(-0.5, 1.2, 1.4)); 
+
+            const lookAtPoint = new THREE.Vector3();
+            playerCar.localToWorld(lookAtPoint.set(0, 1.0, 100)); // Look far in front of the car
+            const tempMatrix = new THREE.Matrix4().lookAt(endCamPos, lookAtPoint, mainCamera.up);
+            const endCamQuat = new THREE.Quaternion().setFromRotationMatrix(tempMatrix);
+
+            mainCamera.position.copy(startCamPos).lerp(endCamPos, progress);
+            mainCamera.quaternion.copy(startCamQuat).slerp(endCamQuat, progress);
+
+            if (progress >= 1) {
+                isCameraAnimating = false;
+                playerCar.add(mainCamera);
+                // --- FIX: Set final position and rotation relative to the car ---
+                mainCamera.position.set(-0.5, 1.2, 1.4); 
+                mainCamera.rotation.set(0, 0, 0); 
+                document.getElementById('dashboard-ui').classList.add('visible');
+            }
+        }
+    }
+
+    mainRenderer.render(mainScene, mainCamera);
+}
+
+// --- CONTROLS ---
+document.addEventListener('keydown', (event) => {
+    if (!gameStarted || isCameraAnimating) return;
+    if (event.key === 'ArrowLeft') {
+        switchLaneTo(-1);
+    } else if (event.key === 'ArrowRight') {
+        switchLaneTo(1);
+    }
+});
+
+let touchStartX = 0;
+let isDragging = false;
+document.body.addEventListener('touchstart', (e) => {
+    if (!gameStarted || isCameraAnimating) return;
+    touchStartX = e.touches[0].clientX;
+    isDragging = true;
+});
+
+document.body.addEventListener('touchmove', (e) => {
+    if (!isDragging || !gameStarted) return;
+    const touchX = e.touches[0].clientX;
+    const deltaX = touchX - touchStartX;
+    if (Math.abs(deltaX) > 50) {
+        if (deltaX < 0) { switchLaneTo(-1); } else { switchLaneTo(1); }
+        isDragging = false;
+    }
+});
+
+document.body.addEventListener('touchend', () => { isDragging = false; });
+
+// --- START THE APP ---
+init();
+</script>
+</body>
+</html>
