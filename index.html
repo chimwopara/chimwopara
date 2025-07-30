@@ -117,26 +117,44 @@ canvas {
     color: #00ddff;
 }
 
-/* --- Dialogue & Phone UI --- */
-#dialogue-container, #phone-container { 
+/* --- Media Player UI --- */
+#media-container { 
     display: none; 
     position: absolute; 
     bottom: 20px; 
-    left: 50%; 
-    transform: translateX(-50%); 
-    background: rgba(0,0,0,0.8); 
+    right: 20px; 
+    background: rgba(0,0,0,0.85); 
     padding: 1em; 
-    border-radius: 10px; 
+    border-radius: 15px; 
     width: 90%; 
-    max-width: 500px; 
+    max-width: 400px; 
     pointer-events: auto; 
+    border: 1px solid #555;
+    backdrop-filter: blur(5px);
 }
-#dialogue-text { margin-bottom: 1em; }
-.dialogue-option { background: #444; padding: 0.5em; margin-top: 0.5em; border-radius: 5px; cursor: pointer; }
-#phone-screen { background: #111; height: 300px; border-radius: 5px; margin-bottom: 1em; position: relative; }
-#video-player { width: 100%; height: 100%; object-fit: cover; display: none; }
-.phone-button-group { display: flex; justify-content: space-around; }
-.phone-button { background: #555; padding: 0.8em; border-radius: 5px; cursor: pointer; }
+#media-video-player { 
+    width: 100%; 
+    height: auto; 
+    border-radius: 10px; 
+    background: #000;
+}
+#close-media-btn {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 30px;
+    text-align: center;
+}
+
 /* --- Weather & Responsiveness --- */
 #weather-overlay { 
     position: absolute; 
@@ -149,7 +167,6 @@ canvas {
     transition: background 2s; 
 }
 
-/* Mobile First - Adjustments for larger screens */
 @media (min-width: 768px) {
     #car-selection-screen h1 {
         font-size: 3.5rem;
@@ -168,7 +185,6 @@ canvas {
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-<!-- Main game canvas will be added here by Three.js -->
 
 <div id="ui-container">
     <div id="car-selection-screen">
@@ -198,9 +214,10 @@ canvas {
         <div id="checkpoint-display">Next: 5.0 km</div>
     </div>
     
-    <!-- Other UI elements remain the same -->
-    <div id="dialogue-container"></div>
-    <div id="phone-container"></div>
+    <div id="media-container">
+        <video id="media-video-player" controls autoplay muted loop playsinline></video>
+        <button id="close-media-btn">X</button>
+    </div>
 </div>
 <div id="weather-overlay"></div>
 
@@ -208,22 +225,28 @@ canvas {
 <script>
 // --- GLOBAL VARIABLES ---
 let mainRenderer, mainScene, mainCamera;
-let playerCar = null, steeringWheel = null;
+let playerCar = null, steeringWheel = null, passengerScreenMesh = null;
 let gameStarted = false;
-let currentLane = 1; // 1 for right lane, -1 for left
+let currentLane = 1; 
 let roadSpeed = 0.2; 
 const carPreviews = [];
-
-// Game state variables
 let distanceTraveled = 0;
-let nextCheckpointDistance = 5; // in km
-
-// Camera animation variables
+let nextCheckpointDistance = 5;
 let isCameraAnimating = false;
 let cameraAnimationStartTime;
-const cameraAnimationDuration = 4000; // 4 seconds for a smooth transition
+const cameraAnimationDuration = 4000;
 let startCamPos = new THREE.Vector3();
 let startCamQuat = new THREE.Quaternion();
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+const videoPlaylist = [
+    'http://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+    'http://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+    'http://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+    'http://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+    'http://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4'
+];
+let currentVideoIndex = 0;
 
 // --- INITIALIZATION ---
 function init() {
@@ -238,8 +261,7 @@ function setupMainScene() {
     mainScene = new THREE.Scene();
     mainScene.fog = new THREE.Fog(0x1a1a1a, 20, 100);
 
-    mainCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    // Start with a top-down view
+    mainCamera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000); // Adjusted FOV
     mainCamera.position.set(0, 25, 10);
     mainCamera.lookAt(0, 0, 0);
 
@@ -264,24 +286,20 @@ function setupCarPreviews() {
     previewElements.forEach(el => {
         const canvas = el.querySelector('.car-preview-canvas');
         const carType = el.dataset.car;
-
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(50, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
         camera.position.set(0, 2, 6);
         camera.lookAt(0, 0, 0);
-
         const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
         renderer.setSize(canvas.clientWidth, canvas.clientHeight);
         renderer.setClearColor(0x000000, 0);
-
-        const carMesh = createCarMesh(carType, false); // Don't create interior for previews
+        const carMesh = createCarMesh(carType, false);
         scene.add(carMesh);
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
         scene.add(ambientLight);
         const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
         directionalLight.position.set(5, 5, 5);
         scene.add(directionalLight);
-
         carPreviews.push({ renderer, scene, camera, carMesh });
     });
 }
@@ -290,6 +308,8 @@ function setupCarPreviews() {
 function addEventListeners() {
     window.addEventListener('resize', onWindowResize, false);
     document.getElementById('car-options').addEventListener('click', selectCar);
+    mainRenderer.domElement.addEventListener('click', onCanvasClick, false);
+    document.getElementById('close-media-btn').addEventListener('click', hideVideoPlayer);
 }
 
 // --- GAME OBJECT CREATION ---
@@ -319,19 +339,101 @@ function createRoad() {
 }
 
 function createSteeringWheel() {
-    const wheel = new THREE.Group();
-    const rimMat = new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.6 });
-    const centerMat = new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.5 });
-    
-    const rim = new THREE.Mesh(new THREE.TorusGeometry(0.4, 0.05, 16, 50), rimMat);
-    const spoke1 = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.04, 0.04), rimMat);
-    spoke1.rotation.z = Math.PI / 2;
-    const center = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.08, 16), centerMat);
-    center.rotation.x = Math.PI / 2;
+    const wheelGroup = new THREE.Group();
+    const rimMat = new THREE.MeshStandardMaterial({ color: 0x181818, roughness: 0.5 });
+    const centerMat = new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.6 });
+    const chromeMat = new THREE.MeshStandardMaterial({ color: 0xbbbbbb, metalness: 1.0, roughness: 0.2 });
 
-    wheel.add(rim, spoke1, center);
-    return wheel;
+    // Rim
+    const rim = new THREE.Mesh(new THREE.TorusGeometry(0.4, 0.06, 16, 60), rimMat);
+    wheelGroup.add(rim);
+
+    // Center hub
+    const centerHub = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.1, 0.08, 16), centerMat);
+    centerHub.rotation.x = Math.PI / 2;
+    wheelGroup.add(centerHub);
+
+    // Spokes
+    const spokeGeo = new THREE.BoxGeometry(0.3, 0.05, 0.05);
+    const spoke1 = new THREE.Mesh(spokeGeo, centerMat);
+    spoke1.position.set(-0.25, 0, 0);
+    spoke1.rotation.z = Math.PI / 2.5;
+    const spoke2 = new THREE.Mesh(spokeGeo, centerMat);
+    spoke2.position.set(0.25, 0, 0);
+    spoke2.rotation.z = -Math.PI / 2.5;
+    const spoke3 = new THREE.Mesh(spokeGeo, centerMat);
+    spoke3.position.y = -0.25;
+    spoke3.rotation.z = Math.PI;
+    wheelGroup.add(spoke1, spoke2, spoke3);
+
+    // Main steering wheel assembly to return
+    const steeringAssembly = new THREE.Group();
+    steeringAssembly.add(wheelGroup);
+    wheelGroup.position.z = 0.1; // Move wheel forward from pivot
+    
+    // Add a column
+    const column = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.1, 0.4, 12), rimMat);
+    column.position.z = -0.1;
+    steeringAssembly.add(column);
+
+    return steeringAssembly;
 }
+
+function createCarInterior() {
+    const interior = new THREE.Group();
+    const dashMat = new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.7 });
+    const screenMat = new THREE.MeshStandardMaterial({ color: 0x050505, roughness: 0.2, metalness: 0.5 });
+
+    // --- Redesigned Dashboard ---
+    const dashTop = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.1, 1.2), dashMat);
+    dashTop.position.set(0, 0.8, 0.8);
+    const dashFront = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.4, 0.1), dashMat);
+    dashFront.position.set(0, 0.55, 1.35);
+    interior.add(dashTop, dashFront);
+    
+    // --- Instrument Cluster ---
+    const clusterHousing = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.25, 0.2), dashMat);
+    clusterHousing.position.set(-0.5, 0.9, 0.5);
+    interior.add(clusterHousing);
+
+    // --- Passenger Screen ---
+    passengerScreenMesh = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.4, 0.05), screenMat);
+    passengerScreenMesh.position.set(0.6, 0.55, 1.3);
+    passengerScreenMesh.name = "passengerScreen";
+    interior.add(passengerScreenMesh);
+
+    // --- A-Pillar and Windshield Frame ---
+    const pillarMat = new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.8 });
+    
+    // --- FIX: Raised the windshield frame and added right pillar ---
+    const pillarHeight = 0.9; // Pillar height from dashboard to roof
+    const pillarYPos = 1.25;  // Positioned on top of the dashboard
+    
+    const pillarLeft = new THREE.Mesh(new THREE.BoxGeometry(0.2, pillarHeight, 0.2), pillarMat);
+    pillarLeft.position.set(-1.2, pillarYPos, 1.8);
+    pillarLeft.rotation.y = Math.PI / 8;
+    pillarLeft.rotation.z = -Math.PI / 12;
+    
+    const pillarRight = pillarLeft.clone();
+    pillarRight.position.x = 1.2;
+    pillarRight.rotation.y = -Math.PI / 8;
+    pillarRight.rotation.z = Math.PI / 12;
+
+    interior.add(pillarLeft, pillarRight);
+
+    const windshieldTopFrame = new THREE.Mesh(new THREE.BoxGeometry(2.6, 0.15, 0.15), pillarMat);
+    windshieldTopFrame.position.set(0, 1.7, 1.9); // Raised position
+    interior.add(windshieldTopFrame);
+
+    // --- Steering Wheel ---
+    steeringWheel = createSteeringWheel();
+    steeringWheel.position.set(-0.5, 0.6, 0.8);
+    steeringWheel.rotation.x = Math.PI / 8;
+    interior.add(steeringWheel);
+
+    return interior;
+}
+
 
 function createCarMesh(type, createInterior = true) {
     const car = new THREE.Group();
@@ -339,9 +441,7 @@ function createCarMesh(type, createInterior = true) {
     const mainMaterial = new THREE.MeshStandardMaterial({ color: carColor, metalness: 0.8, roughness: 0.4 });
     const wheelMaterial = new THREE.MeshStandardMaterial({ color: 0x111111, metalness: 0.1, roughness: 0.8 });
     const glassMaterial = new THREE.MeshStandardMaterial({ color: 0x222222, metalness: 0.9, roughness: 0.2, transparent: true, opacity: 0.8 });
-    const lightMaterialFront = new THREE.MeshStandardMaterial({ color: 0x00aaff, emissive: 0x00aaff, emissiveIntensity: 0.8 });
-    const lightMaterialBack = new THREE.MeshStandardMaterial({ color: 0xff0000, emissive: 0xff0000, emissiveIntensity: 0.8 });
-
+    
     const wheelGeo = new THREE.CylinderGeometry(0.4, 0.4, 0.3, 24);
     const wheelPositions = [
         new THREE.Vector3(-1.2, -0.1, 1.8), new THREE.Vector3(1.2, -0.1, 1.8),
@@ -354,64 +454,31 @@ function createCarMesh(type, createInterior = true) {
         car.add(wheel);
     });
 
+    // Simplified exterior models for performance
     switch(type) {
-        case 'truck': // CORRECTED Cyber truck model
+        case 'truck':
             const cyberMaterial = new THREE.MeshStandardMaterial({ color: 0xC0C0C0, metalness: 1.0, roughness: 0.2 });
-            const body = new THREE.Group();
-            const vertices = new Float32Array([-1.2,0,2.5,1.2,0,2.5,-1.1,0.8,2,1.1,0.8,2,-1,1.8,0.5,1,1.8,0.5,-1,1.4,-2,1,1.4,-2,-1.2,0,-2.5,1.2,0,-2.5]);
-            const indices = [2,3,5,2,5,4,4,5,7,4,7,6,6,7,9,6,9,8,0,1,3,0,3,2,0,2,4,0,4,6,0,6,8,1,7,5,1,9,7,1,5,3,8,9,7,8,7,6,0,8,9,0,9,1];
-            const bodyGeo = new THREE.BufferGeometry();
-            bodyGeo.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
-            bodyGeo.setIndex(indices);
-            bodyGeo.computeVertexNormals(); 
-            const bodyMesh = new THREE.Mesh(bodyGeo, cyberMaterial);
-            body.add(bodyMesh);
-            const frontLight = new THREE.Mesh(new THREE.BoxGeometry(2.2, 0.05, 0.05), lightMaterialFront);
-            frontLight.position.set(0, 0.8, 2.05);
-            const backLight = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.05, 0.05), lightMaterialBack);
-            backLight.position.set(0, 0.0, -2.5);
-            body.add(frontLight, backLight);
+            const body = new THREE.Mesh(new THREE.BoxGeometry(2.5, 1.2, 5), cyberMaterial);
+            body.position.y = 0.5;
             car.add(body);
             break;
         case 'sedan':
             const bodySedan = new THREE.Mesh(new THREE.BoxGeometry(2.5, 0.8, 4.5), mainMaterial);
             bodySedan.position.y = 0.3;
-            const cabinSedan = new THREE.Mesh(new THREE.BoxGeometry(2.3, 0.7, 2.2), mainMaterial);
+            const cabinSedan = new THREE.Mesh(new THREE.BoxGeometry(2.3, 0.7, 2.2), glassMaterial);
             cabinSedan.position.y = 1.05; cabinSedan.position.z = -0.4;
-            const windshield = new THREE.Mesh(new THREE.PlaneGeometry(2.1, 0.8), glassMaterial);
-            windshield.position.set(0, 1.1, 0.75); windshield.rotation.x = Math.PI / 3.5;
-            const rearWindow = new THREE.Mesh(new THREE.PlaneGeometry(2.1, 0.8), glassMaterial);
-            rearWindow.position.set(0, 1.1, -1.45); rearWindow.rotation.x = -Math.PI / 4;
-            const sideWindowL = new THREE.Mesh(new THREE.PlaneGeometry(2.1, 0.6), glassMaterial);
-            sideWindowL.position.set(-1.15, 1.05, -0.4); sideWindowL.rotation.y = Math.PI / 2;
-            const sideWindowR = new THREE.Mesh(new THREE.PlaneGeometry(2.1, 0.6), glassMaterial);
-            sideWindowR.position.set(1.15, 1.05, -0.4); sideWindowR.rotation.y = -Math.PI / 2;
-            car.add(bodySedan, cabinSedan, windshield, rearWindow, sideWindowL, sideWindowR);
+            car.add(bodySedan, cabinSedan);
             break;
         case 'van':
             const bodyVan = new THREE.Mesh(new THREE.BoxGeometry(2.5, 1.6, 5), mainMaterial);
             bodyVan.position.y = 0.7;
-            const windshieldVan = new THREE.Mesh(new THREE.PlaneGeometry(2.2, 1.2), glassMaterial);
-            windshieldVan.position.set(0, 1.1, 2.5); windshieldVan.rotation.x = Math.PI / 5;
-            car.add(bodyVan, windshieldVan);
+            car.add(bodyVan);
             break;
     }
 
     if (createInterior) {
-        const dashboardMat = new THREE.MeshStandardMaterial({ color: 0x252525, roughness: 0.7 });
-        const dashboard = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.6, 0.8), dashboardMat);
-        dashboard.position.set(0, 0.6, 2.0);
-        car.add(dashboard);
-
-        steeringWheel = createSteeringWheel();
-        steeringWheel.position.set(-0.5, 0.9, 1.6);
-        steeringWheel.rotation.x = Math.PI / 10;
-        car.add(steeringWheel);
-
-        const screenMat = new THREE.MeshStandardMaterial({ color: 0x050505, roughness: 0.2, metalness: 0.5 });
-        const passengerScreen = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.4, 0.05), screenMat);
-        passengerScreen.position.set(0.6, 0.9, 1.8);
-        car.add(passengerScreen);
+        const interior = createCarInterior();
+        car.add(interior);
     }
 
     car.scale.set(0.8, 0.8, 0.8);
@@ -423,11 +490,9 @@ function selectCar(event) {
     const carOption = event.target.closest('.car-option');
     if (carOption) {
         const carType = carOption.dataset.car;
-        playerCar = createCarMesh(carType, true); // Create with interior
+        playerCar = createCarMesh(carType, true);
         playerCar.position.y = 0;
         playerCar.position.x = currentLane * 3.75;
-        
-        playerCar.rotation.y = Math.PI; 
         
         mainScene.add(playerCar);
         
@@ -436,7 +501,7 @@ function selectCar(event) {
         
         setTimeout(() => {
             gameStarted = true;
-            carPreviews.length = 0; // Free up resources
+            carPreviews.length = 0;
             
             isCameraAnimating = true;
             cameraAnimationStartTime = performance.now();
@@ -454,13 +519,13 @@ function switchLaneTo(lane) {
 }
 
 function updateDashboard() {
-    const speed = Math.floor(roadSpeed * 400); // Arbitrary multiplier for display
-    const frameDistance = (speed / 3600) * (1/60); // A rough approximation of distance covered per frame
+    const speed = Math.floor(roadSpeed * 400);
+    const frameDistance = (speed / 3600) * (1/60);
     distanceTraveled += frameDistance;
     nextCheckpointDistance -= frameDistance;
 
     if (nextCheckpointDistance <= 0) {
-        nextCheckpointDistance += 5; // Reset for next checkpoint
+        nextCheckpointDistance += 5;
     }
 
     document.getElementById('speed-display').textContent = `Speed: ${speed} km/h`;
@@ -472,6 +537,37 @@ function onWindowResize() {
     mainCamera.aspect = window.innerWidth / window.innerHeight;
     mainCamera.updateProjectionMatrix();
     mainRenderer.setSize(window.innerWidth, window.innerHeight);
+}
+
+// --- MEDIA PLAYER LOGIC ---
+function onCanvasClick(event) {
+    if (!passengerScreenMesh || isCameraAnimating) return;
+
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    raycaster.setFromCamera(mouse, mainCamera);
+    const intersects = raycaster.intersectObject(passengerScreenMesh);
+
+    if (intersects.length > 0) {
+        playNextVideo();
+    }
+}
+
+function playNextVideo() {
+    const mediaContainer = document.getElementById('media-container');
+    const videoPlayer = document.getElementById('media-video-player');
+    videoPlayer.src = videoPlaylist[currentVideoIndex];
+    videoPlayer.play();
+    mediaContainer.style.display = 'block';
+    currentVideoIndex = (currentVideoIndex + 1) % videoPlaylist.length;
+}
+
+function hideVideoPlayer() {
+    const mediaContainer = document.getElementById('media-container');
+    const videoPlayer = document.getElementById('media-video-player');
+    videoPlayer.pause();
+    videoPlayer.src = "";
+    mediaContainer.style.display = 'none';
 }
 
 // --- ANIMATION LOOP ---
@@ -488,7 +584,7 @@ function animate() {
     if (gameStarted && playerCar) {
         const road = mainScene.getObjectByName("road");
         if (road) {
-            road.position.z = (road.position.z + roadSpeed) % 20;
+            road.position.z = (road.position.z - roadSpeed) % 20;
         }
 
         const targetX = currentLane * 3.75;
@@ -496,13 +592,15 @@ function animate() {
 
         playerCar.traverse((child) => {
             if (child.isMesh && child.geometry.type === 'CylinderGeometry') {
-                child.rotation.x += roadSpeed;
+                child.rotation.x -= roadSpeed;
             }
         });
         
         if (steeringWheel) {
-            const targetRotation = (playerCar.position.x - targetX) * 0.1;
-            steeringWheel.rotation.z += (targetRotation - steeringWheel.rotation.z) * 0.2;
+            // Correct steering wheel rotation
+            const wheelMesh = steeringWheel.children[0];
+            const targetRotation = (targetX - playerCar.position.x) * 0.1;
+            wheelMesh.rotation.z += (targetRotation - wheelMesh.rotation.z) * 0.2;
         }
         
         updateDashboard();
@@ -512,12 +610,12 @@ function animate() {
             let progress = Math.min(elapsedTime / cameraAnimationDuration, 1);
             progress = 0.5 - 0.5 * Math.cos(progress * Math.PI);
             
-            // --- FIX: Define the correct final camera position (in driver's seat) ---
+            // --- New Camera Animation Target ---
             const endCamPos = new THREE.Vector3();
-            playerCar.localToWorld(endCamPos.set(-0.5, 1.2, 1.4)); 
+            playerCar.localToWorld(endCamPos.set(-0.4, 1.2, 0.5)); 
 
             const lookAtPoint = new THREE.Vector3();
-            playerCar.localToWorld(lookAtPoint.set(0, 1.0, 100)); // Look far in front of the car
+            playerCar.localToWorld(lookAtPoint.set(0, 1.0, 100));
             const tempMatrix = new THREE.Matrix4().lookAt(endCamPos, lookAtPoint, mainCamera.up);
             const endCamQuat = new THREE.Quaternion().setFromRotationMatrix(tempMatrix);
 
@@ -527,9 +625,8 @@ function animate() {
             if (progress >= 1) {
                 isCameraAnimating = false;
                 playerCar.add(mainCamera);
-                // --- FIX: Set final position and rotation relative to the car ---
-                mainCamera.position.set(-0.5, 1.2, 1.4); 
-                mainCamera.rotation.set(0, 0, 0); 
+                // --- New Final Camera Position ---
+                mainCamera.position.set(-0.4, 1.2, 0.5); 
                 document.getElementById('dashboard-ui').classList.add('visible');
             }
         }
@@ -542,9 +639,9 @@ function animate() {
 document.addEventListener('keydown', (event) => {
     if (!gameStarted || isCameraAnimating) return;
     if (event.key === 'ArrowLeft') {
-        switchLaneTo(-1);
-    } else if (event.key === 'ArrowRight') {
         switchLaneTo(1);
+    } else if (event.key === 'ArrowRight') {
+        switchLaneTo(-1);
     }
 });
 
@@ -561,7 +658,11 @@ document.body.addEventListener('touchmove', (e) => {
     const touchX = e.touches[0].clientX;
     const deltaX = touchX - touchStartX;
     if (Math.abs(deltaX) > 50) {
-        if (deltaX < 0) { switchLaneTo(-1); } else { switchLaneTo(1); }
+        if (deltaX < 0) { 
+            switchLaneTo(1);
+        } else { 
+            switchLaneTo(-1);
+        }
         isDragging = false;
     }
 });
