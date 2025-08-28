@@ -13,16 +13,8 @@
         }
         .hero-bg {
             position: relative;
-            background-color: #111827;
+            background: linear-gradient(135deg, #111827 0%, #1f2937 50%, #111827 100%);
             overflow: hidden;
-        }
-        #particles-js {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: 0;
         }
         .hero-content {
             position: relative;
@@ -58,31 +50,21 @@
 
     <!-- Header -->
     <header class="bg-gray-900/80 backdrop-blur-sm fixed top-0 left-0 right-0 z-50">
-        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+        <div class="container mx-auto px-6 py-3 flex justify-center items-center">
             <a href="#"><img src="logo.png" alt="Chim Wopara Logo" class="h-10 w-auto" onerror="this.onerror=null; this.src='https://placehold.co/120x40/111827/FFFFFF?text=CW'"></a>
-            <nav class="hidden md:flex space-x-8 items-center">
-                <a href="#courses" class="hover:text-blue-400 transition-colors">Courses</a>
-                <a href="#pass" class="hover:text-blue-400 transition-colors">All-Access Pass</a>
-                <a href="#clothing" class="hover:text-blue-400 transition-colors">Clothing</a>
-                <a href="#about" class="hover:text-blue-400 transition-colors">About</a>
-            </nav>
-            <a href="#pass" class="hidden md:inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg cta-button">Get Started</a>
-            <button class="md:hidden text-white focus:outline-none">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-            </button>
         </div>
     </header>
 
     <!-- Hero Section -->
     <main class="pt-16">
         <section class="hero-bg py-20 md:py-32">
-            <div id="particles-js"></div>
             <div class="container mx-auto px-6 text-center hero-content">
-                <h2 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4">Build a Website with AI in Under 1 Hour</h2>
+                <h2 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4">Build products with Ai with speed</h2>
                 <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8">Join me for a live, one-on-one video call and I'll personally teach you the secrets to building stunning websites with the power of Artificial Intelligence.</p>
-                <div class="flex justify-center space-x-4">
-                    <a href="#courses" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg text-lg cta-button">Start with the Tutorial</a>
-                    <a href="#pass" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-lg text-lg cta-button">Get the All-Access Pass</a>
+                <div class="max-w-4xl mx-auto">
+                    <div class="bg-gray-800 rounded-lg p-4">
+                        <iframe width="100%" height="400" src="https://www.youtube.com/embed/QfeSB0qWPZA" frameborder="0" allowfullscreen class="rounded-lg"></iframe>
+                    </div>
                 </div>
             </div>
         </section>
@@ -91,133 +73,225 @@
         <section id="courses" class="py-20 bg-gray-800">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12 fade-in-up">
-                    <h3 class="text-4xl font-bold mb-2">Your Path to AI Web Mastery</h3>
-                    <p class="text-gray-400 max-w-2xl mx-auto">Start with our foundational video course, then supercharge your learning with a personalized coaching call.</p>
+                    <h3 class="text-4xl font-bold mb-2">Intro to Coding with AI</h3>
+                    <p class="text-gray-400 max-w-2xl mx-auto">Start with our foundational aided guides, then supercharge your learning with a personalized coaching call.</p>
                 </div>
 
-                <div class="flex flex-wrap -mx-4 justify-center items-stretch">
-                    <!-- Step 1: Video Tutorial -->
-                    <div class="w-full md:w-1/2 lg:w-1/3 p-4 flex fade-in-up" style="transition-delay: 100ms;">
-                        <div class="bg-gray-900 rounded-xl p-8 flex flex-col course-card">
-                            <div class="mb-4">
-                                <span class="bg-blue-500 text-white text-sm font-semibold px-3 py-1 rounded-full">Step 1</span>
-                            </div>
-                            <img src="https://placehold.co/600x400/111827/FFFFFF?text=AI+Web+Builder+Course" alt="AI Web Builder Course" class="rounded-lg mb-6">
-                            <h4 class="text-2xl font-bold mb-3">Step-by-Step Video Tutorial</h4>
-                            <p class="text-gray-400 mb-6 flex-grow">This comprehensive video guide is your first step. Learn the fundamentals of using AI to design, build, and deploy a professional website from scratch. No coding experience required.</p>
-                            <div class="text-4xl font-bold mb-6">$60</div>
-                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg cta-button">Buy the Tutorial</button>
-                        </div>
+                <div class="text-center mb-8">
+                    <div class="bg-red-600 text-white px-4 py-2 rounded-lg inline-block mb-4">
+                        <span class="font-bold">Limited Time Bundle Offer: </span>
+                        <span id="countdown-timer" class="font-mono">08:00</span>
                     </div>
+                    <div class="bg-yellow-500 text-black px-3 py-1 rounded-full inline-block text-sm font-bold">
+                        Save 17% - Get Both for $49.99!
+                    </div>
+                </div>
 
-                    <!-- Step 2: Live Coaching Call -->
-                    <div class="w-full md:w-1/2 lg:w-1/3 p-4 flex fade-in-up" style="transition-delay: 200ms;">
-                        <div class="bg-gray-900 rounded-xl p-8 flex flex-col course-card">
-                             <div class="mb-4">
-                                <span class="bg-green-500 text-white text-sm font-semibold px-3 py-1 rounded-full">Step 2</span>
+                <div class="max-w-4xl mx-auto">
+                    <div class="bg-gray-800 rounded-xl p-8 border-2 border-yellow-500">
+                        <div class="text-center mb-6">
+                            <h4 class="text-3xl font-bold mb-2">Complete AI Starter Bundle</h4>
+                            <div class="flex justify-center items-center space-x-4 mb-4">
+                                <span class="text-gray-400 line-through text-xl">$60.00</span>
+                                <span class="text-4xl font-bold text-green-400">$49.99</span>
+                                <span class="bg-red-500 text-white px-2 py-1 rounded text-sm">SAVE 17%</span>
                             </div>
-                            <img src="https://placehold.co/600x400/111827/FFFFFF?text=1-on-1+Coaching" alt="1-on-1 Coaching" class="rounded-lg mb-6">
-                            <h4 class="text-2xl font-bold mb-3">25-Minute Live 1-on-1 Call</h4>
-                            <p class="text-gray-400 mb-6 flex-grow">After completing the tutorial, book a private video call with me. I'll answer your questions, review your work, and provide personalized feedback to ensure your success.</p>
-                            <div class="text-4xl font-bold mb-6">$20</div>
-                            <button class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg cta-button" disabled>Unlock After Purchase</button>
-                             <p class="text-xs text-gray-500 mt-2 text-center">This offer is available only after purchasing the video tutorial.</p>
+                            <p class="text-gray-400 mb-6">Get both essential AI guides together and save $10! Perfect for beginners starting their AI journey.</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                            <!-- Step 1: AI Web Builder -->
+                            <div class="bg-gray-900 rounded-lg p-6">
+                                <div class="mb-4">
+                                    <span class="bg-blue-500 text-white text-sm font-semibold px-3 py-1 rounded-full">Step 1</span>
+                                </div>
+                                <img src="websites.png" alt="AI Web Builder Aided Guide" class="rounded-lg mb-4 w-full">
+                                <h5 class="text-lg font-bold mb-2">AI Web Builder</h5>
+                                <p class="text-gray-400 text-sm">Learn to create stunning websites using AI-powered tools. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
+                                <p class="text-sm text-blue-400 mt-2">Individual Price: $29.99</p>
+                            </div>
+
+                            <!-- Step 2: AI Powered Advertising -->
+                            <div class="bg-gray-900 rounded-lg p-6">
+                                <div class="mb-4">
+                                    <span class="bg-green-500 text-white text-sm font-semibold px-3 py-1 rounded-full">Step 2</span>
+                                </div>
+                                <img src="ads.png" alt="AI Powered Advertising Aided Guide" class="rounded-lg mb-4 w-full">
+                                <h5 class="text-lg font-bold mb-2">AI Powered Advertising</h5>
+                                <p class="text-gray-400 text-sm">Master AI-driven ad campaigns for maximum ROI. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
+                                <p class="text-sm text-blue-400 mt-2">Individual Price: $29.99</p>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center">
+                            <button class="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white font-bold py-4 px-12 rounded-lg text-xl cta-button" onclick="openPurchaseModal('Complete AI Starter Bundle', '$49.99')">
+                                Get Complete Bundle - $49.99
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- All-Access Pass Section -->
-        <section id="pass" class="py-20 hero-bg">
+        <!-- About Section -->
+        <section id="about" class="py-20 bg-gray-900">
             <div class="container mx-auto px-6">
-                <div class="bg-gray-800 rounded-2xl p-8 md:p-12 lg:p-16 border border-blue-500/30 shadow-2xl shadow-blue-500/10 fade-in-up">
-                    <div class="text-center">
-                        <h3 class="text-4xl md:text-5xl font-extrabold mb-4">The All-Access Pass</h3>
-                        <p class="text-xl text-blue-300 mb-8 max-w-3xl mx-auto">The ultimate learning package. Get a full hour of my undivided attention and choose any four courses to become a true AI-powered creator.</p>
-                        <div class="text-6xl font-bold mb-6">$250</div>
-                        <ul class="text-left max-w-md mx-auto space-y-3 mb-10">
-                            <li class="flex items-start">
-                                <svg class="w-6 h-6 text-green-400 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                <span><span class="font-bold">1-Hour Private Video Call:</span> Deep dive into advanced topics and get all your questions answered.</span>
-                            </li>
-                            <li class="flex items-start">
-                                <svg class="w-6 h-6 text-green-400 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                <span><span class="font-bold">Any 4 Courses:</span> Handpick any four video courses from my library to build a versatile skillset.</span>
-                            </li>
-                             <li class="flex items-start">
-                                <svg class="w-6 h-6 text-green-400 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                                <span><span class="font-bold">Unbeatable Value:</span> Save big compared to purchasing courses and coaching separately.</span>
-                            </li>
-                        </ul>
-                        <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-10 rounded-lg text-xl cta-button">Claim Your All-Access Pass</button>
+                <div class="flex flex-col md:flex-row items-center bg-gray-800 rounded-xl p-8 md:p-12 fade-in-up">
+                    <div class="md:w-1/3 text-center md:text-left mb-8 md:mb-0 md:pr-12">
+                        <img src="chim.png" alt="Chim Wopara" class="rounded-full w-48 h-48 mx-auto md:mx-0">
+                    </div>
+                    <div class="md:w-2/3">
+                        <h3 class="text-3xl font-bold mb-4">Why Learn From Me?</h3>
+                        <p class="text-gray-400 mb-4">I'm Chim Wopara, an entrepreneur and technologist passionate about empowering people with cutting-edge skills. I've built multiple successful online businesses and have years of experience in web development, AI integration, and digital marketing. My teaching philosophy is simple: break down complex topics into easy-to-understand, actionable steps. I'm not just a teacher; I'm your personal guide in this exciting journey into the world of AI.</p>
+                        <p class="text-gray-400 mb-6">I believe anyone can build amazing things with the right tools and guidance. Let's build the future, together.</p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg cta-button">$1 per minute call</button>
+                            <button class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg cta-button">My projects</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Additional Courses Section -->
-        <section class="py-20 bg-gray-900">
+        <section class="py-20 bg-gray-800">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12 fade-in-up">
                     <h3 class="text-4xl font-bold mb-2">Expand Your AI Skillset</h3>
-                    <p class="text-gray-400 max-w-2xl mx-auto">Go beyond websites. Master AI in marketing, app development, and more with these specialized courses.</p>
+                    <p class="text-gray-400 max-w-2xl mx-auto">Go beyond websites. Master AI in marketing, app development, and more with these specialized aided guides.</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                    <!-- Course Card Template -->
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
+                    <!-- AI Website Builder -->
                     <div class="bg-gray-800 rounded-xl p-6 flex flex-col course-card fade-in-up">
-                        <img src="https://placehold.co/600x400/1f2937/FFFFFF?text=Google+Sign-In" alt="Google Sign-In Course" class="rounded-lg mb-4">
-                        <h4 class="text-xl font-bold mb-2">Sign-in with Google Course</h4>
-                        <p class="text-gray-400 text-sm mb-4 flex-grow">Integrate secure and easy Google authentication into your web projects.</p>
+                        <img src="websites.png" alt="AI Website Builder Aided Guide" class="rounded-lg mb-4">
+                        <h4 class="text-xl font-bold mb-2">AI Website Builder</h4>
+                        <p class="text-gray-400 text-sm mb-4 flex-grow">Create stunning websites using AI-powered tools and automated design systems. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
                         <div class="flex justify-between items-center">
-                            <span class="text-2xl font-bold">$60</span>
-                            <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Add to Cart</button>
+                            <span class="text-2xl font-bold">$29.99</span>
+                            <button class="bg-gray-700/50 backdrop-blur-sm hover:bg-gray-600/50 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI Website Builder', '$29.99')">Explore</button>
                         </div>
                     </div>
+
+                    <!-- Google Sign-In Integration -->
                     <div class="bg-gray-800 rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 100ms;">
-                        <img src="https://placehold.co/600x400/1f2937/FFFFFF?text=Calendly+Booking" alt="Calendly Booking Course" class="rounded-lg mb-4">
-                        <h4 class="text-xl font-bold mb-2">Calendly Booking Course</h4>
-                        <p class="text-gray-400 text-sm mb-4 flex-grow">Automate your scheduling by embedding Calendly into your website seamlessly.</p>
+                        <img src="googlesignin.png" alt="Google Sign-In Aided Guide" class="rounded-lg mb-4">
+                        <h4 class="text-xl font-bold mb-2">Google Sign-In Integration</h4>
+                        <p class="text-gray-400 text-sm mb-4 flex-grow">Integrate secure and easy Google authentication into your web projects. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
                         <div class="flex justify-between items-center">
-                            <span class="text-2xl font-bold">$60</span>
-                            <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Add to Cart</button>
+                            <span class="text-2xl font-bold">$29.99</span>
+                            <button class="bg-gray-700/50 backdrop-blur-sm hover:bg-gray-600/50 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('Google Sign-In Integration', '$29.99')">Explore</button>
                         </div>
                     </div>
+
+                    <!-- AI Ads -->
                     <div class="bg-gray-800 rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 200ms;">
-                        <img src="https://placehold.co/600x400/1f2937/FFFFFF?text=Facebook+Ads" alt="Facebook Ads Course" class="rounded-lg mb-4">
-                        <h4 class="text-xl font-bold mb-2">Facebook Ads Course</h4>
-                        <p class="text-gray-400 text-sm mb-4 flex-grow">Learn to create, manage, and optimize high-converting Facebook ad campaigns.</p>
+                        <img src="ads.png" alt="AI Ads Aided Guide" class="rounded-lg mb-4">
+                        <h4 class="text-xl font-bold mb-2">AI-Powered Advertising</h4>
+                        <p class="text-gray-400 text-sm mb-4 flex-grow">Create and optimize high-converting ad campaigns using artificial intelligence. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
                         <div class="flex justify-between items-center">
-                            <span class="text-2xl font-bold">$60</span>
-                            <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Add to Cart</button>
+                            <span class="text-2xl font-bold">$29.99</span>
+                            <button class="bg-gray-700/50 backdrop-blur-sm hover:bg-gray-600/50 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI-Powered Advertising', '$29.99')">Explore</button>
                         </div>
                     </div>
+
+                    <!-- Web Game Development -->
                     <div class="bg-gray-800 rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 300ms;">
-                        <img src="https://placehold.co/600x400/1f2937/FFFFFF?text=AI+Video+Ads" alt="AI Video Ads Course" class="rounded-lg mb-4">
-                        <h4 class="text-xl font-bold mb-2">AI Video Ads Course</h4>
-                        <p class="text-gray-400 text-sm mb-4 flex-grow">Generate compelling video advertisements in minutes using powerful AI tools.</p>
+                        <img src="webgame.png" alt="Web Game Development Aided Guide" class="rounded-lg mb-4">
+                        <h4 class="text-xl font-bold mb-2">AI Web Game Development</h4>
+                        <p class="text-gray-400 text-sm mb-4 flex-grow">Build interactive web games with AI-assisted development tools and techniques. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
                         <div class="flex justify-between items-center">
-                            <span class="text-2xl font-bold">$60</span>
-                            <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Add to Cart</button>
+                            <span class="text-2xl font-bold">$29.99</span>
+                            <button class="bg-gray-700/50 backdrop-blur-sm hover:bg-gray-600/50 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI Web Game Development', '$29.99')">Explore</button>
                         </div>
                     </div>
-                    <!-- Add fade-in-up and delays to the rest of the cards as well -->
-                </div>
-            </div>
-        </section>
-        
-        <!-- About Section -->
-        <section id="about" class="py-20 bg-gray-800">
-            <div class="container mx-auto px-6">
-                <div class="flex flex-col md:flex-row items-center bg-gray-900 rounded-xl p-8 md:p-12 fade-in-up">
-                    <div class="md:w-1/3 text-center md:text-left mb-8 md:mb-0 md:pr-12">
-                        <img src="https://placehold.co/400x400/111827/FFFFFF?text=Chim+Wopara" alt="Chim Wopara" class="rounded-full w-48 h-48 mx-auto md:mx-0">
+
+                    <!-- AI Music Generation -->
+                    <div class="bg-gray-800 rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 400ms;">
+                        <img src="music.png" alt="AI Music Generation Aided Guide" class="rounded-lg mb-4">
+                        <h4 class="text-xl font-bold mb-2">AI Music Generation</h4>
+                        <p class="text-gray-400 text-sm mb-4 flex-grow">Generate original music and soundtracks using cutting-edge AI technology. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold">$29.99</span>
+                            <button class="bg-gray-700/50 backdrop-blur-sm hover:bg-gray-600/50 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI Music Generation', '$29.99')">Explore</button>
+                        </div>
                     </div>
-                    <div class="md:w-2/3">
-                        <h3 class="text-3xl font-bold mb-4">Why Learn From Me?</h3>
-                        <p class="text-gray-400 mb-4">I'm Chim Wopara, an entrepreneur and technologist passionate about empowering people with cutting-edge skills. I've built multiple successful online businesses and have years of experience in web development, AI integration, and digital marketing. My teaching philosophy is simple: break down complex topics into easy-to-understand, actionable steps. I'm not just a teacher; I'm your personal guide in this exciting journey into the world of AI.</p>
-                        <p class="text-gray-400">I believe anyone can build amazing things with the right tools and guidance. Let's build the future, together.</p>
+
+                    <!-- Mobile Game Development -->
+                    <div class="bg-gray-800 rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 500ms;">
+                        <img src="mobilegame.png" alt="Mobile Game Development Aided Guide" class="rounded-lg mb-4">
+                        <h4 class="text-xl font-bold mb-2">AI Mobile Game Development</h4>
+                        <p class="text-gray-400 text-sm mb-4 flex-grow">Create engaging mobile games with AI-powered development frameworks. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold">$29.99</span>
+                            <button class="bg-gray-700/50 backdrop-blur-sm hover:bg-gray-600/50 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI Mobile Game Development', '$29.99')">Explore</button>
+                        </div>
+                    </div>
+
+                    <!-- AI Voice Technology -->
+                    <div class="bg-gray-800 rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 600ms;">
+                        <img src="voice.png" alt="AI Voice Technology Aided Guide" class="rounded-lg mb-4">
+                        <h4 class="text-xl font-bold mb-2">AI Voice Technology</h4>
+                        <p class="text-gray-400 text-sm mb-4 flex-grow">Implement speech recognition, text-to-speech, and voice AI in your projects. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold">$29.99</span>
+                            <button class="bg-gray-700/50 backdrop-blur-sm hover:bg-gray-600/50 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI Voice Technology', '$29.99')">Explore</button>
+                        </div>
+                    </div>
+
+                    <!-- AI Video Production -->
+                    <div class="bg-gray-800 rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 700ms;">
+                        <img src="video.png" alt="AI Video Production Aided Guide" class="rounded-lg mb-4">
+                        <h4 class="text-xl font-bold mb-2">AI Video Production</h4>
+                        <p class="text-gray-400 text-sm mb-4 flex-grow">Produce professional videos with AI editing, effects, and automated content creation. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold">$29.99</span>
+                            <button class="bg-gray-700/50 backdrop-blur-sm hover:bg-gray-600/50 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI Video Production', '$29.99')">Explore</button>
+                        </div>
+                    </div>
+
+                    <!-- AI Image Generation -->
+                    <div class="bg-gray-800 rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 800ms;">
+                        <img src="pic.png" alt="AI Image Generation Aided Guide" class="rounded-lg mb-4">
+                        <h4 class="text-xl font-bold mb-2">AI Image Generation</h4>
+                        <p class="text-gray-400 text-sm mb-4 flex-grow">Master AI image generation tools to create stunning visuals and artwork. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold">$29.99</span>
+                            <button class="bg-gray-700/50 backdrop-blur-sm hover:bg-gray-600/50 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI Image Generation', '$29.99')">Explore</button>
+                        </div>
+                    </div>
+
+                    <!-- AI Phone Apps -->
+                    <div class="bg-gray-800 rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 900ms;">
+                        <img src="phone.png" alt="AI Phone Apps Aided Guide" class="rounded-lg mb-4">
+                        <h4 class="text-xl font-bold mb-2">AI Phone App Development</h4>
+                        <p class="text-gray-400 text-sm mb-4 flex-grow">Build intelligent mobile applications with integrated AI capabilities. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold">$29.99</span>
+                            <button class="bg-gray-700/50 backdrop-blur-sm hover:bg-gray-600/50 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI Phone App Development', '$29.99')">Explore</button>
+                        </div>
+                    </div>
+
+                    <!-- AI Email Marketing -->
+                    <div class="bg-gray-800 rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 1000ms;">
+                        <img src="mail.png" alt="AI Email Marketing Aided Guide" class="rounded-lg mb-4">
+                        <h4 class="text-xl font-bold mb-2">AI Email Marketing</h4>
+                        <p class="text-gray-400 text-sm mb-4 flex-grow">Automate and optimize email campaigns using AI-driven personalization and analytics. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold">$29.99</span>
+                            <button class="bg-gray-700/50 backdrop-blur-sm hover:bg-gray-600/50 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI Email Marketing', '$29.99')">Explore</button>
+                        </div>
+                    </div>
+
+                    <!-- AI Calendar Management -->
+                    <div class="bg-gray-800 rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 1100ms;">
+                        <img src="calendar.png" alt="AI Calendar Management Aided Guide" class="rounded-lg mb-4">
+                        <h4 class="text-xl font-bold mb-2">AI Calendar Management</h4>
+                        <p class="text-gray-400 text-sm mb-4 flex-grow">Implement smart scheduling and calendar automation with AI-powered booking systems. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold">$29.99</span>
+                            <button class="bg-gray-700/50 backdrop-blur-sm hover:bg-gray-600/50 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI Calendar Management', '$29.99')">Explore</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -230,26 +304,136 @@
                     <h3 class="text-4xl font-bold mb-2">Culture On My Back</h3>
                     <p class="text-gray-400 max-w-2xl mx-auto">Exclusive apparel designed by Chim Wopara. Wear the culture, embody the future.</p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <!-- Clothing Item -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Daytrip -->
                     <div class="bg-gray-800 rounded-xl overflow-hidden clothing-card fade-in-up">
-                        <img src="https://placehold.co/600x700/1f2937/FFFFFF?text=Daytrip" alt="Daytrip Shirt" class="w-full h-auto object-cover">
+                        <img src="daytrip.png" alt="Daytrip" class="w-full h-auto object-cover">
                         <div class="p-6">
                             <h4 class="text-xl font-bold">Daytrip</h4>
                             <p class="text-gray-400 mb-4">3/4 Sleeve Shirt</p>
                             <div class="flex justify-between items-center">
                                 <span class="text-2xl font-bold">$100</span>
-                                <button class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">View Details</button>
+                                <button class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('Daytrip', '$100')">Explore</button>
                             </div>
                         </div>
                     </div>
-                    <!-- Add fade-in-up and delays to other clothing items -->
+
+                    <!-- Dapter -->
+                    <div class="bg-gray-800 rounded-xl overflow-hidden clothing-card fade-in-up" style="transition-delay: 100ms;">
+                        <img src="dapter.png" alt="Dapter" class="w-full h-auto object-cover">
+                        <div class="p-6">
+                            <h4 class="text-xl font-bold">Dapter</h4>
+                            <p class="text-gray-400 mb-4">Premium Apparel</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-2xl font-bold">$100</span>
+                                <button class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('Dapter', '$100')">Explore</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Manuch -->
+                    <div class="bg-gray-800 rounded-xl overflow-hidden clothing-card fade-in-up" style="transition-delay: 200ms;">
+                        <img src="manuch.png" alt="Manuch" class="w-full h-auto object-cover">
+                        <div class="p-6">
+                            <h4 class="text-xl font-bold">Manuch</h4>
+                            <p class="text-gray-400 mb-4">Designer Collection</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-2xl font-bold">$100</span>
+                                <button class="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('Manuch', '$100')">Explore</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                  <div class="text-center mt-12 fade-in-up">
-                    <a href="#" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg text-lg cta-button">Shop Full Collection</a>
+                    <p class="text-gray-400 text-lg">New product annually</p>
                 </div>
             </div>
         </section>
+
+        <!-- Product Purchase Modal -->
+        <div id="purchase-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+            <div class="bg-gray-800 rounded-xl p-8 max-w-md w-full">
+                <h3 class="text-2xl font-bold mb-2" id="modal-product-name">Product Name</h3>
+                <p class="text-gray-400 mb-6">Enter your details below and we'll send you the product access key via email.</p>
+                
+                <form id="purchase-form">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-2">Full Name</label>
+                        <input type="text" id="customer-name" required class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-blue-500 text-white">
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2">Email Address</label>
+                        <input type="email" id="customer-email" required class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-blue-500 text-white">
+                    </div>
+                    
+                    <div class="flex space-x-4 mb-6">
+                        <button type="submit" class="flex-1 bg-gray-700/50 backdrop-blur-sm hover:bg-gray-600/50 text-white font-bold py-3 px-6 rounded-lg">
+                            Checkout
+                        </button>
+                        <button type="button" onclick="closeModal()" class="px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white rounded-lg">
+                            Cancel
+                        </button>
+                    </div>
+                    
+                    <div class="border-t border-gray-600 pt-4">
+                        <button type="button" onclick="showAccessKeyInput()" class="w-full text-gray-400 hover:text-white py-2 transition-colors">
+                            Already have an access key? Enter it here
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Access Key Modal -->
+        <div id="access-key-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+            <div class="bg-gray-800 rounded-xl p-8 max-w-md w-full">
+                <h3 class="text-2xl font-bold mb-2">Enter Access Key</h3>
+                <p class="text-gray-400 mb-6">Enter your access key to unlock your content.</p>
+                
+                <form id="access-key-form">
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2">Access Key</label>
+                        <input type="text" id="access-key-input" required placeholder="Enter your access key" class="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-blue-500 text-white">
+                    </div>
+                    
+                    <div class="flex space-x-4">
+                        <button type="submit" class="flex-1 bg-gray-700/50 backdrop-blur-sm hover:bg-gray-600/50 text-white font-bold py-3 px-6 rounded-lg">
+                            Unlock Content
+                        </button>
+                        <button type="button" onclick="closeAccessKeyModal()" class="px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white rounded-lg">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Video Content Modal -->
+        <div id="video-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+            <div class="bg-gray-800 rounded-xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold" id="video-title">Course Content</h3>
+                    <button onclick="closeVideoModal()" class="text-gray-400 hover:text-white">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="mb-6">
+                    <div class="bg-gray-900 rounded-lg p-4">
+                        <iframe id="course-video" width="100%" height="400" src="" frameborder="0" allowfullscreen class="rounded-lg"></iframe>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <button onclick="showPracticeMaterials()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg">
+                        Practice Material
+                    </button>
+                </div>
+            </div>
+        </div>
 
     </main>
 
@@ -259,11 +443,17 @@
             <div class="text-center mb-8">
                 <h4 class="text-sm uppercase text-gray-500 tracking-widest mb-4">A Chim Wopara Enterprises Company</h4>
                 <div class="flex justify-center items-center space-x-6 md:space-x-10">
-                    <a href="http://fromsupply.com" target="_blank" class="text-gray-400 hover:text-white transition-colors text-lg font-semibold">Fromsupply</a>
+                    <a href="http://fromsupply.com" target="_blank" class="hover:opacity-80 transition-opacity">
+                        <img src="fs.png" alt="Fromsupply" class="h-8 w-auto">
+                    </a>
                     <span class="text-gray-600">|</span>
-                    <a href="http://devgameshow.com" target="_blank" class="text-gray-400 hover:text-white transition-colors text-lg font-semibold">Dev Game Show</a>
-                     <span class="text-gray-600">|</span>
-                    <a href="http://pautacos.com" target="_blank" class="text-gray-400 hover:text-white transition-colors text-lg font-semibold">Pautacos</a>
+                    <a href="http://devgameshow.com" target="_blank" class="hover:opacity-80 transition-opacity">
+                        <img src="dgs.png" alt="Dev Game Show" class="h-8 w-auto">
+                    </a>
+                    <span class="text-gray-600">|</span>
+                    <a href="http://pautacos.com" target="_blank" class="hover:opacity-80 transition-opacity">
+                        <img src="pautacos.png" alt="Pautacos" class="h-8 w-auto">
+                    </a>
                 </div>
             </div>
             <div class="text-center text-gray-500 text-sm">
@@ -277,75 +467,7 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        // Particle.js configuration
-        particlesJS('particles-js', {
-            "particles": {
-                "number": {
-                    "value": 80,
-                    "density": {
-                        "enable": true,
-                        "value_area": 800
-                    }
-                },
-                "color": {
-                    "value": "#ffffff"
-                },
-                "shape": {
-                    "type": "circle",
-                },
-                "opacity": {
-                    "value": 0.5,
-                    "random": false,
-                },
-                "size": {
-                    "value": 3,
-                    "random": true,
-                },
-                "line_linked": {
-                    "enable": true,
-                    "distance": 150,
-                    "color": "#ffffff",
-                    "opacity": 0.4,
-                    "width": 1
-                },
-                "move": {
-                    "enable": true,
-                    "speed": 2,
-                    "direction": "none",
-                    "random": false,
-                    "straight": false,
-                    "out_mode": "out",
-                    "bounce": false,
-                }
-            },
-            "interactivity": {
-                "detect_on": "canvas",
-                "events": {
-                    "onhover": {
-                        "enable": true,
-                        "mode": "repulse"
-                    },
-                    "onclick": {
-                        "enable": true,
-                        "mode": "push"
-                    },
-                    "resize": true
-                },
-                "modes": {
-                    "repulse": {
-                        "distance": 100,
-                        "duration": 0.4
-                    },
-                    "push": {
-                        "particles_nb": 4
-                    }
-                }
-            },
-            "retina_detect": true
-        });
-
         // Scroll-based animations
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -360,12 +482,114 @@
         const elementsToAnimate = document.querySelectorAll('.fade-in-up');
         elementsToAnimate.forEach(el => observer.observe(el));
 
-        // Mobile menu toggle
-        const menuButton = document.querySelector('.md\\:hidden');
-        menuButton.addEventListener('click', () => {
-            // A more complete implementation would create and show a mobile menu overlay
-            console.log('Mobile menu button clicked');
+        // Customer data storage
+        let customerDatabase = [];
+
+        // Access key database (in production, this would be server-side)
+        const validAccessKeys = {
+            'DEMO2024': {
+                product: 'AI Website Builder',
+                videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&rel=0'
+            },
+            'TEST2024': {
+                product: 'AI-Powered Advertising', 
+                videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&rel=0'
+            },
+            'BUNDLE2024': {
+                product: 'Complete AI Starter Bundle',
+                videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&rel=0'
+            }
+        };
+
+        // Modal functions
+        function openPurchaseModal(productName, price) {
+            document.getElementById('modal-product-name').textContent = productName;
+            document.getElementById('modal-price').textContent = price;
+            document.getElementById('purchase-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('purchase-modal').classList.add('hidden');
+            document.getElementById('purchase-form').reset();
+        }
+
+        function showAccessKeyInput() {
+            closeModal();
+            document.getElementById('access-key-modal').classList.remove('hidden');
+        }
+
+        function closeAccessKeyModal() {
+            document.getElementById('access-key-modal').classList.add('hidden');
+            document.getElementById('access-key-form').reset();
+        }
+
+        function closeVideoModal() {
+            document.getElementById('video-modal').classList.add('hidden');
+            document.getElementById('course-video').src = '';
+        }
+
+        function showPracticeMaterials() {
+            alert('Practice materials would be available here! This could link to downloadable PDFs, interactive exercises, or additional resources.');
+        }
+
+        // Handle form submission
+        document.getElementById('purchase-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('customer-name').value;
+            const email = document.getElementById('customer-email').value;
+            const product = document.getElementById('modal-product-name').textContent;
+            const price = document.getElementById('modal-price').textContent;
+            
+            // Save to mailing list
+            customerDatabase.push({
+                name: name,
+                email: email,
+                product: product,
+                price: price,
+                timestamp: new Date().toISOString()
+            });
+            
+            // Simulate checkout process
+            alert(`Thank you ${name}! Your order for ${product} has been processed. You'll receive your access key at ${email} within 5 minutes. Please check your spam folder if you don't see it.`);
+            
+            closeModal();
+            
+            // Log customer data for mailing list (in real implementation, this would go to your backend)
+            console.log('Customer added to mailing list:', customerDatabase);
         });
+
+        // Close modal when clicking outside
+        document.getElementById('purchase-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Countdown timer (8 minutes)
+        let timeLeft = 8 * 60; // 8 minutes in seconds
+        
+        function updateCountdown() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            const display = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            const timer = document.getElementById('countdown-timer');
+            if (timer) {
+                timer.textContent = display;
+            }
+            
+            if (timeLeft > 0) {
+                timeLeft--;
+            } else {
+                // Timer expired - you can add what happens when it reaches 0
+                timeLeft = 8 * 60; // Reset for demo purposes
+            }
+        }
+        
+        // Update countdown every second
+        setInterval(updateCountdown, 1000);
+        updateCountdown(); // Initial call
     </script>
 </body>
 </html>
