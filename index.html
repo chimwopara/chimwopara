@@ -161,7 +161,7 @@
                     <p class="text-gray-400 max-w-2xl mx-auto">Go beyond websites. Master AI in marketing, app development, and more with these specialized aided guides.</p>
                 </div>
 
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
                     <!-- AI Website Builder -->
                     <div class="bg-gray-800 rounded-xl p-6 flex flex-col course-card fade-in-up">
                         <img src="websites.png" alt="AI Website Builder Aided Guide" class="rounded-lg mb-4">
@@ -502,11 +502,12 @@
         };
 
         // Modal functions
-        function openPurchaseModal(productName, price) {
-            document.getElementById('modal-product-name').textContent = productName;
-            document.getElementById('modal-price').textContent = price;
-            document.getElementById('purchase-modal').classList.remove('hidden');
-        }
+
+function openPurchaseModal(productName, price) {
+    document.getElementById('modal-product-name').textContent = productName;
+    // The broken line has been removed
+    document.getElementById('purchase-modal').classList.remove('hidden');
+}
 
         function closeModal() {
             document.getElementById('purchase-modal').classList.add('hidden');
