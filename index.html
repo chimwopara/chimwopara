@@ -29,15 +29,24 @@
     <link rel="icon" href="logo.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Calendly widget styles -->
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
             background-color: #1B2330;
             color: #B7D1E1;
         }
+        @keyframes animate-gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
         .hero-bg {
             position: relative;
-            background: linear-gradient(135deg, #1B2330 0%, #3f5268 50%, #1B2330 100%);
+            background: linear-gradient(-45deg, #1B2330, #3f5268, #B7D1E1, #3f5268);
+            background-size: 400% 400%;
+            animation: animate-gradient 25s ease infinite;
             overflow: hidden;
         }
         .hero-content {
@@ -52,6 +61,11 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
         .course-card, .clothing-card {
+            background: rgba(63, 82, 104, 0.35); /* Chimdeep with transparency */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); /* For Safari */
+            border: 1px solid rgba(183, 209, 225, 0.2); /* Chimlight with transparency */
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .course-card:hover, .clothing-card:hover {
@@ -262,8 +276,10 @@
                         <p class="text-[#B7D1E1]/80 mb-4">I'm Chim Wopara, an entrepreneur and technologist passionate about empowering people with cutting-edge skills. I've built multiple successful online businesses and have years of experience in web development, AI integration, and digital marketing. My teaching philosophy is simple: break down complex topics into easy-to-understand, actionable steps. I'm not just a teacher; I'm your personal guide in this exciting journey into the world of AI.</p>
                         <p class="text-[#B7D1E1]/80 mb-6">I believe anyone can build amazing things with the right tools and guidance. Let's build the future, together.</p>
                         <div class="flex flex-col sm:flex-row gap-4">
-                            <a href="https://wopara.com/#contact" target="_blank" rel="noopener noreferrer" class="bg-[#1B2330] hover:bg-opacity-80 text-white font-bold py-3 px-6 rounded-lg cta-button text-center">Hire me for your project</a>
-                            <a href="https://wopara.com" target="_blank" rel="noopener noreferrer">
+                            <!-- Calendly link widget begin -->
+                            <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/wopara?hide_landing_page_details=1&hide_gdpr_banner=1&background_color=3f5268&text_color=b7d1e1&primary_color=1b2330'});return false;" class="bg-[#1B2330] hover:bg-opacity-80 text-[#B7D1E1] font-bold py-3 px-6 rounded-lg cta-button text-center">Hire me for your project</a>
+                            <!-- Calendly link widget end -->
+                            <a href="https://wopara.com" target="_blank" rel="noopener noreferrer" class="w-full">
                                 <button class="bg-[#1B2330]/50 hover:bg-opacity-40 text-white font-bold py-3 px-6 rounded-lg cta-button w-full">My projects</button>
                             </a>
                         </div>
@@ -282,7 +298,7 @@
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
                     <!-- Cards -->
-                    <div class="bg-[#1B2330] rounded-xl p-6 flex flex-col course-card fade-in-up">
+                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up">
                         <img src="websites.png" alt="AI Website Builder Aided Guide" class="rounded-lg mb-4">
                         <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Website Builder</h3>
                         <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Create stunning websites using AI-powered tools and automated design systems. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
@@ -292,7 +308,7 @@
                         </div>
                     </div>
                     <!-- Repeat for all cards -->
-                     <div class="bg-[#1B2330] rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 100ms;">
+                     <div class="rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 100ms;">
                         <img src="googlesignin.png" alt="Google Sign-In Aided Guide" class="rounded-lg mb-4">
                         <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">Google Sign-In Integration</h3>
                         <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Integrate secure and easy Google authentication into your web projects. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
@@ -301,7 +317,7 @@
                             <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('Google Sign-In Integration', '$29.99')">Explore</button>
                         </div>
                     </div>
-                    <div class="bg-[#1B2330] rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 200ms;">
+                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 200ms;">
                         <img src="ads.png" alt="AI Ads Aided Guide" class="rounded-lg mb-4">
                         <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI-Powered Advertising</h3>
                         <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Create and optimize high-converting ad campaigns using artificial intelligence. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
@@ -310,7 +326,7 @@
                             <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI-Powered Advertising', '$29.99')">Explore</button>
                         </div>
                     </div>
-                    <div class="bg-[#1B2330] rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 300ms;">
+                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 300ms;">
                         <img src="webgame.png" alt="Web Game Development Aided Guide" class="rounded-lg mb-4">
                         <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Web Game Development</h3>
                         <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Build interactive web games with AI-assisted development tools and techniques. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
@@ -319,7 +335,7 @@
                             <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI Web Game Development', '$29.99')">Explore</button>
                         </div>
                     </div>
-                    <div class="bg-[#1B2330] rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 400ms;">
+                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 400ms;">
                         <img src="music.png" alt="AI Music Generation Aided Guide" class="rounded-lg mb-4">
                         <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Music Generation</h3>
                         <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Generate original music and soundtracks using cutting-edge AI technology. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
@@ -328,7 +344,7 @@
                             <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI Music Generation', '$29.99')">Explore</button>
                         </div>
                     </div>
-                    <div class="bg-[#1B2330] rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 500ms;">
+                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 500ms;">
                         <img src="mobilegame.png" alt="Mobile Game Development Aided Guide" class="rounded-lg mb-4">
                         <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Mobile Game Development</h3>
                         <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Create engaging mobile games with AI-powered development frameworks. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
@@ -337,7 +353,7 @@
                             <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI Mobile Game Development', '$29.99')">Explore</button>
                         </div>
                     </div>
-                    <div class="bg-[#1B2330] rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 600ms;">
+                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 600ms;">
                         <img src="voice.png" alt="AI Voice Technology Aided Guide" class="rounded-lg mb-4">
                         <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Voice Technology</h3>
                         <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Implement speech recognition, text-to-speech, and voice AI in your projects. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
@@ -346,7 +362,7 @@
                             <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI Voice Technology', '$29.99')">Explore</button>
                         </div>
                     </div>
-                    <div class="bg-[#1B2330] rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 700ms;">
+                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 700ms;">
                         <img src="video.png" alt="AI Video Production Aided Guide" class="rounded-lg mb-4">
                         <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Video Production</h3>
                         <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Produce professional videos with AI editing, effects, and automated content creation. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
@@ -355,7 +371,7 @@
                             <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI Video Production', '$29.99')">Explore</button>
                         </div>
                     </div>
-                    <div class="bg-[#1B2330] rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 800ms;">
+                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 800ms;">
                         <img src="pic.png" alt="AI Image Generation Aided Guide" class="rounded-lg mb-4">
                         <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Image Generation</h3>
                         <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Master AI image generation tools to create stunning visuals and artwork. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
@@ -364,7 +380,7 @@
                             <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI Image Generation', '$29.99')">Explore</button>
                         </div>
                     </div>
-                    <div class="bg-[#1B2330] rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 900ms;">
+                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 900ms;">
                         <img src="android.png" alt="AI Android App Development" class="rounded-lg mb-4">
                         <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Android App Development</h3>
                         <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Build intelligent Android applications with integrated AI capabilities. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
@@ -373,7 +389,7 @@
                             <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI Android App Development', '$29.99')">Explore</button>
                         </div>
                     </div>
-                    <div class="bg-[#1B2330] rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 1000ms;">
+                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 1000ms;">
                         <img src="roblox.png" alt="AI Roblox Development" class="rounded-lg mb-4">
                         <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Roblox Development</h3>
                         <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Create immersive Roblox games and experiences with AI-powered scripting and asset generation. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
@@ -382,7 +398,7 @@
                             <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI Roblox Development', '$29.99')">Explore</button>
                         </div>
                     </div>
-                    <div class="bg-[#1B2330] rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 1100ms;">
+                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 1100ms;">
                         <img src="iphone.png" alt="AI iPhone App Development" class="rounded-lg mb-4">
                         <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI iPhone App Development</h3>
                         <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Design and build smart iOS apps using Core ML and other AI frameworks for the Apple ecosystem. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
@@ -391,7 +407,7 @@
                             <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI iPhone App Development', '$29.99')">Explore</button>
                         </div>
                     </div>
-                    <div class="bg-[#1B2330] rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 1200ms;">
+                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 1200ms;">
                         <img src="customer.png" alt="AI Customer Service" class="rounded-lg mb-4">
                         <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Customer Service Bots</h3>
                         <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Develop intelligent chatbots and virtual assistants to automate customer support. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
@@ -400,7 +416,7 @@
                             <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI Customer Service Bots', '$29.99')">Explore</button>
                         </div>
                     </div>
-                    <div class="bg-[#1B2330] rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 1300ms;">
+                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 1300ms;">
                         <img src="unity.png" alt="AI Unity Systems" class="rounded-lg mb-4">
                         <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Unity Systems</h3>
                         <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Integrate machine learning agents and AI behaviors into your Unity 3D projects for smarter games. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
@@ -409,7 +425,7 @@
                             <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI Unity Systems', '$29.99')">Explore</button>
                         </div>
                     </div>
-                    <div class="bg-[#1B2330] rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 1400ms;">
+                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 1400ms;">
                         <img src="payment.png" alt="AI Payment Systems" class="rounded-lg mb-4">
                         <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Payment Systems</h3>
                         <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Learn to build secure and intelligent payment processing systems with AI-powered fraud detection. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
@@ -431,7 +447,7 @@
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <!-- Daytrip -->
-                    <div class="bg-[#3f5268] rounded-xl overflow-hidden clothing-card fade-in-up">
+                    <div class="rounded-xl overflow-hidden clothing-card fade-in-up">
                         <img src="daytrip.png" alt="Daytrip 3/4 Sleeve Shirt" class="w-full h-auto object-cover">
                         <div class="p-6">
                             <h3 class="text-xl font-bold text-[#B7D1E1]">Daytrip</h3>
@@ -443,7 +459,7 @@
                     </div>
 
                     <!-- Dapter -->
-                    <div class="bg-[#3f5268] rounded-xl overflow-hidden clothing-card fade-in-up" style="transition-delay: 100ms;">
+                    <div class="rounded-xl overflow-hidden clothing-card fade-in-up" style="transition-delay: 100ms;">
                         <img src="dapter.png" alt="Dapter Premium Apparel" class="w-full h-auto object-cover">
                         <div class="p-6">
                             <h3 class="text-xl font-bold text-[#B7D1E1]">Dapter</h3>
@@ -455,7 +471,7 @@
                     </div>
 
                     <!-- Manuch -->
-                    <div class="bg-[#3f5268] rounded-xl overflow-hidden clothing-card fade-in-up" style="transition-delay: 200ms;">
+                    <div class="rounded-xl overflow-hidden clothing-card fade-in-up" style="transition-delay: 200ms;">
                         <img src="manuch.png" alt="Manuch Designer Collection" class="w-full h-auto object-cover">
                         <div class="p-6">
                             <h3 class="text-xl font-bold text-[#B7D1E1]">Manuch</h3>
@@ -589,16 +605,9 @@
         </div>
     </footer>
 
-    <!-- Calendly badge widget begin -->
-    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+    <!-- Calendly popup widget script -->
     <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
-    <script type="text/javascript">
-        window.onload = function() {
-            Calendly.initBadgeWidget({ url: 'https://calendly.com/wopara?hide_landing_page_details=1&hide_gdpr_banner=1&background_color=1b2330&text_color=b7d1e1&primary_color=3f5268', text: 'Schedule time with me', color: '#3f5268', textColor: '#b7d1e1', branding: false });
-        }
-    </script>
-    <!-- Calendly badge widget end -->
-
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Scroll-based animations
@@ -768,4 +777,5 @@
     </script>
 </body>
 </html>
+
 
