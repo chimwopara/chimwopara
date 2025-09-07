@@ -10,21 +10,21 @@
     <meta name="keywords" content="Chim Wopara, Wopara, learn AI, AI development course, learn to code with AI, AI web builder, AI advertising, AI app development, AI game development, master AI, coding with AI, AI for developers, AI programming">
     <meta name="author" content="Chim Wopara Enterprises">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://yourwebsite.com/"> 
+    <link rel="canonical" href="https://chimwopara.com/"> 
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://yourwebsite.com/">
-    <meta property="og:title" content="Chim Wopara - Master AI Development Courses | Learn to Code with AI">
+    <meta property="og:url" content="https://chimwopara.com/">
+    <meta property="og:title" content="Chim Wopara - Learn to Code with AI">
     <meta property="og:description" content="Learn to code with AI through hands-on courses from Chim Wopara. Master AI web development, app creation, game design, and more.">
-    <meta property="og:image" content="https://yourwebsite.com/og-image.png"> <!-- Use an absolute URL for the image -->
+    <meta property="og:image" content="https://chimwopara.com/logo.png"> <!-- Use an absolute URL for the image -->
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://yourwebsite.com/">
+    <meta property="twitter:url" content="https://chimwopara.com/">
     <meta property="twitter:title" content="Chim Wopara - Master AI Development Courses | Learn to Code with AI">
     <meta property="twitter:description" content="Learn to code with AI through hands-on courses from Chim Wopara. Master AI web development, app creation, game design, and more.">
-    <meta property="twitter:image" content="https://yourwebsite.com/twitter-image.png"> <!-- Use an absolute URL for the image -->
+    <meta property="twitter:image" content="https://chimwopara.com/twitter-image.png"> <!-- Use an absolute URL for the image -->
 
     <link rel="icon" href="logo.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -92,27 +92,27 @@
         {
           "@type": "Organization",
           "name": "Chim Wopara Enterprises",
-          "url": "https://yourwebsite.com/",
-          "logo": "https://yourwebsite.com/logo.png",
+          "url": "https://chimwopara.com/",
+          "logo": "https://chimwopara.com/logo.png",
           "founder": {
             "@type": "Person",
             "name": "Chim Wopara",
             "jobTitle": "Entrepreneur and Technologist",
-            "url": "https://yourwebsite.com/#about"
+            "url": "https://chimwopara.com/#about"
           }
         },
         {
           "@type": "Person",
           "name": "Chim Wopara",
-          "url": "https://yourwebsite.com/#about",
-          "image": "https://yourwebsite.com/chim.png",
+          "url": "https://chimwopara.com/#about",
+          "image": "https://chimwopara.com/chim.png",
           "jobTitle": "AI Development Instructor",
           "alumniOf": "Self-Taught",
           "description": "An entrepreneur and technologist passionate about empowering people with cutting-edge skills in AI development, web development, and digital marketing."
         },
         {
           "@type": "WebSite",
-          "url": "https://yourwebsite.com/",
+          "url": "https://chimwopara.com/",
           "name": "Chim Wopara - Master AI Development",
           "publisher": {
             "@type": "Organization",
@@ -181,8 +181,19 @@
 
     <!-- Header -->
     <header class="bg-[#1B2330]/80 backdrop-blur-sm fixed top-0 left-0 right-0 z-50">
-        <div class="container mx-auto px-6 py-3 flex justify-center items-center">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <!-- TikTok Link -->
+            <a href="https://www.tiktok.com/@chimwopara?_t=ZS-8zXMw9gpRDO&_r=1" target="_blank" rel="noopener noreferrer" class="text-white hover:opacity-80 transition-opacity">
+                <img src="tiktok.png" alt="TikTok Profile" class="h-6 w-6">
+            </a>
+            
+            <!-- Logo -->
             <a href="#"><img src="logo.png" alt="Chim Wopara Logo" class="h-10 w-auto" onerror="this.onerror=null; this.src='https://placehold.co/120x40/1B2330/FFFFFF?text=CW'"></a>
+
+            <!-- WhatsApp Link -->
+            <a href="https://chat.whatsapp.com/Bn75K4eoSVvLUOylfu9Urt?mode=ems_copy_c" target="_blank" rel="noopener noreferrer" class="text-white hover:opacity-80 transition-opacity">
+                <img src="whatsapp.png" alt="WhatsApp Community" class="h-7 w-7">
+            </a>
         </div>
     </header>
 
@@ -212,9 +223,6 @@
                     <div class="bg-red-600 text-white px-4 py-2 rounded-lg inline-block mb-4">
                         <span class="font-bold">Limited Time Bundle Offer: </span>
                         <span id="countdown-timer" class="font-mono">08:00</span>
-                    </div>
-                    <div class="bg-yellow-500 text-black px-3 py-1 rounded-full inline-block text-sm font-bold">
-                        Save 17% - Get Both for $49.99!
                     </div>
                 </div>
 
@@ -296,140 +304,167 @@
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
                     <!-- Cards -->
-                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up">
+                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" onclick="openPurchaseModal('AI Website Builder', '$29.99')">
                         <img src="websites.png" alt="AI Website Builder Aided Guide" class="rounded-lg mb-4">
                         <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Website Builder</h3>
                         <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Create stunning websites using AI-powered tools and automated design systems. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center">
+                        <div class="flex justify-between items-center mt-auto pt-4">
                             <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI Website Builder', '$29.99')">Explore</button>
+                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
                         </div>
                     </div>
                     <!-- Repeat for all cards -->
-                     <div class="rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 100ms;">
+                     <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 100ms;" onclick="openPurchaseModal('Google Sign-In Integration', '$29.99')">
                         <img src="googlesignin.png" alt="Google Sign-In Aided Guide" class="rounded-lg mb-4">
                         <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">Google Sign-In Integration</h3>
                         <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Integrate secure and easy Google authentication into your web projects. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center">
+                        <div class="flex justify-between items-center mt-auto pt-4">
                             <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('Google Sign-In Integration', '$29.99')">Explore</button>
+                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
                         </div>
                     </div>
-                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 200ms;">
+                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 200ms;" onclick="openPurchaseModal('AI-Powered Advertising', '$29.99')">
                         <img src="ads.png" alt="AI Ads Aided Guide" class="rounded-lg mb-4">
                         <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI-Powered Advertising</h3>
                         <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Create and optimize high-converting ad campaigns using artificial intelligence. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center">
+                        <div class="flex justify-between items-center mt-auto pt-4">
                             <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI-Powered Advertising', '$29.99')">Explore</button>
+                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
                         </div>
                     </div>
-                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 300ms;">
+                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 300ms;" onclick="openPurchaseModal('AI Web Game Development', '$29.99')">
                         <img src="webgame.png" alt="Web Game Development Aided Guide" class="rounded-lg mb-4">
                         <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Web Game Development</h3>
                         <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Build interactive web games with AI-assisted development tools and techniques. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center">
+                        <div class="flex justify-between items-center mt-auto pt-4">
                             <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI Web Game Development', '$29.99')">Explore</button>
+                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
                         </div>
                     </div>
-                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 400ms;">
+                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 400ms;" onclick="openPurchaseModal('AI Music Generation', '$29.99')">
                         <img src="music.png" alt="AI Music Generation Aided Guide" class="rounded-lg mb-4">
                         <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Music Generation</h3>
                         <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Generate original music and soundtracks using cutting-edge AI technology. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center">
+                        <div class="flex justify-between items-center mt-auto pt-4">
                             <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI Music Generation', '$29.99')">Explore</button>
+                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
                         </div>
                     </div>
-                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 500ms;">
+                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 500ms;" onclick="openPurchaseModal('AI Mobile Game Development', '$29.99')">
                         <img src="mobilegame.png" alt="Mobile Game Development Aided Guide" class="rounded-lg mb-4">
                         <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Mobile Game Development</h3>
                         <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Create engaging mobile games with AI-powered development frameworks. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center">
+                        <div class="flex justify-between items-center mt-auto pt-4">
                             <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI Mobile Game Development', '$29.99')">Explore</button>
+                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
                         </div>
                     </div>
-                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 600ms;">
+                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 600ms;" onclick="openPurchaseModal('AI Voice Technology', '$29.99')">
                         <img src="voice.png" alt="AI Voice Technology Aided Guide" class="rounded-lg mb-4">
                         <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Voice Technology</h3>
                         <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Implement speech recognition, text-to-speech, and voice AI in your projects. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center">
+                        <div class="flex justify-between items-center mt-auto pt-4">
                             <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI Voice Technology', '$29.99')">Explore</button>
+                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
                         </div>
                     </div>
-                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 700ms;">
+                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 700ms;" onclick="openPurchaseModal('AI Video Production', '$29.99')">
                         <img src="video.png" alt="AI Video Production Aided Guide" class="rounded-lg mb-4">
                         <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Video Production</h3>
                         <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Produce professional videos with AI editing, effects, and automated content creation. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center">
+                        <div class="flex justify-between items-center mt-auto pt-4">
                             <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI Video Production', '$29.99')">Explore</button>
+                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
                         </div>
                     </div>
-                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 800ms;">
+                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 800ms;" onclick="openPurchaseModal('AI Image Generation', '$29.99')">
                         <img src="pic.png" alt="AI Image Generation Aided Guide" class="rounded-lg mb-4">
                         <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Image Generation</h3>
                         <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Master AI image generation tools to create stunning visuals and artwork. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center">
+                        <div class="flex justify-between items-center mt-auto pt-4">
                             <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI Image Generation', '$29.99')">Explore</button>
+                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
                         </div>
                     </div>
-                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 900ms;">
+                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 900ms;" onclick="openPurchaseModal('AI Android App Development', '$29.99')">
                         <img src="android.png" alt="AI Android App Development" class="rounded-lg mb-4">
                         <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Android App Development</h3>
                         <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Build intelligent Android applications with integrated AI capabilities. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center">
+                        <div class="flex justify-between items-center mt-auto pt-4">
                             <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI Android App Development', '$29.99')">Explore</button>
+                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
                         </div>
                     </div>
-                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 1000ms;">
+                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 1000ms;" onclick="openPurchaseModal('AI Roblox Development', '$29.99')">
                         <img src="roblox.png" alt="AI Roblox Development" class="rounded-lg mb-4">
                         <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Roblox Development</h3>
                         <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Create immersive Roblox games and experiences with AI-powered scripting and asset generation. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center">
+                        <div class="flex justify-between items-center mt-auto pt-4">
                             <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI Roblox Development', '$29.99')">Explore</button>
+                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
                         </div>
                     </div>
-                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 1100ms;">
+                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 1100ms;" onclick="openPurchaseModal('AI iPhone App Development', '$29.99')">
                         <img src="iphone.png" alt="AI iPhone App Development" class="rounded-lg mb-4">
                         <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI iPhone App Development</h3>
                         <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Design and build smart iOS apps using Core ML and other AI frameworks for the Apple ecosystem. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center">
+                        <div class="flex justify-between items-center mt-auto pt-4">
                             <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI iPhone App Development', '$29.99')">Explore</button>
+                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
                         </div>
                     </div>
-                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 1200ms;">
+                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 1200ms;" onclick="openPurchaseModal('AI Customer Service Bots', '$29.99')">
                         <img src="customer.png" alt="AI Customer Service" class="rounded-lg mb-4">
                         <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Customer Service Bots</h3>
                         <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Develop intelligent chatbots and virtual assistants to automate customer support. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center">
+                        <div class="flex justify-between items-center mt-auto pt-4">
                             <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI Customer Service Bots', '$29.99')">Explore</button>
+                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
                         </div>
                     </div>
-                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 1300ms;">
+                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 1300ms;" onclick="openPurchaseModal('AI Unity Systems', '$29.99')">
                         <img src="unity.png" alt="AI Unity Systems" class="rounded-lg mb-4">
                         <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Unity Systems</h3>
                         <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Integrate machine learning agents and AI behaviors into your Unity 3D projects for smarter games. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center">
+                        <div class="flex justify-between items-center mt-auto pt-4">
                             <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI Unity Systems', '$29.99')">Explore</button>
+                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
                         </div>
                     </div>
-                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up" style="transition-delay: 1400ms;">
+                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 1400ms;" onclick="openPurchaseModal('AI Payment Systems', '$29.99')">
                         <img src="payment.png" alt="AI Payment Systems" class="rounded-lg mb-4">
                         <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Payment Systems</h3>
                         <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Learn to build secure and intelligent payment processing systems with AI-powered fraud detection. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center">
+                        <div class="flex justify-between items-center mt-auto pt-4">
                             <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('AI Payment Systems', '$29.99')">Explore</button>
+                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
+                        </div>
+                    </div>
+                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 1500ms;" onclick="openPurchaseModal('AI Calling Systems', '$29.99')">
+                        <img src="phone.png" alt="AI Calling Systems" class="rounded-lg mb-4">
+                        <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Calling Systems</h3>
+                        <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Develop automated AI-powered calling and voice response systems for your business. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
+                        <div class="flex justify-between items-center mt-auto pt-4">
+                            <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
+                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
+                        </div>
+                    </div>
+                     <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 1600ms;" onclick="openPurchaseModal('AI Mailing Lists', '$29.99')">
+                        <img src="mail.png" alt="AI Mailing Lists" class="rounded-lg mb-4">
+                        <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Mailing Lists</h3>
+                        <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Build and manage intelligent email marketing campaigns with AI-driven segmentation and optimization. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
+                        <div class="flex justify-between items-center mt-auto pt-4">
+                            <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
+                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
+                        </div>
+                    </div>
+                     <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 1700ms;" onclick="openPurchaseModal('AI Calendar Booking', '$29.99')">
+                        <img src="calendar.png" alt="AI Calendar Booking" class="rounded-lg mb-4">
+                        <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Calendar Booking</h3>
+                        <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Create smart, AI-powered scheduling systems that automate bookings and manage your calendar. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
+                        <div class="flex justify-between items-center mt-auto pt-4">
+                            <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
+                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
                         </div>
                     </div>
                 </div>
@@ -495,20 +530,22 @@
                 <form id="purchase-form">
                     <div class="mb-4">
                         <label for="customer-name-purchase" class="block text-sm font-medium mb-2">Full Name</label>
-                        <input id="customer-name-purchase" type="text" required class="w-full px-3 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-sky-500 text-white">
+                        <input id="customer-name-purchase" type="text" required class="w-full px-3 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-sky-500 text-white" placeholder="Enter your full name">
                     </div>
                     
-                    <div class="mb-6">
+                    <div class="mb-4">
                         <label for="customer-email-purchase" class="block text-sm font-medium mb-2">Email Address</label>
-                        <input id="customer-email-purchase" type="email" required class="w-full px-3 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-sky-500 text-white">
+                        <input id="customer-email-purchase" type="email" required class="w-full px-3 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-sky-500 text-white" placeholder="Enter your email address">
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="referrer-phone" class="block text-sm font-medium mb-2">Referrer's Phone (Optional)</label>
+                        <input id="referrer-phone" type="tel" class="w-full px-3 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-sky-500 text-white" placeholder="Enter phone number">
                     </div>
                     
                     <div class="flex space-x-4 mb-6">
-                        <button type="submit" id="modal-submit-button" class="flex-1 bg-[#1B2330]/50 backdrop-blur-sm hover:bg-[#1B2330]/80 text-white font-bold py-3 px-6 rounded-lg">
+                        <button type="submit" id="modal-submit-button" class="w-full bg-[#1B2330]/50 backdrop-blur-sm hover:bg-[#1B2330]/80 text-white font-bold py-3 px-6 rounded-lg">
                             Checkout
-                        </button>
-                        <button type="button" onclick="closeModal()" class="px-6 py-3 bg-[#1B2330] hover:bg-opacity-80 text-white rounded-lg">
-                            Cancel
                         </button>
                     </div>
                     
@@ -595,9 +632,9 @@
             <div class="text-center text-[#B7D1E1]/60 text-sm">
                 <p>&copy; 2024 Chim Wopara Enterprises. All Rights Reserved.</p>
                 <p class="mt-2">
-                    <a href="#" class="hover:text-[#B7D1E1]">Privacy Policy</a>
+                    <a href="terms.html#privacy" class="hover:text-[#B7D1E1]">Privacy Policy</a>
                     <span class="mx-2">&middot;</span>
-                    <a href="#" class="hover:text-[#B7D1E1]">Terms of Service</a>
+                    <a href="terms.html#terms" class="hover:text-[#B7D1E1]">Terms of Service</a>
                 </p>
             </div>
         </div>
@@ -713,6 +750,7 @@
                 
                 const name = document.getElementById('customer-name-purchase').value;
                 const email = document.getElementById('customer-email-purchase').value;
+                const referrerPhone = document.getElementById('referrer-phone').value;
                 const product = document.getElementById('modal-product-name').textContent;
                 
                 const submitButtonText = document.getElementById('modal-submit-button').textContent;
@@ -721,6 +759,7 @@
                 customerDatabase.push({
                     name: name,
                     email: email,
+                    referrerPhone: referrerPhone,
                     product: product,
                     type: submitButtonText.includes('Checkout') ? 'Purchase' : 'Notification',
                     timestamp: new Date().toISOString()
@@ -775,6 +814,9 @@
     </script>
 </body>
 </html>
+
+
+
 
 
 
