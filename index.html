@@ -60,7 +60,7 @@
             transform: translateY(-3px) scale(1.05);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
-        .course-card, .clothing-card {
+        .clothing-card {
             background: rgba(63, 82, 104, 0.35); /* Chimdeep with transparency */
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px); /* For Safari */
@@ -68,7 +68,7 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .course-card:hover, .clothing-card:hover {
+        .clothing-card:hover {
             transform: translateY(-10px) scale(1.02);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         }
@@ -82,6 +82,153 @@
             opacity: 1;
             transform: translateY(0);
         }
+        
+        /* New School Section Styles */
+        .school-tabs button {
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        .school-tabs button.active {
+            border-bottom-color: #38bdf8; /* sky-500 */
+            color: #e0f2fe; /* sky-100 */
+        }
+
+        .school-content {
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .school-collage {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            margin: 1rem auto;
+        }
+
+        .orbit-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            animation: spin 30s linear infinite;
+        }
+        
+        .central-image {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 30;
+            border-radius: 50%;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            border: 3px solid rgba(183, 209, 225, 0.3);
+        }
+
+        .surrounding-image {
+            position: absolute;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .surrounding-image:hover {
+            filter: brightness(1.2);
+            transform: scale(1.2) !important;
+            z-index: 35 !important;
+        }
+        
+        /* Position images at different orbital distances and use varied counter-rotation speeds */
+        .surrounding-image-1 { 
+            width: 85px;
+            height: 85px;
+            top: calc(50% - 200px - 42.5px);
+            left: calc(50% - 42.5px);
+            z-index: 28;
+            animation: counter-spin-1 32s linear infinite;
+        }
+        .surrounding-image-2 { 
+            width: 60px;
+            height: 60px;
+            top: calc(50% - 98px - 30px);
+            left: calc(50% + 127px - 30px);
+            z-index: 15;
+            animation: counter-spin-2 28s linear infinite;
+        }
+        .surrounding-image-3 { 
+            width: 80px;
+            height: 80px;
+            top: calc(50% + 55px - 40px);
+            left: calc(50% + 194px - 40px);
+            z-index: 25;
+            animation: counter-spin-3 35s linear infinite;
+        }
+        .surrounding-image-4 { 
+            width: 55px;
+            height: 55px;
+            top: calc(50% + 125px - 27.5px);
+            left: calc(50% - 95px - 27.5px);
+            z-index: 12;
+            animation: counter-spin-4 26s linear infinite;
+        }
+        .surrounding-image-5 { 
+            width: 82px;
+            height: 82px;
+            top: calc(50% + 80px - 41px);
+            left: calc(50% - 175px - 41px);
+            z-index: 26;
+            animation: counter-spin-5 33s linear infinite;
+        }
+        .surrounding-image-6 { 
+            width: 65px;
+            height: 65px;
+            top: calc(50% - 25px - 32.5px);
+            left: calc(50% - 158px - 32.5px);
+            z-index: 20;
+            animation: counter-spin-6 29s linear infinite;
+        }
+        .surrounding-image-7 { 
+            width: 75px;
+            height: 75px;
+            top: calc(50% - 145px - 37.5px);
+            left: calc(50% + 115px - 37.5px);
+            z-index: 22;
+            animation: counter-spin-7 31s linear infinite;
+        }
+
+        /* Individual counter-rotation animations with varied speeds */
+        @keyframes counter-spin-1 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+        @keyframes counter-spin-2 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+        @keyframes counter-spin-3 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+        @keyframes counter-spin-4 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+        @keyframes counter-spin-5 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+        @keyframes counter-spin-6 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+        @keyframes counter-spin-7 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .school-collage {
+                width: 350px;
+                height: 350px;
+            }
+            .central-image {
+                width: 150px;
+                height: 150px;
+            }
+            .surrounding-image-1 { transform: rotate(0deg) translateX(140px) scale(1.2); }
+            .surrounding-image-2 { transform: rotate(51.4deg) translateX(110px) scale(0.7); }
+            .surrounding-image-3 { transform: rotate(102.8deg) translateX(150px) scale(1.0); }
+            .surrounding-image-4 { transform: rotate(154.2deg) translateX(100px) scale(0.6); }
+            .surrounding-image-5 { transform: rotate(205.6deg) translateX(130px) scale(1.1); }
+            .surrounding-image-6 { transform: rotate(257deg) translateX(120px) scale(0.8); }
+            .surrounding-image-7 { transform: rotate(308.4deg) translateX(145px) scale(0.9); }
+        }
+
     </style>
     
     <!-- JSON-LD Structured Data for SEO -->
@@ -120,58 +267,27 @@
           }
         },
         {
-          "@type": "Course",
-          "name": "Complete AI Starter Bundle",
-          "description": "Get both essential AI guides together and save $10! Perfect for beginners starting their AI journey. Includes AI Web Builder and AI Powered Advertising.",
-          "provider": {
-            "@type": "Organization",
-            "name": "Chim Wopara Enterprises"
-          }
-        },
-        {
-          "@type": "Course",
-          "name": "AI Website Builder",
-          "description": "Learn to create stunning websites using AI-powered tools and automated design systems.",
-          "provider": {
-            "@type": "Organization",
-            "name": "Chim Wopara Enterprises"
-          }
-        },
-        {
-          "@type": "Course",
-          "name": "AI-Powered Advertising",
-          "description": "Create and optimize high-converting ad campaigns using artificial intelligence.",
-          "provider": {
-            "@type": "Organization",
-            "name": "Chim Wopara Enterprises"
-          }
-        },
-        {
-            "@type": "Course",
-            "name": "AI Android App Development",
-            "description": "Build intelligent Android applications with integrated AI capabilities.",
-            "provider": {
-                "@type": "Organization",
-                "name": "Chim Wopara Enterprises"
+          "@type": "EducationalOrganization",
+          "name": "Chim Wopara AI Schools",
+          "url": "https://chimwopara.com/#schools",
+          "description": "Specialized schools focusing on Media, Business, and Dependent Coding with Artificial Intelligence.",
+           "hasCourse": [
+            {
+              "@type": "Course",
+              "name": "School of Media Artificial Intelligence",
+              "description": "Explore AI applications in creative fields like music, video, image generation, and game development."
+            },
+            {
+              "@type": "Course",
+              "name": "School of Business Artificial Intelligence",
+              "description": "Master AI for business growth, including advertising, customer service, and payment systems."
+            },
+            {
+              "@type": "Course",
+              "name": "School of Dependent Coding Artificial Intelligence",
+              "description": "Learn to code and build applications for web, mobile, and gaming platforms with AI assistance."
             }
-        },
-        {
-            "@type": "Course",
-            "name": "AI Roblox Development",
-            "description": "Create immersive Roblox games and experiences with AI-powered scripting and asset generation.",
-            "provider": {
-                "@type": "Organization",
-                "name": "Chim Wopara Enterprises"
-            }
-        },
-        {
-            "@type": "Course",
-            "name": "AI Customer Service Bots",
-            "description": "Develop intelligent chatbots and virtual assistants to automate customer support.",
-            "provider": {
-                "@type": "Organization",
-                "name": "Chim Wopara Enterprises"
-            }
+          ]
         }
       ]
     }
@@ -211,67 +327,6 @@
             </div>
         </section>
 
-        <!-- Main Offer Section -->
-        <section id="courses" class="py-20 bg-[#3f5268]">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12 fade-in-up">
-                    <h2 class="text-4xl font-bold mb-2 text-[#B7D1E1]">Intro to Coding with AI</h2>
-                    <p class="text-[#B7D1E1]/80 max-w-2xl mx-auto">Start with our foundational aided guides, then supercharge your learning with a personalized coaching call.</p>
-                </div>
-
-                <div class="text-center mb-8">
-                    <div class="bg-red-600 text-white px-4 py-2 rounded-lg inline-block mb-4">
-                        <span class="font-bold">Limited Time Bundle Offer: </span>
-                        <span id="countdown-timer" class="font-mono">08:00</span>
-                    </div>
-                </div>
-
-                <div class="max-w-4xl mx-auto">
-                    <div class="bg-[#1B2330] rounded-xl p-8 border-2 border-[#3f5268]">
-                        <div class="text-center mb-6">
-                            <h3 class="text-3xl font-bold mb-2 text-[#B7D1E1]">Complete AI Starter Bundle</h3>
-                            <div class="flex justify-center items-center space-x-4 mb-4">
-                                <span class="text-[#B7D1E1]/80 line-through text-xl">$60.00</span>
-                                <span class="text-4xl font-bold text-sky-400">$49.99</span>
-                                <span class="bg-red-500 text-white px-2 py-1 rounded text-sm">SAVE 17%</span>
-                            </div>
-                            <p class="text-[#B7D1E1]/80 mb-6">Get both essential AI guides together and save $10! Perfect for beginners starting their AI journey.</p>
-                        </div>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                            <!-- Step 1: AI Web Builder -->
-                            <div class="bg-[#3f5268] rounded-lg p-6">
-                                <div class="mb-4">
-                                    <span class="bg-blue-500 text-white text-sm font-semibold px-3 py-1 rounded-full">Step 1</span>
-                                </div>
-                                <img src="websites.png" alt="AI Web Builder Aided Guide" class="rounded-lg mb-4 w-full">
-                                <h4 class="text-lg font-bold mb-2 text-[#B7D1E1]">AI Web Builder</h4>
-                                <p class="text-[#B7D1E1]/80 text-sm">Learn to create stunning websites using AI-powered tools. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                                <p class="text-sm text-sky-400 mt-2">Individual Price: $29.99</p>
-                            </div>
-
-                            <!-- Step 2: AI Powered Advertising -->
-                            <div class="bg-[#3f5268] rounded-lg p-6">
-                                <div class="mb-4">
-                                    <span class="bg-green-500 text-white text-sm font-semibold px-3 py-1 rounded-full">Step 2</span>
-                                </div>
-                                <img src="ads.png" alt="AI Powered Advertising Aided Guide" class="rounded-lg mb-4 w-full">
-                                <h4 class="text-lg font-bold mb-2 text-[#B7D1E1]">AI Powered Advertising</h4>
-                                <p class="text-[#B7D1E1]/80 text-sm">Master AI-driven ad campaigns for maximum ROI. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                                <p class="text-sm text-sky-400 mt-2">Individual Price: $29.99</p>
-                            </div>
-                        </div>
-                        
-                        <div class="text-center">
-                            <button class="bg-[#3f5268] hover:bg-opacity-80 text-white font-bold py-4 px-12 rounded-lg text-xl cta-button" onclick="openPurchaseModal('Complete AI Starter Bundle', '$49.99')">
-                                Get Complete Bundle - $49.99
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- About Section -->
         <section id="about" class="py-20 bg-[#1B2330]">
             <div class="container mx-auto px-6">
@@ -294,180 +349,33 @@
             </div>
         </section>
 
-        <!-- Additional Courses Section -->
-        <section class="py-20 bg-[#3f5268]">
+        <!-- AI Schools Section -->
+        <section id="schools" class="py-20 bg-[#3f5268] overflow-hidden">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12 fade-in-up">
-                    <h2 class="text-4xl font-bold mb-2 text-[#B7D1E1]">Expand Your AI Skillset</h2>
-                    <p class="text-[#B7D1E1]/80 max-w-2xl mx-auto">Go beyond websites. Master AI in marketing, app development, and more with these specialized aided guides.</p>
+                    <h2 class="text-4xl font-bold mb-2 text-[#B7D1E1]">Begin your Journey</h2>
+                    <p class="text-[#B7D1E1]/80 max-w-2xl mx-auto">Choose your path. We've organized our programs into three specialized schools to focus your learning journey.</p>
+                </div>
+                
+                <div class="school-tabs flex justify-center space-x-4 md:space-x-8 mb-8 border-b border-[#B7D1E1]/20 fade-in-up">
+                    <button onclick="switchSchool('media')" data-school="media" class="py-3 px-2 md:px-4 font-semibold text-lg text-[#B7D1E1]/70 hover:text-white active">Media AI</button>
+                    <button onclick="switchSchool('business')" data-school="business" class="py-3 px-2 md:px-4 font-semibold text-lg text-[#B7D1E1]/70 hover:text-white">Business AI</button>
+                    <button onclick="switchSchool('coding')" data-school="coding" class="py-3 px-2 md:px-4 font-semibold text-lg text-[#B7D1E1]/70 hover:text-white">Coding AI</button>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
-                    <!-- Cards -->
-                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" onclick="openPurchaseModal('AI Website Builder', '$29.99')">
-                        <img src="websites.png" alt="AI Website Builder Aided Guide" class="rounded-lg mb-4">
-                        <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Website Builder</h3>
-                        <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Create stunning websites using AI-powered tools and automated design systems. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center mt-auto pt-4">
-                            <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
-                        </div>
+                <div class="relative">
+                    <!-- School Content Panels -->
+                    <div id="school-media" class="school-content">
+                        <!-- Content generated by JS -->
                     </div>
-                    <!-- Repeat for all cards -->
-                     <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 100ms;" onclick="openPurchaseModal('Google Sign-In Integration', '$29.99')">
-                        <img src="googlesignin.png" alt="Google Sign-In Aided Guide" class="rounded-lg mb-4">
-                        <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">Google Sign-In Integration</h3>
-                        <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Integrate secure and easy Google authentication into your web projects. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center mt-auto pt-4">
-                            <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
-                        </div>
+                    <div id="school-business" class="school-content hidden opacity-0">
+                         <!-- Content generated by JS -->
                     </div>
-                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 200ms;" onclick="openPurchaseModal('AI-Powered Advertising', '$29.99')">
-                        <img src="ads.png" alt="AI Ads Aided Guide" class="rounded-lg mb-4">
-                        <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI-Powered Advertising</h3>
-                        <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Create and optimize high-converting ad campaigns using artificial intelligence. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center mt-auto pt-4">
-                            <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
-                        </div>
-                    </div>
-                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 300ms;" onclick="openPurchaseModal('AI Web Game Development', '$29.99')">
-                        <img src="webgame.png" alt="Web Game Development Aided Guide" class="rounded-lg mb-4">
-                        <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Web Game Development</h3>
-                        <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Build interactive web games with AI-assisted development tools and techniques. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center mt-auto pt-4">
-                            <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
-                        </div>
-                    </div>
-                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 400ms;" onclick="openPurchaseModal('AI Music Generation', '$29.99')">
-                        <img src="music.png" alt="AI Music Generation Aided Guide" class="rounded-lg mb-4">
-                        <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Music Generation</h3>
-                        <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Generate original music and soundtracks using cutting-edge AI technology. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center mt-auto pt-4">
-                            <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
-                        </div>
-                    </div>
-                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 500ms;" onclick="openPurchaseModal('AI Mobile Game Development', '$29.99')">
-                        <img src="mobilegame.png" alt="Mobile Game Development Aided Guide" class="rounded-lg mb-4">
-                        <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Mobile Game Development</h3>
-                        <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Create engaging mobile games with AI-powered development frameworks. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center mt-auto pt-4">
-                            <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
-                        </div>
-                    </div>
-                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 600ms;" onclick="openPurchaseModal('AI Voice Technology', '$29.99')">
-                        <img src="voice.png" alt="AI Voice Technology Aided Guide" class="rounded-lg mb-4">
-                        <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Voice Technology</h3>
-                        <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Implement speech recognition, text-to-speech, and voice AI in your projects. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center mt-auto pt-4">
-                            <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
-                        </div>
-                    </div>
-                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 700ms;" onclick="openPurchaseModal('AI Video Production', '$29.99')">
-                        <img src="video.png" alt="AI Video Production Aided Guide" class="rounded-lg mb-4">
-                        <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Video Production</h3>
-                        <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Produce professional videos with AI editing, effects, and automated content creation. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center mt-auto pt-4">
-                            <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
-                        </div>
-                    </div>
-                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 800ms;" onclick="openPurchaseModal('AI Image Generation', '$29.99')">
-                        <img src="pic.png" alt="AI Image Generation Aided Guide" class="rounded-lg mb-4">
-                        <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Image Generation</h3>
-                        <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Master AI image generation tools to create stunning visuals and artwork. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center mt-auto pt-4">
-                            <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
-                        </div>
-                    </div>
-                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 900ms;" onclick="openPurchaseModal('AI Android App Development', '$29.99')">
-                        <img src="android.png" alt="AI Android App Development" class="rounded-lg mb-4">
-                        <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Android App Development</h3>
-                        <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Build intelligent Android applications with integrated AI capabilities. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center mt-auto pt-4">
-                            <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
-                        </div>
-                    </div>
-                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 1000ms;" onclick="openPurchaseModal('AI Roblox Development', '$29.99')">
-                        <img src="roblox.png" alt="AI Roblox Development" class="rounded-lg mb-4">
-                        <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Roblox Development</h3>
-                        <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Create immersive Roblox games and experiences with AI-powered scripting and asset generation. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center mt-auto pt-4">
-                            <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
-                        </div>
-                    </div>
-                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 1100ms;" onclick="openPurchaseModal('AI iPhone App Development', '$29.99')">
-                        <img src="iphone.png" alt="AI iPhone App Development" class="rounded-lg mb-4">
-                        <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI iPhone App Development</h3>
-                        <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Design and build smart iOS apps using Core ML and other AI frameworks for the Apple ecosystem. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center mt-auto pt-4">
-                            <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
-                        </div>
-                    </div>
-                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 1200ms;" onclick="openPurchaseModal('AI Customer Service Bots', '$29.99')">
-                        <img src="customer.png" alt="AI Customer Service" class="rounded-lg mb-4">
-                        <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Customer Service Bots</h3>
-                        <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Develop intelligent chatbots and virtual assistants to automate customer support. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center mt-auto pt-4">
-                            <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
-                        </div>
-                    </div>
-                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 1300ms;" onclick="openPurchaseModal('AI Unity Systems', '$29.99')">
-                        <img src="unity.png" alt="AI Unity Systems" class="rounded-lg mb-4">
-                        <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Unity Systems</h3>
-                        <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Integrate machine learning agents and AI behaviors into your Unity 3D projects for smarter games. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center mt-auto pt-4">
-                            <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
-                        </div>
-                    </div>
-                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 1400ms;" onclick="openPurchaseModal('AI Payment Systems', '$29.99')">
-                        <img src="payment.png" alt="AI Payment Systems" class="rounded-lg mb-4">
-                        <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Payment Systems</h3>
-                        <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Learn to build secure and intelligent payment processing systems with AI-powered fraud detection. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center mt-auto pt-4">
-                            <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
-                        </div>
-                    </div>
-                    <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 1500ms;" onclick="openPurchaseModal('AI Calling Systems', '$29.99')">
-                        <img src="phone.png" alt="AI Calling Systems" class="rounded-lg mb-4">
-                        <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Calling Systems</h3>
-                        <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Develop automated AI-powered calling and voice response systems for your business. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center mt-auto pt-4">
-                            <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
-                        </div>
-                    </div>
-                     <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 1600ms;" onclick="openPurchaseModal('AI Mailing Lists', '$29.99')">
-                        <img src="mail.png" alt="AI Mailing Lists" class="rounded-lg mb-4">
-                        <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Mailing Lists</h3>
-                        <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Build and manage intelligent email marketing campaigns with AI-driven segmentation and optimization. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center mt-auto pt-4">
-                            <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
-                        </div>
-                    </div>
-                     <div class="rounded-xl p-6 flex flex-col course-card fade-in-up cursor-pointer" style="transition-delay: 1700ms;" onclick="openPurchaseModal('AI Calendar Booking', '$29.99')">
-                        <img src="calendar.png" alt="AI Calendar Booking" class="rounded-lg mb-4">
-                        <h3 class="text-xl font-bold mb-2 text-[#B7D1E1]">AI Calendar Booking</h3>
-                        <p class="text-[#B7D1E1]/80 text-sm mb-4 flex-grow">Create smart, AI-powered scheduling systems that automate bookings and manage your calendar. Takes advantage of fromsupply Logic skeleton for aided learning and recall.</p>
-                        <div class="flex justify-between items-center mt-auto pt-4">
-                            <span class="text-2xl font-bold text-[#B7D1E1]">$29.99</span>
-                            <button class="bg-[#3f5268]/50 backdrop-blur-sm hover:bg-[#3f5268]/80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm">Explore</button>
-                        </div>
+                    <div id="school-coding" class="school-content hidden opacity-0">
+                         <!-- Content generated by JS -->
                     </div>
                 </div>
+
             </div>
         </section>
         
@@ -645,6 +553,79 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // School data with updated image names
+            const schoolData = {
+                media: {
+                    title: 'School of Media Artificial Intelligence',
+                    description: 'Unleash your creativity with Artificial Intelligence. This school covers programs in Music Generation, Video Production, Image Generation, Voice Technology, and Web & Mobile Game Development.',
+                    mainImage: 'media.png',
+                    surroundingImages: ['media1.png', 'media2.png', 'media3.png', 'media4.png', 'media5.png', 'media6.png', 'media7.png']
+                },
+                business: {
+                    title: 'School of Business Artificial Intelligence',
+                    description: 'Drive growth and efficiency in your business. This school includes programs on Powered Advertising, Customer Service Bots, Payment Systems, Calling Systems, Mailing Lists, and Calendar Booking.',
+                    mainImage: 'business.png',
+                    surroundingImages: ['business1.png', 'business2.png', 'business3.png', 'business4.png', 'business5.png', 'business6.png', 'business7.png']
+                },
+                coding: {
+                    title: 'School of Dependent Coding Artificial Intelligence',
+                    description: 'Build the next generation of applications. This school offers programs in Website Building, Google Sign-In, Android & iPhone App Development, Roblox Development, and Unity Systems.',
+                    mainImage: 'coding.png',
+                    surroundingImages: ['coding1.png', 'coding2.png', 'coding3.png', 'coding4.png', 'coding5.png', 'coding6.png', 'coding7.png']
+                }
+            };
+            
+            const createSchoolContent = (schoolKey) => {
+                const data = schoolData[schoolKey];
+                
+                let surroundingImagesHTML = '';
+                data.surroundingImages.forEach((imgSrc, index) => {
+                     surroundingImagesHTML += `<img src="${imgSrc}" alt="Program icon ${index + 1}" class="surrounding-image surrounding-image-${index + 1}">`;
+                });
+
+                return `
+                    <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-8">
+                        <div class="school-collage">
+                           <img src="${data.mainImage}" alt="${data.title}" class="central-image">
+                           <div class="orbit-container">
+                                ${surroundingImagesHTML}
+                           </div>
+                        </div>
+                        <div class="text-center md:text-left">
+                            <h3 class="text-4xl font-bold mb-4 text-white">${data.title}</h3>
+                            <p class="text-[#B7D1E1]/80 max-w-lg mx-auto md:mx-0 mb-8">${data.description}</p>
+                            <button onclick="openPurchaseModal('${data.title}', '$99.99')" class="bg-[#1B2330] hover:bg-opacity-80 text-white font-bold py-3 px-10 rounded-lg text-lg cta-button">
+                                Get Started
+                            </button>
+                        </div>
+                    </div>
+                `;
+            };
+
+            // Populate initial content
+            document.getElementById('school-media').innerHTML = createSchoolContent('media');
+            document.getElementById('school-business').innerHTML = createSchoolContent('business');
+            document.getElementById('school-coding').innerHTML = createSchoolContent('coding');
+            
+            window.switchSchool = function(schoolKey) {
+                // Handle active tab style
+                document.querySelectorAll('.school-tabs button').forEach(button => {
+                    button.classList.remove('active');
+                    if (button.dataset.school === schoolKey) {
+                        button.classList.add('active');
+                    }
+                });
+
+                // Handle content visibility
+                document.querySelectorAll('.school-content').forEach(content => {
+                    if (content.id === `school-${schoolKey}`) {
+                        content.classList.remove('hidden', 'opacity-0');
+                    } else {
+                        content.classList.add('hidden', 'opacity-0');
+                    }
+                });
+            }
+
             // Scroll-based animations
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -786,37 +767,7 @@
                 }
             });
 
-            // Countdown timer (8 minutes)
-            let timeLeft = 8 * 60; // 8 minutes in seconds
-            
-            function updateCountdown() {
-                const minutes = Math.floor(timeLeft / 60);
-                const seconds = timeLeft % 60;
-                const display = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                
-                const timer = document.getElementById('countdown-timer');
-                if (timer) {
-                    timer.textContent = display;
-                }
-                
-                if (timeLeft > 0) {
-                    timeLeft--;
-                } else {
-                    // Timer expired - you can add what happens when it reaches 0
-                    timeLeft = 8 * 60; // Reset for demo purposes
-                }
-            }
-            
-            // Update countdown every second
-            setInterval(updateCountdown, 1000);
-            updateCountdown(); // Initial call
         });
     </script>
 </body>
 </html>
-
-
-
-
-
-
