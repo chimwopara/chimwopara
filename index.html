@@ -49,6 +49,18 @@
             animation: animate-gradient 25s ease infinite;
             overflow: hidden;
         }
+        .hero-image-bg {
+            position: relative;
+            background-image: url('hero.png');
+            background-size: cover;
+            background-position: center;
+        }
+        .culture-bg {
+            position: relative;
+            background-image: url('hero.png');
+            background-size: cover;
+            background-position: center;
+        }
         .hero-content {
             position: relative;
             z-index: 1;
@@ -71,6 +83,15 @@
         .clothing-card:hover {
             transform: translateY(-10px) scale(1.02);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        .glassy-card {
+            background: rgba(63, 82, 104, 0.35);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(183, 209, 225, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            padding: 2rem;
+            border-radius: 1rem;
         }
         .fade-in-up {
             opacity: 0;
@@ -113,10 +134,6 @@
             transform: translate(-50%, -50%);
             z-index: 30;
             transition: opacity 0.8s ease-in-out;
-        }
-
-        .central-image.fade-out {
-            opacity: 0;
         }
 
         .surrounding-image {
@@ -252,6 +269,122 @@
                 height: 150px;
             }
         }
+
+        /* About Section Collage Styles */
+        .about-collage {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            margin: 1rem auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .about-orbit-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            animation: spin 35s linear infinite;
+        }
+
+        .about-central-image {
+            width: 256px;
+            height: 256px;
+            border-radius: 50%;
+            object-fit: cover;
+            position: relative;
+            z-index: 30;
+            border: 4px solid #3f5268;
+        }
+
+        .about-surrounding-image {
+            position: absolute;
+            transition: all 0.3s ease;
+            z-index: 32;
+            display: block; /* Make the <a> tag a block for positioning */
+        }
+        .about-surrounding-image img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .about-surrounding-image:hover {
+            filter: brightness(1.2);
+            transform: scale(1.3) !important;
+            z-index: 35 !important;
+        }
+
+        .about-surrounding-image-1 { /* Github */
+            width: 50px; height: 50px;
+            top: calc(50% - 180px - 25px);
+            left: calc(50% - 25px);
+            animation: counter-spin-1 35s linear infinite;
+        }
+        .about-surrounding-image-2 { /* Instagram */
+            width: 55px; height: 55px;
+            top: calc(50% - 90px - 27.5px);
+            left: calc(50% + 140px - 27.5px);
+            animation: counter-spin-2 33s linear infinite;
+        }
+        .about-surrounding-image-3 { /* TikTok */
+            width: 50px; height: 50px;
+            top: calc(50% + 90px - 25px);
+            left: calc(50% + 145px - 25px);
+            animation: counter-spin-3 38s linear infinite;
+        }
+        .about-surrounding-image-4 { /* WhatsApp */
+            width: 52px; height: 52px;
+            top: calc(50% + 170px - 26px);
+            left: calc(50% - 100px - 26px);
+            animation: counter-spin-4 32s linear infinite;
+        }
+        .about-surrounding-image-5 { /* UAlberta */
+            width: 55px; height: 55px;
+            top: calc(50% + 95px - 27.5px);
+            left: calc(50% - 160px - 27.5px);
+            animation: counter-spin-5 36s linear infinite;
+        }
+        .about-surrounding-image-6 { /* YouTube */
+            width: 50px; height: 50px;
+            top: calc(50% - 100px - 25px);
+            left: calc(50% - 150px - 25px);
+            animation: counter-spin-6 34s linear infinite;
+        }
+        .about-surrounding-image-7 { /* Facebook */
+            width: 50px; height: 50px;
+            top: calc(50% - 150px - 25px);
+            left: calc(50% + 100px - 25px);
+            animation: counter-spin-7 37s linear infinite;
+        }
+
+        /* Responsive adjustments for about collage */
+        @media (max-width: 768px) {
+            .about-collage {
+                width: 300px;
+                height: 300px;
+            }
+            .about-central-image {
+                width: 180px;
+                height: 180px;
+            }
+        }
+
+        /* Footer Background Style */
+        .footer-bg {
+            position: relative;
+            background-image: url('hero.png');
+            background-size: cover;
+            background-position: center;
+        }
+        .footer-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-color: rgba(27, 35, 48, 0.85); /* Dark overlay for readability */
+        }
     </style>
     
     <!-- JSON-LD Structured Data for SEO -->
@@ -310,25 +443,15 @@
 
     <!-- Header -->
     <header class="bg-[#1B2330]/80 backdrop-blur-sm fixed top-0 left-0 right-0 z-50">
-        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <!-- TikTok Link -->
-            <a href="https://www.tiktok.com/@chimwopara?_t=ZS-8zXMw9gpRDO&_r=1" target="_blank" rel="noopener noreferrer" class="text-white hover:opacity-80 transition-opacity">
-                <img src="tiktok.png" alt="TikTok Profile" class="h-6 w-6">
-            </a>
-            
+        <div class="container mx-auto px-6 py-3 flex justify-center items-center">
             <!-- Logo -->
             <a href="#"><img src="logo.png" alt="Chim Wopara Logo" class="h-10 w-auto" onerror="this.onerror=null; this.src='https://placehold.co/120x40/1B2330/FFFFFF?text=CW'"></a>
-
-            <!-- WhatsApp Link -->
-            <a href="https://chat.whatsapp.com/Bn75K4eoSVvLUOylfu9Urt?mode=ems_copy_c" target="_blank" rel="noopener noreferrer" class="text-white hover:opacity-80 transition-opacity">
-                <img src="whatsapp.png" alt="WhatsApp Community" class="h-7 w-7">
-            </a>
         </div>
     </header>
 
     <!-- Hero Section -->
     <main class="pt-16">
-        <section class="hero-bg py-20 md:py-32">
+        <section class="hero-image-bg py-20 md:py-32">
             <div class="container mx-auto px-6 text-center hero-content">
                 <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4 text-[#B7D1E1]">Build products with Ai with speed</h1>
                 <p class="text-lg md:text-xl text-[#B7D1E1]/80 max-w-3xl mx-auto mb-8">Join me for a live, one-on-one video call and I'll personally teach you the secrets to building stunning websites with the power of Artificial Intelligence.</p>
@@ -340,36 +463,10 @@
             </div>
         </section>
 
-        <!-- About Section -->
-        <section id="about" class="py-20 bg-[#1B2330]">
+        <!-- School Section -->
+        <section id="schools" class="py-20 hero-bg overflow-hidden">
             <div class="container mx-auto px-6">
-                <div class="flex flex-col md:flex-row items-center bg-[#3f5268] rounded-xl p-8 md:p-12 fade-in-up">
-                    <div class="md:w-1/3 text-center md:text-left mb-8 md:mb-0 md:pr-12">
-                        <img src="chim.png" alt="Profile photo of Chim Wopara, entrepreneur and technologist" class="rounded-full w-48 h-48 mx-auto md:mx-0">
-                    </div>
-                    <div class="md:w-2/3">
-                        <h2 class="text-3xl font-bold mb-4 text-[#B7D1E1]">Why Learn From Me?</h2>
-                        <p class="text-[#B7D1E1]/80 mb-4">I'm Chim Wopara, an entrepreneur and technologist passionate about empowering people with cutting-edge skills. I've built multiple successful online businesses and have years of experience in web development, AI integration, and digital marketing. My teaching philosophy is simple: break down complex topics into easy-to-understand, actionable steps. I'm not just a teacher; I'm your personal guide in this exciting journey into the world of AI.</p>
-                        <p class="text-[#B7D1E1]/80 mb-6">I believe anyone can build amazing things with the right tools and guidance. Let's build the future, together.</p>
-                        <div class="flex flex-col sm:flex-row gap-4">
-                            <!-- Calendly link widget begin -->
-                            <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/wopara?hide_landing_page_details=1&hide_gdpr_banner=1&background_color=3f5268&text_color=b7d1e1&primary_color=1b2330'});return false;" class="flex-1 bg-[#1B2330] hover:bg-opacity-80 text-[#B7D1E1] font-bold py-3 px-6 rounded-lg cta-button text-center">Hire me for your project</a>
-                            <!-- Calendly link widget end -->
-                            <a href="https://wopara.com" target="_blank" rel="noopener noreferrer" class="flex-1 bg-[#1B2330]/50 hover:bg-opacity-40 text-white font-bold py-3 px-6 rounded-lg cta-button text-center">My projects</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Unified AI School Section -->
-        <section id="schools" class="py-20 bg-[#3f5268] overflow-hidden">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12 fade-in-up">
-                    <h2 class="text-4xl font-bold mb-2 text-[#B7D1E1]">Begin your Journey</h2>
-                    <p class="text-[#B7D1E1]/80 max-w-2xl mx-auto">Master the future with our comprehensive AI education program covering all aspects of modern technology.</p>
-                </div>
-
+                <!-- School Part -->
                 <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-8 fade-in-up">
                     <!-- Animated Collage -->
                     <div class="school-collage">
@@ -385,8 +482,8 @@
                        </div>
                     </div>
                     <!-- Content -->
-                    <div class="text-center md:text-left">
-                        <h3 class="text-4xl font-bold mb-4 text-white">School of Dependent Coding, Business and Media Artificial Intelligence</h3>
+                    <div class="glassy-card text-center md:text-left">
+                        <h3 class="text-4xl font-bold mb-4 text-[#B7D1E1]">School of Dependent Coding, Business and Media Artificial Intelligence</h3>
                         <p id="school-description" class="text-[#B7D1E1]/80 max-w-lg mx-auto md:mx-0 mb-8">
                             Unleash your creativity with Artificial Intelligence. Master programs in Music Generation, Video Production, Image Generation, Voice Technology, and Web & Mobile Game Development.
                         </p>
@@ -399,7 +496,7 @@
         </section>
         
         <!-- Clothing Section -->
-        <section id="clothing" class="py-20 bg-[#1B2330]">
+        <section id="clothing" class="py-20 culture-bg">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12 fade-in-up">
                     <h2 class="text-4xl font-bold mb-2 text-[#B7D1E1]">Culture On My Back</h2>
@@ -444,6 +541,41 @@
                 </div>
                  <div class="text-center mt-12 fade-in-up">
                     <p class="text-[#B7D1E1]/80 text-lg">New product annually</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-20 hero-bg overflow-hidden">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-12 fade-in-up">
+                    <!-- Orbiting Icons on the left -->
+                    <div class="about-collage">
+                        <img src="chim.png" alt="Profile photo of Chim Wopara" class="about-central-image">
+                        <div class="about-orbit-container">
+                            <a href="https://github.com/chimwopara" target="_blank" rel="noopener noreferrer" class="about-surrounding-image about-surrounding-image-1"><img src="github.png" alt="GitHub"></a>
+                            <a href="https://www.instagram.com/chimwopara" target="_blank" rel="noopener noreferrer" class="about-surrounding-image about-surrounding-image-2"><img src="instagram.png" alt="Instagram"></a>
+                            <a href="https://www.tiktok.com/@chimwopara?_t=ZS-8zXMw9gpRDO&_r=1" target="_blank" rel="noopener noreferrer" class="about-surrounding-image about-surrounding-image-3"><img src="tiktok.png" alt="TikTok"></a>
+                            <a href="https://chat.whatsapp.com/Bn75K4eoSVvLUOylfu9Urt?mode=ems_copy_c" target="_blank" rel="noopener noreferrer" class="about-surrounding-image about-surrounding-image-4"><img src="whatsapp.png" alt="WhatsApp"></a>
+                            <a href="https://ualberta.ca" target="_blank" rel="noopener noreferrer" class="about-surrounding-image about-surrounding-image-5"><img src="ualberta.png" alt="UAlberta"></a>
+                            <a href="https://youtube.com/@chimwopara?si=rMgMJHTLgJJzwL_D" target="_blank" rel="noopener noreferrer" class="about-surrounding-image about-surrounding-image-6"><img src="youtube.png" alt="YouTube"></a>
+                            <a href="https://www.facebook.com/profile.php?id=61579876920080" target="_blank" rel="noopener noreferrer" class="about-surrounding-image about-surrounding-image-7"><img src="facebook.png" alt="Facebook"></a>
+                        </div>
+                    </div>
+                    <!-- Glassy card on the right -->
+                    <div class="glassy-card text-center md:text-left">
+                        <h2 class="text-3xl font-bold mb-4 text-[#B7D1E1]">Hi,</h2>
+                        <p class="text-[#B7D1E1]/80 mb-4">I'm Chim Wopara, and i create enterprise solutions with my strong background in Computer Science and Economics.</p>
+                        <p class="text-[#B7D1E1]/80 mb-6"> My primary aim is for Artificial Intelligence to empower the next generation of Nigerians, helping us thrive in a future where AI will be relevant.</p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                             <a href="https://wopara.com" target="_blank" rel="noopener noreferrer" class="bg-[#1B2330] hover:bg-opacity-80 text-white font-bold py-3 px-10 rounded-lg text-lg cta-button inline-block">
+                                Book me
+                            </a>
+                            <a href="mailto:chim@wopara.com" class="bg-[#3f5268] hover:bg-opacity-80 text-[#B7D1E1] font-bold py-3 px-10 rounded-lg cta-button inline-block text-lg">
+                                Email Me
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -648,7 +780,7 @@
 
         <!-- Video Content Modal -->
         <div id="video-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
-            <div class="bg-[#3f5268] rounded-xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-[#1B2330]">
+            <div class="bg-[#3f5268] rounded-3xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-[#1B2330]">
                 <div class="flex justify-between items-center mb-6">
                     <h3 class="text-2xl font-bold text-[#B7D1E1]" id="video-title">Course Content</h3>
                     <button onclick="closeVideoModal()" class="text-[#B7D1E1]/80 hover:text-[#B7D1E1]">
@@ -659,13 +791,13 @@
                 </div>
                 
                 <div class="mb-6">
-                    <div class="bg-[#1B2330] rounded-lg p-4">
-                        <iframe id="course-video" width="100%" height="400" src="" title="Course Video Player" frameborder="0" allowfullscreen class="rounded-lg"></iframe>
+                    <div class="bg-[#1B2330] rounded-3xl p-4">
+                        <iframe id="course-video" width="100%" height="400" src="" title="Course Video Player" frameborder="0" allowfullscreen class="rounded-2xl"></iframe>
                     </div>
                 </div>
                 
                 <div class="text-center">
-                    <button onclick="showPracticeMaterials()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg">
+                    <button onclick="showPracticeMaterials()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-2xl">
                         Practice Material
                     </button>
                 </div>
@@ -675,8 +807,8 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-[#1B2330] border-t border-[#3f5268]">
-        <div class="container mx-auto px-6 py-12">
+    <footer class="footer-bg border-t border-[#3f5268]">
+        <div class="container mx-auto px-6 py-12 relative z-10">
             <div class="text-center mb-8">
                 <h4 class="text-sm uppercase text-[#B7D1E1]/60 tracking-widest mb-4">A Chim Wopara Enterprises Company</h4>
                 <div class="flex justify-center items-center space-x-6 md:space-x-10">
@@ -690,6 +822,10 @@
                     <span class="text-[#3f5268]">|</span>
                     <a href="http://pautacos.com" target="_blank" class="hover:opacity-80 transition-opacity">
                         <img src="pautacos.png" alt="Pautacos Logo" class="h-8 w-auto">
+                    </a>
+                    <span class="text-[#3f5268]">|</span>
+                    <a href="https://chimwopara.com" target="_blank" rel="noopener noreferrer" class="text-white hover:opacity-80 transition-opacity">
+                        <img src="logo.png" alt="Chim Wopara" class="h-8 w-auto">
                     </a>
                 </div>
             </div>
@@ -745,33 +881,20 @@
                     if (img) surroundingImages.push(img);
                 }
                 
-                // Add fade out effect to all images
-                centralImage.classList.add('fade-out');
-                surroundingImages.forEach(img => img.classList.add('fade-out'));
+                currentSchoolIndex = (currentSchoolIndex + 1) % schoolKeys.length;
+                const currentSchool = schoolData[schoolKeys[currentSchoolIndex]];
                 
-                setTimeout(() => {
-                    currentSchoolIndex = (currentSchoolIndex + 1) % schoolKeys.length;
-                    const currentSchool = schoolData[schoolKeys[currentSchoolIndex]];
-                    
-                    // Update central image
-                    centralImage.src = currentSchool.mainImage;
-                    centralImage.alt = currentSchool.title;
-                    
-                    // Update surrounding images
-                    surroundingImages.forEach((img, index) => {
-                        if (currentSchool.surroundingImages[index]) {
-                            img.src = currentSchool.surroundingImages[index];
-                            img.alt = `${currentSchool.title} Program ${index + 1}`;
-                        }
-                    });
-                    
-                    // Remove fade out effect after a brief moment to ensure images are loaded
-                    setTimeout(() => {
-                        centralImage.classList.remove('fade-out');
-                        surroundingImages.forEach(img => img.classList.remove('fade-out'));
-                    }, 100);
-                    
-                }, 300); // 300ms for fade out, then 100ms delay, then fade in
+                // Update central image
+                centralImage.src = currentSchool.mainImage;
+                centralImage.alt = currentSchool.title;
+                
+                // Update surrounding images
+                surroundingImages.forEach((img, index) => {
+                    if (currentSchool.surroundingImages[index]) {
+                        img.src = currentSchool.surroundingImages[index];
+                        img.alt = `${currentSchool.title} Program ${index + 1}`;
+                    }
+                });
             }
 
             // Start cycling every 3 seconds
@@ -988,3 +1111,4 @@
     </script>
 </body>
 </html>
+
