@@ -17,14 +17,14 @@
     <meta property="og:url" content="https://chimwopara.com/">
     <meta property="og:title" content="Chim Wopara - Learn to Code with AI">
     <meta property="og:description" content="Learn to code with AI through hands-on courses from Chim Wopara. Master AI web development, app creation, game design, and more.">
-    <meta property="og:image" content="https://chimwopara.com/logo.png"> <!-- Use an absolute URL for the image -->
+    <meta property="og:image" content="https://chimwopara.com/logo.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://chimwopara.com/">
     <meta property="twitter:title" content="Chim Wopara - Master AI Development Courses | Learn to Code with AI">
     <meta property="twitter:description" content="Learn to code with AI through hands-on courses from Chim Wopara. Master AI web development, app creation, game design, and more.">
-    <meta property="twitter:image" content="https://chimwopara.com/twitter-image.png"> <!-- Use an absolute URL for the image -->
+    <meta property="twitter:image" content="https://chimwopara.com/twitter-image.png">
 
     <link rel="icon" href="logo.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -61,10 +61,10 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
         .clothing-card {
-            background: rgba(63, 82, 104, 0.35); /* Chimdeep with transparency */
+            background: rgba(63, 82, 104, 0.35);
             backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px); /* For Safari */
-            border: 1px solid rgba(183, 209, 225, 0.2); /* Chimlight with transparency */
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(183, 209, 225, 0.2);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
@@ -72,7 +72,6 @@
             transform: translateY(-10px) scale(1.02);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         }
-        /* Scroll Animation Styles */
         .fade-in-up {
             opacity: 0;
             transform: translateY(30px);
@@ -82,54 +81,18 @@
             opacity: 1;
             transform: translateY(0);
         }
-        
-        /* Updated School Section Styles - Pills at Bottom */
-        .school-tabs {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 40px;
-        }
 
-        .school-tabs button {
-            padding: 12px 30px;
-            border-radius: 50px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid transparent;
-            color: #a0aec0;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            cursor: pointer;
-        }
-
-        .school-tabs button:hover {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .school-tabs button.active {
-            background: #1B2330;
-            color: white;
-            border-color: #38bdf8;
-        }
-
-        .school-content {
-            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-        }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
+        /* Unified School Section Styles */
         .school-collage {
             position: relative;
             width: 500px;
             height: 500px;
             margin: 1rem auto;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         .orbit-container {
@@ -149,6 +112,11 @@
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 30;
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        .central-image.fade-out {
+            opacity: 0;
         }
 
         .surrounding-image {
@@ -162,7 +130,7 @@
             z-index: 35 !important;
         }
         
-        /* Position images at different orbital distances and use varied counter-rotation speeds */
+        /* Updated positioning for cycling images */
         .surrounding-image-1 { 
             width: 85px;
             height: 85px;
@@ -220,7 +188,6 @@
             animation: counter-spin-7 31s linear infinite;
         }
 
-        /* Individual counter-rotation animations with varied speeds */
         @keyframes counter-spin-1 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
         @keyframes counter-spin-2 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
         @keyframes counter-spin-3 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
@@ -228,6 +195,51 @@
         @keyframes counter-spin-5 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
         @keyframes counter-spin-6 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
         @keyframes counter-spin-7 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+
+        /* School Selection Modal Styles */
+        .school-checkbox {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #3f5268;
+            border-radius: 4px;
+            background: #1B2330;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .school-checkbox:checked {
+            background: #38bdf8;
+            border-color: #38bdf8;
+        }
+
+        .school-checkbox:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .school-option {
+            border: 2px solid rgba(183, 209, 225, 0.2);
+            background: rgba(63, 82, 104, 0.2);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .school-option:hover {
+            border-color: #38bdf8;
+            background: rgba(63, 82, 104, 0.4);
+        }
+
+        .school-option.selected {
+            border-color: #38bdf8;
+            background: rgba(56, 189, 248, 0.1);
+        }
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
@@ -239,25 +251,7 @@
                 width: 150px;
                 height: 150px;
             }
-            .surrounding-image-1 { transform: rotate(0deg) translateX(140px) scale(1.2); }
-            .surrounding-image-2 { transform: rotate(51.4deg) translateX(110px) scale(0.7); }
-            .surrounding-image-3 { transform: rotate(102.8deg) translateX(150px) scale(1.0); }
-            .surrounding-image-4 { transform: rotate(154.2deg) translateX(100px) scale(0.6); }
-            .surrounding-image-5 { transform: rotate(205.6deg) translateX(130px) scale(1.1); }
-            .surrounding-image-6 { transform: rotate(257deg) translateX(120px) scale(0.8); }
-            .surrounding-image-7 { transform: rotate(308.4deg) translateX(145px) scale(0.9); }
-            
-            .school-tabs {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .school-tabs button {
-                width: 200px;
-                text-align: center;
-            }
         }
-
     </style>
     
     <!-- JSON-LD Structured Data for SEO -->
@@ -299,22 +293,12 @@
           "@type": "EducationalOrganization",
           "name": "Chim Wopara AI Schools",
           "url": "https://chimwopara.com/#schools",
-          "description": "Specialized schools focusing on Media, Business, and Dependent Coding with Artificial Intelligence.",
+          "description": "Unified school focusing on Dependent Coding, Business, and Media with Artificial Intelligence.",
            "hasCourse": [
             {
               "@type": "Course",
-              "name": "School of Media Artificial Intelligence",
-              "description": "Explore AI applications in creative fields like music, video, image generation, and game development."
-            },
-            {
-              "@type": "Course",
-              "name": "School of Business Artificial Intelligence",
-              "description": "Master AI for business growth, including advertising, customer service, and payment systems."
-            },
-            {
-              "@type": "Course",
-              "name": "School of Dependent Coding Artificial Intelligence",
-              "description": "Learn to code and build applications for web, mobile, and gaming platforms with AI assistance."
+              "name": "School of Dependent Coding, Business and Media Artificial Intelligence",
+              "description": "Comprehensive AI education covering creative media, business applications, and coding development."
             }
           ]
         }
@@ -378,34 +362,39 @@
             </div>
         </section>
 
-        <!-- AI Schools Section -->
+        <!-- Unified AI School Section -->
         <section id="schools" class="py-20 bg-[#3f5268] overflow-hidden">
             <div class="container mx-auto px-6">
                 <div class="text-center mb-12 fade-in-up">
                     <h2 class="text-4xl font-bold mb-2 text-[#B7D1E1]">Begin your Journey</h2>
-                    <p class="text-[#B7D1E1]/80 max-w-2xl mx-auto">Choose your path. We've organized our programs into three specialized schools to focus your learning journey.</p>
+                    <p class="text-[#B7D1E1]/80 max-w-2xl mx-auto">Master the future with our comprehensive AI education program covering all aspects of modern technology.</p>
                 </div>
 
-                <div class="relative">
-                    <!-- School Content Panels -->
-                    <div id="school-media" class="school-content">
-                        <!-- Content generated by JS -->
+                <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-8 fade-in-up">
+                    <!-- Animated Collage -->
+                    <div class="school-collage">
+                       <img id="central-image" src="media.png" alt="AI School" class="central-image">
+                       <div class="orbit-container">
+                            <img id="surrounding-1" src="media1.png" alt="Program icon 1" class="surrounding-image surrounding-image-1">
+                            <img id="surrounding-2" src="media2.png" alt="Program icon 2" class="surrounding-image surrounding-image-2">
+                            <img id="surrounding-3" src="media3.png" alt="Program icon 3" class="surrounding-image surrounding-image-3">
+                            <img id="surrounding-4" src="media4.png" alt="Program icon 4" class="surrounding-image surrounding-image-4">
+                            <img id="surrounding-5" src="media5.png" alt="Program icon 5" class="surrounding-image surrounding-image-5">
+                            <img id="surrounding-6" src="media6.png" alt="Program icon 6" class="surrounding-image surrounding-image-6">
+                            <img id="surrounding-7" src="media7.png" alt="Program icon 7" class="surrounding-image surrounding-image-7">
+                       </div>
                     </div>
-                    <div id="school-business" class="school-content hidden opacity-0">
-                         <!-- Content generated by JS -->
-                    </div>
-                    <div id="school-coding" class="school-content hidden opacity-0">
-                         <!-- Content generated by JS -->
+                    <!-- Content -->
+                    <div class="text-center md:text-left">
+                        <h3 class="text-4xl font-bold mb-4 text-white">School of Dependent Coding, Business and Media Artificial Intelligence</h3>
+                        <p id="school-description" class="text-[#B7D1E1]/80 max-w-lg mx-auto md:mx-0 mb-8">
+                            Unleash your creativity with Artificial Intelligence. Master programs in Music Generation, Video Production, Image Generation, Voice Technology, and Web & Mobile Game Development.
+                        </p>
+                        <button onclick="openSchoolSelectionModal()" class="bg-[#1B2330] hover:bg-opacity-80 text-white font-bold py-3 px-10 rounded-lg text-lg cta-button">
+                            Get Started
+                        </button>
                     </div>
                 </div>
-
-                <!-- Navigation Pills at Bottom -->
-                <div class="school-tabs fade-in-up">
-                    <button onclick="switchSchool('media')" data-school="media" class="active">Media AI</button>
-                    <button onclick="switchSchool('business')" data-school="business">Business AI</button>
-                    <button onclick="switchSchool('coding')" data-school="coding">Coding AI</button>
-                </div>
-
             </div>
         </section>
         
@@ -458,6 +447,143 @@
                 </div>
             </div>
         </section>
+
+        <!-- School Selection Modal -->
+        <div id="school-selection-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+            <div class="bg-[#3f5268] rounded-xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-[#1B2330]">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-3xl font-bold text-[#B7D1E1]">Choose Your AI Schools</h3>
+                    <button onclick="closeSchoolSelectionModal()" class="text-[#B7D1E1]/80 hover:text-[#B7D1E1]">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <p class="text-[#B7D1E1]/80 mb-8 text-center">Select one or more schools to customize your AI learning journey. Each school offers specialized programs designed to master different aspects of artificial intelligence.</p>
+                
+                <div class="space-y-6">
+                    <!-- Media AI School -->
+                    <div class="school-option p-6 rounded-xl cursor-pointer" onclick="toggleSchool('media')">
+                        <div class="flex items-start space-x-4">
+                            <input type="checkbox" id="school-media-check" class="school-checkbox mt-1">
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-3 mb-3">
+                                    <img src="media.png" alt="Media AI" class="w-12 h-12 rounded-lg">
+                                    <h4 class="text-xl font-bold text-white">School of Media Artificial Intelligence</h4>
+                                </div>
+                                <p class="text-[#B7D1E1]/80 mb-4">Unleash your creativity with AI-powered media creation. Master the tools that are revolutionizing content creation across industries.</p>
+                                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                    <div class="bg-[#1B2330]/50 p-3 rounded-lg text-center">
+                                        <img src="media1.png" alt="Music Gen" class="w-8 h-8 mx-auto mb-2">
+                                        <p class="text-sm">Music Generation</p>
+                                    </div>
+                                    <div class="bg-[#1B2330]/50 p-3 rounded-lg text-center">
+                                        <img src="media2.png" alt="Video Production" class="w-8 h-8 mx-auto mb-2">
+                                        <p class="text-sm">Video Production</p>
+                                    </div>
+                                    <div class="bg-[#1B2330]/50 p-3 rounded-lg text-center">
+                                        <img src="media3.png" alt="Image Gen" class="w-8 h-8 mx-auto mb-2">
+                                        <p class="text-sm">Image Generation</p>
+                                    </div>
+                                    <div class="bg-[#1B2330]/50 p-3 rounded-lg text-center">
+                                        <img src="media4.png" alt="Voice Tech" class="w-8 h-8 mx-auto mb-2">
+                                        <p class="text-sm">Voice Technology</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Business AI School -->
+                    <div class="school-option p-6 rounded-xl cursor-pointer" onclick="toggleSchool('business')">
+                        <div class="flex items-start space-x-4">
+                            <input type="checkbox" id="school-business-check" class="school-checkbox mt-1">
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-3 mb-3">
+                                    <img src="business.png" alt="Business AI" class="w-12 h-12 rounded-lg">
+                                    <h4 class="text-xl font-bold text-white">School of Business Artificial Intelligence</h4>
+                                </div>
+                                <p class="text-[#B7D1E1]/80 mb-4">Transform your business operations with AI automation. Learn to build systems that drive growth and efficiency at scale.</p>
+                                <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                    <div class="bg-[#1B2330]/50 p-3 rounded-lg text-center">
+                                        <img src="business1.png" alt="AI Advertising" class="w-8 h-8 mx-auto mb-2">
+                                        <p class="text-sm">AI Advertising</p>
+                                    </div>
+                                    <div class="bg-[#1B2330]/50 p-3 rounded-lg text-center">
+                                        <img src="business2.png" alt="Customer Service" class="w-8 h-8 mx-auto mb-2">
+                                        <p class="text-sm">Customer Service Bots</p>
+                                    </div>
+                                    <div class="bg-[#1B2330]/50 p-3 rounded-lg text-center">
+                                        <img src="business3.png" alt="Payment Systems" class="w-8 h-8 mx-auto mb-2">
+                                        <p class="text-sm">Payment Systems</p>
+                                    </div>
+                                    <div class="bg-[#1B2330]/50 p-3 rounded-lg text-center">
+                                        <img src="business4.png" alt="Call Systems" class="w-8 h-8 mx-auto mb-2">
+                                        <p class="text-sm">Calling Systems</p>
+                                    </div>
+                                    <div class="bg-[#1B2330]/50 p-3 rounded-lg text-center">
+                                        <img src="business5.png" alt="Mailing Lists" class="w-8 h-8 mx-auto mb-2">
+                                        <p class="text-sm">Mailing Lists</p>
+                                    </div>
+                                    <div class="bg-[#1B2330]/50 p-3 rounded-lg text-center">
+                                        <img src="business6.png" alt="Calendar Booking" class="w-8 h-8 mx-auto mb-2">
+                                        <p class="text-sm">Calendar Booking</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Coding AI School -->
+                    <div class="school-option p-6 rounded-xl cursor-pointer" onclick="toggleSchool('coding')">
+                        <div class="flex items-start space-x-4">
+                            <input type="checkbox" id="school-coding-check" class="school-checkbox mt-1">
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-3 mb-3">
+                                    <img src="coding.png" alt="Coding AI" class="w-12 h-12 rounded-lg">
+                                    <h4 class="text-xl font-bold text-white">School of Dependent Coding Artificial Intelligence</h4>
+                                </div>
+                                <p class="text-[#B7D1E1]/80 mb-4">Build the future with AI-assisted development. Learn to create applications across platforms using cutting-edge AI tools and frameworks.</p>
+                                <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                    <div class="bg-[#1B2330]/50 p-3 rounded-lg text-center">
+                                        <img src="coding1.png" alt="Website Building" class="w-8 h-8 mx-auto mb-2">
+                                        <p class="text-sm">Website Building</p>
+                                    </div>
+                                    <div class="bg-[#1B2330]/50 p-3 rounded-lg text-center">
+                                        <img src="coding2.png" alt="Google Sign-In" class="w-8 h-8 mx-auto mb-2">
+                                        <p class="text-sm">Google Sign-In</p>
+                                    </div>
+                                    <div class="bg-[#1B2330]/50 p-3 rounded-lg text-center">
+                                        <img src="coding3.png" alt="App Development" class="w-8 h-8 mx-auto mb-2">
+                                        <p class="text-sm">Android & iPhone Apps</p>
+                                    </div>
+                                    <div class="bg-[#1B2330]/50 p-3 rounded-lg text-center">
+                                        <img src="coding4.png" alt="Roblox Dev" class="w-8 h-8 mx-auto mb-2">
+                                        <p class="text-sm">Roblox Development</p>
+                                    </div>
+                                    <div class="bg-[#1B2330]/50 p-3 rounded-lg text-center">
+                                        <img src="coding5.png" alt="Unity Systems" class="w-8 h-8 mx-auto mb-2">
+                                        <p class="text-sm">Unity Systems</p>
+                                    </div>
+                                    <div class="bg-[#1B2330]/50 p-3 rounded-lg text-center">
+                                        <img src="coding6.png" alt="Game Development" class="w-8 h-8 mx-auto mb-2">
+                                        <p class="text-sm">Game Development</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 text-center">
+                    <p class="text-[#B7D1E1]/60 text-sm mb-4">Selected schools: <span id="selected-count">0</span></p>
+                    <button onclick="proceedWithSelection()" class="bg-[#1B2330] hover:bg-opacity-80 text-white font-bold py-3 px-8 rounded-lg text-lg cta-button disabled:opacity-50 disabled:cursor-not-allowed" id="proceed-btn" disabled>
+                        Continue to Enrollment
+                    </button>
+                </div>
+            </div>
+        </div>
 
         <!-- Product Purchase Modal -->
         <div id="purchase-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
@@ -583,77 +709,139 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // School data with updated image names
+            // School cycling data
             const schoolData = {
                 media: {
-                    title: 'School of Media Artificial Intelligence',
-                    description: 'Unleash your creativity with Artificial Intelligence. This school covers programs in Music Generation, Video Production, Image Generation, Voice Technology, and Web & Mobile Game Development.',
+                    title: 'Media Artificial Intelligence',
+                    description: 'Unleash your creativity with Artificial Intelligence. Master programs in Music Generation, Video Production, Image Generation, Voice Technology, and Web & Mobile Game Development.',
                     mainImage: 'media.png',
                     surroundingImages: ['media1.png', 'media2.png', 'media3.png', 'media4.png', 'media5.png', 'media6.png', 'media7.png']
                 },
                 business: {
-                    title: 'School of Business Artificial Intelligence',
-                    description: 'Drive growth and efficiency in your business. This school includes programs on Powered Advertising, Customer Service Bots, Payment Systems, Calling Systems, Mailing Lists, and Calendar Booking.',
+                    title: 'Business Artificial Intelligence',
+                    description: 'Drive growth and efficiency in your business. Master programs on AI Advertising, Customer Service Bots, Payment Systems, Calling Systems, Mailing Lists, and Calendar Booking.',
                     mainImage: 'business.png',
                     surroundingImages: ['business1.png', 'business2.png', 'business3.png', 'business4.png', 'business5.png', 'business6.png', 'business7.png']
                 },
                 coding: {
-                    title: 'School of Dependent Coding Artificial Intelligence',
-                    description: 'Build the next generation of applications. This school offers programs in Website Building, Google Sign-In, Android & iPhone App Development, Roblox Development, and Unity Systems.',
+                    title: 'Dependent Coding Artificial Intelligence',
+                    description: 'Build the next generation of applications. Master programs in Website Building, Google Sign-In, Android & iPhone App Development, Roblox Development, and Unity Systems.',
                     mainImage: 'coding.png',
                     surroundingImages: ['coding1.png', 'coding2.png', 'coding3.png', 'coding4.png', 'coding5.png', 'coding6.png', 'coding7.png']
                 }
             };
+
+            let currentSchoolIndex = 0;
+            const schoolKeys = Object.keys(schoolData);
             
-            const createSchoolContent = (schoolKey) => {
-                const data = schoolData[schoolKey];
+            // Function to cycle through schools
+            function cycleSchools() {
+                const centralImage = document.getElementById('central-image');
+                const surroundingImages = [];
                 
-                let surroundingImagesHTML = '';
-                data.surroundingImages.forEach((imgSrc, index) => {
-                     surroundingImagesHTML += `<img src="${imgSrc}" alt="Program icon ${index + 1}" class="surrounding-image surrounding-image-${index + 1}">`;
-                });
+                // Get all surrounding images
+                for (let i = 1; i <= 7; i++) {
+                    const img = document.getElementById(`surrounding-${i}`);
+                    if (img) surroundingImages.push(img);
+                }
+                
+                // Add fade out effect to all images
+                centralImage.classList.add('fade-out');
+                surroundingImages.forEach(img => img.classList.add('fade-out'));
+                
+                setTimeout(() => {
+                    currentSchoolIndex = (currentSchoolIndex + 1) % schoolKeys.length;
+                    const currentSchool = schoolData[schoolKeys[currentSchoolIndex]];
+                    
+                    // Update central image
+                    centralImage.src = currentSchool.mainImage;
+                    centralImage.alt = currentSchool.title;
+                    
+                    // Update surrounding images
+                    surroundingImages.forEach((img, index) => {
+                        if (currentSchool.surroundingImages[index]) {
+                            img.src = currentSchool.surroundingImages[index];
+                            img.alt = `${currentSchool.title} Program ${index + 1}`;
+                        }
+                    });
+                    
+                    // Remove fade out effect after a brief moment to ensure images are loaded
+                    setTimeout(() => {
+                        centralImage.classList.remove('fade-out');
+                        surroundingImages.forEach(img => img.classList.remove('fade-out'));
+                    }, 100);
+                    
+                }, 300); // 300ms for fade out, then 100ms delay, then fade in
+            }
 
-                return `
-                    <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-8">
-                        <div class="school-collage">
-                           <img src="${data.mainImage}" alt="${data.title}" class="central-image">
-                           <div class="orbit-container">
-                                ${surroundingImagesHTML}
-                           </div>
-                        </div>
-                        <div class="text-center md:text-left">
-                            <h3 class="text-4xl font-bold mb-4 text-white">${data.title}</h3>
-                            <p class="text-[#B7D1E1]/80 max-w-lg mx-auto md:mx-0 mb-8">${data.description}</p>
-                            <button onclick="openPurchaseModal('${data.title}', '$99.99')" class="bg-[#1B2330] hover:bg-opacity-80 text-white font-bold py-3 px-10 rounded-lg text-lg cta-button">
-                                Get Started
-                            </button>
-                        </div>
-                    </div>
-                `;
-            };
+            // Start cycling every 3 seconds
+            setInterval(cycleSchools, 3000);
 
-            // Populate initial content
-            document.getElementById('school-media').innerHTML = createSchoolContent('media');
-            document.getElementById('school-business').innerHTML = createSchoolContent('business');
-            document.getElementById('school-coding').innerHTML = createSchoolContent('coding');
-            
-            window.switchSchool = function(schoolKey) {
-                // Handle active tab style
-                document.querySelectorAll('.school-tabs button').forEach(button => {
-                    button.classList.remove('active');
-                    if (button.dataset.school === schoolKey) {
-                        button.classList.add('active');
-                    }
-                });
+            // School selection functionality
+            let selectedSchools = new Set();
 
-                // Handle content visibility
-                document.querySelectorAll('.school-content').forEach(content => {
-                    if (content.id === `school-${schoolKey}`) {
-                        content.classList.remove('hidden', 'opacity-0');
-                    } else {
-                        content.classList.add('hidden', 'opacity-0');
-                    }
+            window.openSchoolSelectionModal = function() {
+                document.getElementById('school-selection-modal').classList.remove('hidden');
+            }
+
+            window.closeSchoolSelectionModal = function() {
+                document.getElementById('school-selection-modal').classList.add('hidden');
+                // Reset selections
+                selectedSchools.clear();
+                document.querySelectorAll('.school-checkbox').forEach(checkbox => {
+                    checkbox.checked = false;
                 });
+                document.querySelectorAll('.school-option').forEach(option => {
+                    option.classList.remove('selected');
+                });
+                updateProceedButton();
+            }
+
+            window.toggleSchool = function(schoolType) {
+                const checkbox = document.getElementById(`school-${schoolType}-check`);
+                const option = checkbox.closest('.school-option');
+                
+                if (selectedSchools.has(schoolType)) {
+                    selectedSchools.delete(schoolType);
+                    checkbox.checked = false;
+                    option.classList.remove('selected');
+                } else {
+                    selectedSchools.add(schoolType);
+                    checkbox.checked = true;
+                    option.classList.add('selected');
+                }
+                
+                updateProceedButton();
+            }
+
+            function updateProceedButton() {
+                const proceedBtn = document.getElementById('proceed-btn');
+                const countSpan = document.getElementById('selected-count');
+                
+                countSpan.textContent = selectedSchools.size;
+                
+                if (selectedSchools.size > 0) {
+                    proceedBtn.disabled = false;
+                    proceedBtn.textContent = `Continue with ${selectedSchools.size} School${selectedSchools.size > 1 ? 's' : ''}`;
+                } else {
+                    proceedBtn.disabled = true;
+                    proceedBtn.textContent = 'Continue to Enrollment';
+                }
+            }
+
+            window.proceedWithSelection = function() {
+                if (selectedSchools.size === 0) return;
+                
+                // Close modal and proceed with selected schools
+                closeSchoolSelectionModal();
+                
+                // Create a summary of selected schools
+                const selectedSchoolNames = Array.from(selectedSchools).map(school => {
+                    return schoolData[school].title;
+                });
+                
+                // Open purchase modal with selected schools
+                openPurchaseModal(`AI Schools Bundle: ${selectedSchoolNames.join(', ')}`, '$299.99');
             }
 
             // Scroll-based animations
@@ -672,7 +860,6 @@
 
             // Customer data storage
             let customerDatabase = [];
-            let projectInquiries = [];
 
             // Access key database (in production, this would be server-side)
             const validAccessKeys = {
@@ -727,8 +914,6 @@
             window.closeVideoModal = function() {
                 document.getElementById('video-modal').classList.add('hidden');
                 const iframe = document.getElementById('course-video');
-                const tempSrc = iframe.src;
-                iframe.src = tempSrc; // This stops the video
                 iframe.src = '';
             }
 
@@ -754,7 +939,6 @@
                 }
             });
 
-
             // Handle Purchase/Notify form submission
             document.getElementById('purchase-form').addEventListener('submit', function(e) {
                 e.preventDefault();
@@ -772,31 +956,34 @@
                     email: email,
                     referrerPhone: referrerPhone,
                     product: product,
+                    selectedSchools: Array.from(selectedSchools),
                     type: submitButtonText.includes('Checkout') ? 'Purchase' : 'Notification',
                     timestamp: new Date().toISOString()
                 });
 
                 if(submitButtonText.includes('Checkout')) {
-                    // Simulate checkout process
-                    alert(`Thank you ${name}! Your order for ${product} has been processed. You'll receive your access key at ${email} within 5 minutes. Please check your spam folder if you don't see it.`);
+                    alert(`Thank you ${name}! Your enrollment for ${product} has been processed. You'll receive your access details at ${email} within 5 minutes. Please check your spam folder if you don't see it.`);
                 } else {
-                    // Simulate notification sign-up
                     alert(`Thank you ${name}! We will notify you at ${email} when ${product} becomes available.`);
                 }
                 
                 closeModal();
                 
-                // Log customer data for mailing list (in real implementation, this would go to your backend)
-                console.log('Customer added to mailing list:', customerDatabase);
+                console.log('Customer enrolled:', customerDatabase);
             });
 
-            // Close modal when clicking outside
+            // Close modals when clicking outside
             document.getElementById('purchase-modal').addEventListener('click', function(e) {
                 if (e.target === this) {
                     closeModal();
                 }
             });
 
+            document.getElementById('school-selection-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeSchoolSelectionModal();
+                }
+            });
         });
     </script>
 </body>
