@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chim Wopara - Affiliate Network</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1B2330;
+            color: #B7D1E1;
+        }
+        .glassy-card {
+            background: rgba(63, 82, 104, 0.35);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(183, 209, 225, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .reward-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .link-card {
+            transition: all 0.3s ease;
+        }
+        .link-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        .copy-btn {
+            transition: all 0.2s ease;
+        }
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+        .tier-badge {
+            position: relative;
+            overflow: hidden;
+        }
+        .tier-badge::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shine 3s infinite;
+        }
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <a href="index.html" class="inline-block mb-4">
+                <img src="logo.png" alt="Chim Wopara" class="h-12 w-auto mx-auto">
+            </a>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-sky-400 to-blue-600 text-transparent bg-clip-text">
+                Affiliate Network
+            </h1>
+            <p class="text-lg text-[#B7D1E1]/80">Join our network and earn rewards for bringing people together</p>
+        </div>
+
+        <!-- Signup Form (Initially visible) -->
+        <div id="signup-section" class="glassy-card rounded-2xl p-8 mb-8">
+            <h2 class="text-3xl font-bold mb-6 text-center">Join the Network</h2>
+            <form id="signup-form" class="space-y-6">
+                <!-- Personal Information -->
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Full Name *</label>
+                        <input type="text" id="fullname" required 
+                            class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-sky-500 text-white"
+                            placeholder="John Doe">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Phone Number *</label>
+                        <input type="tel" id="phone" required 
+                            class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-sky-500 text-white"
+                            placeholder="+1 (555) 123-4567">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-2">Email Address *</label>
+                    <input type="email" id="email" required 
+                        class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-sky-500 text-white"
+                        placeholder="john@example.com">
+                </div>
+
+                <!-- Membership Type -->
+                <div>
+                    <label class="block text-sm font-medium mb-2">Join As *</label>
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <label class="cursor-pointer">
+                            <input type="radio" name="memberType" value="Assembler" required class="peer sr-only">
+                            <div class="glassy-card rounded-lg p-6 text-center transition-all peer-checked:border-2 peer-checked:border-sky-500 peer-checked:bg-sky-500/10">
+                                <h3 class="font-bold text-lg mb-2">Assembler</h3>
+                                <p class="text-sm text-[#B7D1E1]/70">Build and grow together</p>
+                            </div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="memberType" value="Member" required class="peer sr-only">
+                            <div class="glassy-card rounded-lg p-6 text-center transition-all peer-checked:border-2 peer-checked:border-sky-500 peer-checked:bg-sky-500/10">
+                                <h3 class="font-bold text-lg mb-2">Member</h3>
+                                <p class="text-sm text-[#B7D1E1]/70">Be part of the community</p>
+                            </div>
+                        </label>
+                        <label class="cursor-pointer">
+                            <input type="radio" name="memberType" value="Partner" required class="peer sr-only">
+                            <div class="glassy-card rounded-lg p-6 text-center transition-all peer-checked:border-2 peer-checked:border-sky-500 peer-checked:bg-sky-500/10">
+                                <h3 class="font-bold text-lg mb-2">Partner</h3>
+                                <p class="text-sm text-[#B7D1E1]/70">Collaborate at the highest level</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Username -->
+                <div>
+                    <label class="block text-sm font-medium mb-2">Choose Your Username *</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="username" required 
+                            class="flex-1 px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-sky-500 text-white"
+                            placeholder="johndoe123">
+                        <button type="button" id="check-username" 
+                            class="px-6 py-3 bg-[#3f5268] hover:bg-[#4a6280] rounded-lg transition-colors">
+                            Check
+                        </button>
+                    </div>
+                    <p id="username-status" class="text-sm mt-2"></p>
+                </div>
+
+                <!-- Referral Code (Optional) -->
+                <div>
+                    <label class="block text-sm font-medium mb-2">Referral Code (Optional)</label>
+                    <input type="text" id="referral-code" 
+                        class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-sky-500 text-white"
+                        placeholder="Enter referral code if you have one">
+                </div>
+
+                <button type="submit" 
+                    class="w-full bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-lg transition-all transform hover:scale-105">
+                    Create My Affiliate Account
+                </button>
+            </form>
+        </div>
+
+        <!-- Dashboard (Initially hidden) -->
+        <div id="dashboard-section" class="hidden">
+            <!-- User Info Card -->
+            <div class="glassy-card rounded-2xl p-8 mb-8">
+                <div class="flex flex-col md:flex-row items-center justify-between mb-6">
+                    <div>
+                        <h2 class="text-3xl font-bold mb-2">Welcome, <span id="user-fullname">User</span>!</h2>
+                        <p class="text-[#B7D1E1]/70">Username: <span id="user-username" class="font-mono">username</span></p>
+                        <p class="text-[#B7D1E1]/70">Member Type: <span id="user-type" class="font-semibold">Type</span></p>
+                    </div>
+                    <div class="tier-badge mt-4 md:mt-0 px-6 py-3 rounded-full text-center">
+                        <p class="text-sm text-[#B7D1E1]/70">Current Tier</p>
+                        <p id="user-tier" class="text-2xl font-bold">Starter</p>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-[#1B2330]/50 rounded-lg p-6 text-center">
+                        <p class="text-3xl font-bold text-sky-400" id="total-referrals">0</p>
+                        <p class="text-sm text-[#B7D1E1]/70 mt-2">Total Referrals</p>
+                    </div>
+                    <div class="bg-[#1B2330]/50 rounded-lg p-6 text-center">
+                        <p class="text-3xl font-bold text-green-400" id="reward-points">0</p>
+                        <p class="text-sm text-[#B7D1E1]/70 mt-2">Reward Points</p>
+                    </div>
+                    <div class="bg-[#1B2330]/50 rounded-lg p-6 text-center">
+                        <p class="text-3xl font-bold text-purple-400" id="next-tier-count">5</p>
+                        <p class="text-sm text-[#B7D1E1]/70 mt-2">To Next Tier</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reward Tiers -->
+            <div class="glassy-card rounded-2xl p-8 mb-8">
+                <h3 class="text-2xl font-bold mb-6">Reward Tiers</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between p-4 bg-[#1B2330]/50 rounded-lg">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-gray-600 flex items-center justify-center">
+                                <span class="text-2xl">🌱</span>
+                            </div>
+                            <div>
+                                <p class="font-bold">Starter</p>
+                                <p class="text-sm text-[#B7D1E1]/70">0-4 referrals</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-[#B7D1E1]/70">50 points/referral</p>
+                    </div>
+                    <div class="flex items-center justify-between p-4 bg-[#1B2330]/50 rounded-lg">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center">
+                                <span class="text-2xl">⭐</span>
+                            </div>
+                            <div>
+                                <p class="font-bold">Bronze</p>
+                                <p class="text-sm text-[#B7D1E1]/70">5-14 referrals</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-[#B7D1E1]/70">75 points/referral</p>
+                    </div>
+                    <div class="flex items-center justify-between p-4 bg-[#1B2330]/50 rounded-lg">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-gray-400 flex items-center justify-center">
+                                <span class="text-2xl">💎</span>
+                            </div>
+                            <div>
+                                <p class="font-bold">Silver</p>
+                                <p class="text-sm text-[#B7D1E1]/70">15-29 referrals</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-[#B7D1E1]/70">100 points/referral</p>
+                    </div>
+                    <div class="flex items-center justify-between p-4 bg-[#1B2330]/50 rounded-lg">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-yellow-500 flex items-center justify-center">
+                                <span class="text-2xl">👑</span>
+                            </div>
+                            <div>
+                                <p class="font-bold">Gold</p>
+                                <p class="text-sm text-[#B7D1E1]/70">30-49 referrals</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-[#B7D1E1]/70">150 points/referral</p>
+                    </div>
+                    <div class="flex items-center justify-between p-4 bg-[#1B2330]/50 rounded-lg">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-purple-600 flex items-center justify-center">
+                                <span class="text-2xl">🏆</span>
+                            </div>
+                            <div>
+                                <p class="font-bold">Platinum</p>
+                                <p class="text-sm text-[#B7D1E1]/70">50+ referrals</p>
+                            </div>
+                        </div>
+                        <p class="text-sm text-[#B7D1E1]/70">200 points/referral + exclusive perks</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Affiliate Links -->
+            <div class="glassy-card rounded-2xl p-8 mb-8">
+                <h3 class="text-2xl font-bold mb-6">Your Affiliate Links</h3>
+                <p class="text-[#B7D1E1]/70 mb-6">Share these links to earn rewards when people join through your network</p>
+                
+                <div class="space-y-4">
+                    <!-- chimwopara.com -->
+                    <div class="link-card bg-[#1B2330]/50 rounded-lg p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="font-bold text-lg">Chim Wopara</h4>
+                            <span class="text-xs bg-sky-500/20 text-sky-400 px-3 py-1 rounded-full">Primary</span>
+                        </div>
+                        <div class="flex gap-2">
+                            <input type="text" readonly id="link-chimwopara" 
+                                class="flex-1 px-4 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white text-sm font-mono">
+                            <button onclick="copyLink('link-chimwopara')" 
+                                class="copy-btn px-6 py-2 bg-sky-500 hover:bg-sky-600 rounded-lg transition-colors">
+                                Copy
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- wopara.com -->
+                    <div class="link-card bg-[#1B2330]/50 rounded-lg p-6">
+                        <h4 class="font-bold text-lg mb-3">Wopara</h4>
+                        <div class="flex gap-2">
+                            <input type="text" readonly id="link-wopara" 
+                                class="flex-1 px-4 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white text-sm font-mono">
+                            <button onclick="copyLink('link-wopara')" 
+                                class="copy-btn px-6 py-2 bg-sky-500 hover:bg-sky-600 rounded-lg transition-colors">
+                                Copy
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- pautacos.com -->
+                    <div class="link-card bg-[#1B2330]/50 rounded-lg p-6">
+                        <h4 class="font-bold text-lg mb-3">Pautacos</h4>
+                        <div class="flex gap-2">
+                            <input type="text" readonly id="link-pautacos" 
+                                class="flex-1 px-4 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white text-sm font-mono">
+                            <button onclick="copyLink('link-pautacos')" 
+                                class="copy-btn px-6 py-2 bg-sky-500 hover:bg-sky-600 rounded-lg transition-colors">
+                                Copy
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- devgameshow.com -->
+                    <div class="link-card bg-[#1B2330]/50 rounded-lg p-6">
+                        <h4 class="font-bold text-lg mb-3">Dev Game Show</h4>
+                        <div class="flex gap-2">
+                            <input type="text" readonly id="link-devgameshow" 
+                                class="flex-1 px-4 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white text-sm font-mono">
+                            <button onclick="copyLink('link-devgameshow')" 
+                                class="copy-btn px-6 py-2 bg-sky-500 hover:bg-sky-600 rounded-lg transition-colors">
+                                Copy
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- fromsupply.com -->
+                    <div class="link-card bg-[#1B2330]/50 rounded-lg p-6">
+                        <h4 class="font-bold text-lg mb-3">FromSupply</h4>
+                        <div class="flex gap-2">
+                            <input type="text" readonly id="link-fromsupply" 
+                                class="flex-1 px-4 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white text-sm font-mono">
+                            <button onclick="copyLink('link-fromsupply')" 
+                                class="copy-btn px-6 py-2 bg-sky-500 hover:bg-sky-600 rounded-lg transition-colors">
+                                Copy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Referral History -->
+            <div class="glassy-card rounded-2xl p-8">
+                <h3 class="text-2xl font-bold mb-6">Recent Referrals</h3>
+                <div id="referral-list" class="space-y-3">
+                    <p class="text-[#B7D1E1]/70 text-center py-8">No referrals yet. Start sharing your links!</p>
+                </div>
+            </div>
+
+            <!-- Logout Button -->
+            <div class="text-center mt-8">
+                <button onclick="logout()" 
+                    class="px-8 py-3 bg-red-600/20 hover:bg-red-600/30 text-red-400 rounded-lg transition-colors">
+                    Logout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Database simulation (In production, this would be a real backend)
+        class AffiliateDatabase {
+            constructor() {
+                this.users = JSON.parse(localStorage.getItem('affiliateUsers') || '[]');
+                this.referrals = JSON.parse(localStorage.getItem('affiliateReferrals') || '[]');
+                this.currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+            }
+
+            saveUsers() {
+                localStorage.setItem('affiliateUsers', JSON.stringify(this.users));
+            }
+
+            saveReferrals() {
+                localStorage.setItem('affiliateReferrals', JSON.stringify(this.referrals));
+            }
+
+            saveCurrentUser() {
+                localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+            }
+
+            usernameExists(username) {
+                return this.users.some(user => user.username.toLowerCase() === username.toLowerCase());
+            }
+
+            emailExists(email) {
+                return this.users.some(user => user.email.toLowerCase() === email.toLowerCase());
+            }
+
+            createUser(userData) {
+                const user = {
+                    id: Date.now().toString(),
+                    fullname: userData.fullname,
+                    phone: userData.phone,
+                    email: userData.email,
+                    memberType: userData.memberType,
+                    username: userData.username,
+                    referralCode: userData.referralCode || null,
+                    joinedDate: new Date().toISOString(),
+                    totalReferrals: 0,
+                    rewardPoints: 0
+                };
+                
+                this.users.push(user);
+                this.saveUsers();
+
+                // If they used a referral code, add a referral
+                if (userData.referralCode) {
+                    const referrer = this.users.find(u => u.username.toLowerCase() === userData.referralCode.toLowerCase());
+                    if (referrer) {
+                        this.addReferral(referrer.username, user);
+                    }
+                }
+
+                return user;
+            }
+
+            addReferral(referrerUsername, newUser) {
+                const referrer = this.users.find(u => u.username === referrerUsername);
+                if (!referrer) return;
+
+                // Add referral record
+                this.referrals.push({
+                    referrerId: referrer.id,
+                    referredUserId: newUser.id,
+                    referredUserName: newUser.fullname,
+                    referredUserType: newUser.memberType,
+                    date: new Date().toISOString()
+                });
+
+                // Update referrer stats
+                referrer.totalReferrals++;
+                const tier = this.calculateTier(referrer.totalReferrals);
+                referrer.rewardPoints += this.getPointsPerReferral(tier);
+
+                this.saveUsers();
+                this.saveReferrals();
+            }
+
+            calculateTier(referrals) {
+                if (referrals >= 50) return 'Platinum';
+                if (referrals >= 30) return 'Gold';
+                if (referrals >= 15) return 'Silver';
+                if (referrals >= 5) return 'Bronze';
+                return 'Starter';
+            }
+
+            getPointsPerReferral(tier) {
+                const points = {
+                    'Starter': 50,
+                    'Bronze': 75,
+                    'Silver': 100,
+                    'Gold': 150,
+                    'Platinum': 200
+                };
+                return points[tier] || 50;
+            }
+
+            getUserReferrals(userId) {
+                return this.referrals.filter(r => r.referrerId === userId);
+            }
+
+            login(username) {
+                const user = this.users.find(u => u.username === username);
+                if (user) {
+                    this.currentUser = user;
+                    this.saveCurrentUser();
+                    return user;
+                }
+                return null;
+            }
+
+            logout() {
+                this.currentUser = null;
+                localStorage.removeItem('currentUser');
+            }
+        }
+
+        const db = new AffiliateDatabase();
+
+        // Check if user is already logged in
+        if (db.currentUser) {
+            showDashboard(db.currentUser);
+        }
+
+        // Username check
+        document.getElementById('check-username').addEventListener('click', function() {
+            const username = document.getElementById('username').value.trim();
+            const statusEl = document.getElementById('username-status');
+            
+            if (!username) {
+                statusEl.textContent = 'Please enter a username';
+                statusEl.className = 'text-sm mt-2 text-red-400';
+                return;
+            }
+
+            if (db.usernameExists(username)) {
+                statusEl.textContent = '❌ Username already taken';
+                statusEl.className = 'text-sm mt-2 text-red-400';
+            } else {
+                statusEl.textContent = '✓ Username available';
+                statusEl.className = 'text-sm mt-2 text-green-400';
+            }
+        });
+
+        // Form submission
+        document.getElementById('signup-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
+
+            // Validate username
+            if (db.usernameExists(username)) {
+                alert('Username already taken. Please choose another.');
+                return;
+            }
+
+            // Validate email
+            if (db.emailExists(email)) {
+                alert('Email already registered. Please use another email or login.');
+                return;
+            }
+
+            // Get selected member type
+            const memberType = document.querySelector('input[name="memberType"]:checked').value;
+
+            // Create user
+            const userData = {
+                fullname: document.getElementById('fullname').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                email: email,
+                memberType: memberType,
+                username: username,
+                referralCode: document.getElementById('referral-code').value.trim()
+            };
+
+            const newUser = db.createUser(userData);
+            
+            // Show success message
+            alert(`Welcome to the network, ${newUser.fullname}! Your affiliate account has been created.`);
+            
+            // Show dashboard
+            showDashboard(newUser);
+        });
+
+        function showDashboard(user) {
+            // Hide signup, show dashboard
+            document.getElementById('signup-section').classList.add('hidden');
+            document.getElementById('dashboard-section').classList.remove('hidden');
+
+            // Update user info
+            document.getElementById('user-fullname').textContent = user.fullname;
+            document.getElementById('user-username').textContent = user.username;
+            document.getElementById('user-type').textContent = user.memberType;
+
+            // Calculate tier
+            const tier = db.calculateTier(user.totalReferrals);
+            document.getElementById('user-tier').textContent = tier;
+
+            // Update stats
+            document.getElementById('total-referrals').textContent = user.totalReferrals;
+            document.getElementById('reward-points').textContent = user.rewardPoints;
+
+            // Calculate referrals to next tier
+            let nextTierCount = 5;
+            if (user.totalReferrals >= 5 && user.totalReferrals < 15) nextTierCount = 15 - user.totalReferrals;
+            else if (user.totalReferrals >= 15 && user.totalReferrals < 30) nextTierCount = 30 - user.totalReferrals;
+            else if (user.totalReferrals >= 30 && user.totalReferrals < 50) nextTierCount = 50 - user.totalReferrals;
+            else if (user.totalReferrals >= 50) nextTierCount = 0;
+            else nextTierCount = 5 - user.totalReferrals;
+
+            document.getElementById('next-tier-count').textContent = nextTierCount;
+
+            // Generate affiliate links
+            const baseUrls = {
+                'chimwopara': 'https://chimwopara.com',
+                'wopara': 'https://wopara.com',
+                'pautacos': 'https://pautacos.com',
+                'devgameshow': 'https://devgameshow.com',
+                'fromsupply': 'https://fromsupply.com'
+            };
+
+            Object.keys(baseUrls).forEach(key => {
+                const link = `${baseUrls[key]}?ref=${user.username}`;
+                document.getElementById(`link-${key}`).value = link;
+            });
+
+            // Show referral history
+            const referrals = db.getUserReferrals(user.id);
+            const referralList = document.getElementById('referral-list');
+            
+            if (referrals.length > 0) {
+                referralList.innerHTML = referrals.slice(-10).reverse().map(ref => `
+                    <div class="bg-[#1B2330]/50 rounded-lg p-4 flex items-center justify-between">
+                        <div>
+                            <p class="font-semibold">${ref.referredUserName}</p>
+                            <p class="text-sm text-[#B7D1E1]/70">${ref.referredUserType} • ${new Date(ref.date).toLocaleDateString()}</p>
+                        </div>
+                        <div class="text-green-400 font-bold">
+                            +${db.getPointsPerReferral(db.calculateTier(user.totalReferrals))} pts
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function copyLink(elementId) {
+            const input = document.getElementById(elementId);
+            input.select();
+            document.execCommand('copy');
+            
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = 'Copied!';
+            btn.classList.add('bg-green-500');
+            btn.classList.remove('bg-sky-500');
+            
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.classList.remove('bg-green-500');
+                btn.classList.add('bg-sky-500');
+            }, 2000);
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                db.logout();
+                location.reload();
+            }
+        }
+
+        // Handle incoming referrals (when someone visits with ?ref=username)
+        const urlParams = new URLSearchParams(window.location.search);
+        const refUsername = urlParams.get('ref');
+        if (refUsername && !db.currentUser) {
+            document.getElementById('referral-code').value = refUsername;
+            // Scroll to signup
+            document.getElementById('signup-section').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
