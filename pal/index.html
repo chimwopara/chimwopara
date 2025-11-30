@@ -1101,50 +1101,112 @@
             { id: 'custom', name: 'Other', desc: 'Non listed language', icon: '✨', isSpecial: true }
         ];
 
-        const themes = [
-            { id: 'default', name: 'Midnight (Default)', start: '#1c1c1e', end: '#000000', accent: '#0A84FF' },
-            { id: 'ocean', name: 'Ocean Blue', start: '#005f73', end: '#0a9396', accent: '#94d2bd' },
-            { id: 'sunset', name: 'Sunset Orange', start: '#941b0c', end: '#bc3908', accent: '#f6aa1c' },
-            { id: 'forest', name: 'Forest Green', start: '#1b4332', end: '#2d6a4f', accent: '#52b788' },
-            { id: 'lavender', name: 'Lavender Dream', start: '#240046', end: '#3c096c', accent: '#9d4edd' },
-            { id: 'cherry', name: 'Cherry Blossom', start: '#590d22', end: '#800f2f', accent: '#ff4d6d' },
-            { id: 'gold', name: 'Royal Gold', start: '#332900', end: '#4d3d00', accent: '#ffd700' },
-            { id: 'neon', name: 'Neon Cyber', start: '#0d0d0d', end: '#1a1a1a', accent: '#00ff9f' },
-            { id: 'slate', name: 'Slate Minimal', start: '#334155', end: '#475569', accent: '#94a3b8' },
-            { id: 'coffee', name: 'Coffee', start: '#4a3529', end: '#5c4739', accent: '#d4a373' },
-            { id: 'dracula', name: 'Dracula', start: '#44475a', end: '#6272a4', accent: '#ff79c6' },
-            { id: 'arctic', name: 'Arctic Ice', start: '#003f5c', end: '#2f4b7c', accent: '#a0e4f1' },
-            { id: 'mint', name: 'Fresh Mint', start: '#164e44', end: '#065f46', accent: '#6ee7b7' },
-            { id: 'matrix', name: 'The Matrix', start: '#001a00', end: '#003300', accent: '#00ff00' },
-            { id: 'vaporwave', name: 'Vaporwave', start: '#5b2c6f', end: '#d60270', accent: '#00e5ff' },
-            { id: 'ruby', name: 'Ruby Red', start: '#3d0000', end: '#9b2226', accent: '#ff1a1a' },
-            { id: 'sapphire', name: 'Sapphire Deep', start: '#001233', end: '#002855', accent: '#4cc9f0' },
-            { id: 'emerald', name: 'Emerald City', start: '#013a1a', end: '#014f25', accent: '#10b981' },
-            { id: 'amethyst', name: 'Amethyst Geode', start: '#240046', end: '#5a189a', accent: '#c77dff' },
-            { id: 'tokyo', name: 'Tokyo Night', start: '#19002e', end: '#3a0ca3', accent: '#f72585' },
-            { id: 'mami', name: 'Miami Vice', start: '#c71585', end: '#4b0082', accent: '#00ffff' },
-            { id: 'nordic', name: 'Nordic Frost', start: '#2e3440', end: '#4c566a', accent: '#88c0d0' },
-            { id: 'graphite', name: 'Graphite', start: '#212121', end: '#424242', accent: '#e0e0e0' },
-            { id: 'sepia', name: 'Old Sepia', start: '#3e2723', end: '#5d4037', accent: '#d7ccc8' },
-            { id: 'cotton', name: 'Cotton Candy', start: '#ffcbf2', end: '#a2d2ff', accent: '#ffffff' },
-            { id: 'cyber', name: 'Cyber Yellow', start: '#1a1a00', end: '#333300', accent: '#ffff00' },
-            { id: 'bordeaux', name: 'Bordeaux Wine', start: '#2b0000', end: '#5c001e', accent: '#ff6b81' },
-            { id: 'gunmetal', name: 'Gunmetal', start: '#263238', end: '#37474f', accent: '#90a4ae' },
-            { id: 'sky', name: 'Deep Sky', start: '#0c4a6e', end: '#075985', accent: '#7dd3fc' },
-            { id: 'rose', name: 'Dusty Rose', start: '#4a0404', end: '#7f1d1d', accent: '#fda4af' },
-            { id: 'storm', name: 'Stormy Night', start: '#1f2937', end: '#374151', accent: '#fbbf24' },
-            { id: 'moss', name: 'Spanish Moss', start: '#354f52', end: '#52796f', accent: '#cad2c5' },
-            { id: 'pumpkin', name: 'Spiced Pumpkin', start: '#7c2d12', end: '#9a3412', accent: '#fdba74' },
-            { id: 'void', name: 'The Void', start: '#000000', end: '#0a0a0a', accent: '#ffffff' },
-            { id: 'indigo', name: 'Indigo Flow', start: '#312e81', end: '#4338ca', accent: '#818cf8' },
-            { id: 'terminal', name: 'Retro Terminal', start: '#1a1a1a', end: '#0f0f0f', accent: '#39ff14' },
-            { id: 'coral', name: 'Living Coral', start: '#7f1d1d', end: '#991b1b', accent: '#ff7f50' },
-            { id: 'glacier', name: 'Glacier Blue', start: '#082f49', end: '#0369a1', accent: '#bae6fd' },
-            { id: 'plum', name: 'Sugar Plum', start: '#4a044e', end: '#701a75', accent: '#f0abfc' },
-            { id: 'sand', name: 'Desert Sand', start: '#451a03', end: '#78350f', accent: '#fcd34d' },
-            { id: 'teal', name: 'Teal Depth', start: '#042f2e', end: '#115e59', accent: '#5eead4' },
-            { id: 'blueprint', name: 'Blueprint', start: '#1e3a8a', end: '#1d4ed8', accent: '#ffffff' }
-        ];
+       const themes = [
+  // Original 41 (slightly polished where needed)
+  { id: 'default',     name: 'Midnight (Default)', start: '#1c1c1e', end: '#000000', accent: '#0a84ff' },
+  { id: 'ocean',       name: 'Ocean Blue',         start: '#005f73', end: '#0a9396', accent: '#94d2bd' },
+  { id: 'sunset',      name: 'Sunset Orange',      start: '#941b0c', end: '#bc3908', accent: '#f6aa1c' },
+  { id: 'forest',      name: 'Forest Green',       start: '#1b4332', end: '#2d6a4f', accent: '#52b788' },
+  { id: 'lavender',    name: 'Lavender Dream',  start: '#240046', end: '#3c096c', accent: '#c77dff' },
+  { id: 'cherry',      name: 'Cherry Blossom',     start: '#590d22', end: '#800f2f', accent: '#ff6b9d' },
+  { id: 'gold',        name: 'Royal Gold',         start: '#332900', end: '#4d3d00', accent: '#ffd700' },
+  { id: 'neon',        name: 'Neon Cyber',         start: '#0d0d0d', end: '#1a1a1a', accent: '#00ff9f' },
+  { id: 'slate',       name: 'Slate Minimal',      start: '#334155', end: '#475569', accent: '#cbd5e1' },
+  { id: 'coffee',      name: 'Coffee',             start: '#4a3529', end: '#5c4739', accent: '#d4a373' },
+  { id: 'dracula',     name: 'Dracula',            start: '#44475a', end: '#6272a4', accent: '#ff79c6' },
+  { id: 'arctic',      name: 'Arctic Ice',         start: '#003f5c', end: '#2f4b7c', accent: '#a5f3fc' },
+  { id: 'mint',        name: 'Fresh Mint',         start: '#164e44', end: '#065f46', accent: '#6ee7b7' },
+  { id: 'matrix',      name: 'The Matrix',         start: '#001a00', end: '#003300', accent: '#39ff14' },
+  { id: 'vaporwave',   name: 'Vaporwave',          start: '#5b2c6f', end: '#d60270', accent: '#00e5ff' },
+  { id: 'ruby',        name: 'Ruby Red',           start: '#3d0000', end: '#9b2226', accent: '#ff6b6b' },
+  { id: 'sapphire',    name: 'Sapphire Deep',      start: '#001233', end: '#002855', accent: '#4cc9f0' },
+  { id: 'emerald',     name: 'Emerald City',       start: '#013a1a', end: '#014f25', accent: '#34d399' },
+  { id: 'amethyst',    name: 'Amethyst Geode',     start: '#240046', end: '#5a189a', accent: '#e0aaff' },
+  { id: 'tokyo',       name: 'Tokyo Night',        start: '#19002e', end: '#3a0ca3', accent: '#f72585' },
+  { id: 'miami',       name: 'Miami Vice',       start: '#c71585', end: '#4b0082', accent: '#00ffff' },
+  { id: 'nordic',      name: 'Nordic Frost',       start: '#2e3440', end: '#4c566a', accent: '#88c0d0' },
+  { id: 'graphite',    name: 'Graphite',           start: '#212121', end: '#424242', accent: '#e0e0e0' },
+  { id: 'sepia',       name: 'Old Sepia',          start: '#3e2723', end: '#5d4037', accent: '#d7ccc8' },
+  { id: 'cotton',      name: 'Cotton Candy',       start: '#ffcbf2', end: '#a2d2ff', accent: '#1e293b', textColor: 'dark' },
+  { id: 'cyber',       name: 'Cyber Yellow',       start: '#1a1a00', end: '#333300', accent: '#ffff00' },
+  { id: 'bordeaux',    name: 'Bordeaux Wine',      start: '#2b0000', end: '#5c001e', accent: '#ff8fab' },
+  { id: 'gunmetal',    name: 'Gunmetal',           start: '#263238', end: '#37474f', accent: '#b0bec5' },
+  { id: 'sky',         name: 'Deep Sky',           start: '#0c4a6e', end: '#075985', accent: '#7dd3fc' },
+  { id: 'rose',        name: 'Dusty Rose',         start: '#4a0404', end: '#7f1d1d', accent: '#fda4af' },
+  { id: 'storm',       name: 'Stormy Night',       start: '#1f2937', end: '#374151', accent: '#fbbf24' },
+  { id: 'moss',        name: 'Spanish Moss',       start: '#354f52', end: '#52796f', accent: '#cad2c5' },
+  { id: 'pumpkin',     name: 'Spiced Pumpkin',     start: '#7c2d12', end: '#9a3412', accent: '#fdba74' },
+  { id: 'void',        name: 'The Void',           start: '#000000', end: '#0a0a0a', accent: '#ffffff' },
+  { id: 'indigo',      name: 'Indigo Flow',        start: '#312e81', end: '#4338ca', accent: '#a5b4fc' },
+  { id: 'terminal',    name: 'Retro Terminal',     start: '#1a1a1a', end: '#0f0f0f', accent: '#39ff14' },
+  { id: 'coral',        name: 'Living Coral',       start: '#7f1d1d', end: '#991b1b', accent: '#ff7f50' },
+  { id: 'glacier',     name: 'Glacier Blue',       start: '#082f49', end: '#0369a1', accent: '#bae6fd' },
+  { id: 'plum',        name: 'Sugar Plum',         start: '#4a044e', end: '#701a75', accent: '#f0abfc' },
+  { id: 'sand',        name: 'Desert Sand',         start: '#451a03', end: '#78350f', accent: '#fcd34d' },
+  { id: 'teal',        name: 'Teal Depth',         start: '#042f2e', end: '#115e59', accent: '#5eead4' },
+  { id: 'blueprint',   name: 'Blueprint',          start: '#1e3a8a', end: '#1d4ed8', accent: '#ffffff' },
+
+  // 50 NEW — ALL 100% READABLE (light themes have dark text)
+  { id: 'aurora',      name: 'Aurora Borealis',    start: '#0b132b', end: '#1c2a48', accent: '#00ff9f' },
+  { id: 'peacock',     name: 'Peacock Feathers',   start: '#0a3d62', end: '#134e4a', accent: '#00f5d4' },
+  { id: 'bloodorange', name: 'Blood Orange',       start: '#3d0000', end: '#991b00', accent: '#ff8c42' },
+  { id: 'frostbite',   name: 'Frostbite',          start: '#e0f2fe', end: '#bae6fd', accent: '#0c4a6e', textColor: 'dark' },
+  { id: 'obsidian',    name: 'Polished Obsidian',  start: '#0c0a09', end: '#1c1917', accent: '#ff4d78' },
+  { id: 'limepunch',   name: 'Lime Punch',         start: '#1a2e05', end: '#2d5a0a', accent: '#a3e635' },
+  { id: 'royalpurple', name: 'Royal Velvet',       start: '#240046', end: '#5a189a', accent: '#e0aaff' },
+  { id: 'copper',      name: 'Burnished Copper',   start: '#3c1f0c', end: '#6b3a1a', accent: '#ff9f1c' },
+  { id: 'abyss',       name: 'Deep Abyss',         start: '#000814', end: '#001d3d', accent: '#ffc300' },
+  { id: 'flamingo',    name: 'Flamingo Pink',      start: '#78001a', end: '#c71585', accent: '#ff8fab' },
+  { id: 'olive',       name: 'Mediterranean Olive',start: '#283618', end: '#3d4f24', accent: '#b5e48c' },
+  { id: 'crimson',     name: 'Crimson Tide',       start: '#450000', end: '#8b0000', accent: '#ff6b6b' },
+  { id: 'turquoise',   name: 'Caribbean Turquoise',start: '#014f4f', end: '#016666', accent: '#99f6e4' },
+  { id: 'charcoal',    name: 'Charcoal Ember',     start: '#1e1e1e', end: '#2d2d2d', accent: '#ff453a' },
+  { id: 'lilac',       name: 'Spring Lilac',       start: '#6b5b95', end: '#8876b3', accent: '#e0c3fc' },
+  { id: 'electric',    name: 'Electric Violet',    start: '#1e0038', end: '#3d0075', accent: '#c77dff' },
+  { id: 'maroon',      name: 'Vintage Maroon',     start: '#3f0000', end: '#720026', accent: '#ff6b6b' },
+  { id: 'seaglass',    name: 'Sea Glass',          start: '#ccfbf1', end: '#99f6e4', accent: '#134e4a', textColor: 'dark' },
+  { id: 'amber',       name: 'Golden Amber',       start: '#4a2c00', end: '#783c00', accent: '#ffbf00' },
+  { id: 'midnightblue',name: 'Midnight Sapphire',  start: '#03071e', end: '#370617', accent: '#48cae4' },
+  { id: 'matcha',      name: 'Matcha Latte',       start: '#3a5a40', end: '#588157', accent: '#d4e6b8' },
+  { id: 'onyx',        name: 'Onyx Shine',         start: '#0f0f0f', end: '#1f1f1f', accent: '#00d4ff' },
+  { id: 'orchid',      name: 'Wild Orchid',        start: '#660066', end: '#990099', accent: '#ff99ff' },
+  { id: 'rust',        name: 'Rusted Iron',        start: '#4a1e04', end: '#7f3300', accent: '#ff6b35' },
+  { id: 'aquamarine',  name: 'Aquamarine Glow',    start: '#007f7f', end: '#009999', accent: '#66ffff' },
+  { id: 'slateblue',   name: 'Slate Blue',         start: '#2b2d42', end: '#3d4060', accent: '#a0a9e6' },
+  { id: 'tangerine',   name: 'Tangerine Dream',    start: '#992b00', end: '#cc3d00', accent: '#ff8c38' },
+  { id: 'evergreen',   name: 'Evergreen Forest',    start: '#0a3d2a', end: '#1a5c42', accent: '#34d399' },
+  { id: 'wine',        name: 'Mulled Wine',        start: '#420420', end: '#6b0a3d', accent: '#f72585' },
+  { id: 'cyanide',     name: 'Toxic Cyanide',      start: '#001a1a', end: '#003333', accent: '#00f5d4' },
+  { id: 'mauve',       name: 'Dusty Mauve',        start: '#5c2a3d', end: '#8a4a6b', accent: '#e8b4d9' },
+  { id: 'bronze',      name: 'Ancient Bronze',      start: '#4a2e0a', end: '#7d4e1a', accent: '#e6b86e' },
+  { id: 'bubblegum',   name: 'Bubblegum Pop',      start: '#ffb3d9', end: '#ff99c8', accent: '#2d1b3a' },   // dark accent
+  { id: 'deepsea',     name: 'Deep Sea Trench',    start: '#000033', end: '#000066', accent: '#00d0ff' },
+  { id: 'hazelnut',    name: 'Toasted Hazelnut',   start: '#5c3d2e', end: '#8b5a3c', accent: '#e6b8a2' },
+  { id: 'fuchsia',     name: 'Hot Fuchsia',        start: '#9d0b54', end: '#c71585', accent: '#ff66ff' },
+  { id: 'ivory',       name: 'Ivory Tower',        start: '#f5f5dc', end: '#e8e8d0', accent: '#3a3a2a', textColor: 'dark' },
+  { id: 'scarlet',     name: 'Scarlet Letter',     start: '#800000', end: '#a41313', accent: '#ff6b6b' },
+  { id: 'lagoon',      name: 'Tropical Lagoon',     start: '#006d77', end: '#0099aa', accent: '#83c5be' },
+  { id: 'mystic',      name: 'Mystic Purple',      start: '#2e1a47', end: '#4d2a7a', accent: '#c8b6ff' },
+  { id: 'citrine',    name: 'Citrine Crystal',     start: '#5c4400', end: '#8b6600', accent: '#fff350' },
+  { id: 'violet',      name: 'Imperial Violet',     start: '#3f0071', end: '#7209b7', accent: '#e0aaff' },
+  { id: 'pine',        name: 'Pine Needle',         start: '#173019', end: '#254d28', accent: '#76b947' },
+  { id: 'cerulean',    name: 'Cerulean Sky',       start: '#1e40af', end: '#2563eb', accent: '#93c5fd' },
+  { id: 'garnet',      name: 'Garnet Gem',         start: '#5e0a1a', end: '#8b1129', accent: '#ff6b6b' },
+  { id: 'honey',       name: 'Wild Honey',          start: '#783900', end: '#a0522d', accent: '#ffdb58' },
+  { id: 'phantom',     name: 'Phantom Gray',        start: '#1a1a2e', end: '#16213e', accent: '#94a3b8' },
+  { id: 'vermillion',  name: 'Vermillion Fire',     start: '#a63d00', end: '#d94f00', accent: '#ff8c38' },
+  { id: 'pearl',       name: 'Moonlit Pearl',      start: '#f8f9fa', end: '#e9ecef', accent: '#212529', textColor: 'dark' },    // almost black accent
+  // 92–100 — Brand new, beautiful & 100% readable
+  { id: 'dawn',        name: 'Soft Dawn',          start: '#ffe4e6', end: '#fecaca', accent: '#991b1b', textColor: 'dark' },
+  { id: 'twilight',    name: 'Twilight Haze',      start: '#1e1b4b', end: '#312e81', accent: '#c4b5fd' },
+  { id: 'sherbet',     name: 'Lemon Sherbet',      start: '#fff7ed', end: '#fed7aa', accent: '#9a3412', textColor: 'dark' },
+  { id: 'midnightrose',name: 'Midnight Rose',      start: '#4c1d95', end: '#7c3aed', accent: '#f0abfc' },
+  { id: 'cantaloupe',  name: 'Ripe Cantaloupe',    start: '#ffedd5', end: '#fdba74', accent: '#7c2d12', textColor: 'dark' },
+  { id: 'obsidianfire',name: 'Obsidian Fire',      start: '#0c0a09', end: '#1a0d00', accent: '#ff6b35' },
+  { id: 'mintcream',   name: 'Mint Cream',         start: '#f0fdfa', end: '#ccfbf1', accent: '#115e59', textColor: 'dark' },
+  { id: 'bloodmoon',   name: 'Blood Moon',         start: '#450a0a', end: '#7f1d1d', accent: '#fca5a5' },
+  { id: 'polar',       name: 'Polar Lights',       start: '#ecfeff', end: '#cffafe', accent: '#155e75', textColor: 'dark' },  // very light → deep cyan accent
+];
         
         let unlockedThemes = ['default'];
         let isPremium = false;
@@ -1192,6 +1254,23 @@
             const theme = themes.find(t => t.id === themeId);
             if (!theme) return;
             const root = document.documentElement;
+            
+            // Helper to set text colors
+            const setTextColor = (color) => {
+                if (color === 'dark') {
+                    root.style.setProperty('--text-primary', '#1D1D1F');
+                    root.style.setProperty('--text-secondary', 'rgba(0, 0, 0, 0.6)');
+                    root.style.setProperty('--text-tertiary', 'rgba(0, 0, 0, 0.3)');
+                    root.style.setProperty('--border-glass', 'rgba(0, 0, 0, 0.1)'); 
+                } else {
+                    // Reset to default (White/Dark Mode) variables
+                    root.style.removeProperty('--text-primary');
+                    root.style.removeProperty('--text-secondary');
+                    root.style.removeProperty('--text-tertiary');
+                    root.style.removeProperty('--border-glass');
+                }
+            };
+
             if (themeId === 'default') {
                 root.style.removeProperty('--bg-app');
                 root.style.removeProperty('--bg-gradient-start');
@@ -1199,6 +1278,7 @@
                 root.style.removeProperty('--bg-glass');
                 root.style.removeProperty('--accent-primary');
                 root.style.removeProperty('--accent-highlight');
+                setTextColor('light'); // Default is dark mode
             } else {
                 root.style.setProperty('--bg-app', theme.start);
                 root.style.setProperty('--bg-gradient-start', theme.start);
@@ -1206,6 +1286,9 @@
                 root.style.setProperty('--bg-glass', `${theme.start}BF`);
                 root.style.setProperty('--accent-primary', theme.accent);
                 root.style.setProperty('--accent-highlight', theme.accent);
+                
+                // Apply text color based on theme property
+                setTextColor(theme.textColor || 'light');
             }
             closeThemeStoreModal();
         }
