@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CW Network - Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -277,11 +277,11 @@
                 <div id="role-switcher" class="mb-6 p-4 bg-[#1B2330]/50 rounded-lg hidden">
                     <p class="text-sm text-[#B7D1E1]/70 mb-3">Switch Your Role:</p>
                     <div class="flex gap-3">
-                        <button onclick="switchToAssembler()" id="switch-assembler" 
+                        <button type="button" onclick="switchToAssembler()" id="switch-assembler" 
                             class="px-4 py-2 bg-sky-500/20 text-sky-400 rounded-lg hover:bg-sky-500/30 transition-colors">
                             Assembler Mode
                         </button>
-                        <button onclick="switchToAuditor()" id="switch-auditor"
+                        <button type="button" onclick="switchToAuditor()" id="switch-auditor"
                             class="px-4 py-2 bg-green-500/20 text-green-400 rounded-lg hover:bg-green-500/30 transition-colors">
                             Auditor Mode
                         </button>
@@ -319,7 +319,7 @@
                             <div class="flex gap-2">
                                 <input type="text" readonly id="link-cwnetwork" 
                                     class="flex-1 px-4 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white text-sm font-mono">
-                                <button onclick="copyLink('link-cwnetwork')" 
+                                <button type="button" onclick="copyLink(this, 'link-cwnetwork')" 
                                     class="copy-btn px-6 py-2 bg-sky-500 hover:bg-sky-600 rounded-lg transition-colors">
                                     Copy
                                 </button>
@@ -334,7 +334,7 @@
                             <div class="flex gap-2">
                                 <input type="text" readonly id="link-chimwopara" 
                                     class="flex-1 px-4 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white text-sm font-mono">
-                                <button onclick="copyLink('link-chimwopara')" 
+                                <button type="button" onclick="copyLink(this, 'link-chimwopara')" 
                                     class="copy-btn px-6 py-2 bg-sky-500 hover:bg-sky-600 rounded-lg transition-colors">
                                     Copy
                                 </button>
@@ -346,7 +346,7 @@
                             <div class="flex gap-2">
                                 <input type="text" readonly id="link-wopara" 
                                     class="flex-1 px-4 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white text-sm font-mono">
-                                <button onclick="copyLink('link-wopara')" 
+                                <button type="button" onclick="copyLink(this, 'link-wopara')" 
                                     class="copy-btn px-6 py-2 bg-sky-500 hover:bg-sky-600 rounded-lg transition-colors">
                                     Copy
                                 </button>
@@ -358,7 +358,7 @@
                             <div class="flex gap-2">
                                 <input type="text" readonly id="link-pautacos" 
                                     class="flex-1 px-4 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white text-sm font-mono">
-                                <button onclick="copyLink('link-pautacos')" 
+                                <button type="button" onclick="copyLink(this, 'link-pautacos')" 
                                     class="copy-btn px-6 py-2 bg-sky-500 hover:bg-sky-600 rounded-lg transition-colors">
                                     Copy
                                 </button>
@@ -370,7 +370,7 @@
                             <div class="flex gap-2">
                                 <input type="text" readonly id="link-devgameshow" 
                                     class="flex-1 px-4 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white text-sm font-mono">
-                                <button onclick="copyLink('link-devgameshow')" 
+                                <button type="button" onclick="copyLink(this, 'link-devgameshow')" 
                                     class="copy-btn px-6 py-2 bg-sky-500 hover:bg-sky-600 rounded-lg transition-colors">
                                     Copy
                                 </button>
@@ -382,7 +382,7 @@
                             <div class="flex gap-2">
                                 <input type="text" readonly id="link-fromsupply" 
                                     class="flex-1 px-4 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white text-sm font-mono">
-                                <button onclick="copyLink('link-fromsupply')" 
+                                <button type="button" onclick="copyLink(this, 'link-fromsupply')" 
                                     class="copy-btn px-6 py-2 bg-sky-500 hover:bg-sky-600 rounded-lg transition-colors">
                                     Copy
                                 </button>
@@ -410,7 +410,7 @@
                                 <p class="text-[#B7D1E1]/70" id="farm-name-display"></p>
                                 <p class="text-[#B7D1E1]/70 text-sm" id="farm-details-display"></p>
                             </div>
-                            <button onclick="createNewAudit()" 
+                            <button type="button" onclick="createNewAudit()" 
                                 class="px-6 py-3 bg-green-500 hover:bg-green-600 rounded-lg transition-colors">
                                 + New Audit
                             </button>
@@ -466,7 +466,7 @@
                                     <div class="space-y-3" id="crop-inventory-list">
                                         <p class="text-[#B7D1E1]/70 text-sm">No crops recorded yet</p>
                                     </div>
-                                    <button onclick="addCropEntry()" 
+                                    <button type="button" onclick="addCropEntry()" 
                                         class="mt-4 px-4 py-2 bg-green-500/20 text-green-400 rounded-lg hover:bg-green-500/30 transition-colors">
                                         + Add Crop
                                     </button>
@@ -477,13 +477,13 @@
                                     <div class="space-y-3" id="fertilizer-list">
                                         <p class="text-[#B7D1E1]/70 text-sm">No fertilizers recorded yet</p>
                                     </div>
-                                    <button onclick="addFertilizerEntry()" 
+                                    <button type="button" onclick="addFertilizerEntry()" 
                                         class="mt-4 px-4 py-2 bg-blue-500/20 text-blue-400 rounded-lg hover:bg-blue-500/30 transition-colors">
                                         + Add Fertilizer/Chemical
                                     </button>
                                 </div>
 
-                                <button onclick="savePlantFarmAudit()" 
+                                <button type="button" onclick="savePlantFarmAudit()" 
                                     class="w-full px-6 py-3 bg-green-500 hover:bg-green-600 rounded-lg transition-colors">
                                     Save Farm Audit
                                 </button>
@@ -499,7 +499,7 @@
                                     <div class="space-y-3" id="livestock-inventory-list">
                                         <p class="text-[#B7D1E1]/70 text-sm">No livestock recorded yet</p>
                                     </div>
-                                    <button onclick="addLivestockEntry()" 
+                                    <button type="button" onclick="addLivestockEntry()" 
                                         class="mt-4 px-4 py-2 bg-green-500/20 text-green-400 rounded-lg hover:bg-green-500/30 transition-colors">
                                         + Add Livestock
                                     </button>
@@ -510,7 +510,7 @@
                                     <div class="space-y-3" id="feed-list">
                                         <p class="text-[#B7D1E1]/70 text-sm">No feed records yet</p>
                                     </div>
-                                    <button onclick="addFeedEntry()" 
+                                    <button type="button" onclick="addFeedEntry()" 
                                         class="mt-4 px-4 py-2 bg-blue-500/20 text-blue-400 rounded-lg hover:bg-blue-500/30 transition-colors">
                                         + Add Feed Record
                                     </button>
@@ -521,13 +521,13 @@
                                     <div class="space-y-3" id="health-records-list">
                                         <p class="text-[#B7D1E1]/70 text-sm">No health records yet</p>
                                     </div>
-                                    <button onclick="addHealthRecord()" 
+                                    <button type="button" onclick="addHealthRecord()" 
                                         class="mt-4 px-4 py-2 bg-red-500/20 text-red-400 rounded-lg hover:bg-red-500/30 transition-colors">
                                         + Add Health Record
                                     </button>
                                 </div>
 
-                                <button onclick="saveAnimalFarmAudit()" 
+                                <button type="button" onclick="saveAnimalFarmAudit()" 
                                     class="w-full px-6 py-3 bg-green-500 hover:bg-green-600 rounded-lg transition-colors">
                                     Save Farm Audit
                                 </button>
@@ -553,7 +553,7 @@
                                 <p class="text-[#B7D1E1]/70" id="kitchen-name-display"></p>
                                 <p class="text-[#B7D1E1]/70 text-sm" id="kitchen-details-display"></p>
                             </div>
-                            <button onclick="startNewKitchenAudit()" 
+                            <button type="button" onclick="startNewKitchenAudit()" 
                                 class="px-6 py-3 bg-orange-500 hover:bg-orange-600 rounded-lg transition-colors">
                                 + New Assessment
                             </button>
@@ -601,7 +601,7 @@
                                     <textarea id="receipt-notes" rows="2" placeholder="Any additional details..."
                                         class="w-full px-4 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white"></textarea>
                                 </div>
-                                <button onclick="uploadReceipt()" 
+                                <button type="button" onclick="uploadReceipt()" 
                                     class="px-6 py-3 bg-green-500 hover:bg-green-600 rounded-lg transition-colors">
                                     Upload Receipt
                                 </button>
@@ -651,7 +651,7 @@
                                     <textarea id="session-notes" rows="3" placeholder="Menu items, techniques used, etc..."
                                         class="w-full px-4 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white"></textarea>
                                 </div>
-                                <button onclick="saveCookingSession()" 
+                                <button type="button" onclick="saveCookingSession()" 
                                     class="px-6 py-3 bg-purple-500 hover:bg-purple-600 rounded-lg transition-colors">
                                     Log Cooking Session
                                 </button>
@@ -677,7 +677,7 @@
             </div>
 
             <div class="text-center mt-8">
-                <button onclick="handleLogout()" 
+                <button type="button" onclick="handleLogout()" 
                     class="px-8 py-3 bg-red-600/20 hover:bg-red-600/30 text-red-400 rounded-lg transition-colors">
                     Logout
                 </button>
@@ -1352,7 +1352,7 @@
                         <p class="font-semibold">${entry.crop}</p>
                         <p class="text-sm text-[#B7D1E1]/70">${entry.quantity}</p>
                     </div>
-                    <button onclick="removeCropEntry(${idx})" class="text-red-400 hover:text-red-300">×</button>
+                    <button type="button" onclick="removeCropEntry(${idx})" class="text-red-400 hover:text-red-300">×</button>
                 </div>
             `).join('');
         }
@@ -1383,7 +1383,7 @@
                         <p class="font-semibold">${entry.name}</p>
                         <p class="text-sm text-[#B7D1E1]/70">${entry.amount}</p>
                     </div>
-                    <button onclick="removeFertilizerEntry(${idx})" class="text-red-400 hover:text-red-300">×</button>
+                    <button type="button" onclick="removeFertilizerEntry(${idx})" class="text-red-400 hover:text-red-300">×</button>
                 </div>
             `).join('');
         }
@@ -1414,7 +1414,7 @@
                         <p class="font-semibold">${entry.type}</p>
                         <p class="text-sm text-[#B7D1E1]/70">Count: ${entry.count}</p>
                     </div>
-                    <button onclick="removeLivestockEntry(${idx})" class="text-red-400 hover:text-red-300">×</button>
+                    <button type="button" onclick="removeLivestockEntry(${idx})" class="text-red-400 hover:text-red-300">×</button>
                 </div>
             `).join('');
         }
@@ -1445,7 +1445,7 @@
                         <p class="font-semibold">${entry.type}</p>
                         <p class="text-sm text-[#B7D1E1]/70">${entry.amount}</p>
                     </div>
-                    <button onclick="removeFeedEntry(${idx})" class="text-red-400 hover:text-red-300">×</button>
+                    <button type="button" onclick="removeFeedEntry(${idx})" class="text-red-400 hover:text-red-300">×</button>
                 </div>
             `).join('');
         }
@@ -1476,7 +1476,7 @@
                         <p class="font-semibold">${entry.description}</p>
                         <p class="text-sm text-[#B7D1E1]/70">${entry.details}</p>
                     </div>
-                    <button onclick="removeHealthRecord(${idx})" class="text-red-400 hover:text-red-300">×</button>
+                    <button type="button" onclick="removeHealthRecord(${idx})" class="text-red-400 hover:text-red-300">×</button>
                 </div>
             `).join('');
         }
@@ -1733,11 +1733,11 @@
             loadSessionsList();
         }
 
-        function copyLink(elementId) {
+        // FIXED: copyLink now receives the button element directly instead of relying on implicit event
+        function copyLink(btn, elementId) {
             const input = document.getElementById(elementId);
             input.select();
             document.execCommand('copy');
-            const btn = event.target;
             const originalText = btn.textContent;
             btn.textContent = 'Copied!';
             btn.classList.add('bg-green-500');
