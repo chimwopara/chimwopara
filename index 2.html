@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Prompts & Logic</title>
+    <title>P & L</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
@@ -42,395 +42,154 @@
             transition: background-color 0.5s ease, color 0.5s ease;
         }
         
+        /* Protection Classes */
+        .protected-content {
+            user-select: none; -webkit-user-select: none; cursor: default; transition: filter 0.2s ease;
+        }
+        .privacy-blur { filter: blur(12px) grayscale(100%); opacity: 0.5; pointer-events: none; }
+        
         .container {
-            display: flex;
-            height: 100vh;
-            width: 100vw;
-            padding: 12px;
-            gap: 12px;
+            display: flex; height: 100vh; width: 100vw; padding: 12px; gap: 12px;
             background: linear-gradient(to bottom right, var(--bg-gradient-start), var(--bg-gradient-end)); 
             transition: background 0.5s ease;
         }
         
         /* Sidebar Styles */
         .sidebar {
-            width: 300px;
-            background-color: var(--bg-glass);
-            backdrop-filter: blur(50px) saturate(180%);
-            -webkit-backdrop-filter: blur(50px) saturate(180%);
-            border: 1px solid var(--border-glass);
-            border-radius: 16px;
-            display: flex;
-            flex-direction: column;
-            flex-shrink: 0;
-            user-select: none;
-            z-index: 10;
+            width: 300px; background-color: var(--bg-glass);
+            backdrop-filter: blur(50px) saturate(180%); -webkit-backdrop-filter: blur(50px) saturate(180%);
+            border: 1px solid var(--border-glass); border-radius: 16px;
+            display: flex; flex-direction: column; flex-shrink: 0; user-select: none; z-index: 10;
             box-shadow: 0 20px 40px rgba(0,0,0,0.4);
             transition: transform 0.5s var(--ease-spring), opacity 0.3s ease, width 0.5s var(--ease-spring), background-color 0.5s ease;
             margin-left: 0;
         }
-        
-        .sidebar.hidden {
-            transform: translateX(-110%);
-            opacity: 0;
-            pointer-events: none;
-            width: 0;
-            margin-left: -12px;
-        }
+        .sidebar.hidden { transform: translateX(-110%); opacity: 0; pointer-events: none; width: 0; margin-left: -12px; }
         
         .toggle-sidebar-btn {
-            position: fixed;
-            top: 23px;
-            left: 260px;
-            width: 40px;
-            height: 40px;
-            background: var(--bg-glass);
-            backdrop-filter: blur(50px) saturate(180%);
-            -webkit-backdrop-filter: blur(50px) saturate(180%);
-            border: 1px solid var(--border-glass);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 20;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-            transition: all 0.5s var(--ease-spring);
+            position: fixed; top: 23px; left: 260px; width: 40px; height: 40px;
+            background: var(--bg-glass); backdrop-filter: blur(50px) saturate(180%);
+            border: 1px solid var(--border-glass); border-radius: 12px;
+            display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 20;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3); transition: all 0.5s var(--ease-spring);
         }
-
-        .toggle-sidebar-btn.collapsed {
-            left: 24px;
-            background: rgba(28, 28, 30, 0.5);
-            box-shadow: none;
-        }
-        
-        .toggle-sidebar-btn:hover {
-            background: var(--bg-glass-light);
-            transform: scale(1.05);
-        }
-
-        .toggle-sidebar-btn.collapsed:hover {
-             transform: scale(1.05) translateX(2px);
-        }
-        
-        .toggle-sidebar-btn svg {
-            width: 20px;
-            height: 20px;
-            stroke: var(--text-primary);
-            transition: transform 0.5s var(--ease-spring);
-        }
-
+        .toggle-sidebar-btn.collapsed { left: 24px; background: rgba(28, 28, 30, 0.5); box-shadow: none; }
+        .toggle-sidebar-btn:hover { background: var(--bg-glass-light); transform: scale(1.05); }
+        .toggle-sidebar-btn.collapsed:hover { transform: scale(1.05) translateX(2px); }
+        .toggle-sidebar-btn svg { width: 20px; height: 20px; stroke: var(--text-primary); transition: transform 0.5s var(--ease-spring); }
         .toggle-sidebar-btn.collapsed svg { transform: rotate(180deg); }
         
         .sidebar-header { padding: 16px 16px 12px 16px; }
         .logo { display: flex; align-items: center; gap: 12px; padding-left: 8px; margin-bottom: 12px; }
         .logo-img { height: 28px; width: auto; }
-        .logo-text {
-            font-weight: 700; font-size: 1.2rem; letter-spacing: -0.01em;
-            color: var(--text-primary);
-        }
+        .logo-text { font-weight: 700; font-size: 1.2rem; letter-spacing: -0.01em; color: var(--text-primary); }
 
         .sidebar-btn {
-            margin: 4px 12px;
-            padding: 8px 12px;
-            color: var(--text-primary);
-            background: transparent;
-            border-radius: 10px;
-            font-weight: 500;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.2s var(--ease-spring);
-            display: flex; align-items: center; gap: 10px;
+            margin: 4px 12px; padding: 8px 12px; color: var(--text-primary); background: transparent;
+            border-radius: 10px; font-weight: 500; font-size: 0.9rem; cursor: pointer;
+            transition: all 0.2s var(--ease-spring); display: flex; align-items: center; gap: 10px;
             border: none; text-align: left;
         }
         .sidebar-btn:hover { background: var(--bg-glass-light); }
         .sidebar-btn:active { background: rgba(255,255,255,0.15); transform: scale(0.98); }
         .sidebar-btn svg { opacity: 0.8; width: 18px; height: 18px; }
 
-        .new-chat-btn {
-            background: rgba(10, 132, 255, 0.15);
-            color: var(--accent-primary);
-            font-weight: 600;
-        }
+        .new-chat-btn { background: rgba(10, 132, 255, 0.15); color: var(--accent-primary); font-weight: 600; }
         .new-chat-btn:hover { background: rgba(10, 132, 255, 0.25) !important; }
         .new-chat-btn svg { opacity: 1; color: var(--accent-primary); }
         
-        .sidebar-section-title {
-            font-size: 12px; font-weight: 600; color: var(--text-tertiary);
-            padding: 20px 20px 8px 20px; text-transform: uppercase; letter-spacing: 0.05em;
-        }
-
+        .sidebar-section-title { font-size: 12px; font-weight: 600; color: var(--text-tertiary); padding: 20px 20px 8px 20px; text-transform: uppercase; letter-spacing: 0.05em; }
         .history-container { flex: 1; overflow-y: auto; padding: 0 12px; }
         .history-container::-webkit-scrollbar { width: 0px; }
-
-        .history-item {
-            padding: 8px 12px;
-            border-radius: 8px;
-            margin-bottom: 2px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-        }
+        .history-item { padding: 8px 12px; border-radius: 8px; margin-bottom: 2px; cursor: pointer; transition: all 0.2s ease; color: var(--text-secondary); font-size: 0.85rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .history-item:hover { background: var(--bg-glass-light); color: var(--text-primary); }
 
-        .sidebar-footer {
-            padding: 16px;
-            background: rgba(0,0,0,0.2);
-            backdrop-filter: blur(20px);
-            border-top: 1px solid var(--border-glass);
-            border-radius: 0 0 16px 16px;
-            display: flex; flex-direction: column; gap: 12px;
-        }
-
-        .mini-stats {
-            display: flex; justify-content: space-between; align-items: center;
-            font-size: 12px; color: var(--text-secondary); font-weight: 500;
-            padding: 0 8px;
-        }
+        .sidebar-footer { padding: 16px; background: rgba(0,0,0,0.2); backdrop-filter: blur(20px); border-top: 1px solid var(--border-glass); border-radius: 0 0 16px 16px; display: flex; flex-direction: column; gap: 12px; }
+        .mini-stats { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-secondary); font-weight: 500; padding: 0 8px; }
         .text-accent { color: var(--accent-primary); }
 
-        .google-signin-btn {
-            width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;
-            background-color: rgba(255,255,255,0.1);
-            color: #fff; border: 1px solid var(--border-glass);
-            border-radius: 10px; padding: 8px;
-            font-size: 13px; font-weight: 600;
-            cursor: pointer; transition: all 0.2s ease;
-        }
+        .google-signin-btn { width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; background-color: rgba(255,255,255,0.1); color: #fff; border: 1px solid var(--border-glass); border-radius: 10px; padding: 8px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
         .google-signin-btn:hover { background-color: rgba(255,255,255,0.15); }
         
         /* Main Content */
-        .main-content {
-            flex: 1;
-            border-radius: 16px;
-            background: transparent;
-            backdrop-filter: none;
-            border: none;
-            display: flex; flex-direction: column;
-            position: relative; overflow: hidden;
-            box-shadow: none;
-            transition: all 0.5s var(--ease-spring);
-        }
-        
+        .main-content { flex: 1; border-radius: 16px; background: transparent; backdrop-filter: none; border: none; display: flex; flex-direction: column; position: relative; overflow: hidden; box-shadow: none; transition: all 0.5s var(--ease-spring); }
         .content-area { flex: 1; display: flex; overflow: hidden; position: relative; }
-        
-        .creator-panel {
-            flex: 1; max-width: 100%; margin: 0 auto;
-            display: flex; flex-direction: column;
-            transition: all 0.5s var(--ease-spring);
-        }
-        .content-area.has-viewer .creator-panel {
-            max-width: 45%; border-right: 1px solid var(--border-glass);
-        }
+        .creator-panel { flex: 1; max-width: 100%; margin: 0 auto; display: flex; flex-direction: column; transition: all 0.5s var(--ease-spring); }
+        .content-area.has-viewer .creator-panel { max-width: 45%; border-right: 1px solid var(--border-glass); }
 
-        .prompt-container {
-            flex: 1; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; padding: 40px;
-        }
+        .prompt-container { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; }
+        .greeting { text-align: center; max-width: 600px; margin-bottom: 40px; animation: fadeIn 0.8s ease-out; }
+        .greeting h1 { font-weight: 700; font-size: 2.8rem; margin-bottom: 12px; color: var(--text-primary); letter-spacing: -0.02em; }
+        .greeting p { color: var(--text-secondary); font-size: 1.3rem; font-weight: 400; }
 
-        .greeting {
-            text-align: center; max-width: 600px; margin-bottom: 40px;
-            animation: fadeIn 0.8s ease-out;
-        }
-        .greeting h1 {
-            font-weight: 700; font-size: 2.8rem; margin-bottom: 12px;
-            color: var(--text-primary); letter-spacing: -0.02em;
-        }
-        .greeting p {
-            color: var(--text-secondary); font-size: 1.3rem; font-weight: 400;
-        }
-
-        .input-area-wrapper {
-            width: 100%; max-width: 720px; margin: 0 auto 32px auto;
-            padding: 0 24px; position: relative; z-index: 2;
-        }
-
-        .input-container {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(60px) saturate(180%);
-            -webkit-backdrop-filter: blur(60px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            padding: 16px 20px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
-        }
-        .input-container:focus-within {
-            border-color: rgba(10, 132, 255, 0.4);
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        }
-
-        textarea#questionInput {
-            width: 100%; min-height: 48px; max-height: 200px;
-            background: transparent; border: none;
-            color: var(--text-primary); font-family: inherit;
-            font-size: 1rem; line-height: 1.4;
-            resize: none; outline: none;
-        }
+        .input-area-wrapper { width: 100%; max-width: 720px; margin: 0 auto 32px auto; padding: 0 24px; position: relative; z-index: 2; }
+        .input-container { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(60px) saturate(180%); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 24px; padding: 16px 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05); transition: all 0.3s ease; }
+        .input-container:focus-within { border-color: rgba(10, 132, 255, 0.4); background: rgba(255, 255, 255, 0.08); box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1); }
+        textarea#questionInput { width: 100%; min-height: 48px; max-height: 200px; background: transparent; border: none; color: var(--text-primary); font-family: inherit; font-size: 1rem; line-height: 1.4; resize: none; outline: none; }
         textarea#questionInput::placeholder { color: var(--text-tertiary); }
 
-        .input-footer {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-top: 12px; padding-top: 0;
-        }
-
+        .input-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 0; }
         .input-tools { display: flex; gap: 8px; align-items: center; }
-
-        .minimal-btn {
-            background-color: rgba(255,255,255,0.08);
-            color: var(--text-secondary); border: none;
-            padding: 6px 12px; border-radius: 18px;
-            font-size: 0.85rem; font-weight: 500;
-            cursor: pointer; display: flex; align-items: center; gap: 6px;
-            transition: all 0.2s ease;
-        }
+        .minimal-btn { background-color: rgba(255,255,255,0.08); color: var(--text-secondary); border: none; padding: 6px 12px; border-radius: 18px; font-size: 0.85rem; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all 0.2s ease; }
         .minimal-btn:hover { background-color: rgba(255,255,255,0.15); color: #fff; }
         .minimal-btn.active-lang { background-color: var(--accent-primary); color: #fff; }
-
         #languageSelect { display: none; }
-        
-        .minimal-select {
-            background-color: rgba(255,255,255,0.08);
-            color: var(--text-secondary);
-            border: 1px solid transparent;
-            padding: 6px 12px;
-            border-radius: 18px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            outline: none;
-        }
+        .minimal-select { background-color: rgba(255,255,255,0.08); color: var(--text-secondary); border: 1px solid transparent; padding: 6px 12px; border-radius: 18px; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.2s ease; outline: none; }
         .minimal-select:hover { background-color: rgba(255,255,255,0.15); color: #fff; }
         .minimal-select:focus { background-color: rgba(255,255,255,0.12); border-color: rgba(10, 132, 255, 0.3); color: #fff; }
         .minimal-select option[disabled] { color: var(--text-tertiary); }
 
-        .send-btn {
-            width: 32px; height: 32px;
-            background: var(--accent-primary);
-            color: white; border: none; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: all 0.2s var(--ease-spring);
-        }
+        .send-btn { width: 32px; height: 32px; background: var(--accent-primary); color: white; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s var(--ease-spring); }
         .send-btn svg { width: 16px; height: 16px; stroke-width: 3px; }
         .send-btn:hover { transform: scale(1.1); background: var(--accent-highlight); }
         .send-btn:active { transform: scale(0.95); }
         .send-btn:disabled { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.2); transform: none; cursor: default; }
 
         /* Modal Styles */
-        .modal {
-            display: none; position: fixed; inset: 0;
-            background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(10px);
-            align-items: center; justify-content: center; z-index: 1000;
-            opacity: 0; transition: opacity 0.2s ease;
-        }
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(10px); align-items: center; justify-content: center; z-index: 1000; opacity: 0; transition: opacity 0.2s ease; }
         .modal.active { display: flex; opacity: 1; }
-        
-        .modal-content, .language-modal-content {
-            background: rgba(44, 44, 46, 0.9);
-            backdrop-filter: blur(40px) saturate(180%);
-            border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            border-radius: 20px; overflow: hidden;
-            transform: scale(0.95); opacity: 0; transition: all 0.3s var(--ease-spring);
-        }
+        .modal-content, .language-modal-content { background: rgba(44, 44, 46, 0.9); backdrop-filter: blur(40px) saturate(180%); border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5); border-radius: 20px; overflow: hidden; transform: scale(0.95); opacity: 0; transition: all 0.3s var(--ease-spring); }
         .modal.active .modal-content, .modal.active .language-modal-content { transform: scale(1); opacity: 1; }
-        
         .language-modal-content { max-width: 900px; width: 90%; max-height: 80vh; display: flex; flex-direction: column; }
-
-        .language-search-bar {
-            width: 100%; padding: 10px 16px 10px 34px;
-            background: rgba(118, 118, 128, 0.24); border: none; border-radius: 10px;
-            color: var(--text-primary); font-size: 0.95rem; margin-top: 12px; outline: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='rgba(235,235,245,0.5)' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'%3E%3C/line%3E%3C/svg%3E");
-            background-repeat: no-repeat; background-position: 10px center;
-        }
+        .language-search-bar { width: 100%; padding: 10px 16px 10px 34px; background: rgba(118, 118, 128, 0.24); border: none; border-radius: 10px; color: var(--text-primary); font-size: 0.95rem; margin-top: 12px; outline: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='rgba(235,235,245,0.5)' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'%3E%3C/line%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: 10px center; }
         .language-search-bar:focus { background-color: rgba(118, 118, 128, 0.35); }
-
         .language-grid-container { flex: 1; overflow-y: auto; padding: 20px; }
         .language-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
         @media (max-width: 800px) { .language-grid { grid-template-columns: repeat(3, 1fr); } }
         @media (max-width: 600px) { .language-grid { grid-template-columns: repeat(2, 1fr); } }
-
-        .language-card {
-            background: rgba(255,255,255,0.05);
-            border-radius: 14px; padding: 12px;
-            cursor: pointer; transition: all 0.2s ease;
-            display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px;
-        }
+        .language-card { background: rgba(255,255,255,0.05); border-radius: 14px; padding: 12px; cursor: pointer; transition: all 0.2s ease; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; }
         .language-card:hover { background: rgba(255,255,255,0.1); transform: translateY(-2px); }
         .language-card.selected { background: rgba(10, 132, 255, 0.2); }
-
-        .lang-icon {
-            width: 48px; height: 48px;
-            flex-shrink: 0; display: flex; align-items: center; justify-content: center;
-            font-size: 24px; color: var(--text-secondary);
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-        }
+        .lang-icon { width: 48px; height: 48px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 24px; color: var(--text-secondary); filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
         .lang-icon img { width: 100%; height: 100%; object-fit: contain; }
         .lang-info { width: 100%; }
         .lang-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 2px; color: var(--text-primary); }
         .lang-desc { font-size: 0.75rem; color: var(--text-secondary); line-height: 1.3; }
         .special-card { background: linear-gradient(135deg, rgba(10, 132, 255, 0.15), rgba(94, 92, 230, 0.15)); }
 
-        .challenge-viewer {
-            flex: 1; background: rgba(0,0,0,0.5);
-            display: none; flex-direction: column;
-            border-left: 1px solid var(--border-glass); backdrop-filter: blur(40px);
-        }
+        .challenge-viewer { flex: 1; background: rgba(0,0,0,0.5); display: none; flex-direction: column; border-left: 1px solid var(--border-glass); backdrop-filter: blur(40px); }
         .challenge-viewer.active, .content-area.has-viewer .challenge-viewer { display: flex !important; }
-
-        .viewer-header {
-            height: 50px; padding: 0 16px;
-            display: flex; align-items: center; justify-content: space-between;
-            border-bottom: 1px solid var(--border-glass); background: rgba(255,255,255,0.03);
-        }
+        .viewer-header { height: 50px; padding: 0 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-glass); background: rgba(255,255,255,0.03); }
         .viewer-title { font-weight: 600; font-size: 0.9rem; color: var(--text-primary); opacity: 0.8; }
-        .tool-btn {
-            background: var(--bg-glass-light); border: none; color: var(--text-secondary);
-            cursor: pointer; padding: 6px; border-radius: 8px; transition: all 0.2s ease;
-        }
+        .tool-btn { background: var(--bg-glass-light); border: none; color: var(--text-secondary); cursor: pointer; padding: 6px; border-radius: 8px; transition: all 0.2s ease; }
         .tool-btn:hover { background: rgba(255,255,255,0.15); color: #fff; }
-
-        .iframe-wrap {
-            flex: 1; background: #fff; border-radius: 12px; margin: 12px; overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
+        .iframe-wrap { flex: 1; background: #fff; border-radius: 12px; margin: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
 
         .hidden { display: none !important; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* Status Area */
-        .status-area {
-            position: fixed; top: 24px; right: 24px; z-index: 2000;
-            display: flex; flex-direction: column; gap: 12px; align-items: flex-end;
-            width: auto; pointer-events: none;
-        }
+        .status-area { position: fixed; top: 24px; right: 24px; z-index: 2000; display: flex; flex-direction: column; gap: 12px; align-items: flex-end; width: auto; pointer-events: none; }
         .loading-indicator { display: none; align-items: center; gap: 10px; color: var(--text-secondary); font-weight: 500; }
         .loading-indicator.active { display: flex; }
         .spinner { width: 20px; height: 20px; border: 2.5px solid rgba(255,255,255,0.2); border-top-color: var(--accent-primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .error-message, .success-message { 
-            padding: 12px 40px 12px 18px; border-radius: 12px; font-size: 0.9rem; font-weight: 500; 
-            display: none; backdrop-filter: blur(10px); position: relative;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.3); border: 1px solid var(--border-glass);
-            pointer-events: auto; max-width: 350px; align-items: center;
-        }
+        .error-message, .success-message { padding: 12px 40px 12px 18px; border-radius: 12px; font-size: 0.9rem; font-weight: 500; display: none; backdrop-filter: blur(10px); position: relative; box-shadow: 0 8px 24px rgba(0,0,0,0.3); border: 1px solid var(--border-glass); pointer-events: auto; max-width: 350px; align-items: center; }
         .error-message.active, .success-message.active { display: flex; align-items: center; animation: slideUp 0.3s ease; }
         .error-message { background: rgba(255, 69, 58, 0.2); color: #ff7b7b; }
         .success-message { background: rgba(48, 209, 88, 0.2); color: #6bff87; }
         .alert-text { word-break: break-word; }
-        .alert-close-btn {
-            position: absolute; top: 50%; right: 10px; transform: translateY(-50%);
-            background: rgba(0,0,0,0.6); color: #ffffff; border: none; border-radius: 50%;
-            width: 22px; height: 22px; display: flex; align-items: center; justify-content: center;
-            padding: 0; cursor: pointer; font-size: 18px; font-weight: 700; line-height: 1;
-            transition: all 0.2s ease; flex-shrink: 0; z-index: 10;
-        }
+        .alert-close-btn { position: absolute; top: 50%; right: 10px; transform: translateY(-50%); background: rgba(0,0,0,0.6); color: #ffffff; border: none; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer; font-size: 18px; font-weight: 700; line-height: 1; transition: all 0.2s ease; flex-shrink: 0; z-index: 10; }
         .alert-close-btn:hover { background: rgba(0,0,0,0.8); transform: translateY(-50%) scale(1.1); }
 
         /* Theme Grid */
@@ -438,21 +197,11 @@
         @media (max-width: 1000px) { .theme-grid { grid-template-columns: repeat(6, 1fr); } }
         @media (max-width: 700px) { .theme-grid { grid-template-columns: repeat(4, 1fr); } }
         @media (max-width: 500px) { .theme-grid { grid-template-columns: repeat(3, 1fr); } }
-
         .theme-wrapper { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; transition: transform 0.2s ease; }
         .theme-wrapper:hover { transform: translateY(-4px); }
-
-        .theme-option {
-             width: 100%; aspect-ratio: 1; border-radius: 16px;
-             border: 2px solid rgba(255,255,255,0.1); transition: all 0.2s ease;
-             position: relative; overflow: hidden;
-        }
+        .theme-option { width: 100%; aspect-ratio: 1; border-radius: 16px; border: 2px solid rgba(255,255,255,0.1); transition: all 0.2s ease; position: relative; overflow: hidden; }
         .theme-wrapper:hover .theme-option { border-color: var(--accent-primary); }
-        .theme-option.locked::after {
-             content: '?'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-             background: rgba(0,0,0,0.6); font-size: 1.8rem; backdrop-filter: blur(4px);
-             text-shadow: 0 2px 10px rgba(0,0,0,0.5); font-weight: 700;
-        }
+        .theme-option.locked::after { content: '?'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.6); font-size: 1.8rem; backdrop-filter: blur(4px); text-shadow: 0 2px 10px rgba(0,0,0,0.5); font-weight: 700; }
         .theme-name { font-size: 0.75rem; color: var(--text-secondary); text-align: center; font-weight: 500; max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .theme-wrapper:hover .theme-name { color: var(--text-primary); }
         
@@ -460,37 +209,126 @@
         #downgradeOption { display: none; margin-top: 24px; cursor: pointer; color: var(--text-tertiary); font-size: 0.9rem; text-decoration: underline; text-underline-offset: 4px; }
         #downgradeOption:hover { color: var(--error); }
 
-        /* University Portal Styles (New) */
-        .university-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;
-            width: 100%; margin-bottom: 32px;
-        }
-        .faculty-card {
-            background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass);
-            border-radius: 20px; padding: 24px; cursor: pointer; transition: all 0.3s ease;
-            display: flex; flex-direction: column; gap: 12px; position: relative; overflow: hidden;
-        }
+        /* University Portal Styles */
+        /* Updated Grid Layout for Faculty Cards: 3 columns */
+        .university-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; margin-bottom: 32px; }
+        .faculty-card { background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass); border-radius: 20px; padding: 24px; cursor: pointer; transition: all 0.3s ease; display: flex; flex-direction: column; gap: 12px; position: relative; overflow: hidden; }
         .faculty-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-4px); border-color: var(--accent-primary); }
         .faculty-card.selected { background: rgba(10, 132, 255, 0.15); border-color: var(--accent-primary); box-shadow: 0 0 0 2px var(--accent-primary); }
-        .faculty-icon { width: 48px; height: 48px; border-radius: 12px; margin-bottom: 8px; }
-        .faculty-title { font-size: 1.2rem; font-weight: 700; color: var(--text-primary); }
-        .faculty-desc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; }
+        .faculty-header { display: flex; gap: 16px; align-items: flex-start; }
+        .faculty-icon { width: 56px; height: 56px; border-radius: 12px; flex-shrink: 0; object-fit: cover; }
+        .faculty-info { flex: 1; }
+        .faculty-title { font-size: 1.2rem; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+        .faculty-desc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.4; }
+        .syllabus-box { margin-top: 16px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 16px; font-size: 0.85rem; color: var(--text-secondary); max-height: 200px; overflow-y: auto; }
+        .syllabus-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-tertiary); margin-bottom: 8px; font-weight: 700; }
+        .syllabus-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
+        .syllabus-item { display: flex; gap: 8px; align-items: baseline; line-height: 1.4; }
+        .syllabus-item::before { content: "•"; color: var(--accent-primary); }
         .program-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 12px; }
         .program-tag { font-size: 0.75rem; background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 12px; color: var(--text-secondary); }
-        
-        .admission-form {
-            background: rgba(0,0,0,0.3); border-radius: 20px; padding: 24px;
-            display: flex; flex-direction: column; gap: 16px; width: 100%;
-        }
+        .admission-form { background: rgba(0,0,0,0.3); border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 16px; width: 100%; }
         .form-group { display: flex; flex-direction: column; gap: 8px; text-align: left; }
         .form-label { font-size: 0.9rem; font-weight: 600; color: var(--text-secondary); }
-        .form-input {
-            background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass);
-            border-radius: 12px; padding: 12px; color: white; font-size: 1rem; outline: none;
-            transition: border-color 0.2s;
-        }
+        .form-input { background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass); border-radius: 12px; padding: 12px; color: white; font-size: 1rem; outline: none; transition: border-color 0.2s; }
         .form-input:focus { border-color: var(--accent-primary); background: rgba(255,255,255,0.08); }
         .form-textarea { min-height: 100px; resize: vertical; font-family: inherit; }
+
+        /* Payment Modal */
+        .payment-modal-content { max-width: 500px; }
+        .card-preview { background: linear-gradient(135deg, #0A84FF, #5E5CE6); border-radius: 16px; padding: 24px; color: white; margin-bottom: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; overflow: hidden; height: 200px; display: flex; flex-direction: column; justify-content: space-between; }
+        .card-preview::before { content: ''; position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: rgba(255,255,255,0.1); border-radius: 50%; }
+        .card-preview::after { content: ''; position: absolute; bottom: -30px; left: -30px; width: 120px; height: 120px; background: rgba(255,255,255,0.1); border-radius: 50%; }
+        .chip { width: 40px; height: 28px; background: linear-gradient(135deg, #ffd700, #b8860b); border-radius: 4px; margin-bottom: 20px; }
+        .card-number-display { font-family: 'JetBrains Mono', monospace; font-size: 1.4rem; letter-spacing: 2px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .card-details-display { display: flex; justify-content: space-between; margin-top: 20px; }
+        .detail-label { font-size: 0.7rem; opacity: 0.8; text-transform: uppercase; margin-bottom: 4px; }
+        .detail-value { font-family: 'JetBrains Mono', monospace; font-size: 1rem; }
+
+        /* Student Portal Dashboard */
+        .student-portal { position: fixed; inset: 0; background: var(--bg-app); z-index: 5000; display: none; flex-direction: column; padding: 24px; overflow: hidden; }
+        .student-portal.active { display: flex; }
+        
+        /* Updated Grid Layout for Perfect Centering */
+        .portal-header { 
+            display: grid; 
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            margin-bottom: 24px; 
+            padding-bottom: 16px; 
+            border-bottom: 1px solid var(--border-glass); 
+            min-height: 80px; 
+        }
+        
+        .portal-title-group {
+            grid-column: 1;
+        }
+        
+        .portal-progress-group {
+            grid-column: 2;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+        }
+        
+        .portal-title { font-size: 2rem; font-weight: 800; color: var(--text-primary); }
+        .portal-subtitle { color: var(--accent-primary); font-weight: 600; font-size: 1.1rem; }
+        
+        .portal-body { flex: 1; display: flex; gap: 24px; overflow: hidden; }
+        .weeks-sidebar { width: 280px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; padding-right: 12px; }
+        .weeks-sidebar::-webkit-scrollbar { width: 4px; }
+        .weeks-sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+        
+        .week-card { background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass); border-radius: 12px; padding: 16px; cursor: pointer; transition: all 0.2s ease; display: flex; justify-content: space-between; align-items: center; }
+        .week-card:hover { background: rgba(255,255,255,0.1); }
+        .week-card.active { background: var(--accent-primary); border-color: var(--accent-primary); }
+        .week-card.locked { opacity: 0.5; cursor: not-allowed; }
+        .week-card.locked:hover { background: rgba(255,255,255,0.05); }
+        
+        .week-info { display: flex; flex-direction: column; gap: 2px; }
+        .week-num { font-weight: 700; font-size: 1rem; }
+        .week-status { font-size: 0.75rem; opacity: 0.8; }
+        
+        .week-content-view { flex: 1; background: rgba(255,255,255,0.03); border-radius: 20px; border: 1px solid var(--border-glass); padding: 32px; display: flex; flex-direction: column; overflow-y: auto; }
+        
+        .portal-hero {
+            background: black;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 32px;
+            aspect-ratio: 16/9;
+            max-height: 400px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            border: 1px solid var(--border-glass);
+        }
+        
+        .portal-hero iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .content-header { margin-bottom: 32px; }
+        .content-title { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+        .content-desc { color: var(--text-secondary); font-size: 1.1rem; }
+        
+        .resource-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+        .resource-card { background: rgba(255,255,255,0.05); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; cursor: pointer; transition: all 0.3s ease; aspect-ratio: 1; border: 1px solid transparent; position: relative; }
+        .resource-card:hover { transform: translateY(-5px); background: rgba(255,255,255,0.1); border-color: var(--accent-primary); }
+        .resource-card.locked { opacity: 0.6; cursor: not-allowed; filter: grayscale(1); }
+        .resource-card.locked:hover { transform: none; background: rgba(255,255,255,0.05); border-color: transparent; }
+        
+        .lock-icon { position: absolute; top: 12px; right: 12px; color: var(--text-tertiary); }
+        
+        .res-icon { width: 64px; height: 64px; color: var(--accent-primary); }
+        .res-title { font-weight: 600; font-size: 1.1rem; }
+        
+        /* Progress Bar */
+        .progress-container { width: 200px; background: rgba(255,255,255,0.1); height: 8px; border-radius: 4px; overflow: hidden; margin-top: 8px; }
+        .progress-fill { height: 100%; background: var(--success); transition: width 0.5s ease; border-radius: 4px; }
+        
+        .close-portal { position: fixed; top: 24px; right: 24px; background: rgba(0,0,0,0.5); border: 1px solid var(--border-glass); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 5001; transition: all 0.2s ease; }
+        .close-portal:hover { background: var(--error); transform: scale(1.1); }
 
         /* Mobile Friendliness */
         @media (max-width: 768px) {
@@ -510,7 +348,7 @@
             .content-area.has-viewer { display: block; }
             .content-area.has-viewer .creator-panel { display: none; }
             .content-area.has-viewer .challenge-viewer { max-width: 100%; border-left: none; position: absolute; inset: 0; height: 100%; }
-            .modal-content, .language-modal-content, #storeModal > div, #themeStoreModal > div, #premiumModal > div, #universityModal > div {
+            .modal-content, .language-modal-content, #storeModal > div, #themeStoreModal > div, #premiumModal > div, #universityModal > div, .payment-modal-content {
                 width: 95% !important; max-width: 95% !important; padding: 24px !important; max-height: 90vh; overflow-y: auto; -webkit-overflow-scrolling: touch;
             }
             .modal-title-text, h2[style*="font-size: 2.5rem"], h3[style*="font-size: 2.5rem"] { font-size: 1.8rem !important; margin-bottom: 24px !important; }
@@ -523,6 +361,16 @@
             .container { height: 100vh; height: -webkit-fill-available; }
             body.modal-active .toggle-sidebar-btn { display: none; }
             .sidebar.hidden ~ .main-content { margin-left: 0; }
+            
+            .portal-body { flex-direction: column; }
+            .weeks-sidebar { width: 100%; height: 150px; flex-direction: row; overflow-x: auto; overflow-y: hidden; }
+            .week-card { min-width: 160px; }
+            
+            /* Mobile Portal Header Reset */
+            .portal-header { display: flex; flex-direction: column; gap: 16px; min-height: auto; }
+            .portal-title-group { grid-column: auto; text-align: center; }
+            .portal-progress-group { grid-column: auto; width: 100%; }
+            .progress-container { width: 100%; }
         }
         
         .toggle-sidebar-btn.hide-on-modal { display: none !important; }
@@ -536,6 +384,105 @@
             .lang-icon { width: 40px; height: 40px; font-size: 20px; }
             .lang-name { font-size: 0.9rem; }
         }
+
+        /* Main Tabs */
+        .main-tabs { display: flex; gap: 0; padding: 12px 16px; background: rgba(0,0,0,0.3); border-radius: 12px; margin: 12px 16px; }
+        .main-tab { flex: 1; background: transparent; border: none; color: var(--text-secondary); padding: 12px 16px; border-radius: 8px; font-weight: 500; cursor: pointer; transition: all 0.2s ease; text-align: center; }
+        .main-tab:hover { color: var(--text-primary); }
+        .main-tab.active { background: transparent; color: var(--text-primary); border-bottom: 2px solid var(--text-primary); border-radius: 0; }
+        
+        .tab-content { display: none; flex: 1; overflow: hidden; }
+        .tab-content.active { display: flex; flex-direction: column; }
+        
+        .tab-content-inner { flex: 1; overflow-y: auto; padding: 24px; }
+        
+        /* Sub Tabs */
+        .sub-tabs { display: flex; gap: 0; background: rgba(0,0,0,0.3); border-radius: 12px; padding: 8px; margin-bottom: 20px; }
+        .sub-tab { flex: 1; background: transparent; border: none; color: var(--text-secondary); padding: 12px 16px; border-radius: 8px; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: all 0.2s ease; text-align: center; }
+        .sub-tab:hover { color: var(--text-primary); }
+        .sub-tab.active { background: transparent; color: var(--text-primary); border-bottom: 2px solid var(--text-primary); border-radius: 0; }
+        
+        .sub-tab-content { display: none; }
+        .sub-tab-content.active { display: block; }
+        
+        /* Items Container & Cards */
+        .items-container { display: flex; flex-direction: column; gap: 16px; }
+        
+        .item-card { background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: 16px; padding: 20px; backdrop-filter: blur(20px); transition: all 0.2s ease; }
+        .item-card:hover { border-color: var(--accent-primary); }
+        
+        .item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+        .item-title-input { background: transparent; border: none; color: var(--text-primary); font-size: 1rem; font-weight: 600; outline: none; min-width: 150px; flex: 1; }
+        .item-title-input:focus { border-bottom: 1px solid var(--accent-primary); }
+        
+        .item-controls { display: flex; gap: 8px; align-items: center; }
+        
+        .serial-badge { background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 6px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-secondary); }
+        
+        .visibility-label { font-size: 0.75rem; color: var(--text-tertiary); }
+        
+        .toggle-switch { position: relative; width: 44px; height: 24px; display: inline-block; }
+        .toggle-switch input { opacity: 0; width: 0; height: 0; }
+        .toggle-slider { position: absolute; cursor: pointer; inset: 0; background: rgba(255,255,255,0.2); border-radius: 24px; transition: 0.3s; }
+        .toggle-slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background: white; border-radius: 50%; transition: 0.3s; }
+        .toggle-switch input:checked + .toggle-slider { background: var(--accent-primary); }
+        .toggle-switch input:checked + .toggle-slider:before { transform: translateX(20px); }
+        
+        .icon-btn { background: transparent; border: none; color: var(--text-secondary); padding: 6px; border-radius: 6px; cursor: pointer; transition: all 0.2s ease; }
+        .icon-btn:hover { background: var(--bg-glass-light); color: var(--text-primary); }
+        .icon-btn.delete:hover { background: rgba(255, 69, 58, 0.2); color: var(--error); }
+        
+        .item-content { background: rgba(0,0,0,0.3); border-radius: 8px; padding: 12px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 12px; white-space: pre-wrap; word-break: break-word; }
+        
+        .item-description { font-size: 0.85rem; color: var(--text-tertiary); font-style: italic; }
+        
+        .maybe-tag { display: inline-block; background: rgba(255, 107, 157, 0.2); color: #FF6B9D; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; margin-left: 8px; }
+        
+        .keyword-highlight { color: #5AC8FA; }
+        
+        /* Add New Button */
+        .add-new-btn { background: transparent; border: 2px dashed var(--border-glass); border-radius: 16px; padding: 20px; color: var(--text-secondary); font-weight: 500; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 16px; }
+        .add-new-btn:hover { border-color: var(--accent-primary); color: var(--accent-primary); background: rgba(10, 132, 255, 0.05); }
+        
+        /* Save Button */
+        .save-btn { width: 32px; height: 32px; background: rgba(255,255,255,0.1); color: var(--text-secondary); border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; }
+        .save-btn:hover { background: rgba(255,255,255,0.2); color: var(--text-primary); }
+        
+        /* Save Type Toggle */
+        .save-type-toggle { display: flex; background: rgba(255,255,255,0.05); border-radius: 10px; padding: 4px; }
+        .type-btn { flex: 1; background: transparent; border: none; color: var(--text-secondary); padding: 10px; border-radius: 8px; font-weight: 500; cursor: pointer; transition: all 0.2s ease; }
+        .type-btn.active { background: var(--accent-primary); color: white; }
+        
+        .visibility-toggle { display: flex; align-items: center; gap: 12px; }
+        
+        /* Structured Modal Styles */
+        .structured-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; text-align: left; }
+        .struct-category { margin-bottom: 8px; }
+        .struct-title { font-size: 0.8rem; font-weight: 700; color: var(--text-tertiary); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--border-glass); padding-bottom: 8px; }
+        .struct-items { display: flex; flex-wrap: wrap; gap: 8px; }
+        .struct-chip { background: rgba(10, 132, 255, 0.15); border: 1px solid rgba(10, 132, 255, 0.3); padding: 6px 12px; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--accent-primary); transition: all 0.2s ease; cursor: pointer; }
+        .struct-chip:hover { background: rgba(10, 132, 255, 0.25); transform: translateY(-2px); }
+        .struct-chip.active { background: var(--accent-primary); color: white; border-color: var(--accent-primary); }
+        
+        /* Highlight Overlay for Structured Mode */
+        .textarea-container { position: relative; width: 100%; min-height: 48px; max-height: 200px; }
+        textarea#questionInput, .input-highlight-overlay {
+            width: 100%; min-height: 48px; max-height: 200px; 
+            font-family: inherit; font-size: 1rem; line-height: 1.4;
+            padding: 0; margin: 0; border: none; resize: none; outline: none;
+            background: transparent; 
+            white-space: pre-wrap; word-wrap: break-word;
+        }
+        textarea#questionInput { position: relative; z-index: 2; color: var(--text-primary); }
+        .input-highlight-overlay { position: absolute; top: 0; left: 0; z-index: 1; color: transparent; pointer-events: none; overflow: hidden; }
+        .h-keyword { font-weight: 700; }
+        .h-reference { color: var(--accent-highlight); background: rgba(90, 200, 250, 0.15); border-radius: 3px; padding: 0 2px; }
+        
+        @media (max-width: 768px) {
+            .structured-grid { grid-template-columns: 1fr; }
+            .main-tabs { padding: 8px 12px; }
+            .main-tab { padding: 6px 12px; font-size: 0.85rem; }
+        }
     </style>
 </head>
 <body>
@@ -547,8 +494,8 @@
         <div class="sidebar">
             <div class="sidebar-header">
                 <div class="logo">
-                    <img src="logo.png" alt=" Prompts & Logic Logo" class="logo-img">
-                    <span class="logo-text"> Prompts & Logic</span>
+                    <img src="logo2.png" alt=" P & L Logo" class="logo-img">
+                    <span class="logo-text"> P & L</span>
                 </div>
             </div>
 
@@ -562,7 +509,7 @@
                 Community
             </button>
             
-            <button class="sidebar-btn" onclick="showUniversityModal()">
+            <button class="sidebar-btn" onclick="checkEnrollmentAndOpen()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
                 University
             </button>
@@ -570,6 +517,11 @@
             <button class="sidebar-btn" onclick="showThemeStoreModal()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
                 Environment
+            </button>
+
+            <button class="sidebar-btn" onclick="showStructuredModal()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                Structured
             </button>
             
             <div class="sidebar-section-title">Recents</div>
@@ -591,65 +543,133 @@
         </div>
         
         <div class="main-content">
-            <div class="content-area" id="mainContentArea">
-                <div class="creator-panel" id="creatorPanel">
-                    <div class="prompt-container">
-                        <div class="greeting">
-                            <h1>Learn Different.</h1>
-                            <p>Prompt it, we make it work, you solve it logically.</p>
-                        </div>
-                    </div>
+            <!-- Main Tabs -->
+            <div class="main-tabs">
+                <button class="main-tab active" data-tab="chat" onclick="switchMainTab('chat')">Chat</button>
+                <button class="main-tab" data-tab="contexts" onclick="switchMainTab('contexts')">Contexts</button>
+                <button class="main-tab" data-tab="prompts" onclick="switchMainTab('prompts')">Prompts</button>
+            </div>
 
-                    <div class="input-area-wrapper">
-                        <div class="input-container">
-                            <textarea id="questionInput" placeholder="Describe your coding challenge..."></textarea>
-                            
-                            <div class="input-footer">
-                                <div class="input-tools">
-                                    <button id="languageTrigger" class="minimal-btn" onclick="openLanguageModal()">
-                                        <span id="currentLanguageLabel">Language...</span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                                    </button>
-
-                                    <select id="languageSelect" style="display: none;">
-                                        <option value="" disabled selected>Language</option>
-                                        <option value="javascript">JavaScript</option>
-                                        <option value="python">Python</option>
-                                        <option value="c">C</option>
-                                        <option value="custom">custom</option>
-                                    </select>
-                                    
-                                    <select id="difficultySelect" class="minimal-select" onchange="checkSelections()">
-                                        <option value="" disabled selected>Difficulty...</option>
-                                        <option value="beginner">Beginner</option>
-                                        <option value="intermediate">Intermediate</option>
-                                        <option value="advanced">Advanced</option>
-                                    </select>
-                                    
-                                    <input id="customLanguageInput" class="minimal-select hidden" style="border: 1px solid var(--accent-primary); cursor: text; min-width: 120px;" placeholder="e.g. Assembly..." oninput="checkSelections()">
-                                </div>
-                                
-                                <button class="send-btn" onclick="generateChallenge()" id="generateBtn" title="Generate" disabled>
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <line x1="12" y1="19" x2="12" y2="5"></line>
-                                        <polyline points="5 12 12 5 19 12"></polyline>
-                                    </svg>
-                                </button>
+            <!-- Chat Tab Content -->
+            <div class="tab-content active" id="chatTab">
+                <div class="content-area" id="mainContentArea">
+                    <div class="creator-panel" id="creatorPanel">
+                        <div class="prompt-container">
+                            <div class="greeting">
+                                <h1>Learn Different.</h1>
+                                <p>Prompt it, we make it work, you solve it logically.</p>
                             </div>
                         </div>
-                        
+
+                        <div class="input-area-wrapper">
+                            <div class="input-container">
+                                <div class="textarea-container">
+                                    <div id="highlightOverlay" class="input-highlight-overlay"></div>
+                                    <textarea id="questionInput" placeholder="Describe your coding challenge..." oninput="checkSelections()"></textarea>
+                                </div>
+                                <div class="input-footer">
+                                    <div class="input-tools">
+                                        <select id="modeSelect" class="minimal-select" onchange="toggleMode()">
+                                            <option value="general" selected>General</option>
+                                            <option value="code">Code</option>
+                                            <option value="structured">Structured</option>
+                                        </select>
+
+                                        <div id="codeTools" style="display: none; gap: 8px; align-items: center; flex-wrap: wrap;">
+                                            <button id="languageTrigger" class="minimal-btn" onclick="openLanguageModal()">
+                                                <span id="currentLanguageLabel">Language...</span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </button>
+
+                                            <select id="languageSelect" style="display: none;">
+                                                <option value="" disabled selected>Language</option>
+                                                <option value="javascript">JavaScript</option>
+                                                <option value="python">Python</option>
+                                                <option value="c">C</option>
+                                                <option value="custom">custom</option>
+                                            </select>
+                                            
+                                            <select id="difficultySelect" class="minimal-select" onchange="checkSelections()">
+                                                <option value="" disabled selected>Difficulty...</option>
+                                                <option value="beginner">Beginner</option>
+                                                <option value="intermediate">Intermediate</option>
+                                                <option value="advanced">Advanced</option>
+                                            </select>
+                                            
+                                            <input id="customLanguageInput" class="minimal-select hidden" style="border: 1px solid var(--accent-primary); cursor: text; min-width: 120px;" placeholder="e.g. Assembly..." oninput="checkSelections()">
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; gap: 8px; align-items: center;">
+                                        <button class="save-btn" onclick="openSaveModal()" title="Save">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                                        </button>
+                                        <button class="send-btn" onclick="generateChallenge()" id="generateBtn" title="Generate" disabled>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                    
+                    <div class="challenge-viewer" id="challengeViewer">
+                        <div class="viewer-header">
+                            <div class="viewer-title">Challenge Artifact</div>
+                            <button class="tool-btn" onclick="closeViewer()">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                            </button>
+                        </div>
+                        <div class="iframe-wrap">
+                            <iframe id="challengeFrame" src=""></iframe>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="challenge-viewer" id="challengeViewer">
-                    <div class="viewer-header">
-                        <div class="viewer-title">Challenge Artifact</div>
-                        <button class="tool-btn" onclick="closeViewer()">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </div>
+
+            <!-- Contexts Tab Content -->
+            <div class="tab-content" id="contextsTab">
+                <div class="tab-content-inner">
+                    <div class="sub-tabs">
+                        <button class="sub-tab active" data-subtab="mine-contexts" onclick="switchSubTab('contexts', 'mine-contexts')">Mine</button>
+                        <button class="sub-tab" data-subtab="community-contexts" onclick="switchSubTab('contexts', 'community-contexts')">Community</button>
+                    </div>
+                    <div class="sub-tab-content active" id="mine-contexts">
+                        <div class="items-container" id="contextsContainer"></div>
+                        <button class="add-new-btn" onclick="addNewContext()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            Add New Context
                         </button>
                     </div>
-                    <div class="iframe-wrap">
-                        <iframe id="challengeFrame" src=""></iframe>
+                    <div class="sub-tab-content" id="community-contexts">
+                        <p style="color: var(--text-secondary); text-align: center; padding: 40px;">Community contexts coming soon...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prompts Tab Content -->
+            <div class="tab-content" id="promptsTab">
+                <div class="tab-content-inner">
+                    <div class="sub-tabs">
+                        <button class="sub-tab active" data-subtab="mine-prompts" onclick="switchSubTab('prompts', 'mine-prompts')">Prompts</button>
+                        <button class="sub-tab" data-subtab="forges" onclick="switchSubTab('prompts', 'forges')">Forges</button>
+                        <button class="sub-tab" data-subtab="molds" onclick="switchSubTab('prompts', 'molds')">Molds</button>
+                        <button class="sub-tab" data-subtab="explore" onclick="switchSubTab('prompts', 'explore')">Explore</button>
+                    </div>
+                    <div class="sub-tab-content active" id="mine-prompts">
+                        <div class="items-container" id="promptsContainer"></div>
+                        <button class="add-new-btn" onclick="addNewPrompt()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            Add New Prompt
+                        </button>
+                    </div>
+                    <div class="sub-tab-content" id="forges">
+                        <p style="color: var(--text-secondary); text-align: center; padding: 40px;">Forges coming soon...</p>
+                    </div>
+                    <div class="sub-tab-content" id="molds">
+                        <p style="color: var(--text-secondary); text-align: center; padding: 40px;">Molds coming soon...</p>
+                    </div>
+                    <div class="sub-tab-content" id="explore">
+                        <p style="color: var(--text-secondary); text-align: center; padding: 40px;">Explore coming soon...</p>
                     </div>
                 </div>
             </div>
@@ -671,6 +691,77 @@
         </div>
     </div>
 
+    <!-- Student Portal Dashboard -->
+    <div id="studentPortal" class="student-portal">
+        <button class="close-portal" onclick="closeStudentPortal()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+        <div class="portal-header">
+            <div class="portal-title-group">
+                <div class="portal-title">University Portal</div>
+                <div class="portal-subtitle" id="enrolledFacultyName">Enrolled: Faculty of Media</div>
+            </div>
+            <div class="portal-progress-group">
+                <div style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 4px;">Progress</div>
+                <div class="progress-container">
+                    <div class="progress-fill" id="portalProgressBar" style="width: 2%;"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="portal-body">
+            <!-- Left Sidebar: Weeks -->
+            <div class="weeks-sidebar" id="weeksSidebar">
+                <!-- Generated by JS -->
+            </div>
+            
+            <!-- Right Content: Resources -->
+            <div class="week-content-view">
+                
+                <!-- Hero Video Section -->
+                <div class="portal-hero">
+                    <iframe id="heroVideoFrame" src="https://www.youtube.com/embed/1KFPknAH0do?controls=0&rel=0" title="Weekly Intro" allowfullscreen></iframe>
+                </div>
+
+                <div class="content-header">
+                    <div class="content-title" id="viewWeekTitle">Week 1</div>
+                    <div class="content-desc" id="viewWeekDesc">Introduction to the curriculum and setup.</div>
+                </div>
+                
+                <div class="resource-grid">
+                    <!-- Video Lecture -->
+                    <div class="resource-card" onclick="alert('Opening Video Lecture...')">
+                        <svg class="res-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
+                        <div class="res-title">Video Lecture</div>
+                    </div>
+                    
+                    <!-- Notes -->
+                    <div class="resource-card" id="notesCard" onclick="openClassNotes()">
+                        <svg class="res-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        <div class="res-title">Class Notes</div>
+                    </div>
+                    
+                    <!-- P&L Challenge (Locked till Wednesday) -->
+                    <div class="resource-card locked" id="pnlCard" onclick="openPnLChallenge()">
+                        <svg class="lock-icon" id="pnlLock" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:block;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        <svg class="res-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                        <div class="res-title">P&L Challenge</div>
+                        <div style="font-size: 0.7rem; color: var(--text-tertiary); margin-top: -8px;">Opens Wednesday</div>
+                    </div>
+                    
+                    <!-- Weekly Project (Locked except Fridays) -->
+                    <div class="resource-card locked" id="projectCard" onclick="openWeeklyProject()">
+                        <svg class="lock-icon" id="projectLock" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:block;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        <svg class="res-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                        <div class="res-title">Weekly Project</div>
+                        <div style="font-size: 0.7rem; color: var(--text-tertiary); margin-top: -8px;">Fridays Only (24h)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
     <div class="modal" id="languageModal" onclick="if(event.target === this) closeLanguageModal()">
         <div class="language-modal-content" style="background: transparent; backdrop-filter: none; border: none; box-shadow: none; padding: 32px; max-height: 90vh;">
              <div style="display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 800px; margin: 0 auto;">
@@ -687,56 +778,63 @@
     <div class="modal" id="storeModal" onclick="if(event.target === this) closeStoreModal()">
         <div style="text-align: center; padding: 40px 40px 80px; width: 90%; max-width: 1400px; max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column; margin: auto;">
              <h2 style="font-size: 2.5rem; margin-bottom: 32px; font-weight: 800; color: var(--text-primary); text-shadow: 0 4px 20px rgba(0,0,0,0.5);">Community</h2>
-             
-             <div id="challengeStoreGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 10px; flex: 1;">
-                 </div>
-             
-             <p id="noSharedChallenges" style="color: var(--text-secondary); font-size: 1.1rem; margin-top: 40px; display: none;">
-                 No shared challenges yet. Complete a challenge and share it with the community!
-             </p>
+             <div id="challengeStoreGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 10px; flex: 1;"></div>
+             <p id="noSharedChallenges" style="color: var(--text-secondary); font-size: 1.1rem; margin-top: 40px; display: none;">No shared challenges yet. Complete a challenge and share it with the community!</p>
         </div>
     </div>
 
+    <!-- University Modal (Selection & Admission) -->
     <div class="modal" id="universityModal" onclick="if(event.target === this) closeUniversityModal()">
         <div style="text-align: center; padding: 40px; width: 90%; max-width: 1000px; max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column; margin: auto;">
-             <h2 style="font-size: 2.5rem; font-weight: 800; color: var(--text-primary); margin-bottom: 8px; text-shadow: 0 4px 20px rgba(0,0,0,0.5);">University of Prompts & Logic</h2>
-             <p style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 32px;">Select a faculty and submit your admission application.</p>
-             
-             <div class="university-grid" id="facultyGrid">
-                 </div>
-
+             <h2 style="font-size: 2.5rem; font-weight: 800; color: var(--text-primary); margin-bottom: 8px; text-shadow: 0 4px 20px rgba(0,0,0,0.5);">University of P & L</h2>
+             <p style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 32px;">Select a faculty to view its curriculum and submit your admission application.</p>
+             <div class="university-grid" id="facultyGrid"></div>
              <form class="admission-form" id="admissionForm" onsubmit="handleAdmissionSubmit(event)">
                  <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); text-align: left;">Admission Application</h3>
                  <p style="color: var(--text-tertiary); font-size: 0.9rem; text-align: left; margin-bottom: 16px;">Applying for: <strong id="selectedFacultyName" style="color: var(--accent-primary);">None selected</strong></p>
-                 
-                 <div class="form-group">
-                     <label class="form-label">Full Name</label>
-                     <input type="text" class="form-input" required placeholder="John Doe">
-                 </div>
-                 <div class="form-group">
-                     <label class="form-label">Email Address</label>
-                     <input type="email" class="form-input" required placeholder="john@example.com">
-                 </div>
-                 <div class="form-group">
-                     <label class="form-label">Highest Education Level</label>
-                     <select class="form-input minimal-select" style="text-align: left; width: 100%; border: 1px solid var(--border-glass);">
-                         <option>High School</option>
-                         <option>Undergraduate</option>
-                         <option>Postgraduate</option>
-                         <option>Self-Taught</option>
-                     </select>
-                 </div>
-                 <div class="form-group">
-                     <label class="form-label">Portfolio / Github Link (Optional)</label>
-                     <input type="url" class="form-input" placeholder="https://...">
-                 </div>
-                 <div class="form-group">
-                     <label class="form-label">Statement of Purpose</label>
-                     <textarea class="form-input form-textarea" required placeholder="Why do you want to join this faculty? How will you use AI?"></textarea>
-                 </div>
-                 
-                 <button type="submit" class="minimal-btn" style="background: var(--accent-primary); color: white; justify-content: center; padding: 14px; font-size: 1rem; margin-top: 16px;">Submit Application</button>
+                 <div class="form-group"><label class="form-label">Full Name</label><input type="text" class="form-input" required placeholder="John Doe"></div>
+                 <div class="form-group"><label class="form-label">Email Address</label><input type="email" class="form-input" required placeholder="john@example.com"></div>
+                 <div class="form-group"><label class="form-label">Phone Number</label><input type="tel" class="form-input" required placeholder="+1 (555) 000-0000"></div>
+                 <div class="form-group"><label class="form-label">Address</label><input type="text" class="form-input" required placeholder="123 Main St, City, Country"></div>
+                 <div class="form-group"><label class="form-label">Field of Work</label><input type="text" class="form-input" required placeholder="e.g. Graphic Design, Student, Engineer"></div>
+                 <div class="form-group"><label class="form-label">Create Password</label><input type="password" class="form-input" required placeholder="••••••••"></div>
+                 <div class="form-group"><label class="form-label">Highest Education Level</label><select class="form-input minimal-select" style="text-align: left; width: 100%; border: 1px solid var(--border-glass);"><option>High School</option><option>Undergraduate</option><option>Postgraduate</option><option>Self-Taught</option></select></div>
+                 <div class="form-group"><label class="form-label">Portfolio / Github Link (Optional)</label><input type="url" class="form-input" placeholder="https://..."></div>
+                 <div class="form-group"><label class="form-label">Statement of Purpose</label><textarea class="form-input form-textarea" required placeholder="Why do you want to join this faculty? How will you use AI?"></textarea></div>
+                 <button type="submit" class="minimal-btn" style="background: var(--accent-primary); color: white; justify-content: center; padding: 14px; font-size: 1rem; margin-top: 16px;">Proceed to Payment</button>
              </form>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="modal" id="paymentModal" onclick="if(event.target === this) closePaymentModal()">
+        <div class="modal-content payment-modal-content" style="padding: 32px;">
+            <h3 style="font-size: 1.8rem; margin-bottom: 24px; font-weight: 700; text-align: center;">Secure Checkout</h3>
+            
+            <div class="card-preview">
+                <div class="chip"></div>
+                <div class="card-number-display">•••• •••• •••• 4242</div>
+                <div class="card-details-display">
+                    <div><div class="detail-label">Card Holder</div><div class="detail-value">John Doe</div></div>
+                    <div><div class="detail-label">Expires</div><div class="detail-value">12/28</div></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Card Number</label>
+                <input type="text" class="form-input" placeholder="0000 0000 0000 0000">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px;">
+                <div class="form-group"><label class="form-label">Expiry</label><input type="text" class="form-input" placeholder="MM/YY"></div>
+                <div class="form-group"><label class="form-label">CVC</label><input type="text" class="form-input" placeholder="123"></div>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin: 24px 0 16px 0; border-top: 1px solid var(--border-glass); padding-top: 16px;">
+                <span style="color: var(--text-secondary);">Total Admission Fee</span>
+                <span style="font-size: 1.5rem; font-weight: 700;">$499.00</span>
+            </div>
+
+            <button onclick="processPayment()" class="minimal-btn" style="width: 100%; background: #30D158; color: white; justify-content: center; padding: 14px; font-size: 1.1rem; font-weight: 600;">Pay Now</button>
         </div>
     </div>
 
@@ -764,7 +862,7 @@
                  </div>
                  <div style="background: rgba(10, 132, 255, 0.1); backdrop-filter: blur(40px); border: 1px solid rgba(10, 132, 255, 0.3); border-radius: 24px; padding: 32px; display: flex; flex-direction: column; gap: 16px; position: relative; box-shadow: 0 20px 60px rgba(10, 132, 255, 0.2);">
                      <div style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--accent-primary); padding: 6px 16px; border-radius: 16px; font-size: 0.85rem; font-weight: 700; color: white; box-shadow: 0 4px 12px rgba(10, 132, 255, 0.4);">POPULAR</div>
-                     <h4 style="font-size: 1.4rem; font-weight: 700; color: var(--accent-primary);">Community Member</h4>
+                     <h4 style="font-size: 1.4rem; font-weight: 700;">Community Member</h4>
                      <div style="font-size: 2rem; font-weight: 800;">$9.99<span style="font-size: 1rem; font-weight: 500; color: var(--text-secondary);">/mo</span></div>
                      <ul style="text-align: left; color: var(--text-secondary); font-size: 1rem; padding-left: 20px; margin-bottom: auto; list-style-type: disc; line-height: 1.5;">
                          <li>5,000 monthly output lines</li>
@@ -792,7 +890,194 @@
         </div>
     </div>
 
+    <!-- Structured Tutorial Modal -->
+    <div class="modal" id="structuredModal" onclick="if(event.target === this) closeStructuredModal()">
+        <div class="modal-content" style="text-align: center; padding: 40px; width: 90%; max-width: 1000px; max-height: 90vh; overflow-y: auto;">
+            <h2 style="font-size: 2rem; margin-bottom: 12px; font-weight: 800;">Structured P&L</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 32px;">Use these keywords in <strong>Structured Mode</strong> to precisely control the AI. <em>Tap any keyword to learn more.</em></p>
+            
+            <div class="structured-grid">
+                <!-- Start -->
+                <div class="struct-category">
+                    <div class="struct-title">Start</div>
+                    <div class="struct-items">
+                        <span class="struct-chip" onclick="showKeywordInfo('in')">in</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('for')">for</span>
+                    </div>
+                </div>
+                
+                <!-- References -->
+                <div class="struct-category">
+                    <div class="struct-title">References</div>
+                    <div class="struct-items">
+                        <span class="struct-chip" onclick="showKeywordInfo('context')">context</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('line')">line</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('chimcontext')">chimcontext</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('prompt')">prompt</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('chimprompt')">chimprompt</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('file')">file</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('error')">error</span>
+                    </div>
+                </div>
+
+                <!-- Generation -->
+                <div class="struct-category">
+                    <div class="struct-title">Generation</div>
+                    <div class="struct-items">
+                        <span class="struct-chip" onclick="showKeywordInfo('spawn')">spawn</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('rare')">rare</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('create')">create</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('refactor')">refactor</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('explain')">explain</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('optimize')">optimize</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('debug')">debug</span>
+                    </div>
+                </div>
+
+                <!-- Attributes -->
+                <div class="struct-category">
+                    <div class="struct-title">Attributes</div>
+                    <div class="struct-items">
+                        <span class="struct-chip" onclick="showKeywordInfo('from')">from</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('makeit')">makeit</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('like')">like</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('but')">but</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('with')">with</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('without')">without</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('prefer')">prefer</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('format')">format</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('steps')">steps</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('between')">between</span>
+                    </div>
+                </div>
+
+                <!-- Position & Style -->
+                <div class="struct-category">
+                    <div class="struct-title">Position & Style</div>
+                    <div class="struct-items">
+                        <span class="struct-chip" onclick="showKeywordInfo('nextto')">nextto</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('blame')">blame</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('animate')">animate</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('background')">background</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('font')">font</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('style')">style</span>
+                    </div>
+                </div>
+
+                <!-- Organization -->
+                <div class="struct-category">
+                    <div class="struct-title">Organization</div>
+                    <div class="struct-items">
+                        <span class="struct-chip" onclick="showKeywordInfo('maybe')">maybe</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('then')">then</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('forge')">forge</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('mold')">mold</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('jump')">jump</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('using')">using</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Keyword Info Display -->
+            <div id="keywordInfoBox" style="margin-top: 24px; padding: 20px; background: rgba(0,0,0,0.4); border: 1px solid var(--accent-primary); border-radius: 12px; text-align: left; display: none;">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                    <span id="keywordInfoName" style="font-family: 'JetBrains Mono', monospace; font-size: 1.2rem; color: var(--accent-primary); font-weight: 700;"></span>
+                    <span id="keywordInfoCategory" style="font-size: 0.75rem; background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 4px; color: var(--text-tertiary);"></span>
+                </div>
+                <p id="keywordInfoDesc" style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5; margin-bottom: 12px;"></p>
+                <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 12px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;">
+                    <span style="color: var(--text-tertiary);">Example:</span><br>
+                    <span id="keywordInfoExample" style="color: var(--text-secondary);"></span>
+                </div>
+            </div>
+            
+            <!-- Example (shown when no keyword selected) -->
+            <div id="keywordDefaultExample" style="margin-top: 24px; padding: 20px; background: rgba(0,0,0,0.3); border-radius: 12px; text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--text-secondary);">
+                <strong style="color: var(--accent-primary);">Example:</strong><br><br>
+                <span style="color: #5AC8FA;">*in*</span> swift ; <span style="color: #5AC8FA;">*for*</span> iPhone ; <span style="color: #5AC8FA;">*context*</span> 1 ; <span style="color: #30D158;">*create*</span> search bar ; <span style="color: #5AC8FA;">*from*</span> WhatsApp ; <span style="color: #5AC8FA;">*makeit*</span> static ; <span style="color: #5AC8FA;">*like*</span> iMessage ; <span style="color: #5AC8FA;">*but*</span> new Siri effect ; no search icon
+            </div>
+        </div>
+    </div>
+
+    <!-- Save Modal -->
+    <div class="modal" id="saveModal" onclick="if(event.target === this) closeSaveModal()">
+        <div class="modal-content" style="padding: 32px; width: 90%; max-width: 500px;">
+            <h2 style="font-size: 1.5rem; margin-bottom: 24px; font-weight: 700; text-align: center;">Save Content</h2>
+            
+            <div class="save-type-toggle">
+                <button class="type-btn active" data-type="context" onclick="setSaveType('context')">Context</button>
+                <button class="type-btn" data-type="prompt" onclick="setSaveType('prompt')">Prompt</button>
+            </div>
+            
+            <div class="form-group" style="margin-top: 20px;">
+                <label class="form-label">Title *</label>
+                <input type="text" id="saveTitle" class="form-input" placeholder="Enter a title..." required>
+            </div>
+            
+            <div class="form-group" style="margin-top: 16px;">
+                <label class="form-label">Description (optional)</label>
+                <textarea id="saveDescription" class="form-input" style="min-height: 80px; resize: vertical;" placeholder="Add a description..."></textarea>
+            </div>
+            
+            <div class="visibility-toggle" style="margin-top: 20px;">
+                <span style="color: var(--text-secondary);">Visibility:</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="savePublic">
+                    <span class="toggle-slider"></span>
+                </label>
+                <span id="visibilityLabel" style="color: var(--text-secondary);">Private</span>
+            </div>
+            
+            <div style="display: flex; gap: 12px; margin-top: 24px;">
+                <button onclick="closeSaveModal()" class="minimal-btn" style="flex: 1; justify-content: center; padding: 12px;">Cancel</button>
+                <button onclick="confirmSave()" class="minimal-btn" style="flex: 1; justify-content: center; padding: 12px; background: var(--accent-primary); color: white;">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal" id="editModal" onclick="if(event.target === this) closeEditModal()">
+        <div class="modal-content" style="padding: 32px; width: 90%; max-width: 600px;">
+            <h2 style="font-size: 1.5rem; margin-bottom: 24px; font-weight: 700; text-align: center;" id="editModalTitle">Edit Item</h2>
+            
+            <input type="hidden" id="editItemType">
+            <input type="hidden" id="editItemSerial">
+            
+            <div class="form-group">
+                <label class="form-label">Title</label>
+                <input type="text" id="editTitle" class="form-input" placeholder="Enter a title...">
+            </div>
+            
+            <div class="form-group" style="margin-top: 16px;">
+                <label class="form-label">Content</label>
+                <textarea id="editContent" class="form-input" style="min-height: 150px; resize: vertical; font-family: 'JetBrains Mono', monospace;" placeholder="Enter content..."></textarea>
+            </div>
+            
+            <div class="form-group" style="margin-top: 16px;">
+                <label class="form-label">Description (optional)</label>
+                <textarea id="editDescription" class="form-input" style="min-height: 80px; resize: vertical;" placeholder="Add a description..."></textarea>
+            </div>
+            
+            <div class="visibility-toggle" style="margin-top: 20px;">
+                <span style="color: var(--text-secondary);">Visibility:</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="editPublic">
+                    <span class="toggle-slider"></span>
+                </label>
+                <span id="editVisibilityLabel" style="color: var(--text-secondary);">Private</span>
+            </div>
+            
+            <div style="display: flex; gap: 12px; margin-top: 24px;">
+                <button onclick="closeEditModal()" class="minimal-btn" style="flex: 1; justify-content: center; padding: 12px;">Cancel</button>
+                <button onclick="confirmEdit()" class="minimal-btn" style="flex: 1; justify-content: center; padding: 12px; background: var(--accent-primary); color: white;">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import Syllabus Data before main script -->
+    <script src="syllabus.js"></script>
     <script src="app.js"></script>
+    
     <script>
         const languages = [
             { id: 'assembly', name: 'Assembly', desc: 'Low-level hardware control', img: 'Assembly.png' },
@@ -866,25 +1151,11 @@
         let currentPlan = null;
         let linesRemaining = 250;
         let selectedFaculty = null;
-
-        // University Data (Imported from ChimWopara logic)
-        const schoolData = {
-            media: {
-                title: 'Faculty of Media',
-                description: 'Unleash your creativity with AI-powered media creation. Master the tools that are revolutionizing content creation across industries.',
-                tags: ['Music Generation', 'Video Production', 'Image Generation', 'Audio Tech']
-            },
-            business: {
-                title: 'Faculty of Business',
-                description: 'Transform your business operations with AI automation. Learn to build systems that drive growth and efficiency at scale.',
-                tags: ['Forms', 'Customer Service Bots', 'Payment Systems', 'Call Systems']
-            },
-            coding: {
-                title: 'Faculty of Coding',
-                description: 'Build the future with AI-assisted development. Learn to create applications across platforms using cutting-edge AI tools.',
-                tags: ['Websites', 'Google Sign-In', 'Mobile Apps', 'Roblox', 'Unity']
-            }
-        };
+        
+        // Enrollment State
+        let isEnrolled = localStorage.getItem('isEnrolled') === 'true';
+        let enrolledFaculty = localStorage.getItem('enrolledFaculty') || null;
+        let currentWeek = 1; // Locked to week 1 for now
 
         function updatelinesDisplay() {
             document.getElementById('linesCount').textContent = linesRemaining.toLocaleString();
@@ -1053,32 +1324,48 @@
             const grid = document.getElementById('facultyGrid');
             grid.innerHTML = '';
             
+            if (typeof schoolData === 'undefined') { console.error('Syllabus data not loaded!'); return; }
+
             Object.keys(schoolData).forEach(key => {
                 const school = schoolData[key];
                 const card = document.createElement('div');
                 card.className = 'faculty-card';
                 if (selectedFaculty === key) card.classList.add('selected');
                 
-                card.onclick = () => {
+                card.onclick = (e) => {
+                    if (e.target.closest('.syllabus-box')) return;
                     document.querySelectorAll('.faculty-card').forEach(c => c.classList.remove('selected'));
                     card.classList.add('selected');
                     selectedFaculty = key;
                     document.getElementById('selectedFacultyName').textContent = school.title;
                 };
 
-                // Use existing images if they exist in the root folder, else fallback to icons
                 const imgSrc = `${key}.png`; 
-                
                 let tagsHtml = school.tags.map(tag => `<span class="program-tag">${tag}</span>`).join('');
+                let syllabusHtml = school.syllabus.map(item => `<li class="syllabus-item">${item}</li>`).join('');
 
                 card.innerHTML = `
-                    <img src="${imgSrc}" class="faculty-icon" onerror="this.style.display='none'">
-                    <div class="faculty-title">${school.title}</div>
-                    <div class="faculty-desc">${school.description}</div>
+                    <div class="faculty-header">
+                        <img src="${imgSrc}" class="faculty-icon" onerror="this.style.display='none'">
+                        <div class="faculty-info">
+                            <div class="faculty-title">${school.title}</div>
+                            <div class="faculty-desc">${school.description}</div>
+                        </div>
+                    </div>
+                    <div class="syllabus-box protected-content" oncopy="return false" oncontextmenu="return false"><div class="syllabus-title">Curriculum</div><ul class="syllabus-list">${syllabusHtml}</ul></div>
                     <div class="program-tags">${tagsHtml}</div>
                 `;
                 grid.appendChild(card);
             });
+        }
+
+        // New Admission & Portal Logic
+        function checkEnrollmentAndOpen() {
+            if (isEnrolled && enrolledFaculty) {
+                openStudentPortal();
+            } else {
+                showUniversityModal();
+            }
         }
 
         function handleAdmissionSubmit(e) {
@@ -1087,11 +1374,170 @@
                 showAlert('Please select a faculty first.', true);
                 return;
             }
-            // Mock submission
             closeUniversityModal();
-            showAlert(`Application to ${schoolData[selectedFaculty].title} submitted successfully! We will email you shortly.`, false, 6000);
-            document.getElementById('admissionForm').reset();
-            selectedFaculty = null;
+            // Open Payment Modal
+            document.getElementById('paymentModal').classList.add('active');
+            updateToggleButtonVisibility();
+        }
+
+        function closePaymentModal() {
+            document.getElementById('paymentModal').classList.remove('active');
+            updateToggleButtonVisibility();
+        }
+
+        function processPayment() {
+            // Mock Processing
+            const btn = document.querySelector('#paymentModal button');
+            const originalText = btn.textContent;
+            btn.textContent = "Processing...";
+            btn.disabled = true;
+
+            setTimeout(() => {
+                closePaymentModal();
+                btn.textContent = originalText;
+                btn.disabled = false;
+                
+                // Enrollment Success
+                isEnrolled = true;
+                enrolledFaculty = selectedFaculty;
+                localStorage.setItem('isEnrolled', 'true');
+                localStorage.setItem('enrolledFaculty', enrolledFaculty);
+                
+                showAlert('Payment successful! Welcome to the University.', false, 5000);
+                openStudentPortal();
+            }, 1500);
+        }
+
+        function openStudentPortal() {
+            const portal = document.getElementById('studentPortal');
+            portal.classList.add('active');
+            
+            // Set Faculty Name
+            const facultyName = schoolData[enrolledFaculty]?.title || "University";
+            document.getElementById('enrolledFacultyName').textContent = `Enrolled: ${facultyName}`;
+            
+            renderWeeks();
+            loadWeekContent(currentWeek);
+        }
+
+        function closeStudentPortal() {
+            document.getElementById('studentPortal').classList.remove('active');
+        }
+
+        function renderWeeks() {
+            const sidebar = document.getElementById('weeksSidebar');
+            sidebar.innerHTML = '';
+            
+            for (let i = 1; i <= 52; i++) {
+                const isLocked = i > currentWeek;
+                const div = document.createElement('div');
+                div.className = `week-card ${i === currentWeek ? 'active' : ''} ${isLocked ? 'locked' : ''}`;
+                
+                let icon = isLocked ? 
+                    `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>` : 
+                    `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+                
+                if (i === currentWeek) {
+                    icon = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>`;
+                }
+
+                div.innerHTML = `
+                    <div class="week-info">
+                        <div class="week-num">Week ${i}</div>
+                        <div class="week-status">${isLocked ? 'Locked' : (i === currentWeek ? 'In Progress' : 'Completed')}</div>
+                    </div>
+                    ${icon}
+                `;
+                
+                if (!isLocked) {
+                    div.onclick = () => {
+                        document.querySelectorAll('.week-card').forEach(c => c.classList.remove('active'));
+                        div.classList.add('active');
+                        loadWeekContent(i);
+                    };
+                }
+                
+                sidebar.appendChild(div);
+            }
+        }
+
+        function loadWeekContent(weekNum) {
+            document.getElementById('viewWeekTitle').textContent = `Week ${weekNum}`;
+            
+            // Progress Bar Update
+            const progressPercent = (weekNum / 52) * 100;
+            document.getElementById('portalProgressBar').style.width = `${progressPercent}%`;
+            
+            // Mock descriptions based on syllabus
+            let desc = "Focus on completing your weekly projects and reviewing lecture notes.";
+            if (schoolData[enrolledFaculty] && schoolData[enrolledFaculty].syllabus[weekNum-1]) {
+                desc = schoolData[enrolledFaculty].syllabus[weekNum-1];
+            }
+            document.getElementById('viewWeekDesc').textContent = desc;
+            
+            // Update Time-Locked Resources
+            updateTimeLocks(weekNum);
+        }
+        
+        function updateTimeLocks(weekNum) {
+            // DEBUG MODE: Set 'mockDay' to test states.
+            // 1 = Monday (Both Locked)
+            // 3 = Wednesday (P&L Unlocked, Project Locked)
+            // 5 = Friday (Both Unlocked)
+            const mockDay = 1; // FOR DEMO: Set to 1 (Monday) to visually LOCK everything.
+            
+            const day = mockDay; // In production use: new Date().getDay();
+            
+            // P&L Challenge: Locked until Wednesday (Day 3)
+            const pnlCard = document.getElementById('pnlCard');
+            const pnlLock = document.getElementById('pnlLock');
+            if (day < 3) {
+                pnlCard.classList.add('locked');
+                pnlLock.style.display = 'block';
+                pnlCard.onclick = () => showAlert('P&L Challenges unlock every Wednesday.', true);
+            } else {
+                pnlCard.classList.remove('locked');
+                pnlLock.style.display = 'none';
+                pnlCard.onclick = openPnLChallenge;
+            }
+            
+            // Weekly Project: Open only on Fridays (Day 5)
+            const projectCard = document.getElementById('projectCard');
+            const projectLock = document.getElementById('projectLock');
+            if (day !== 5) {
+                projectCard.classList.add('locked');
+                projectLock.style.display = 'block';
+                projectCard.onclick = () => showAlert('Weekly Projects are only open on Fridays for 24 hours.', true);
+            } else {
+                projectCard.classList.remove('locked');
+                projectLock.style.display = 'none';
+                projectCard.onclick = openWeeklyProject;
+            }
+            
+            // Notes Card Update with Dynamic Path
+            const notesCard = document.getElementById('notesCard');
+            // We store the weekNum in a dataset attribute to access it in the click handler
+            notesCard.dataset.week = weekNum;
+        }
+        
+        function openClassNotes() {
+            const weekNum = document.getElementById('notesCard').dataset.week || 1;
+            // Map full faculty name to short code if needed, but here we used keys 'media', 'business', 'coding'
+            // enrolledFaculty variable holds the key (e.g., 'media')
+            const pdfPath = `university/faculty/${enrolledFaculty}/${enrolledFaculty}week${weekNum}.pdf`;
+            
+            // Check if we can actually open it (in a real app, you'd check existence)
+            // For now, we simulate opening it
+            console.log(`Opening PDF: ${pdfPath}`);
+            window.open(pdfPath, '_blank');
+        }
+        
+        function openPnLChallenge() {
+            alert('Starting Weekly P&L Challenge...');
+        }
+        
+        function openWeeklyProject() {
+            alert('Opening Weekly Project Environment...');
         }
 
         const viewerObserver = new MutationObserver((mutations) => {
@@ -1109,14 +1555,42 @@
             document.getElementById('creatorPanel').style.display = 'flex';
         }
         
+        function toggleMode() {
+            const mode = document.getElementById('modeSelect').value;
+            const codeTools = document.getElementById('codeTools');
+            
+            if (mode === 'code') {
+                codeTools.style.display = 'flex';
+                checkSelections();
+            } else {
+                codeTools.style.display = 'none';
+                // For general mode, we enable the button
+                document.getElementById('generateBtn').disabled = false;
+            }
+        }
+
         function checkSelections() {
+            const questionInput = document.getElementById('questionInput').value.trim();
+            const mode = document.getElementById('modeSelect').value;
+            const generateBtn = document.getElementById('generateBtn');
+
+            const hasInput = questionInput.length > 0;
+
+            if (mode === 'general') {
+                generateBtn.disabled = !hasInput;
+                return;
+            }
+
+            // Code mode logic
             const language = document.getElementById('languageSelect').value;
             const difficulty = document.getElementById('difficultySelect').value;
             const customLanguage = document.getElementById('customLanguageInput').value;
+
             let isLanguageValid = language !== "";
             if (language === 'custom') isLanguageValid = customLanguage.trim() !== "";
             const isDifficultyValid = difficulty !== "";
-            document.getElementById('generateBtn').disabled = !(isLanguageValid && isDifficultyValid);
+
+            generateBtn.disabled = !(hasInput && isLanguageValid && isDifficultyValid);
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -1124,6 +1598,12 @@
              updatelinesDisplay();
              updatePremiumModalUI();
              loadChallengeStore();
+             
+             // Check URL params for auto-open
+             const urlParams = new URLSearchParams(window.location.search);
+             if (urlParams.get('action') === 'university') {
+                 checkEnrollmentAndOpen();
+             }
              
              document.querySelectorAll('.modal').forEach(modal => {
                  modal.addEventListener('click', (e) => {
@@ -1143,6 +1623,21 @@
                      }
                  });
              }
+             
+             // Initial check for button state
+             checkSelections();
+        });
+        
+        // --- CONTENT PROTECTION LOGIC ---
+        window.addEventListener('blur', () => { document.querySelectorAll('.protected-content').forEach(el => { el.classList.add('privacy-blur'); }); });
+        window.addEventListener('focus', () => { document.querySelectorAll('.protected-content').forEach(el => { el.classList.remove('privacy-blur'); }); });
+        document.addEventListener('keyup', (e) => {
+            if (e.key === 'PrintScreen') {
+                const elements = document.querySelectorAll('.protected-content');
+                elements.forEach(el => el.classList.add('privacy-blur'));
+                alert('Screenshots are not permitted for curriculum content.');
+                setTimeout(() => { elements.forEach(el => el.classList.remove('privacy-blur')); }, 2000);
+            }
         });
 
         function updateToggleButtonVisibility() {
@@ -1248,6 +1743,546 @@
                 if (customBtn) { customBtn.addEventListener('click', () => { tokenClient.requestAccessToken(); }); }
             } catch (error) { console.error("Error initializing Google Token Client:", error); showAlert("Could not load Google Sign-In.", true); }
         });
+
+        // ============ TABS SYSTEM ============
+        function switchMainTab(tabName) {
+            document.querySelectorAll('.main-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelector(`.main-tab[data-tab="${tabName}"]`).classList.add('active');
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            
+            if (tabName === 'contexts') renderContexts();
+            if (tabName === 'prompts') renderPrompts();
+        }
+        
+        function switchSubTab(parent, subTabId) {
+            const container = document.getElementById(parent + 'Tab');
+            container.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
+            container.querySelectorAll('.sub-tab-content').forEach(t => t.classList.remove('active'));
+            container.querySelector(`.sub-tab[data-subtab="${subTabId}"]`).classList.add('active');
+            document.getElementById(subTabId).classList.add('active');
+        }
+
+        // ============ STRUCTURED MODAL ============
+        function showStructuredModal() { document.getElementById('structuredModal').classList.add('active'); updateToggleButtonVisibility(); }
+        function closeStructuredModal() { document.getElementById('structuredModal').classList.remove('active'); updateToggleButtonVisibility(); }
+
+        // Keyword definitions
+        const keywordDefinitions = {
+            // Start
+            'in': { category: 'Start', desc: 'Specifies the programming language or environment for your request.', example: '*in* swift ; *create* login screen' },
+            'for': { category: 'Start', desc: 'Defines the target platform or device.', example: '*for* iPhone ; *create* navigation bar' },
+            
+            // References
+            'context': { category: 'References', desc: 'References a saved context by its serial number. Use to include previously saved code or specifications.', example: '*context* #C23b5js8 ; *refactor* with new API' },
+            'line': { category: 'References', desc: 'References specific line numbers in your code or context.', example: '*line* 45-60 ; *explain* this function' },
+            'chimcontext': { category: 'References', desc: 'References a public community context shared by other users.', example: '*chimcontext* #C8hn2k4m ; *create* similar layout' },
+            'prompt': { category: 'References', desc: 'References one of your saved prompts by its serial number.', example: '*prompt* %P9x2k3m1 ; apply to new project' },
+            'chimprompt': { category: 'References', desc: 'References a public community prompt shared by other users.', example: '*chimprompt* #Pab3k9x2 ; customize for my needs' },
+            'file': { category: 'References', desc: 'References an uploaded file or attachment.', example: '*file* design.png ; *create* matching UI' },
+            'error': { category: 'References', desc: 'References an error message to help debug or explain the issue.', example: '*error* "undefined is not a function" ; *debug*' },
+            
+            // Generation
+            'spawn': { category: 'Generation', desc: 'Generates multiple variations or instances of something.', example: '*spawn* 5 color themes ; *like* Material Design' },
+            'rare': { category: 'Generation', desc: 'Requests unique, uncommon, or creative solutions instead of standard approaches.', example: '*rare* ; *create* loading animation' },
+            'create': { category: 'Generation', desc: 'The primary command to generate new code, components, or content.', example: '*create* user profile card ; *with* avatar and bio' },
+            'refactor': { category: 'Generation', desc: 'Improves existing code structure without changing its behavior.', example: '*context* 1 ; *refactor* for better readability' },
+            'explain': { category: 'Generation', desc: 'Provides detailed explanation of code, concepts, or logic.', example: '*line* 20-35 ; *explain* step by step' },
+            'optimize': { category: 'Generation', desc: 'Improves code performance, efficiency, or resource usage.', example: '*context* 1 ; *optimize* for speed' },
+            'debug': { category: 'Generation', desc: 'Finds and fixes bugs or issues in the code.', example: '*error* "null reference" ; *debug* ; *explain* fix' },
+            
+            // Attributes
+            'from': { category: 'Attributes', desc: 'References a design or functionality from an existing app or source as inspiration.', example: '*create* chat bubble ; *from* WhatsApp' },
+            'makeit': { category: 'Attributes', desc: 'Applies a specific quality or characteristic to the output.', example: '*create* button ; *makeit* rounded ; *makeit* animated' },
+            'like': { category: 'Attributes', desc: 'Makes the output similar to a referenced style or example.', example: '*create* navbar ; *like* Apple.com' },
+            'but': { category: 'Attributes', desc: 'Modifies or overrides a specific aspect of the reference.', example: '*like* Instagram stories ; *but* vertical scroll' },
+            'with': { category: 'Attributes', desc: 'Includes additional features or elements.', example: '*create* form ; *with* validation ; *with* dark mode' },
+            'without': { category: 'Attributes', desc: 'Excludes specific features or elements.', example: '*create* modal ; *without* close button ; *without* backdrop' },
+            'prefer': { category: 'Attributes', desc: 'Sets a preference for approach, library, or method.', example: '*prefer* flexbox ; *create* grid layout' },
+            'format': { category: 'Attributes', desc: 'Specifies the output format or structure.', example: '*explain* API ; *format* bullet points' },
+            'steps': { category: 'Attributes', desc: 'Requests output broken into numbered steps or phases.', example: '*create* auth flow ; *steps* 5' },
+            'between': { category: 'Attributes', desc: 'Specifies a range or constraint between values.', example: '*spawn* icons ; *between* 24px and 48px' },
+            
+            // Position & Style
+            'nextto': { category: 'Position & Style', desc: 'Positions an element relative to another element.', example: '*create* tooltip ; *nextto* button' },
+            'blame': { category: 'Position & Style', desc: 'Highlights or annotates specific parts of code with explanations.', example: '*blame* ; *context* 1 ; show problem areas' },
+            'animate': { category: 'Position & Style', desc: 'Adds animation or motion to elements.', example: '*create* card ; *animate* on hover ; *like* Material' },
+            'background': { category: 'Position & Style', desc: 'Specifies background styling for elements.', example: '*create* hero section ; *background* gradient blue' },
+            'font': { category: 'Position & Style', desc: 'Specifies typography settings.', example: '*create* heading ; *font* Inter ; *makeit* bold' },
+            'style': { category: 'Position & Style', desc: 'Applies general styling or a design system.', example: '*style* glassmorphism ; *create* card component' },
+            
+            // Organization
+            'maybe': { category: 'Organization', desc: 'Marks something as optional or conditional in the output.', example: '*create* form ; *with* email ; *maybe* phone number' },
+            'then': { category: 'Organization', desc: 'Chains sequential actions or defines what happens next.', example: '*create* button ; *then* show modal on click' },
+            'forge': { category: 'Organization', desc: 'Combines multiple prompts or contexts into a reusable template.', example: '*forge* "auth-flow" ; *from* login + signup + reset' },
+            'mold': { category: 'Organization', desc: 'Creates a reusable pattern or template from existing code.', example: '*mold* "api-call" ; *from* context 1' },
+            'jump': { category: 'Organization', desc: 'Skips to a specific section or jumps between contexts.', example: '*jump* line 100 ; *explain* from there' },
+            'using': { category: 'Organization', desc: 'Specifies libraries, frameworks, or tools to use.', example: '*create* chart ; *using* Chart.js ; *in* React' }
+        };
+
+        function showKeywordInfo(keyword) {
+            const info = keywordDefinitions[keyword];
+            if (!info) return;
+            
+            // Remove active class from all chips
+            document.querySelectorAll('.struct-chip').forEach(chip => chip.classList.remove('active'));
+            // Add active class to clicked chip
+            event.target.classList.add('active');
+            
+            // Hide default example, show info box
+            document.getElementById('keywordDefaultExample').style.display = 'none';
+            const infoBox = document.getElementById('keywordInfoBox');
+            infoBox.style.display = 'block';
+            
+            // Populate info
+            document.getElementById('keywordInfoName').textContent = keyword;
+            document.getElementById('keywordInfoCategory').textContent = info.category;
+            document.getElementById('keywordInfoDesc').textContent = info.desc;
+            document.getElementById('keywordInfoExample').innerHTML = info.example.replace(/\*(\w+)\*/g, '<span style="color: #5AC8FA;">*$1*</span>');
+            
+            // Scroll to info box
+            infoBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // ============ SAVE MODAL ============
+        let saveType = 'context';
+        
+        function openSaveModal() {
+            const content = document.getElementById('questionInput').value.trim();
+            if (!content) { showAlert('Please enter some content first.', true); return; }
+            document.getElementById('saveModal').classList.add('active');
+            updateToggleButtonVisibility();
+        }
+        
+        function closeSaveModal() {
+            document.getElementById('saveModal').classList.remove('active');
+            document.getElementById('saveTitle').value = '';
+            document.getElementById('saveDescription').value = '';
+            document.getElementById('savePublic').checked = false;
+            document.getElementById('visibilityLabel').textContent = 'Private';
+            updateToggleButtonVisibility();
+        }
+        
+        function setSaveType(type) {
+            saveType = type;
+            document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+            document.querySelector(`.type-btn[data-type="${type}"]`).classList.add('active');
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const publicToggle = document.getElementById('savePublic');
+            if (publicToggle) {
+                publicToggle.addEventListener('change', () => {
+                    document.getElementById('visibilityLabel').textContent = publicToggle.checked ? 'Public' : 'Private';
+                });
+            }
+        });
+        
+        function generateSerial() {
+            const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+            let serial = '';
+            for (let i = 0; i < 8; i++) serial += chars[Math.floor(Math.random() * chars.length)];
+            return serial;
+        }
+        
+        function confirmSave() {
+            const title = document.getElementById('saveTitle').value.trim();
+            const description = document.getElementById('saveDescription').value.trim();
+            const isPublic = document.getElementById('savePublic').checked;
+            const content = document.getElementById('questionInput').value.trim();
+            
+            if (!title) { showAlert('Please enter a title.', true); return; }
+            
+            const serial = generateSerial();
+            const prefix = saveType === 'context' ? 'C' : 'P';
+            const fullSerial = prefix + serial;
+            
+            const item = {
+                title,
+                serial: fullSerial,
+                content,
+                description,
+                isPublic,
+                createdAt: new Date().toISOString()
+            };
+            
+            if (saveType === 'context') {
+                const contexts = JSON.parse(localStorage.getItem('savedContexts') || '[]');
+                contexts.push(item);
+                localStorage.setItem('savedContexts', JSON.stringify(contexts));
+            } else {
+                const prompts = JSON.parse(localStorage.getItem('savedPrompts') || '[]');
+                prompts.push(item);
+                localStorage.setItem('savedPrompts', JSON.stringify(prompts));
+            }
+            
+            const refSymbol = isPublic ? '#' : '%';
+            showAlert(`Saved! Reference: ${refSymbol}${fullSerial}`, false);
+            closeSaveModal();
+        }
+
+        // ============ EDIT MODAL ============
+        function closeEditModal() {
+            document.getElementById('editModal').classList.remove('active');
+        }
+        
+        function confirmEdit() {
+            const type = document.getElementById('editItemType').value;
+            const index = parseInt(document.getElementById('editItemSerial').value);
+            const title = document.getElementById('editTitle').value.trim();
+            const content = document.getElementById('editContent').value.trim();
+            const description = document.getElementById('editDescription').value.trim();
+            const isPublic = document.getElementById('editPublic').checked;
+            
+            if (!title) { showAlert('Please enter a title.', true); return; }
+            
+            if (type === 'context') {
+                const contexts = JSON.parse(localStorage.getItem('savedContexts') || '[]');
+                contexts[index].title = title;
+                contexts[index].content = content;
+                contexts[index].description = description;
+                contexts[index].isPublic = isPublic;
+                localStorage.setItem('savedContexts', JSON.stringify(contexts));
+                renderContexts();
+            } else {
+                const prompts = JSON.parse(localStorage.getItem('savedPrompts') || '[]');
+                prompts[index].title = title;
+                prompts[index].content = content;
+                prompts[index].description = description;
+                prompts[index].isPublic = isPublic;
+                localStorage.setItem('savedPrompts', JSON.stringify(prompts));
+                renderPrompts();
+            }
+            
+            showAlert('Changes saved!', false);
+            closeEditModal();
+        }
+        
+        // Edit modal visibility toggle listener
+        document.addEventListener('DOMContentLoaded', () => {
+            const editPublicToggle = document.getElementById('editPublic');
+            if (editPublicToggle) {
+                editPublicToggle.addEventListener('change', () => {
+                    document.getElementById('editVisibilityLabel').textContent = editPublicToggle.checked ? 'Public' : 'Private';
+                });
+            }
+        });
+
+        // ============ CONTEXTS CRUD ============
+        function renderContexts() {
+            const container = document.getElementById('contextsContainer');
+            const contexts = JSON.parse(localStorage.getItem('savedContexts') || '[]');
+            container.innerHTML = '';
+            
+            contexts.forEach((ctx, index) => {
+                const refSymbol = ctx.isPublic ? '#' : '%';
+                const card = document.createElement('div');
+                card.className = 'item-card';
+                card.innerHTML = `
+                    <div class="item-header">
+                        <input type="text" class="item-title-input" value="${escapeHtml(ctx.title)}" onchange="updateContextTitle(${index}, this.value)">
+                        <div class="item-controls">
+                            <span class="serial-badge">${refSymbol}${ctx.serial}</span>
+                            <span class="visibility-label">${ctx.isPublic ? 'Public' : 'Private'}</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" ${ctx.isPublic ? 'checked' : ''} onchange="toggleContextVisibility(${index})">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <button class="icon-btn" onclick="editContext(${index})" title="Edit">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            </button>
+                            <button class="icon-btn delete" onclick="deleteContext(${index})" title="Delete">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="item-content">${escapeHtml(ctx.content)}</div>
+                    ${ctx.description ? `<div class="item-description">${escapeHtml(ctx.description)}</div>` : ''}
+                `;
+                container.appendChild(card);
+            });
+        }
+        
+        function addNewContext() {
+            const contexts = JSON.parse(localStorage.getItem('savedContexts') || '[]');
+            contexts.push({
+                title: 'New Context',
+                serial: 'C' + generateSerial(),
+                content: '',
+                description: '',
+                isPublic: false,
+                createdAt: new Date().toISOString()
+            });
+            localStorage.setItem('savedContexts', JSON.stringify(contexts));
+            renderContexts();
+        }
+        
+        function updateContextTitle(index, title) {
+            const contexts = JSON.parse(localStorage.getItem('savedContexts') || '[]');
+            contexts[index].title = title;
+            localStorage.setItem('savedContexts', JSON.stringify(contexts));
+        }
+        
+        function toggleContextVisibility(index) {
+            const contexts = JSON.parse(localStorage.getItem('savedContexts') || '[]');
+            contexts[index].isPublic = !contexts[index].isPublic;
+            localStorage.setItem('savedContexts', JSON.stringify(contexts));
+            renderContexts();
+        }
+        
+        function deleteContext(index) {
+            if (!confirm('Delete this context?')) return;
+            const contexts = JSON.parse(localStorage.getItem('savedContexts') || '[]');
+            contexts.splice(index, 1);
+            localStorage.setItem('savedContexts', JSON.stringify(contexts));
+            renderContexts();
+        }
+        
+        function editContext(index) {
+            const contexts = JSON.parse(localStorage.getItem('savedContexts') || '[]');
+            const context = contexts[index];
+            document.getElementById('editModalTitle').textContent = 'Edit Context';
+            document.getElementById('editItemType').value = 'context';
+            document.getElementById('editItemSerial').value = index;
+            document.getElementById('editTitle').value = context.title;
+            document.getElementById('editContent').value = context.content;
+            document.getElementById('editDescription').value = context.description || '';
+            document.getElementById('editPublic').checked = context.isPublic;
+            document.getElementById('editVisibilityLabel').textContent = context.isPublic ? 'Public' : 'Private';
+            document.getElementById('editModal').classList.add('active');
+        }
+
+        // ============ PROMPTS CRUD ============
+        function renderPrompts() {
+            const container = document.getElementById('promptsContainer');
+            const prompts = JSON.parse(localStorage.getItem('savedPrompts') || '[]');
+            container.innerHTML = '';
+            
+            prompts.forEach((p, index) => {
+                const refSymbol = p.isPublic ? '#' : '%';
+                const card = document.createElement('div');
+                card.className = 'item-card';
+                card.innerHTML = `
+                    <div class="item-header">
+                        <input type="text" class="item-title-input" value="${escapeHtml(p.title)}" onchange="updatePromptTitle(${index}, this.value)">
+                        <div class="item-controls">
+                            <span class="serial-badge">${refSymbol}${p.serial}</span>
+                            <span class="visibility-label">${p.isPublic ? 'Public' : 'Private'}</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" ${p.isPublic ? 'checked' : ''} onchange="togglePromptVisibility(${index})">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <button class="icon-btn" onclick="editPrompt(${index})" title="Edit">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                            </button>
+                            <button class="icon-btn delete" onclick="deletePrompt(${index})" title="Delete">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="item-content">${formatPromptContent(p.content)}</div>
+                    ${p.description ? `<div class="item-description">${escapeHtml(p.description)}</div>` : ''}
+                `;
+                container.appendChild(card);
+            });
+        }
+        
+        function addNewPrompt() {
+            const prompts = JSON.parse(localStorage.getItem('savedPrompts') || '[]');
+            prompts.push({
+                title: 'New Prompt',
+                serial: 'P' + generateSerial(),
+                content: '',
+                description: '',
+                isPublic: false,
+                createdAt: new Date().toISOString()
+            });
+            localStorage.setItem('savedPrompts', JSON.stringify(prompts));
+            renderPrompts();
+        }
+        
+        function updatePromptTitle(index, title) {
+            const prompts = JSON.parse(localStorage.getItem('savedPrompts') || '[]');
+            prompts[index].title = title;
+            localStorage.setItem('savedPrompts', JSON.stringify(prompts));
+        }
+        
+        function togglePromptVisibility(index) {
+            const prompts = JSON.parse(localStorage.getItem('savedPrompts') || '[]');
+            prompts[index].isPublic = !prompts[index].isPublic;
+            localStorage.setItem('savedPrompts', JSON.stringify(prompts));
+            renderPrompts();
+        }
+        
+        function deletePrompt(index) {
+            if (!confirm('Delete this prompt?')) return;
+            const prompts = JSON.parse(localStorage.getItem('savedPrompts') || '[]');
+            prompts.splice(index, 1);
+            localStorage.setItem('savedPrompts', JSON.stringify(prompts));
+            renderPrompts();
+        }
+        
+        function editPrompt(index) {
+            const prompts = JSON.parse(localStorage.getItem('savedPrompts') || '[]');
+            const prompt = prompts[index];
+            document.getElementById('editModalTitle').textContent = 'Edit Prompt';
+            document.getElementById('editItemType').value = 'prompt';
+            document.getElementById('editItemSerial').value = index;
+            document.getElementById('editTitle').value = prompt.title;
+            document.getElementById('editContent').value = prompt.content;
+            document.getElementById('editDescription').value = prompt.description || '';
+            document.getElementById('editPublic').checked = prompt.isPublic;
+            document.getElementById('editVisibilityLabel').textContent = prompt.isPublic ? 'Public' : 'Private';
+            document.getElementById('editModal').classList.add('active');
+        }
+        
+        function formatPromptContent(content) {
+            const keywords = ['in', 'for', 'context', 'line', 'chimcontext', 'prompt', 'chimprompt', 'file', 'error', 'spawn', 'rare', 'create', 'refactor', 'explain', 'optimize', 'debug', 'from', 'makeit', 'like', 'but', 'with', 'without', 'prefer', 'format', 'steps', 'between', 'nextto', 'blame', 'animate', 'background', 'font', 'style', 'maybe', 'then', 'forge', 'mold', 'jump', 'using'];
+            let formatted = escapeHtml(content);
+            keywords.forEach(kw => {
+                const regex = new RegExp(`\\b${kw}\\b`, 'gi');
+                formatted = formatted.replace(regex, `<span class="keyword-highlight">$&</span>`);
+            });
+            return formatted;
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // ============ STRUCTURED HIGHLIGHTING ============
+        function updateStructuredHighlights(text) {
+            const overlay = document.getElementById('highlightOverlay');
+            if (!overlay || document.getElementById('modeSelect').value !== 'structured') return;
+            
+            const keywords = ['in', 'for', 'context', 'line', 'chimcontext', 'prompt', 'chimprompt', 'file', 'error', 'spawn', 'rare', 'create', 'refactor', 'explain', 'optimize', 'debug', 'from', 'makeit', 'like', 'but', 'with', 'without', 'prefer', 'format', 'steps', 'between', 'nextto', 'blame', 'animate', 'background', 'font', 'style', 'maybe', 'then', 'forge', 'mold', 'jump', 'using'];
+            
+            let formatted = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            
+            // Highlight references (#C, #P, %C, %P)
+            formatted = formatted.replace(/([#%])([CP])([a-z0-9]{8,9})/gi, '<span class="h-reference">$&</span>');
+            
+            // Highlight keywords (bold only now)
+            keywords.forEach(kw => {
+                const regex = new RegExp(`\\b${kw}\\b`, 'gi');
+                formatted = formatted.replace(regex, `<span class="h-keyword">$&</span>`);
+            });
+            if (formatted[formatted.length - 1] === '\n') formatted += '&nbsp;';
+            overlay.innerHTML = formatted;
+            overlay.scrollTop = document.getElementById('questionInput').scrollTop;
+        }
+
+        // Update toggleMode to handle structured mode
+        const originalToggleMode = typeof toggleMode !== 'undefined' ? toggleMode : null;
+        function toggleMode() {
+            const mode = document.getElementById('modeSelect').value;
+            const codeTools = document.getElementById('codeTools');
+            const overlay = document.getElementById('highlightOverlay');
+            
+            if (mode === 'code') {
+                codeTools.style.display = 'flex';
+            } else {
+                codeTools.style.display = 'none';
+            }
+            
+            if (mode === 'structured') {
+                checkSelections();
+            } else if (overlay) {
+                overlay.innerHTML = '';
+            }
+            
+            checkSelections();
+        }
+
+        // Update checkSelections to handle structured mode
+        const originalCheckSelections = typeof checkSelections !== 'undefined' ? checkSelections : null;
+        function checkSelections() {
+            const questionInput = document.getElementById('questionInput');
+            const val = questionInput.value;
+            const mode = document.getElementById('modeSelect').value;
+            const generateBtn = document.getElementById('generateBtn');
+            const hasInput = val.trim().length > 0;
+
+            if (mode === 'general') {
+                generateBtn.disabled = !hasInput;
+                return;
+            }
+            
+            if (mode === 'structured') {
+                generateBtn.disabled = !hasInput;
+                updateStructuredHighlights(val);
+                return;
+            }
+
+            // Code mode
+            const language = document.getElementById('languageSelect').value;
+            const difficulty = document.getElementById('difficultySelect').value;
+            const customLanguage = document.getElementById('customLanguageInput').value;
+            let isLanguageValid = language !== "";
+            if (language === 'custom') isLanguageValid = customLanguage.trim() !== "";
+            const isDifficultyValid = difficulty !== "";
+            generateBtn.disabled = !(hasInput && isLanguageValid && isDifficultyValid);
+        }
+
+        // Scroll sync for structured mode
+        document.addEventListener('DOMContentLoaded', () => {
+            const qInput = document.getElementById('questionInput');
+            const overlay = document.getElementById('highlightOverlay');
+            if (qInput && overlay) {
+                qInput.addEventListener('scroll', () => {
+                    overlay.scrollTop = qInput.scrollTop;
+                });
+            }
+        });
+
+        // ============ REFERENCE EXPANSION ============
+        // Expands #Cxxxxxx, #Pxxxxxx, %Cxxxxxx, %Pxxxxxx references to their content
+        function expandReferences(text) {
+            const contexts = JSON.parse(localStorage.getItem('savedContexts') || '[]');
+            const prompts = JSON.parse(localStorage.getItem('savedPrompts') || '[]');
+            
+            // Pattern matches #C, #P, %C, %P followed by alphanumeric serial
+            const refPattern = /([#%])([CP])([a-z0-9]{8,9})/gi;
+            
+            return text.replace(refPattern, (match, symbol, type, serial) => {
+                const fullSerial = type.toUpperCase() + serial.toLowerCase();
+                let found = null;
+                
+                if (type.toUpperCase() === 'C') {
+                    found = contexts.find(c => c.serial.toLowerCase() === fullSerial.toLowerCase());
+                } else {
+                    found = prompts.find(p => p.serial.toLowerCase() === fullSerial.toLowerCase());
+                }
+                
+                if (found) {
+                    // Recursively expand nested references
+                    return expandReferences(found.content);
+                }
+                return match; // Return original if not found
+            });
+        }
+        
+        // Get expanded text for sending
+        function getExpandedInput() {
+            const input = document.getElementById('questionInput').value;
+            return expandReferences(input);
+        }
+        
+        // Preview expansion on hover or for display
+        function getReferencedItem(serial) {
+            const contexts = JSON.parse(localStorage.getItem('savedContexts') || '[]');
+            const prompts = JSON.parse(localStorage.getItem('savedPrompts') || '[]');
+            
+            const type = serial.charAt(0).toUpperCase();
+            if (type === 'C') {
+                return contexts.find(c => c.serial.toLowerCase() === serial.toLowerCase());
+            } else if (type === 'P') {
+                return prompts.find(p => p.serial.toLowerCase() === serial.toLowerCase());
+            }
+            return null;
+        }
     </script>
 </body>
 </html>
