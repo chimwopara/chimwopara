@@ -3,85 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>Chim Wopara - Master AI Development Courses | Learn to Code with AI</title>
-    <meta name="description" content="Learn to code with AI through hands-on courses from Chim Wopara. Master AI web development, app creation, game design, and more. Start building the future, today.">
-    <meta name="keywords" content="Chim Wopara, Wopara, learn AI, AI development course, learn to code with AI, AI web builder, AI advertising, AI app development, AI game development, master AI, coding with AI, AI for developers, AI programming">
-    <meta name="author" content="Chim Wopara Enterprises">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://chimwopara.com/"> 
-
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://chimwopara.com/">
-    <meta property="og:title" content="Chim Wopara - Learn to Code with AI">
-    <meta property="og:description" content="Learn to code with AI through hands-on courses from Chim Wopara. Master AI web development, app creation, game design, and more.">
-    <meta property="og:image" content="https://chimwopara.com/assets/logo.png">
-
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://chimwopara.com/">
-    <meta property="twitter:title" content="Chim Wopara - Master AI Development Courses | Learn to Code with AI">
-    <meta property="twitter:description" content="Learn to code with AI through hands-on courses from Chim Wopara. Master AI web development, app creation, game design, and more.">
-    <meta property="twitter:image" content="https://chimwopara.com/assets/twitter-image.png">
-
-    <link rel="icon" href="assets/logo.png" type="image/png">
-    
+    <title>CW Network - Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
             background-color: #1B2330;
             color: #B7D1E1;
-        }
-        @keyframes animate-gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        .hero-bg {
-            position: relative;
-            background: linear-gradient(-45deg, #1B2330, #3f5268, #B7D1E1, #3f5268);
-            background-size: 400% 400%;
-            animation: animate-gradient 25s ease infinite;
-            overflow: hidden;
-        }
-        .hero-image-bg {
-            position: relative;
-            /* Updated Path */
-            background-image: url('assets/hero.png');
-            background-size: cover;
-            background-position: center;
-        }
-        .culture-bg {
-            position: relative;
-            /* Updated Path */
-            background-image: url('assets/hero.png');
-            background-size: cover;
-            background-position: center;
-        }
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
-        .cta-button {
-            transition: all 0.3s ease;
-        }
-        .cta-button:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-        .clothing-card {
-            background: rgba(63, 82, 104, 0.35);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(183, 209, 225, 0.2);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .clothing-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         }
         .glassy-card {
             background: rgba(63, 82, 104, 0.35);
@@ -89,625 +18,2091 @@
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(183, 209, 225, 0.2);
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            padding: 2rem;
-            border-radius: 1rem;
         }
-        .fade-in-up {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        .fade-in-up.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Unified School Section Styles */
-        .school-collage {
-            position: relative;
-            width: 500px;
-            height: 500px;
-            margin: 1rem auto;
-        }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .orbit-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            animation: spin 30s linear infinite;
-        }
-        
-        .central-image {
-            width: 200px;
-            height: 200px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 30;
-            transition: opacity 0.8s ease-in-out;
-        }
-
-        .surrounding-image {
-            position: absolute;
+        .link-card {
             transition: all 0.3s ease;
         }
-
-        .surrounding-image:hover {
-            filter: brightness(1.2);
-            transform: scale(1.2) !important;
-            z-index: 35 !important;
+        .link-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
         }
-        
-        /* Updated positioning for cycling images */
-        .surrounding-image-1 { 
-            width: 85px;
-            height: 85px;
-            top: calc(50% - 200px - 42.5px);
-            left: calc(50% - 42.5px);
-            z-index: 28;
-            animation: counter-spin-1 32s linear infinite;
+        .copy-btn {
+            transition: all 0.2s ease;
         }
-        .surrounding-image-2 { 
-            width: 60px;
-            height: 60px;
-            top: calc(50% - 98px - 30px);
-            left: calc(50% + 127px - 30px);
-            z-index: 15;
-            animation: counter-spin-2 28s linear infinite;
+        .copy-btn:active {
+            transform: scale(0.95);
         }
-        .surrounding-image-3 { 
-            width: 80px;
-            height: 80px;
-            top: calc(50% + 55px - 40px);
-            left: calc(50% + 194px - 40px);
-            z-index: 25;
-            animation: counter-spin-3 35s linear infinite;
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
         }
-        .surrounding-image-4 { 
-            width: 55px;
-            height: 55px;
-            top: calc(50% + 125px - 27.5px);
-            left: calc(50% - 95px - 27.5px);
-            z-index: 12;
-            animation: counter-spin-4 26s linear infinite;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .surrounding-image-5 { 
-            width: 82px;
-            height: 82px;
-            top: calc(50% + 80px - 41px);
-            left: calc(50% - 175px - 41px);
-            z-index: 26;
-            animation: counter-spin-5 33s linear infinite;
-        }
-        .surrounding-image-6 { 
-            width: 65px;
-            height: 65px;
-            top: calc(50% - 25px - 32.5px);
-            left: calc(50% - 158px - 32.5px);
-            z-index: 20;
-            animation: counter-spin-6 29s linear infinite;
-        }
-        .surrounding-image-7 { 
-            width: 75px;
-            height: 75px;
-            top: calc(50% - 145px - 37.5px);
-            left: calc(50% + 115px - 37.5px);
-            z-index: 22;
-            animation: counter-spin-7 31s linear infinite;
-        }
-
-        @keyframes counter-spin-1 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
-        @keyframes counter-spin-2 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
-        @keyframes counter-spin-3 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
-        @keyframes counter-spin-4 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
-        @keyframes counter-spin-5 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
-        @keyframes counter-spin-6 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
-        @keyframes counter-spin-7 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .school-collage {
-                width: 350px;
-                height: 350px;
-            }
-            .central-image {
-                width: 150px;
-                height: 150px;
-            }
-        }
-
-        /* About Section Collage Styles */
-        .about-collage {
-            position: relative;
-            width: 400px;
-            height: 400px;
-            margin: 1rem auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .about-orbit-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            animation: spin 35s linear infinite;
-        }
-
-        .about-central-image {
-            width: 256px;
-            height: 256px;
-            border-radius: 50%;
-            object-fit: cover;
-            position: relative;
-            z-index: 30;
-            border: 4px solid #3f5268;
-        }
-
-        .about-surrounding-image {
-            position: absolute;
+        .audit-card {
             transition: all 0.3s ease;
-            z-index: 32;
-            display: block; 
+            cursor: pointer;
         }
-        .about-surrounding-image img {
-            width: 100%;
-            height: 100%;
-        }
-
-        .about-surrounding-image:hover {
-            filter: brightness(1.2);
-            transform: scale(1.3) !important;
-            z-index: 35 !important;
-        }
-
-        .about-surrounding-image-1 { /* Github */
-            width: 50px; height: 50px;
-            top: calc(50% - 180px - 25px);
-            left: calc(50% - 25px);
-            animation: counter-spin-1 35s linear infinite;
-        }
-        .about-surrounding-image-2 { /* Instagram */
-            width: 55px; height: 55px;
-            top: calc(50% - 90px - 27.5px);
-            left: calc(50% + 140px - 27.5px);
-            animation: counter-spin-2 33s linear infinite;
-        }
-        .about-surrounding-image-3 { /* TikTok */
-            width: 50px; height: 50px;
-            top: calc(50% + 90px - 25px);
-            left: calc(50% + 145px - 25px);
-            animation: counter-spin-3 38s linear infinite;
-        }
-        .about-surrounding-image-4 { /* WhatsApp */
-            width: 52px; height: 52px;
-            top: calc(50% + 170px - 26px);
-            left: calc(50% - 100px - 26px);
-            animation: counter-spin-4 32s linear infinite;
-        }
-        .about-surrounding-image-5 { /* UAlberta */
-            width: 55px; height: 55px;
-            top: calc(50% + 95px - 27.5px);
-            left: calc(50% - 160px - 27.5px);
-            animation: counter-spin-5 36s linear infinite;
-        }
-        .about-surrounding-image-6 { /* YouTube */
-            width: 50px; height: 50px;
-            top: calc(50% - 100px - 25px);
-            left: calc(50% - 150px - 25px);
-            animation: counter-spin-6 34s linear infinite;
-        }
-        .about-surrounding-image-7 { /* Facebook */
-            width: 50px; height: 50px;
-            top: calc(50% - 150px - 25px);
-            left: calc(50% + 100px - 25px);
-            animation: counter-spin-7 37s linear infinite;
-        }
-        .about-surrounding-image-8 { /* LinkedIn */
-            width: 52px; height: 52px;
-            top: calc(50% + 165px - 26px);
-            left: calc(50% + 20px - 26px);
-            animation: counter-spin-8 39s linear infinite;
-        }
-
-        @keyframes counter-spin-8 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
-
-        /* Responsive adjustments for about collage */
-        @media (max-width: 768px) {
-            .about-collage {
-                width: 300px;
-                height: 300px;
-            }
-            .about-central-image {
-                width: 180px;
-                height: 180px;
-            }
-        }
-
-        /* Footer Background Style */
-        .footer-bg {
-            position: relative;
-            /* Updated Path */
-            background-image: url('assets/hero.png');
-            background-size: cover;
-            background-position: center;
-        }
-        .footer-bg::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background-color: rgba(27, 35, 48, 0.85); /* Dark overlay for readability */
+        .audit-card:hover {
+            transform: translateY(-5px);
+            border-color: #0ea5e9;
         }
     </style>
-    
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "Organization",
-          "name": "Chim Wopara Enterprises",
-          "url": "https://chimwopara.com/",
-          "logo": "https://chimwopara.com/assets/logo.png",
-          "founder": {
-            "@type": "Person",
-            "name": "Chim Wopara",
-            "jobTitle": "Entrepreneur and Technologist",
-            "url": "https://chimwopara.com/#about"
-          }
-        },
-        {
-          "@type": "Person",
-          "name": "Chim Wopara",
-          "url": "https://chimwopara.com/#about",
-          "image": "https://chimwopara.com/assets/chim.png",
-          "jobTitle": "AI Development Instructor",
-          "alumniOf": "Self-Taught",
-          "description": "An entrepreneur and technologist passionate about empowering people with cutting-edge skills in AI development, web development, and digital marketing."
-        }
-      ]
-    }
-    </script>
 </head>
-<body class="bg-[#1B2330] text-[#B7D1E1]">
-
-    <header class="bg-[#1B2330]/80 backdrop-blur-sm fixed top-0 left-0 right-0 z-50">
-        <div class="container mx-auto px-6 py-3 flex justify-center items-center">
-            <a href="#"><img src="assets/logo.png" alt="Chim Wopara Logo" class="h-10 w-auto" onerror="this.onerror=null; this.src='https://placehold.co/120x40/1B2330/FFFFFF?text=CW'"></a>
+<body class="min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <div class="text-center mb-12">
+            <a href="index.html" class="inline-block mb-4">
+                <img src="assets/logo.png" alt="Chim Wopara" class="h-12 w-auto mx-auto">
+            </a>
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-sky-400 to-blue-600 text-transparent bg-clip-text">
+                CW Network
+            </h1>
+            <p class="text-lg text-[#B7D1E1]/80">Connect, Share, Earn.</p>
         </div>
-    </header>
 
-    <main class="pt-16">
-        <section class="hero-image-bg py-20 md:py-32">
-            <div class="container mx-auto px-6 text-center hero-content">
-                <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4 text-[#B7D1E1]">The Future, not the now.</h1>
-                <p class="text-lg md:text-xl text-[#B7D1E1]/80 max-w-3xl mx-auto mb-8">We make  products that point to the future of technology in Africa .</p>
-                <div class="max-w-4xl mx-auto mb-8">
-                    
-                </div>
-                
-                <div class="max-w-4xl mx-auto">
-                    <div class="bg-[#3f5268] rounded-lg p-4">
-                        <iframe width="100%" height="400" src="https://www.youtube.com/embed/1KFPknAH0do" title="AI Development Tutorial with Chim Wopara" frameborder="0" allowfullscreen class="rounded-lg"></iframe>
+        <div id="auth-section" class="max-w-2xl mx-auto">
+            
+            <div id="login-container" class="glassy-card rounded-2xl p-8 mb-8 fade-in">
+                <h2 class="text-2xl font-bold mb-6 text-center">Sign In to Your Account</h2>
+                <form id="login-form" class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Username</label>
+                        <input type="text" id="login-username" required 
+                            class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-sky-500 text-white"
+                            placeholder="Enter your username">
                     </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Password</label>
+                        <input type="password" id="login-password" required 
+                            class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-sky-500 text-white"
+                            placeholder="Enter your password">
+                    </div>
+                    <button type="submit" 
+                        class="w-full bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-lg transition-all transform hover:scale-105">
+                        Sign In
+                    </button>
+                </form>
+                <div class="mt-6 text-center text-sm text-[#B7D1E1]/70">
+                    New to CW Network? <button onclick="toggleAuth('signup')" class="text-sky-400 hover:text-sky-300 font-semibold ml-1">Create an account</button>
                 </div>
             </div>
-        </section>
 
-        <section id="schools" class="py-20 hero-bg overflow-hidden">
-            <div class="container mx-auto px-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-8 fade-in-up">
-                    <div class="school-collage">
-                       <img id="central-image" src="assets/media.png" alt="AI School" class="central-image">
-                       <div class="orbit-container">
-                            <img id="surrounding-1" src="assets/media1.png" alt="Program icon 1" class="surrounding-image surrounding-image-1">
-                            <img id="surrounding-2" src="assets/media2.png" alt="Program icon 2" class="surrounding-image surrounding-image-2">
-                            <img id="surrounding-3" src="assets/media3.png" alt="Program icon 3" class="surrounding-image surrounding-image-3">
-                            <img id="surrounding-4" src="assets/media4.png" alt="Program icon 4" class="surrounding-image surrounding-image-4">
-                            <img id="surrounding-5" src="assets/media5.png" alt="Program icon 5" class="surrounding-image surrounding-image-5">
-                            <img id="surrounding-6" src="assets/media6.png" alt="Program icon 6" class="surrounding-image surrounding-image-6">
-                            <img id="surrounding-7" src="assets/media7.png" alt="Program icon 7" class="surrounding-image surrounding-image-7">
-                       </div>
+            <div id="signup-container" class="glassy-card rounded-2xl p-8 mb-8 fade-in hidden">
+                <h2 class="text-2xl font-bold mb-6 text-center">Create Your Account</h2>
+                <form id="signup-form" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Full Name *</label>
+                            <input type="text" id="fullname" required 
+                                class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-sky-500 text-white"
+                                placeholder="John Doe">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Phone Number *</label>
+                            <input type="tel" id="phone" required 
+                                class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-sky-500 text-white"
+                                placeholder="+1 (555) 123-4567">
+                        </div>
                     </div>
-                    <div class="glassy-card text-center md:text-left">
-    <h3 class="text-4xl font-bold mb-4 text-[#B7D1E1]">Prompts & Logic</h3>
-    <p id="school-description" class="text-[#B7D1E1]/80 max-w-lg mx-auto md:mx-0 mb-8">
-        P&L is our state of the art protocol for unleashing your creativity with Artificial Intelligence. Enrol in our Media, Coding or Business school.
-    </p>
 
-    <a href="pal/index.html?action=university" class="bg-[#1B2330] hover:bg-opacity-80 text-white font-bold py-3 px-10 rounded-lg text-lg cta-button inline-block mb-4">
-        Enroll Now
-    </a>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Email Address *</label>
+                        <input type="email" id="email" required 
+                            class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-sky-500 text-white"
+                            placeholder="john@example.com">
+                    </div>
 
-    <a href="pal/index.html?action=prompt" class="bg-[#1B2330] hover:bg-opacity-80 text-white font-bold py-3 px-10 rounded-lg text-lg cta-button inline-block">
-        Prompt Now
-    </a>
-</div>
+                    <div class="bg-sky-500/10 border border-sky-500/30 rounded-lg p-4">
+                        <h4 class="font-bold mb-2 text-sky-400">✨ You Get Both Capabilities!</h4>
+                        <p class="text-sm text-[#B7D1E1]/80">As a CW Network member, you can be both an Assembler (earn through referrals) and an Auditor (track your farm/kitchen). Set up auditing now or later - it's optional!</p>
+                    </div>
 
-                </div>
-            </div>
-        </section>
-        
-        <section id="clothing" class="py-20 culture-bg">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12 fade-in-up">
-                    <h2 class="text-4xl font-bold mb-2 text-[#B7D1E1]">Culture On My Back</h2>
-                    <p class="text-[#B7D1E1]/80 max-w-2xl mx-auto">Exclusive apparel designed by Chim Wopara. Wear the culture, embody the future.</p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="rounded-xl overflow-hidden clothing-card fade-in-up">
-                        <img src="assets/daytrip.png" alt="Daytrip 3/4 Sleeve Shirt" class="w-full h-auto object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-[#B7D1E1]">Daytrip</h3>
-                            <p class="text-[#B7D1E1]/80 mb-4">3/4 Sleeve Shirt</p>
-                            <div class="flex justify-start items-center">
-                                <button class="bg-[#1B2330] hover:bg-opacity-80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('Daytrip', 'notify')">Get Notified</button>
+                    <!-- Optional Auditing Setup -->
+                    <div>
+                        <label class="block text-sm font-medium mb-3">
+                            <input type="checkbox" id="setup-auditing-now" onchange="toggleAuditingSetup()" class="mr-2">
+                            I want to set up Auditing now (optional)
+                        </label>
+                    </div>
+
+                    <!-- Auditor-specific fields -->
+                    <div id="auditor-fields" class="hidden space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Audit Type *</label>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="auditType" value="Farm" class="peer sr-only" onchange="handleAuditTypeChange()">
+                                    <div class="glassy-card rounded-lg p-4 text-center transition-all peer-checked:border-2 peer-checked:border-green-500 peer-checked:bg-green-500/10">
+                                        <h3 class="font-bold text-md mb-1">Farm Audit</h3>
+                                        <p class="text-xs text-[#B7D1E1]/70">Track farm operations</p>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="auditType" value="Kitchen" class="peer sr-only" onchange="handleAuditTypeChange()">
+                                    <div class="glassy-card rounded-lg p-4 text-center transition-all peer-checked:border-2 peer-checked:border-orange-500 peer-checked:bg-orange-500/10">
+                                        <h3 class="font-bold text-md mb-1">Kitchen Audit</h3>
+                                        <p class="text-xs text-[#B7D1E1]/70">Chef self-assessment</p>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Farm Audit Fields -->
+                        <div id="farm-fields" class="hidden space-y-6">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Farm Type *</label>
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <label class="cursor-pointer">
+                                        <input type="radio" name="farmType" value="Plant" class="peer sr-only">
+                                        <div class="glassy-card rounded-lg p-4 text-center transition-all peer-checked:border-2 peer-checked:border-green-500 peer-checked:bg-green-500/10">
+                                            <h3 class="font-bold text-md mb-1">🌱 Plant Farm</h3>
+                                            <p class="text-xs text-[#B7D1E1]/70">Crops & vegetation</p>
+                                        </div>
+                                    </label>
+                                    <label class="cursor-pointer">
+                                        <input type="radio" name="farmType" value="Animal" class="peer sr-only">
+                                        <div class="glassy-card rounded-lg p-4 text-center transition-all peer-checked:border-2 peer-checked:border-green-500 peer-checked:bg-green-500/10">
+                                            <h3 class="font-bold text-md mb-1">🐄 Animal Farm</h3>
+                                            <p class="text-xs text-[#B7D1E1]/70">Livestock & poultry</p>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Farm Name *</label>
+                                <input type="text" id="farm-name" 
+                                    class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-sky-500 text-white"
+                                    placeholder="e.g., Green Valley Farm">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Farm Location *</label>
+                                <input type="text" id="farm-location" 
+                                    class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-sky-500 text-white"
+                                    placeholder="City, State/Province">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Farm Size (acres) *</label>
+                                <input type="number" id="farm-size" min="0" step="0.1"
+                                    class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-sky-500 text-white"
+                                    placeholder="e.g., 50">
+                            </div>
+                        </div>
+
+                        <!-- Kitchen Audit Fields -->
+                        <div id="kitchen-fields" class="hidden space-y-6">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Restaurant/Kitchen Name *</label>
+                                <input type="text" id="kitchen-name" 
+                                    class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-sky-500 text-white"
+                                    placeholder="e.g., The Golden Spoon">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Chef Name *</label>
+                                <input type="text" id="chef-name" 
+                                    class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-sky-500 text-white"
+                                    placeholder="Head Chef or Owner Chef">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Cuisine Type *</label>
+                                <input type="text" id="cuisine-type" 
+                                    class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-sky-500 text-white"
+                                    placeholder="e.g., Italian, Asian Fusion, American">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Kitchen Location *</label>
+                                <input type="text" id="kitchen-location" 
+                                    class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-sky-500 text-white"
+                                    placeholder="Restaurant address">
                             </div>
                         </div>
                     </div>
 
-                    <div class="rounded-xl overflow-hidden clothing-card fade-in-up" style="transition-delay: 100ms;">
-                        <img src="assets/dapter.png" alt="Dapter Premium Apparel" class="w-full h-auto object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-[#B7D1E1]">Dapter</h3>
-                            <p class="text-[#B7D1E1]/80 mb-4">Premium Apparel</p>
-                            <div class="flex justify-start items-center">
-                                <button class="bg-[#1B2330] hover:bg-opacity-80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('Dapter', 'notify')">Get Notified</button>
-                            </div>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Choose Username *</label>
+                            <input type="text" id="username" required 
+                                class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-sky-500 text-white"
+                                placeholder="johndoe123">
+                            <p id="username-status" class="text-xs mt-1 min-h-[1.25rem]"></p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Create Password *</label>
+                            <input type="password" id="signup-password" required minlength="6"
+                                class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-sky-500 text-white"
+                                placeholder="Min 6 characters">
                         </div>
                     </div>
 
-                    <div class="rounded-xl overflow-hidden clothing-card fade-in-up" style="transition-delay: 200ms;">
-                        <img src="assets/manuch.png" alt="Manuch Designer Collection" class="w-full h-auto object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-[#B7D1E1]">Manuch</h3>
-                            <p class="text-[#B7D1E1]/80 mb-4">Designer Collection</p>
-                            <div class="flex justify-start items-center">
-                                <button class="bg-[#1B2330] hover:bg-opacity-80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('Manuch', 'notify')">Get Notified</button>
-                            </div>
-                        </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Referral Code (Optional)</label>
+                        <input type="text" id="referral-code" 
+                            class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-sky-500 text-white"
+                            placeholder="Who invited you? (Enter their username)">
                     </div>
-                </div>
-                 <div class="text-center mt-12 fade-in-up">
-                    <p class="text-[#B7D1E1]/80 text-lg">New product annually</p>
-                </div>
-            </div>
-        </section>
 
-        <section id="about" class="py-20 hero-bg overflow-hidden">
-            <div class="container mx-auto px-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-12 fade-in-up">
-                    <div class="about-collage">
-                        <img src="assets/chim.png" alt="Profile photo of Chim Wopara" class="about-central-image">
-                        <div class="about-orbit-container">
-                            <a href="https://github.com/chimwopara" target="_blank" rel="noopener noreferrer" class="about-surrounding-image about-surrounding-image-1"><img src="assets/github.png" alt="GitHub"></a>
-                            <a href="https://www.instagram.com/chimwopara" target="_blank" rel="noopener noreferrer" class="about-surrounding-image about-surrounding-image-2"><img src="assets/instagram.png" alt="Instagram"></a>
-                            <a href="https://www.tiktok.com/@chimwopara?_t=ZS-8zXMw9gpRDO&_r=1" target="_blank" rel="noopener noreferrer" class="about-surrounding-image about-surrounding-image-3"><img src="assets/tiktok.png" alt="TikTok"></a>
-                            <a href="https://chat.whatsapp.com/Bn75K4eoSVvLUOylfu9Urt?mode=ems_copy_c" target="_blank" rel="noopener noreferrer" class="about-surrounding-image about-surrounding-image-4"><img src="assets/whatsapp.png" alt="WhatsApp"></a>
-                            <a href="https://ualberta.ca" target="_blank" rel="noopener noreferrer" class="about-surrounding-image about-surrounding-image-5"><img src="assets/ualberta.png" alt="UAlberta"></a>
-                            <a href="https://youtube.com/@chimwopara?si=rMgMJHTLgJJzwL_D" target="_blank" rel="noopener noreferrer" class="about-surrounding-image about-surrounding-image-6"><img src="assets/youtube.png" alt="YouTube"></a>
-                            <a href="https://www.facebook.com/profile.php?id=61579876920080" target="_blank" rel="noopener noreferrer" class="about-surrounding-image about-surrounding-image-7"><img src="assets/facebook.png" alt="Facebook"></a>
-                            <a href="https://www.linkedin.com/in/wopara/" target="_blank" rel="noopener noreferrer" class="about-surrounding-image about-surrounding-image-8"><img src="assets/linkedin.png" alt="LinkedIn"></a>
-                        </div>
-                    </div>
-                    <div class="glassy-card text-center md:text-left">
-                        <h2 class="text-3xl font-bold mb-4 text-[#B7D1E1]">Hi,</h2>
-                        <p class="text-[#B7D1E1]/80 mb-4">I'm Chim Wopara, and i create enterprise solutions with my strong background in Computer Science and Economics.</p>
-                        <p class="text-[#B7D1E1]/80 mb-6"> A better Africa uses Artificial Intelligence to power the world.</p>
-                        <div class="flex flex-col sm:flex-row gap-4">
-                             <a href="https://wopara.com" target="_blank" rel="noopener noreferrer" class="bg-[#1B2330] hover:bg-opacity-80 text-white font-bold py-3 px-10 rounded-lg text-lg cta-button inline-block">
-                                Book me
-                            </a>
-                            <a href="affiliate-system.html" class="bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-bold py-3 px-10 rounded-lg cta-button inline-block text-lg shadow-lg">
-                                Join Network
-                            </a>
-                            <a href="/cdn-cgi/l/email-protection#fc9f949591bc8b938c9d8e9dd29f9391" class="bg-[#3f5268] hover:bg-opacity-80 text-[#B7D1E1] font-bold py-3 px-10 rounded-lg cta-button inline-block text-lg">
-                                Email Me
-                            </a>
-                        </div>
-                    </div>
+                    <button type="submit" 
+                        class="w-full bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-lg transition-all transform hover:scale-105">
+                        Create My CW Account
+                    </button>
+                </form>
+                <div class="mt-6 text-center text-sm text-[#B7D1E1]/70">
+                    Already have an account? <button onclick="toggleAuth('login')" class="text-sky-400 hover:text-sky-300 font-semibold ml-1">Sign In</button>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <div id="purchase-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
-            <div class="bg-[#3f5268] rounded-xl p-8 max-w-md w-full border border-[#1B2330]">
-                <h3 class="text-2xl font-bold mb-2 text-[#B7D1E1]" id="modal-product-name">Product Name</h3>
-                <p class="text-[#B7D1E1]/80 mb-6" id="modal-description">Enter your details below.</p>
-                
-                <form id="purchase-form">
-                    <div class="mb-4">
-                        <label for="customer-name-purchase" class="block text-sm font-medium mb-2">Full Name</label>
-                        <input id="customer-name-purchase" type="text" required class="w-full px-3 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-sky-500 text-white" placeholder="Enter your full name">
+        <div id="dashboard-section" class="hidden">
+            <div class="glassy-card rounded-2xl p-8 mb-8">
+                <div class="flex flex-col md:flex-row items-center justify-between mb-6">
+                    <div>
+                        <h2 class="text-3xl font-bold mb-2">Welcome, <span id="user-fullname">User</span>!</h2>
+                        <p class="text-[#B7D1E1]/70">Username: <span id="user-username" class="font-mono">username</span> 
+                            <button type="button" onclick="showChangeUsernameModal()" class="text-sky-400 hover:text-sky-300 text-sm ml-2">✏️ Change</button>
+                        </p>
+                        <p class="text-[#B7D1E1]/70">
+                            <span id="user-badges" class="flex gap-2 mt-1"></span>
+                        </p>
                     </div>
-                    
-                    <div class="mb-4">
-                        <label for="customer-email-purchase" class="block text-sm font-medium mb-2">Email Address</label>
-                        <input id="customer-email-purchase" type="email" required class="w-full px-3 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-sky-500 text-white" placeholder="Enter your email address">
+                    <div class="flex items-center gap-4 mt-4 md:mt-0">
+                        <button type="button" onclick="showSettingsModal()" class="p-3 bg-[#1B2330]/50 hover:bg-[#1B2330] rounded-lg transition-colors" title="Settings">
+                            ⚙️
+                        </button>
+                        <div class="tier-badge px-6 py-3 rounded-full text-center">
+                            <p class="text-sm text-[#B7D1E1]/70">Current Tier</p>
+                            <p id="user-tier" class="text-2xl font-bold">Starter</p>
+                        </div>
                     </div>
+                </div>
 
-                    <div class="flex space-x-4 mb-6">
-                        <button type="submit" id="modal-submit-button" class="w-full bg-[#1B2330]/50 backdrop-blur-sm hover:bg-[#1B2330]/80 text-white font-bold py-3 px-6 rounded-lg">
-                            Get Notified
+                <!-- Role Switcher -->
+                <div id="role-switcher" class="mb-6 p-4 bg-[#1B2330]/50 rounded-lg">
+                    <p class="text-sm text-[#B7D1E1]/70 mb-3">Switch Your View:</p>
+                    <div class="flex flex-wrap gap-3">
+                        <button type="button" onclick="switchToAssembler()" id="switch-assembler" 
+                            class="px-4 py-2 bg-sky-500/20 text-sky-400 rounded-lg hover:bg-sky-500/30 transition-colors">
+                            🔗 Assembler
+                        </button>
+                        <button type="button" onclick="switchToFarmOwner()" id="switch-farm-owner"
+                            class="px-4 py-2 bg-green-500/20 text-green-400 rounded-lg hover:bg-green-500/30 transition-colors">
+                            🌾 My Farms
+                        </button>
+                        <button type="button" onclick="switchToAuditor()" id="switch-auditor"
+                            class="px-4 py-2 bg-purple-500/20 text-purple-400 rounded-lg hover:bg-purple-500/30 transition-colors">
+                            🔍 Auditor
                         </button>
                     </div>
-                </form>
-            </div>
-        </div>
+                </div>
 
-    </main>
-
-    <footer class="footer-bg border-t border-[#3f5268]">
-        <div class="container mx-auto px-6 py-12 relative z-10">
-            <div class="text-center mb-8">
-                <h4 class="text-sm uppercase text-[#B7D1E1]/60 tracking-widest mb-4">A Chim Wopara Enterprises Company</h4>
-                <div class="flex justify-center items-center space-x-6 md:space-x-10">
-                    <a href="http://fromsupply.com" target="_blank" class="hover:opacity-80 transition-opacity">
-                        <img src="assets/fs.png" alt="Fromsupply Logo" class="h-8 w-auto">
-                    </a>
-                    <span class="text-[#3f5268]">|</span>
-                    <a href="http://devgameshow.com" target="_blank" class="hover:opacity-80 transition-opacity">
-                        <img src="assets/dgs.png" alt="Dev Game Show Logo" class="h-8 w-auto">
-                    </a>
-                    <span class="text-[#3f5268]">|</span>
-                    <a href="http://pautacos.com" target="_blank" class="hover:opacity-80 transition-opacity">
-                        <img src="assets/pautacos.png" alt="Pautacos Logo" class="h-8 w-auto">
-                    </a>
-                    <span class="text-[#3f5268]">|</span>
-                    <a href="https://chimwopara.com" target="_blank" rel="noopener noreferrer" class="text-white hover:opacity-80 transition-opacity">
-                        <img src="assets/logo.png" alt="Chim Wopara" class="h-8 w-auto">
-                    </a>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-[#1B2330]/50 rounded-lg p-6 text-center">
+                        <p class="text-3xl font-bold text-sky-400" id="total-referrals">0</p>
+                        <p class="text-sm text-[#B7D1E1]/70 mt-2">Total Referrals</p>
+                    </div>
+                    <div class="bg-[#1B2330]/50 rounded-lg p-6 text-center">
+                        <p class="text-3xl font-bold text-green-400" id="reward-points">0</p>
+                        <p class="text-sm text-[#B7D1E1]/70 mt-2">Reward Points</p>
+                    </div>
+                    <div class="bg-[#1B2330]/50 rounded-lg p-6 text-center">
+                        <p class="text-3xl font-bold text-purple-400" id="next-tier-count">5</p>
+                        <p class="text-sm text-[#B7D1E1]/70 mt-2">To Next Tier</p>
+                    </div>
                 </div>
             </div>
-            <div class="text-center text-[#B7D1E1]/60 text-sm">
-                <p>&copy; 2024 Chim Wopara Enterprises. All Rights Reserved.</p>
-                <p class="mt-2">
-                    <a href="terms.html#privacy" class="hover:text-[#B7D1E1]">Privacy Policy</a>
-                    <span class="mx-2">&middot;</span>
-                    <a href="terms.html#terms" class="hover:text-[#B7D1E1]">Terms of Service</a>
-                </p>
+
+            <!-- Assembler Dashboard -->
+            <div id="assembler-dashboard" class="hidden">
+                <div class="glassy-card rounded-2xl p-8 mb-8">
+                    <h3 class="text-2xl font-bold mb-6">Your CW Links</h3>
+                    <p class="text-[#B7D1E1]/70 mb-6">Share these links to earn rewards when people join through your network</p>
+                    
+                    <div class="space-y-4">
+                        <div class="link-card bg-[#1B2330]/50 rounded-lg p-6 border border-sky-500/30">
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="font-bold text-lg text-sky-400">CW Network</h4>
+                                <span class="text-xs bg-sky-500/20 text-sky-400 px-3 py-1 rounded-full">Network</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <input type="text" readonly id="link-cwnetwork" 
+                                    class="flex-1 px-4 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white text-sm font-mono">
+                                <button type="button" onclick="copyLink(this, 'link-cwnetwork')" 
+                                    class="copy-btn px-6 py-2 bg-sky-500 hover:bg-sky-600 rounded-lg transition-colors">
+                                    Copy
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="link-card bg-[#1B2330]/50 rounded-lg p-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <h4 class="font-bold text-lg">P&L</h4>
+                                <span class="text-xs bg-gray-500/20 text-gray-400 px-3 py-1 rounded-full">Primary</span>
+                            </div>
+                            <div class="flex gap-2">
+                                <input type="text" readonly id="link-chimwopara" 
+                                    class="flex-1 px-4 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white text-sm font-mono">
+                                <button type="button" onclick="copyLink(this, 'link-chimwopara')" 
+                                    class="copy-btn px-6 py-2 bg-sky-500 hover:bg-sky-600 rounded-lg transition-colors">
+                                    Copy
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="link-card bg-[#1B2330]/50 rounded-lg p-6">
+                            <h4 class="font-bold text-lg mb-3">Wopara</h4>
+                            <div class="flex gap-2">
+                                <input type="text" readonly id="link-wopara" 
+                                    class="flex-1 px-4 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white text-sm font-mono">
+                                <button type="button" onclick="copyLink(this, 'link-wopara')" 
+                                    class="copy-btn px-6 py-2 bg-sky-500 hover:bg-sky-600 rounded-lg transition-colors">
+                                    Copy
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="link-card bg-[#1B2330]/50 rounded-lg p-6">
+                            <h4 class="font-bold text-lg mb-3">Pautacos</h4>
+                            <div class="flex gap-2">
+                                <input type="text" readonly id="link-pautacos" 
+                                    class="flex-1 px-4 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white text-sm font-mono">
+                                <button type="button" onclick="copyLink(this, 'link-pautacos')" 
+                                    class="copy-btn px-6 py-2 bg-sky-500 hover:bg-sky-600 rounded-lg transition-colors">
+                                    Copy
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="link-card bg-[#1B2330]/50 rounded-lg p-6">
+                            <h4 class="font-bold text-lg mb-3">Dev Game Show</h4>
+                            <div class="flex gap-2">
+                                <input type="text" readonly id="link-devgameshow" 
+                                    class="flex-1 px-4 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white text-sm font-mono">
+                                <button type="button" onclick="copyLink(this, 'link-devgameshow')" 
+                                    class="copy-btn px-6 py-2 bg-sky-500 hover:bg-sky-600 rounded-lg transition-colors">
+                                    Copy
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="link-card bg-[#1B2330]/50 rounded-lg p-6">
+                            <h4 class="font-bold text-lg mb-3">FromSupply</h4>
+                            <div class="flex gap-2">
+                                <input type="text" readonly id="link-fromsupply" 
+                                    class="flex-1 px-4 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white text-sm font-mono">
+                                <button type="button" onclick="copyLink(this, 'link-fromsupply')" 
+                                    class="copy-btn px-6 py-2 bg-sky-500 hover:bg-sky-600 rounded-lg transition-colors">
+                                    Copy
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glassy-card rounded-2xl p-8">
+                    <h3 class="text-2xl font-bold mb-6">Recent Referrals</h3>
+                    <div id="referral-list" class="space-y-3">
+                        <p class="text-[#B7D1E1]/70 text-center py-8">No referrals yet. Start sharing your links!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Farm Owner Dashboard -->
+            <div id="farm-owner-dashboard" class="hidden">
+                <div class="glassy-card rounded-2xl p-8 mb-8">
+                    <div class="flex items-center justify-between mb-6">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2">🌾 My Registered Farms</h3>
+                            <p class="text-[#B7D1E1]/70">Register your farms to receive weekly audits and build investor trust</p>
+                        </div>
+                        <button type="button" onclick="showRegisterFarmModal()" 
+                            class="px-6 py-3 bg-green-500 hover:bg-green-600 rounded-lg transition-colors font-semibold">
+                            + Register Farm
+                        </button>
+                    </div>
+
+                    <!-- Trust Building Info -->
+                    <div class="bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/30 rounded-xl p-6 mb-6">
+                        <h4 class="font-bold text-lg mb-3 text-green-400">🛡️ Building Investor Trust</h4>
+                        <div class="grid md:grid-cols-3 gap-4 text-sm">
+                            <div class="flex items-start gap-3">
+                                <span class="text-2xl">🔄</span>
+                                <div>
+                                    <p class="font-semibold">Rotating Auditors</p>
+                                    <p class="text-[#B7D1E1]/70">Different auditor each week, same auditor can't return for 1 year</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="text-2xl">⏰</span>
+                                <div>
+                                    <p class="font-semibold">Simultaneous Audits</p>
+                                    <p class="text-[#B7D1E1]/70">Every Saturday 11am-12pm nationwide</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="text-2xl">🔒</span>
+                                <div>
+                                    <p class="font-semibold">Anti-Gaming</p>
+                                    <p class="text-[#B7D1E1]/70">No time to borrow animals or prepare</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Next Audit Countdown -->
+                    <div class="bg-[#1B2330]/50 rounded-xl p-6 mb-6">
+                        <h4 class="font-bold mb-3">⏱️ Next Audit Window</h4>
+                        <div id="audit-countdown" class="text-center">
+                            <p class="text-3xl font-bold text-sky-400" id="countdown-display">--</p>
+                            <p class="text-sm text-[#B7D1E1]/70 mt-2">Until Saturday 11:00 AM</p>
+                        </div>
+                    </div>
+
+                    <!-- Registered Farms List -->
+                    <div id="my-farms-list" class="space-y-4">
+                        <p class="text-[#B7D1E1]/70 text-center py-8">No farms registered yet. Register your first farm to start building trust!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Auditor Dashboard -->
+            <div id="auditor-dashboard" class="hidden">
+                <!-- Become Auditor Prompt (shown if not an auditor) -->
+                <div id="become-auditor-prompt" class="glassy-card rounded-2xl p-8 mb-8">
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-4xl">🔍</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2">Become a Certified Auditor</h3>
+                        <p class="text-[#B7D1E1]/70 mb-6 max-w-lg mx-auto">
+                            Help build trust in the agricultural supply chain. As an auditor, you'll conduct weekly farm inspections 
+                            every Saturday from 11am-12pm. You'll be randomly assigned to farms you haven't audited in the past year.
+                        </p>
+                        
+                        <div class="grid md:grid-cols-3 gap-4 mb-8 text-sm">
+                            <div class="bg-[#1B2330]/50 rounded-lg p-4">
+                                <p class="font-bold text-purple-400">💰 Earn Rewards</p>
+                                <p class="text-[#B7D1E1]/70">Get paid for each completed audit</p>
+                            </div>
+                            <div class="bg-[#1B2330]/50 rounded-lg p-4">
+                                <p class="font-bold text-purple-400">🎯 Make Impact</p>
+                                <p class="text-[#B7D1E1]/70">Help farmers access investment</p>
+                            </div>
+                            <div class="bg-[#1B2330]/50 rounded-lg p-4">
+                                <p class="font-bold text-purple-400">📈 Build Reputation</p>
+                                <p class="text-[#B7D1E1]/70">Grow your auditor rating</p>
+                            </div>
+                        </div>
+                        
+                        <button type="button" onclick="showBecomeAuditorModal()" 
+                            class="px-8 py-4 bg-purple-500 hover:bg-purple-600 rounded-lg transition-colors font-semibold text-lg">
+                            Apply to Become an Auditor
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Active Auditor Dashboard (shown if user is an auditor) -->
+                <div id="active-auditor-dashboard" class="hidden">
+                    <div class="glassy-card rounded-2xl p-8 mb-8">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h3 class="text-2xl font-bold mb-2">🔍 Auditor Dashboard</h3>
+                                <p class="text-[#B7D1E1]/70">Your assigned audits and schedule</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm text-[#B7D1E1]/70">Your Rating</p>
+                                <p class="text-2xl font-bold text-yellow-400" id="auditor-rating">⭐ 5.0</p>
+                            </div>
+                        </div>
+
+                        <!-- Audit Window Status -->
+                        <div id="audit-window-status" class="rounded-xl p-6 mb-6">
+                            <!-- Will be populated by JS -->
+                        </div>
+
+                        <!-- Stats -->
+                        <div class="grid md:grid-cols-3 gap-6 mb-6">
+                            <div class="bg-[#1B2330]/50 rounded-lg p-6 text-center">
+                                <p class="text-3xl font-bold text-purple-400" id="total-audits-completed">0</p>
+                                <p class="text-sm text-[#B7D1E1]/70 mt-2">Audits Completed</p>
+                            </div>
+                            <div class="bg-[#1B2330]/50 rounded-lg p-6 text-center">
+                                <p class="text-3xl font-bold text-green-400" id="pending-assignments">0</p>
+                                <p class="text-sm text-[#B7D1E1]/70 mt-2">Pending Assignments</p>
+                            </div>
+                            <div class="bg-[#1B2330]/50 rounded-lg p-6 text-center">
+                                <p class="text-3xl font-bold text-sky-400" id="auditor-earnings">$0</p>
+                                <p class="text-sm text-[#B7D1E1]/70 mt-2">Total Earnings</p>
+                            </div>
+                        </div>
+
+                        <!-- Assigned Audits -->
+                        <h4 class="font-bold text-lg mb-4">📋 Your Assigned Audits</h4>
+                        <div id="assigned-audits-list" class="space-y-4">
+                            <p class="text-[#B7D1E1]/70 text-center py-8">No audits assigned yet. Check back soon!</p>
+                        </div>
+                    </div>
+
+                    <!-- Completed Audits History -->
+                    <div class="glassy-card rounded-2xl p-8">
+                        <h3 class="text-2xl font-bold mb-6">📜 Audit History</h3>
+                        <div id="audit-history-list" class="space-y-4">
+                            <p class="text-[#B7D1E1]/70 text-center py-8">No completed audits yet</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-8">
+                <button type="button" onclick="handleLogout()" 
+                    class="px-8 py-3 bg-red-600/20 hover:bg-red-600/30 text-red-400 rounded-lg transition-colors">
+                    Logout
+                </button>
             </div>
         </div>
-    </footer>
+    </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
-    
+    <!-- Custom Modal for Audit Setup -->
+    <div id="modal-overlay" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div id="modal-container" class="glassy-card rounded-2xl p-8 max-w-lg w-full max-h-[90vh] overflow-y-auto fade-in">
+            <!-- Modal content will be injected here -->
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast-container" class="fixed top-4 right-4 z-50 space-y-2"></div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Updated School Cycling Data with 'assets/' prefix
-            const schoolData = {
-                media: {
-                    title: 'Media Artificial Intelligence',
-                    mainImage: 'assets/media.png',
-                    surroundingImages: [
-                        'assets/media1.png', 'assets/media2.png', 'assets/media3.png', 
-                        'assets/media4.png', 'assets/media5.png', 'assets/media7.png', 'assets/media6.png'
-                    ]
-                },
-                business: {
-                    title: 'Business Artificial Intelligence',
-                    mainImage: 'assets/business.png',
-                    surroundingImages: [
-                        'assets/business1.png', 'assets/fillout.png', 'assets/business3.png', 
-                        'assets/business4.png', 'assets/business5.png', 'assets/business6.png', 'assets/calendly.png'
-                    ]
-                },
-                coding: {
-                    title: 'Dependent Coding Artificial Intelligence',
-                    mainImage: 'assets/coding.png',
-                    surroundingImages: [
-                        'assets/coding1.png', 'assets/xcode.png', 'assets/coding3.png', 
-                        'assets/coding4.png', 'assets/unity.png', 'assets/coding6.png', 'assets/roblox.png'
-                    ]
+        // Toast notification system
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            const bgColor = type === 'success' ? 'bg-green-500/90' : 
+                           type === 'error' ? 'bg-red-500/90' : 
+                           type === 'warning' ? 'bg-yellow-500/90' : 'bg-sky-500/90';
+            
+            const icon = type === 'success' ? '✓' : 
+                        type === 'error' ? '✕' : 
+                        type === 'warning' ? '⚠' : 'ℹ';
+            
+            toast.className = `${bgColor} text-white px-6 py-4 rounded-xl shadow-lg flex items-center gap-3 transform translate-x-full transition-transform duration-300`;
+            toast.innerHTML = `
+                <span class="text-xl">${icon}</span>
+                <span>${message}</span>
+            `;
+            
+            container.appendChild(toast);
+            
+            // Animate in
+            setTimeout(() => toast.classList.remove('translate-x-full'), 10);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                toast.classList.add('translate-x-full');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Modal system
+        function showModal(content) {
+            const overlay = document.getElementById('modal-overlay');
+            const container = document.getElementById('modal-container');
+            container.innerHTML = content;
+            overlay.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const overlay = document.getElementById('modal-overlay');
+            overlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        // Close modal on overlay click
+        document.getElementById('modal-overlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Confirm dialog replacement
+        function showConfirm(title, message, onConfirm, onCancel) {
+            const content = `
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-yellow-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-3xl">⚠️</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">${title}</h3>
+                    <p class="text-[#B7D1E1]/70 mb-6">${message}</p>
+                    <div class="flex gap-3 justify-center">
+                        <button type="button" onclick="closeModal(); ${onCancel ? onCancel + '()' : ''}" 
+                            class="px-6 py-3 bg-[#1B2330] hover:bg-[#1B2330]/70 rounded-lg transition-colors">
+                            Cancel
+                        </button>
+                        <button type="button" onclick="closeModal(); ${onConfirm}()" 
+                            class="px-6 py-3 bg-red-500 hover:bg-red-600 rounded-lg transition-colors">
+                            Confirm
+                        </button>
+                    </div>
+                </div>
+            `;
+            showModal(content);
+        }
+
+        // Database simulation
+        class CWDatabase {
+            constructor() {
+                this.users = JSON.parse(localStorage.getItem('CWUsers') || '[]');
+                this.referrals = JSON.parse(localStorage.getItem('CWReferrals') || '[]');
+                this.currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+                this.registeredFarms = JSON.parse(localStorage.getItem('registeredFarms') || '[]');
+                this.registeredKitchens = JSON.parse(localStorage.getItem('registeredKitchens') || '[]');
+                this.auditAssignments = JSON.parse(localStorage.getItem('auditAssignments') || '[]');
+                this.completedAudits = JSON.parse(localStorage.getItem('completedAudits') || '[]');
+            }
+
+            saveUsers() {
+                localStorage.setItem('CWUsers', JSON.stringify(this.users));
+            }
+
+            saveReferrals() {
+                localStorage.setItem('CWReferrals', JSON.stringify(this.referrals));
+            }
+
+            saveCurrentUser() {
+                localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+            }
+
+            saveFarms() {
+                localStorage.setItem('registeredFarms', JSON.stringify(this.registeredFarms));
+            }
+
+            saveKitchens() {
+                localStorage.setItem('registeredKitchens', JSON.stringify(this.registeredKitchens));
+            }
+
+            saveAuditAssignments() {
+                localStorage.setItem('auditAssignments', JSON.stringify(this.auditAssignments));
+            }
+
+            saveCompletedAudits() {
+                localStorage.setItem('completedAudits', JSON.stringify(this.completedAudits));
+            }
+
+            usernameExists(username) {
+                return this.users.some(user => user.username.toLowerCase() === username.toLowerCase());
+            }
+
+            emailExists(email) {
+                return this.users.some(user => user.email.toLowerCase() === email.toLowerCase());
+            }
+
+            // Username change functionality
+            changeUsername(userId, newUsername) {
+                if (this.usernameExists(newUsername)) {
+                    return { success: false, message: 'Username already taken' };
                 }
+                
+                const user = this.users.find(u => u.id === userId);
+                if (!user) {
+                    return { success: false, message: 'User not found' };
+                }
+                
+                const oldUsername = user.username;
+                user.username = newUsername;
+                user.usernameHistory = user.usernameHistory || [];
+                user.usernameHistory.push({ oldUsername, changedAt: new Date().toISOString() });
+                
+                this.currentUser = user;
+                this.saveUsers();
+                this.saveCurrentUser();
+                
+                return { success: true, message: 'Username changed successfully' };
+            }
+
+            createUser(userData) {
+                const user = {
+                    id: Date.now().toString(),
+                    fullname: userData.fullname,
+                    phone: userData.phone,
+                    email: userData.email,
+                    username: userData.username,
+                    password: userData.password, 
+                    referralCode: userData.referralCode || null,
+                    joinedDate: new Date().toISOString(),
+                    totalReferrals: 0,
+                    rewardPoints: 0,
+                    isAuditor: userData.isAuditor || false,
+                    auditorProfile: userData.auditorProfile || null,
+                    currentMode: 'Assembler'
+                };
+                
+                this.users.push(user);
+                this.saveUsers();
+
+                if (userData.referralCode) {
+                    const referrer = this.users.find(u => u.username.toLowerCase() === userData.referralCode.toLowerCase());
+                    if (referrer) {
+                        this.addReferral(referrer.username, user);
+                    }
+                }
+
+                return user;
+            }
+
+            // Register a farm for auditing
+            registerFarm(farmData) {
+                const farm = {
+                    id: Date.now().toString(),
+                    ownerId: farmData.ownerId,
+                    ownerName: farmData.ownerName,
+                    farmName: farmData.farmName,
+                    farmType: farmData.farmType,
+                    location: farmData.location,
+                    size: farmData.size,
+                    registeredDate: new Date().toISOString(),
+                    status: 'pending_initial_audit',
+                    lastAuditDate: null,
+                    auditHistory: []
+                };
+                
+                this.registeredFarms.push(farm);
+                this.saveFarms();
+                
+                // Assign initial audit
+                this.assignInitialAudit(farm);
+                
+                return farm;
+            }
+
+            // Register a kitchen for auditing
+            registerKitchen(kitchenData) {
+                const kitchen = {
+                    id: Date.now().toString(),
+                    ownerId: kitchenData.ownerId,
+                    ownerName: kitchenData.ownerName,
+                    kitchenName: kitchenData.kitchenName,
+                    chefName: kitchenData.chefName,
+                    cuisineType: kitchenData.cuisineType,
+                    location: kitchenData.location,
+                    registeredDate: new Date().toISOString(),
+                    status: 'pending_initial_audit',
+                    lastAuditDate: null,
+                    auditHistory: []
+                };
+                
+                this.registeredKitchens.push(kitchen);
+                this.saveKitchens();
+                
+                return kitchen;
+            }
+
+            // Become an auditor
+            becomeAuditor(userId, auditorProfile) {
+                const user = this.users.find(u => u.id === userId);
+                if (!user) return null;
+                
+                user.isAuditor = true;
+                user.auditorProfile = {
+                    ...auditorProfile,
+                    certifiedDate: new Date().toISOString(),
+                    totalAuditsCompleted: 0,
+                    rating: 5.0,
+                    specializations: auditorProfile.specializations || ['Farm', 'Kitchen']
+                };
+                
+                this.currentUser = user;
+                this.saveUsers();
+                this.saveCurrentUser();
+                
+                return user;
+            }
+
+            // Get eligible auditors for a farm (not audited this farm in past year)
+            getEligibleAuditors(farmId) {
+                const oneYearAgo = new Date();
+                oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+                
+                return this.users.filter(user => {
+                    if (!user.isAuditor) return false;
+                    
+                    // Check if auditor has audited this farm in the past year
+                    const recentAudit = this.completedAudits.find(audit => 
+                        audit.farmId === farmId && 
+                        audit.auditorId === user.id &&
+                        new Date(audit.completedDate) > oneYearAgo
+                    );
+                    
+                    return !recentAudit;
+                });
+            }
+
+            // Assign initial audit when farm registers
+            assignInitialAudit(farm) {
+                const eligibleAuditors = this.getEligibleAuditors(farm.id);
+                if (eligibleAuditors.length === 0) return null;
+                
+                // Randomly select an auditor
+                const auditor = eligibleAuditors[Math.floor(Math.random() * eligibleAuditors.length)];
+                
+                const assignment = {
+                    id: Date.now().toString(),
+                    farmId: farm.id,
+                    farmName: farm.farmName,
+                    farmType: farm.farmType,
+                    farmLocation: farm.location,
+                    auditorId: auditor.id,
+                    auditorName: auditor.fullname,
+                    assignedDate: new Date().toISOString(),
+                    scheduledDate: this.getNextSaturdayAuditTime(),
+                    type: 'initial',
+                    status: 'scheduled'
+                };
+                
+                this.auditAssignments.push(assignment);
+                this.saveAuditAssignments();
+                
+                return assignment;
+            }
+
+            // Get next Saturday at 11am for audit scheduling
+            getNextSaturdayAuditTime() {
+                const now = new Date();
+                const daysUntilSaturday = (6 - now.getDay() + 7) % 7 || 7;
+                const nextSaturday = new Date(now);
+                nextSaturday.setDate(now.getDate() + daysUntilSaturday);
+                nextSaturday.setHours(11, 0, 0, 0);
+                return nextSaturday.toISOString();
+            }
+
+            // Check if current time is within audit window (Saturday 11am-12pm)
+            isAuditWindowOpen() {
+                const now = new Date();
+                const day = now.getDay();
+                const hour = now.getHours();
+                return day === 6 && hour >= 11 && hour < 12;
+            }
+
+            // Get time until next audit window
+            getTimeUntilAuditWindow() {
+                const now = new Date();
+                const nextSaturday = new Date(this.getNextSaturdayAuditTime());
+                const diff = nextSaturday - now;
+                
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                
+                return { days, hours, minutes, total: diff };
+            }
+
+            // Submit audit (only during audit window)
+            submitAudit(assignmentId, auditData) {
+                // In production, enforce audit window
+                // if (!this.isAuditWindowOpen()) {
+                //     return { success: false, message: 'Audit window is closed. Audits can only be submitted on Saturdays 11am-12pm.' };
+                // }
+                
+                const assignment = this.auditAssignments.find(a => a.id === assignmentId);
+                if (!assignment) {
+                    return { success: false, message: 'Assignment not found' };
+                }
+                
+                const completedAudit = {
+                    id: Date.now().toString(),
+                    assignmentId: assignment.id,
+                    farmId: assignment.farmId,
+                    farmName: assignment.farmName,
+                    auditorId: assignment.auditorId,
+                    auditorName: assignment.auditorName,
+                    completedDate: new Date().toISOString(),
+                    auditData: auditData,
+                    type: assignment.type
+                };
+                
+                this.completedAudits.push(completedAudit);
+                assignment.status = 'completed';
+                
+                // Update farm status
+                const farm = this.registeredFarms.find(f => f.id === assignment.farmId);
+                if (farm) {
+                    farm.status = 'audited';
+                    farm.lastAuditDate = completedAudit.completedDate;
+                    farm.auditHistory.push(completedAudit.id);
+                    this.saveFarms();
+                }
+                
+                // Update auditor stats
+                const auditor = this.users.find(u => u.id === assignment.auditorId);
+                if (auditor && auditor.auditorProfile) {
+                    auditor.auditorProfile.totalAuditsCompleted++;
+                    this.saveUsers();
+                }
+                
+                this.saveAuditAssignments();
+                this.saveCompletedAudits();
+                
+                // Schedule next weekly audit with different auditor
+                this.scheduleNextWeeklyAudit(farm);
+                
+                return { success: true, audit: completedAudit };
+            }
+
+            // Schedule next weekly audit with a different auditor
+            scheduleNextWeeklyAudit(farm) {
+                const eligibleAuditors = this.getEligibleAuditors(farm.id);
+                if (eligibleAuditors.length === 0) return null;
+                
+                const auditor = eligibleAuditors[Math.floor(Math.random() * eligibleAuditors.length)];
+                
+                const assignment = {
+                    id: Date.now().toString(),
+                    farmId: farm.id,
+                    farmName: farm.farmName,
+                    farmType: farm.farmType,
+                    farmLocation: farm.location,
+                    auditorId: auditor.id,
+                    auditorName: auditor.fullname,
+                    assignedDate: new Date().toISOString(),
+                    scheduledDate: this.getNextSaturdayAuditTime(),
+                    type: 'weekly',
+                    status: 'scheduled'
+                };
+                
+                this.auditAssignments.push(assignment);
+                this.saveAuditAssignments();
+                
+                return assignment;
+            }
+
+            // Get auditor's assigned audits
+            getAuditorAssignments(auditorId) {
+                return this.auditAssignments.filter(a => a.auditorId === auditorId && a.status === 'scheduled');
+            }
+
+            // Get auditor's completed audits
+            getAuditorCompletedAudits(auditorId) {
+                return this.completedAudits.filter(a => a.auditorId === auditorId);
+            }
+
+            // Get farm's audit history
+            getFarmAuditHistory(farmId) {
+                return this.completedAudits.filter(a => a.farmId === farmId);
+            }
+
+            // Get user's registered farms
+            getUserFarms(userId) {
+                return this.registeredFarms.filter(f => f.ownerId === userId);
+            }
+
+            addReferral(referrerUsername, newUser) {
+                const referrer = this.users.find(u => u.username === referrerUsername);
+                if (!referrer) return;
+
+                this.referrals.push({
+                    referrerId: referrer.id,
+                    referredUserId: newUser.id,
+                    referredUserName: newUser.fullname,
+                    date: new Date().toISOString()
+                });
+
+                referrer.totalReferrals++;
+                const tier = this.calculateTier(referrer.totalReferrals);
+                referrer.rewardPoints += this.getPointsPerReferral(tier);
+
+                this.saveUsers();
+                this.saveReferrals();
+            }
+
+            calculateTier(referrals) {
+                if (referrals >= 50) return 'Platinum';
+                if (referrals >= 30) return 'Gold';
+                if (referrals >= 15) return 'Silver';
+                if (referrals >= 5) return 'Bronze';
+                return 'Starter';
+            }
+
+            getPointsPerReferral(tier) {
+                const points = { 'Starter': 50, 'Bronze': 75, 'Silver': 100, 'Gold': 150, 'Platinum': 200 };
+                return points[tier] || 50;
+            }
+
+            getUserReferrals(userId) {
+                return this.referrals.filter(r => r.referrerId === userId);
+            }
+
+            login(username, password) {
+                const user = this.users.find(u => 
+                    u.username.toLowerCase() === username.toLowerCase() && 
+                    u.password === password
+                );
+                
+                if (user) {
+                    this.currentUser = user;
+                    this.saveCurrentUser();
+                    return user;
+                }
+                return null;
+            }
+
+            updateUserMode(userId, mode) {
+                const user = this.users.find(u => u.id === userId);
+                if (user) {
+                    user.currentMode = mode;
+                    this.currentUser = user;
+                    this.saveUsers();
+                    this.saveCurrentUser();
+                }
+            }
+
+            logout() {
+                this.currentUser = null;
+                localStorage.removeItem('currentUser');
+            }
+        }
+
+        const db = new CWDatabase();
+
+        // UI Logic
+        function toggleAuth(view) {
+            const loginContainer = document.getElementById('login-container');
+            const signupContainer = document.getElementById('signup-container');
+            
+            if (view === 'signup') {
+                loginContainer.classList.add('hidden');
+                signupContainer.classList.remove('hidden');
+            } else {
+                signupContainer.classList.add('hidden');
+                loginContainer.classList.remove('hidden');
+            }
+        }
+
+        function toggleAuditingSetup() {
+            const checkbox = document.getElementById('setup-auditing-now');
+            const auditorFields = document.getElementById('auditor-fields');
+            
+            if (checkbox.checked) {
+                auditorFields.classList.remove('hidden');
+            } else {
+                auditorFields.classList.add('hidden');
+            }
+        }
+
+        function handleMemberTypeChange() {
+            // This function is no longer needed but kept for compatibility
+        }
+
+        function handleAuditTypeChange() {
+            const auditType = document.querySelector('input[name="auditType"]:checked');
+            const farmFields = document.getElementById('farm-fields');
+            const kitchenFields = document.getElementById('kitchen-fields');
+            
+            if (auditType) {
+                if (auditType.value === 'Farm') {
+                    farmFields.classList.remove('hidden');
+                    kitchenFields.classList.add('hidden');
+                } else if (auditType.value === 'Kitchen') {
+                    kitchenFields.classList.remove('hidden');
+                    farmFields.classList.add('hidden');
+                }
+            }
+        }
+
+        if (db.currentUser) {
+            showDashboard(db.currentUser);
+        }
+
+        document.getElementById('username').addEventListener('input', function() {
+            const username = this.value.trim();
+            const statusEl = document.getElementById('username-status');
+            
+            if (username.length < 3) {
+                statusEl.textContent = '';
+                return;
+            }
+
+            if (db.usernameExists(username)) {
+                statusEl.textContent = '❌ Username already taken';
+                statusEl.className = 'text-xs mt-1 text-red-400';
+            } else {
+                statusEl.textContent = '✓ Username available';
+                statusEl.className = 'text-xs mt-1 text-green-400';
+            }
+        });
+
+        document.getElementById('signup-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('signup-password').value;
+
+            if (db.usernameExists(username)) {
+                showToast('Username already taken. Please choose another.', 'error');
+                return;
+            }
+
+            if (db.emailExists(email)) {
+                showToast('Email already registered. Please login.', 'error');
+                return;
+            }
+
+            // Everyone is both Assembler and Auditor
+            const userData = {
+                fullname: document.getElementById('fullname').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                email: email,
+                AuditorType: 'Both', // Everyone has both capabilities
+                username: username,
+                password: password,
+                referralCode: document.getElementById('referral-code').value.trim()
             };
 
-            let currentSchoolIndex = 0;
-            const schoolKeys = Object.keys(schoolData);
+            // If user chose to set up auditing now
+            const setupAuditing = document.getElementById('setup-auditing-now').checked;
             
-            // Function to cycle through schools
-            function cycleSchools() {
-                const centralImage = document.getElementById('central-image');
-                const surroundingImages = [];
+            if (setupAuditing) {
+                const auditType = document.querySelector('input[name="auditType"]:checked')?.value;
                 
-                // Get all surrounding images
-                for (let i = 1; i <= 7; i++) {
-                    const img = document.getElementById(`surrounding-${i}`);
-                    if (img) surroundingImages.push(img);
+                if (!auditType) {
+                    showToast('Please select an audit type or uncheck "Set up Auditing now"', 'error');
+                    return;
                 }
-                
-                currentSchoolIndex = (currentSchoolIndex + 1) % schoolKeys.length;
-                const currentSchool = schoolData[schoolKeys[currentSchoolIndex]];
-                
-                // Update central image
-                centralImage.src = currentSchool.mainImage;
-                centralImage.alt = currentSchool.title;
-                
-                // Update surrounding images
-                surroundingImages.forEach((img, index) => {
-                    if (currentSchool.surroundingImages[index]) {
-                        img.src = currentSchool.surroundingImages[index];
-                        img.alt = `${currentSchool.title} Program ${index + 1}`;
+
+                userData.auditData = { auditType: auditType };
+
+                if (auditType === 'Farm') {
+                    const farmType = document.querySelector('input[name="farmType"]:checked')?.value;
+                    if (!farmType) {
+                        showToast('Please select a farm type', 'error');
+                        return;
                     }
-                });
-            }
 
-            // Start cycling every 3 seconds
-            setInterval(cycleSchools, 3000);
+                    userData.auditData.farmType = farmType;
+                    userData.auditData.farmName = document.getElementById('farm-name').value.trim();
+                    userData.auditData.farmLocation = document.getElementById('farm-location').value.trim();
+                    userData.auditData.farmSize = document.getElementById('farm-size').value;
 
-            // Scroll-based animations
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
+                    if (!userData.auditData.farmName || !userData.auditData.farmLocation || !userData.auditData.farmSize) {
+                        showToast('Please fill in all farm details', 'error');
+                        return;
                     }
-                });
-            }, {
-                threshold: 0.1
-            });
+                } else if (auditType === 'Kitchen') {
+                    userData.auditData.kitchenName = document.getElementById('kitchen-name').value.trim();
+                    userData.auditData.chefName = document.getElementById('chef-name').value.trim();
+                    userData.auditData.cuisineType = document.getElementById('cuisine-type').value.trim();
+                    userData.auditData.kitchenLocation = document.getElementById('kitchen-location').value.trim();
 
-            const elementsToAnimate = document.querySelectorAll('.fade-in-up');
-            elementsToAnimate.forEach(el => observer.observe(el));
-
-            // Customer data storage
-            let customerDatabase = [];
-
-            // Modal functions for Clothing items
-            window.openPurchaseModal = function(productName, type) {
-                document.getElementById('modal-product-name').textContent = productName;
-                const description = document.getElementById('modal-description');
-                const submitButton = document.getElementById('modal-submit-button');
-
-                if (type === 'notify') {
-                    description.textContent = "Enter your details below and we'll notify you when this product is available.";
-                    submitButton.textContent = 'Get Notified';
+                    if (!userData.auditData.kitchenName || !userData.auditData.chefName || !userData.auditData.cuisineType || !userData.auditData.kitchenLocation) {
+                        showToast('Please fill in all kitchen details', 'error');
+                        return;
+                    }
                 }
-                document.getElementById('purchase-modal').classList.remove('hidden');
             }
 
-            window.closeModal = function() {
-                document.getElementById('purchase-modal').classList.add('hidden');
-                document.getElementById('purchase-form').reset();
-            }
-
-            // Handle Purchase/Notify form submission
-            document.getElementById('purchase-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const name = document.getElementById('customer-name-purchase').value;
-                const email = document.getElementById('customer-email-purchase').value;
-                const product = document.getElementById('modal-product-name').textContent;
-                
-                // Save to mailing list
-                customerDatabase.push({
-                    name: name,
-                    email: email,
-                    product: product,
-                    type: 'Notification',
-                    timestamp: new Date().toISOString()
-                });
-
-                alert(`Thank you ${name}! We will notify you at ${email} when ${product} becomes available.`);
-                closeModal();
-            });
-
-            // Close modals when clicking outside
-            document.getElementById('purchase-modal').addEventListener('click', function(e) {
-                    if (e.target === e.currentTarget) {
-                    closeModal();
-                }
-            });
+            const newUser = db.createUser(userData);
+            db.login(username, password); 
+            
+            showToast(`Welcome, ${newUser.fullname}! Account created successfully. 🎉`, 'success');
+            showDashboard(newUser);
         });
+
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('login-username').value.trim();
+            const password = document.getElementById('login-password').value;
+
+            const user = db.login(username, password);
+
+            if (user) {
+                showDashboard(user);
+            } else {
+                showToast('Invalid Username or Password', 'error');
+            }
+        });
+
+        function showDashboard(user) {
+            console.log('showDashboard called for user:', user.username);
+            
+            document.getElementById('auth-section').classList.add('hidden');
+            document.getElementById('dashboard-section').classList.remove('hidden');
+
+            document.getElementById('user-fullname').textContent = user.fullname;
+            document.getElementById('user-username').textContent = user.username;
+            
+            // Show badges
+            const badgesContainer = document.getElementById('user-badges');
+            let badges = '<span class="px-2 py-1 bg-sky-500/20 text-sky-400 rounded text-xs">Assembler</span>';
+            if (user.isAuditor) {
+                badges += '<span class="px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs ml-2">Certified Auditor</span>';
+            }
+            const userFarms = db.getUserFarms(user.id);
+            if (userFarms.length > 0) {
+                badges += '<span class="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs ml-2">Farm Owner</span>';
+            }
+            badgesContainer.innerHTML = badges;
+
+            const tier = db.calculateTier(user.totalReferrals);
+            document.getElementById('user-tier').textContent = tier;
+            document.getElementById('total-referrals').textContent = user.totalReferrals;
+            document.getElementById('reward-points').textContent = user.rewardPoints;
+
+            let nextTierCount = 5;
+            if (user.totalReferrals >= 5 && user.totalReferrals < 15) nextTierCount = 15 - user.totalReferrals;
+            else if (user.totalReferrals >= 15 && user.totalReferrals < 30) nextTierCount = 30 - user.totalReferrals;
+            else if (user.totalReferrals >= 30 && user.totalReferrals < 50) nextTierCount = 50 - user.totalReferrals;
+            else if (user.totalReferrals >= 50) nextTierCount = 0;
+            
+            document.getElementById('next-tier-count').textContent = nextTierCount;
+
+            // Generate Links
+            const baseUrls = {
+                'cwnetwork': 'https://cwnetwork.com', 
+                'chimwopara': 'https://chimwopara.com',
+                'wopara': 'https://wopara.com',
+                'pautacos': 'https://pautacos.com',
+                'devgameshow': 'https://devgameshow.com',
+                'fromsupply': 'https://fromsupply.com'
+            };
+            
+            // Set all links
+            document.getElementById('link-cwnetwork').value = `${baseUrls['cwnetwork']}?ref=${user.username}`;
+            document.getElementById('link-chimwopara').value = `${baseUrls['chimwopara']}?ref=${user.username}`;
+            document.getElementById('link-wopara').value = `${baseUrls['wopara']}?ref=${user.username}`;
+            document.getElementById('link-pautacos').value = `${baseUrls['pautacos']}?ref=${user.username}`;
+            document.getElementById('link-devgameshow').value = `${baseUrls['devgameshow']}?ref=${user.username}`;
+            document.getElementById('link-fromsupply').value = `${baseUrls['fromsupply']}?ref=${user.username}`;
+            
+            const referrals = db.getUserReferrals(user.id);
+            const referralList = document.getElementById('referral-list');
+            
+            if (referrals.length > 0) {
+                referralList.innerHTML = referrals.slice(-10).reverse().map(ref => `
+                    <div class="bg-[#1B2330]/50 rounded-lg p-4 flex items-center justify-between">
+                        <div>
+                            <p class="font-semibold">${ref.referredUserName}</p>
+                            <p class="text-sm text-[#B7D1E1]/70">${new Date(ref.date).toLocaleDateString()}</p>
+                        </div>
+                        <div class="text-green-400 font-bold">
+                            +${db.getPointsPerReferral(db.calculateTier(user.totalReferrals))} pts
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Show appropriate dashboard based on current mode
+            const currentMode = user.currentMode || 'Assembler';
+            
+            if (currentMode === 'FarmOwner') {
+                switchToFarmOwner();
+            } else if (currentMode === 'Auditor') {
+                switchToAuditor();
+            } else {
+                switchToAssembler();
+            }
+            
+            // Start countdown timer
+            updateAuditCountdown();
+            setInterval(updateAuditCountdown, 60000); // Update every minute
+        }
+
+        function updateAuditCountdown() {
+            const timeUntil = db.getTimeUntilAuditWindow();
+            const countdownEl = document.getElementById('countdown-display');
+            
+            if (db.isAuditWindowOpen()) {
+                countdownEl.innerHTML = '<span class="text-green-400">🟢 AUDIT WINDOW OPEN</span>';
+                countdownEl.nextElementSibling.textContent = 'Submit your audits now!';
+            } else {
+                countdownEl.textContent = `${timeUntil.days}d ${timeUntil.hours}h ${timeUntil.minutes}m`;
+            }
+        }
+
+        function switchToAssembler() {
+            console.log('switchToAssembler called');
+            
+            if (!db.currentUser) return;
+            
+            document.getElementById('assembler-dashboard').classList.remove('hidden');
+            document.getElementById('farm-owner-dashboard').classList.add('hidden');
+            document.getElementById('auditor-dashboard').classList.add('hidden');
+            
+            db.updateUserMode(db.currentUser.id, 'Assembler');
+            updateRoleSwitcherButtons('assembler');
+        }
+
+        function switchToFarmOwner() {
+            console.log('switchToFarmOwner called');
+            
+            if (!db.currentUser) return;
+            
+            document.getElementById('assembler-dashboard').classList.add('hidden');
+            document.getElementById('farm-owner-dashboard').classList.remove('hidden');
+            document.getElementById('auditor-dashboard').classList.add('hidden');
+            
+            db.updateUserMode(db.currentUser.id, 'FarmOwner');
+            updateRoleSwitcherButtons('farm-owner');
+            
+            loadFarmOwnerDashboard();
+        }
+
+        function switchToAuditor() {
+            console.log('switchToAuditor called');
+            
+            if (!db.currentUser) return;
+            
+            document.getElementById('assembler-dashboard').classList.add('hidden');
+            document.getElementById('farm-owner-dashboard').classList.add('hidden');
+            document.getElementById('auditor-dashboard').classList.remove('hidden');
+            
+            db.updateUserMode(db.currentUser.id, 'Auditor');
+            updateRoleSwitcherButtons('auditor');
+            
+            loadAuditorDashboard();
+        }
+
+        function updateRoleSwitcherButtons(activeRole) {
+            const buttons = {
+                'assembler': document.getElementById('switch-assembler'),
+                'farm-owner': document.getElementById('switch-farm-owner'),
+                'auditor': document.getElementById('switch-auditor')
+            };
+            
+            Object.entries(buttons).forEach(([role, btn]) => {
+                if (role === activeRole) {
+                    btn.classList.add('ring-2', 'ring-white/50');
+                } else {
+                    btn.classList.remove('ring-2', 'ring-white/50');
+                }
+            });
+        }
+
+        function loadFarmOwnerDashboard() {
+            const farms = db.getUserFarms(db.currentUser.id);
+            const listDiv = document.getElementById('my-farms-list');
+            
+            if (farms.length === 0) {
+                listDiv.innerHTML = '<p class="text-[#B7D1E1]/70 text-center py-8">No farms registered yet. Register your first farm to start building trust!</p>';
+                return;
+            }
+            
+            listDiv.innerHTML = farms.map(farm => {
+                const statusColors = {
+                    'pending_initial_audit': 'bg-yellow-500/20 text-yellow-400',
+                    'audited': 'bg-green-500/20 text-green-400'
+                };
+                const statusText = {
+                    'pending_initial_audit': '⏳ Awaiting Initial Audit',
+                    'audited': '✅ Verified'
+                };
+                
+                return `
+                    <div class="bg-[#1B2330]/50 rounded-xl p-6 border border-[#3f5268]">
+                        <div class="flex items-start justify-between mb-4">
+                            <div>
+                                <h4 class="font-bold text-lg">${farm.farmName}</h4>
+                                <p class="text-sm text-[#B7D1E1]/70">${farm.farmType} Farm • ${farm.location} • ${farm.size} acres</p>
+                            </div>
+                            <span class="px-3 py-1 rounded-full text-xs ${statusColors[farm.status]}">${statusText[farm.status]}</span>
+                        </div>
+                        <div class="grid grid-cols-3 gap-4 text-sm">
+                            <div>
+                                <p class="text-[#B7D1E1]/70">Registered</p>
+                                <p class="font-semibold">${new Date(farm.registeredDate).toLocaleDateString()}</p>
+                            </div>
+                            <div>
+                                <p class="text-[#B7D1E1]/70">Last Audit</p>
+                                <p class="font-semibold">${farm.lastAuditDate ? new Date(farm.lastAuditDate).toLocaleDateString() : 'Pending'}</p>
+                            </div>
+                            <div>
+                                <p class="text-[#B7D1E1]/70">Total Audits</p>
+                                <p class="font-semibold">${farm.auditHistory.length}</p>
+                            </div>
+                        </div>
+                        <button type="button" onclick="viewFarmAuditHistory('${farm.id}')" 
+                            class="mt-4 text-sky-400 hover:text-sky-300 text-sm">
+                            View Audit History →
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function loadAuditorDashboard() {
+            const user = db.currentUser;
+            
+            if (!user.isAuditor) {
+                document.getElementById('become-auditor-prompt').classList.remove('hidden');
+                document.getElementById('active-auditor-dashboard').classList.add('hidden');
+                return;
+            }
+            
+            document.getElementById('become-auditor-prompt').classList.add('hidden');
+            document.getElementById('active-auditor-dashboard').classList.remove('hidden');
+            
+            // Update stats
+            document.getElementById('auditor-rating').textContent = `⭐ ${user.auditorProfile.rating.toFixed(1)}`;
+            document.getElementById('total-audits-completed').textContent = user.auditorProfile.totalAuditsCompleted;
+            
+            const assignments = db.getAuditorAssignments(user.id);
+            document.getElementById('pending-assignments').textContent = assignments.length;
+            
+            // Earnings estimate ($25 per audit)
+            document.getElementById('auditor-earnings').textContent = `$${user.auditorProfile.totalAuditsCompleted * 25}`;
+            
+            // Update audit window status
+            const windowStatus = document.getElementById('audit-window-status');
+            if (db.isAuditWindowOpen()) {
+                windowStatus.className = 'bg-green-500/20 border border-green-500/50 rounded-xl p-6 mb-6';
+                windowStatus.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <span class="text-3xl">🟢</span>
+                        <div>
+                            <h4 class="font-bold text-lg text-green-400">Audit Window is OPEN</h4>
+                            <p class="text-sm text-[#B7D1E1]/70">You can submit audits now until 12:00 PM</p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                const timeUntil = db.getTimeUntilAuditWindow();
+                windowStatus.className = 'bg-[#1B2330]/50 border border-[#3f5268] rounded-xl p-6 mb-6';
+                windowStatus.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <span class="text-3xl">⏰</span>
+                        <div>
+                            <h4 class="font-bold text-lg">Next Audit Window</h4>
+                            <p class="text-sm text-[#B7D1E1]/70">Saturday 11:00 AM - 12:00 PM</p>
+                            <p class="text-sky-400 font-semibold">${timeUntil.days}d ${timeUntil.hours}h ${timeUntil.minutes}m</p>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Load assigned audits
+            const assignedList = document.getElementById('assigned-audits-list');
+            if (assignments.length === 0) {
+                assignedList.innerHTML = '<p class="text-[#B7D1E1]/70 text-center py-8">No audits assigned yet. Check back soon!</p>';
+            } else {
+                assignedList.innerHTML = assignments.map(assignment => `
+                    <div class="bg-[#1B2330]/50 rounded-xl p-6 border border-[#3f5268]">
+                        <div class="flex items-start justify-between mb-4">
+                            <div>
+                                <h4 class="font-bold text-lg">${assignment.farmName}</h4>
+                                <p class="text-sm text-[#B7D1E1]/70">${assignment.farmType} Farm • ${assignment.farmLocation}</p>
+                            </div>
+                            <span class="px-3 py-1 rounded-full text-xs bg-yellow-500/20 text-yellow-400">
+                                ${assignment.type === 'initial' ? '🆕 Initial Audit' : '📅 Weekly Audit'}
+                            </span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <p class="text-sm text-[#B7D1E1]/70">
+                                Scheduled: ${new Date(assignment.scheduledDate).toLocaleDateString()} at 11:00 AM
+                            </p>
+                            <button type="button" onclick="startAudit('${assignment.id}')" 
+                                class="px-4 py-2 bg-purple-500 hover:bg-purple-600 rounded-lg transition-colors text-sm font-semibold ${db.isAuditWindowOpen() ? '' : 'opacity-50 cursor-not-allowed'}"
+                                ${db.isAuditWindowOpen() ? '' : 'disabled'}>
+                                ${db.isAuditWindowOpen() ? 'Start Audit' : 'Wait for Window'}
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            // Load audit history
+            const completedAudits = db.getAuditorCompletedAudits(user.id);
+            const historyList = document.getElementById('audit-history-list');
+            
+            if (completedAudits.length === 0) {
+                historyList.innerHTML = '<p class="text-[#B7D1E1]/70 text-center py-8">No completed audits yet</p>';
+            } else {
+                historyList.innerHTML = completedAudits.slice(-10).reverse().map(audit => `
+                    <div class="bg-[#1B2330]/50 rounded-lg p-4 flex items-center justify-between">
+                        <div>
+                            <p class="font-semibold">${audit.farmName}</p>
+                            <p class="text-sm text-[#B7D1E1]/70">${new Date(audit.completedDate).toLocaleDateString()}</p>
+                        </div>
+                        <span class="text-green-400">✅ Completed</span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Username change modal
+        function showChangeUsernameModal() {
+            const content = `
+                <div>
+                    <div class="text-center mb-6">
+                        <div class="w-12 h-12 bg-sky-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <span class="text-2xl">✏️</span>
+                        </div>
+                        <h3 class="text-xl font-bold">Change Username</h3>
+                        <p class="text-[#B7D1E1]/70 text-sm mt-1">Current: <span class="font-mono">${db.currentUser.username}</span></p>
+                    </div>
+                    
+                    <form id="change-username-form" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">New Username *</label>
+                            <input type="text" id="new-username" required minlength="3"
+                                class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-sky-500 text-white"
+                                placeholder="Enter new username">
+                            <p id="new-username-status" class="text-xs mt-1 min-h-[1.25rem]"></p>
+                        </div>
+                        
+                        <div class="flex gap-3 pt-2">
+                            <button type="button" onclick="closeModal()" 
+                                class="flex-1 px-4 py-3 bg-[#1B2330] hover:bg-[#1B2330]/70 rounded-lg transition-colors">
+                                Cancel
+                            </button>
+                            <button type="submit" 
+                                class="flex-1 px-4 py-3 bg-sky-500 hover:bg-sky-600 rounded-lg transition-colors font-semibold">
+                                Change Username
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            showModal(content);
+            
+            setTimeout(() => {
+                const input = document.getElementById('new-username');
+                input.focus();
+                
+                input.addEventListener('input', function() {
+                    const username = this.value.trim();
+                    const statusEl = document.getElementById('new-username-status');
+                    
+                    if (username.length < 3) {
+                        statusEl.textContent = '';
+                        return;
+                    }
+                    
+                    if (db.usernameExists(username)) {
+                        statusEl.textContent = '❌ Username already taken';
+                        statusEl.className = 'text-xs mt-1 text-red-400';
+                    } else {
+                        statusEl.textContent = '✓ Username available';
+                        statusEl.className = 'text-xs mt-1 text-green-400';
+                    }
+                });
+                
+                document.getElementById('change-username-form').addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const newUsername = document.getElementById('new-username').value.trim();
+                    
+                    const result = db.changeUsername(db.currentUser.id, newUsername);
+                    
+                    if (result.success) {
+                        closeModal();
+                        showToast('Username changed successfully! 🎉', 'success');
+                        document.getElementById('user-username').textContent = newUsername;
+                        // Update referral links
+                        showDashboard(db.currentUser);
+                    } else {
+                        showToast(result.message, 'error');
+                    }
+                });
+            }, 100);
+        }
+
+        // Settings modal
+        function showSettingsModal() {
+            const content = `
+                <div>
+                    <div class="text-center mb-6">
+                        <div class="w-12 h-12 bg-gray-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <span class="text-2xl">⚙️</span>
+                        </div>
+                        <h3 class="text-xl font-bold">Settings</h3>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <button type="button" onclick="closeModal(); showChangeUsernameModal();" 
+                            class="w-full text-left px-4 py-3 bg-[#1B2330]/50 hover:bg-[#1B2330] rounded-lg transition-colors flex items-center gap-3">
+                            <span>✏️</span>
+                            <div>
+                                <p class="font-semibold">Change Username</p>
+                                <p class="text-xs text-[#B7D1E1]/70">Update your display name</p>
+                            </div>
+                        </button>
+                        
+                        <button type="button" onclick="closeModal(); handleLogout();" 
+                            class="w-full text-left px-4 py-3 bg-red-500/10 hover:bg-red-500/20 rounded-lg transition-colors flex items-center gap-3 text-red-400">
+                            <span>🚪</span>
+                            <div>
+                                <p class="font-semibold">Logout</p>
+                                <p class="text-xs text-red-400/70">Sign out of your account</p>
+                            </div>
+                        </button>
+                    </div>
+                    
+                    <button type="button" onclick="closeModal()" 
+                        class="w-full mt-6 px-4 py-3 bg-[#1B2330] hover:bg-[#1B2330]/70 rounded-lg transition-colors">
+                        Close
+                    </button>
+                </div>
+            `;
+            showModal(content);
+        }
+
+        // Register Farm Modal
+        function showRegisterFarmModal() {
+            const content = `
+                <div>
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-3xl">🌾</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2">Register Your Farm</h3>
+                        <p class="text-[#B7D1E1]/70 text-sm">Your farm will receive weekly audits from rotating certified auditors</p>
+                    </div>
+                    
+                    <form id="register-farm-form" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Farm Type *</label>
+                            <div class="grid grid-cols-2 gap-3">
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="regFarmType" value="Plant" class="peer sr-only" required>
+                                    <div class="glassy-card rounded-lg p-4 text-center transition-all peer-checked:border-2 peer-checked:border-green-500 peer-checked:bg-green-500/10">
+                                        <span class="text-2xl">🌱</span>
+                                        <p class="font-semibold mt-1">Plant Farm</p>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="regFarmType" value="Animal" class="peer sr-only">
+                                    <div class="glassy-card rounded-lg p-4 text-center transition-all peer-checked:border-2 peer-checked:border-green-500 peer-checked:bg-green-500/10">
+                                        <span class="text-2xl">🐄</span>
+                                        <p class="font-semibold mt-1">Animal Farm</p>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Farm Name *</label>
+                            <input type="text" id="reg-farm-name" required
+                                class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-green-500 text-white"
+                                placeholder="e.g., Green Valley Farm">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Location *</label>
+                            <input type="text" id="reg-farm-location" required
+                                class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-green-500 text-white"
+                                placeholder="City, State/Province">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Farm Size (acres) *</label>
+                            <input type="number" id="reg-farm-size" required min="0" step="0.1"
+                                class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-green-500 text-white"
+                                placeholder="e.g., 50">
+                        </div>
+                        
+                        <div class="bg-sky-500/10 border border-sky-500/30 rounded-lg p-4 text-sm">
+                            <p class="font-semibold text-sky-400 mb-1">📋 What happens next?</p>
+                            <ul class="text-[#B7D1E1]/70 space-y-1">
+                                <li>• An auditor will be assigned for your initial audit</li>
+                                <li>• Audits occur every Saturday 11am-12pm</li>
+                                <li>• Different auditor each week (no repeats for 1 year)</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="flex gap-3 pt-2">
+                            <button type="button" onclick="closeModal()" 
+                                class="flex-1 px-4 py-3 bg-[#1B2330] hover:bg-[#1B2330]/70 rounded-lg transition-colors">
+                                Cancel
+                            </button>
+                            <button type="submit" 
+                                class="flex-1 px-4 py-3 bg-green-500 hover:bg-green-600 rounded-lg transition-colors font-semibold">
+                                Register Farm
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            showModal(content);
+            
+            setTimeout(() => {
+                document.getElementById('register-farm-form').addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const farmType = document.querySelector('input[name="regFarmType"]:checked')?.value;
+                    if (!farmType) {
+                        showToast('Please select a farm type', 'error');
+                        return;
+                    }
+                    
+                    const farm = db.registerFarm({
+                        ownerId: db.currentUser.id,
+                        ownerName: db.currentUser.fullname,
+                        farmName: document.getElementById('reg-farm-name').value.trim(),
+                        farmType: farmType,
+                        location: document.getElementById('reg-farm-location').value.trim(),
+                        size: document.getElementById('reg-farm-size').value
+                    });
+                    
+                    closeModal();
+                    showToast('Farm registered successfully! An auditor will be assigned shortly. 🌾', 'success');
+                    loadFarmOwnerDashboard();
+                    showDashboard(db.currentUser);
+                });
+            }, 100);
+        }
+
+        // Become Auditor Modal
+        function showBecomeAuditorModal() {
+            const content = `
+                <div>
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-3xl">🔍</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2">Become an Auditor</h3>
+                        <p class="text-[#B7D1E1]/70 text-sm">Complete this application to start conducting farm audits</p>
+                    </div>
+                    
+                    <form id="become-auditor-form" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">What qualifies you? *</label>
+                            <textarea id="auditor-qualifications" required rows="3"
+                                class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-purple-500 text-white"
+                                placeholder="Describe your relevant experience (farming, agriculture, inspection, etc.)"></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Specializations</label>
+                            <div class="flex flex-wrap gap-2">
+                                <label class="cursor-pointer">
+                                    <input type="checkbox" name="specialization" value="Plant" class="peer sr-only" checked>
+                                    <span class="px-3 py-2 rounded-lg bg-[#1B2330] border border-[#3f5268] peer-checked:border-green-500 peer-checked:bg-green-500/20 transition-all inline-block">
+                                        🌱 Plant Farms
+                                    </span>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="checkbox" name="specialization" value="Animal" class="peer sr-only" checked>
+                                    <span class="px-3 py-2 rounded-lg bg-[#1B2330] border border-[#3f5268] peer-checked:border-green-500 peer-checked:bg-green-500/20 transition-all inline-block">
+                                        🐄 Animal Farms
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Available Region *</label>
+                            <input type="text" id="auditor-region" required
+                                class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-purple-500 text-white"
+                                placeholder="City, State or Region you can audit in">
+                        </div>
+                        
+                        <div class="bg-purple-500/10 border border-purple-500/30 rounded-lg p-4 text-sm">
+                            <p class="font-semibold text-purple-400 mb-2">📋 Auditor Responsibilities</p>
+                            <ul class="text-[#B7D1E1]/70 space-y-1">
+                                <li>• Conduct audits every Saturday 11am-12pm</li>
+                                <li>• Submit honest, thorough reports</li>
+                                <li>• Cannot audit the same farm twice in one year</li>
+                                <li>• Earn $25 per completed audit</li>
+                            </ul>
+                        </div>
+                        
+                        <label class="flex items-start gap-3 cursor-pointer">
+                            <input type="checkbox" id="auditor-agreement" required class="mt-1">
+                            <span class="text-sm text-[#B7D1E1]/70">
+                                I agree to conduct audits honestly and understand that falsifying reports will result in permanent ban and legal action.
+                            </span>
+                        </label>
+                        
+                        <div class="flex gap-3 pt-2">
+                            <button type="button" onclick="closeModal()" 
+                                class="flex-1 px-4 py-3 bg-[#1B2330] hover:bg-[#1B2330]/70 rounded-lg transition-colors">
+                                Cancel
+                            </button>
+                            <button type="submit" 
+                                class="flex-1 px-4 py-3 bg-purple-500 hover:bg-purple-600 rounded-lg transition-colors font-semibold">
+                                Submit Application
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            showModal(content);
+            
+            setTimeout(() => {
+                document.getElementById('become-auditor-form').addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const specializations = Array.from(document.querySelectorAll('input[name="specialization"]:checked'))
+                        .map(cb => cb.value);
+                    
+                    db.becomeAuditor(db.currentUser.id, {
+                        qualifications: document.getElementById('auditor-qualifications').value.trim(),
+                        region: document.getElementById('auditor-region').value.trim(),
+                        specializations: specializations
+                    });
+                    
+                    closeModal();
+                    showToast('Welcome to the Auditor team! 🔍', 'success');
+                    loadAuditorDashboard();
+                    showDashboard(db.currentUser);
+                });
+            }, 100);
+        }
+
+        // Start audit
+        function startAudit(assignmentId) {
+            if (!db.isAuditWindowOpen()) {
+                showToast('Audit window is closed. Come back Saturday 11am-12pm.', 'error');
+                return;
+            }
+            
+            const assignment = db.auditAssignments.find(a => a.id === assignmentId);
+            if (!assignment) return;
+            
+            const content = `
+                <div>
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-3xl">📋</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2">Audit: ${assignment.farmName}</h3>
+                        <p class="text-[#B7D1E1]/70 text-sm">${assignment.farmType} Farm • ${assignment.farmLocation}</p>
+                    </div>
+                    
+                    <form id="audit-form" class="space-y-4 max-h-96 overflow-y-auto pr-2">
+                        ${assignment.farmType === 'Animal' ? `
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Livestock Count *</label>
+                                <input type="number" id="audit-livestock-count" required min="0"
+                                    class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-purple-500 text-white"
+                                    placeholder="Total animals observed">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Animal Health Status *</label>
+                                <select id="audit-health-status" required
+                                    class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-purple-500 text-white">
+                                    <option value="">Select status</option>
+                                    <option value="excellent">Excellent - All animals healthy</option>
+                                    <option value="good">Good - Minor issues observed</option>
+                                    <option value="fair">Fair - Some concerns</option>
+                                    <option value="poor">Poor - Serious health issues</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Feed Quality *</label>
+                                <select id="audit-feed-quality" required
+                                    class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-purple-500 text-white">
+                                    <option value="">Select quality</option>
+                                    <option value="excellent">Excellent</option>
+                                    <option value="good">Good</option>
+                                    <option value="adequate">Adequate</option>
+                                    <option value="poor">Poor</option>
+                                </select>
+                            </div>
+                        ` : `
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Crop Health Status *</label>
+                                <select id="audit-crop-status" required
+                                    class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-purple-500 text-white">
+                                    <option value="">Select status</option>
+                                    <option value="excellent">Excellent - Healthy crops</option>
+                                    <option value="good">Good - Minor issues</option>
+                                    <option value="fair">Fair - Some disease/pests</option>
+                                    <option value="poor">Poor - Serious problems</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Estimated Yield *</label>
+                                <select id="audit-yield" required
+                                    class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-purple-500 text-white">
+                                    <option value="">Select estimate</option>
+                                    <option value="above-expected">Above Expected</option>
+                                    <option value="as-expected">As Expected</option>
+                                    <option value="below-expected">Below Expected</option>
+                                    <option value="poor">Poor Yield Expected</option>
+                                </select>
+                            </div>
+                        `}
+                        
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Overall Rating *</label>
+                            <div class="flex gap-2">
+                                ${[1,2,3,4,5].map(n => `
+                                    <label class="cursor-pointer flex-1">
+                                        <input type="radio" name="overallRating" value="${n}" class="peer sr-only" ${n === 5 ? 'checked' : ''}>
+                                        <div class="text-center py-3 rounded-lg bg-[#1B2330] border border-[#3f5268] peer-checked:border-yellow-500 peer-checked:bg-yellow-500/20 transition-all">
+                                            <span class="text-xl">${n <= 2 ? '😟' : n === 3 ? '😐' : n === 4 ? '🙂' : '😊'}</span>
+                                            <p class="text-xs mt-1">${n}</p>
+                                        </div>
+                                    </label>
+                                `).join('')}
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Notes & Observations</label>
+                            <textarea id="audit-notes" rows="3"
+                                class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-purple-500 text-white"
+                                placeholder="Any additional observations, concerns, or recommendations..."></textarea>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Upload Photos (optional)</label>
+                            <input type="file" id="audit-photos" accept="image/*" multiple
+                                class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white">
+                        </div>
+                    </form>
+                    
+                    <div class="flex gap-3 pt-4 mt-4 border-t border-[#3f5268]">
+                        <button type="button" onclick="closeModal()" 
+                            class="flex-1 px-4 py-3 bg-[#1B2330] hover:bg-[#1B2330]/70 rounded-lg transition-colors">
+                            Cancel
+                        </button>
+                        <button type="button" onclick="submitAudit('${assignmentId}')" 
+                            class="flex-1 px-4 py-3 bg-green-500 hover:bg-green-600 rounded-lg transition-colors font-semibold">
+                            Submit Audit
+                        </button>
+                    </div>
+                </div>
+            `;
+            showModal(content);
+        }
+
+        function submitAudit(assignmentId) {
+            const assignment = db.auditAssignments.find(a => a.id === assignmentId);
+            if (!assignment) return;
+            
+            let auditData = {
+                overallRating: document.querySelector('input[name="overallRating"]:checked')?.value,
+                notes: document.getElementById('audit-notes')?.value || ''
+            };
+            
+            if (assignment.farmType === 'Animal') {
+                auditData.livestockCount = document.getElementById('audit-livestock-count')?.value;
+                auditData.healthStatus = document.getElementById('audit-health-status')?.value;
+                auditData.feedQuality = document.getElementById('audit-feed-quality')?.value;
+            } else {
+                auditData.cropStatus = document.getElementById('audit-crop-status')?.value;
+                auditData.yield = document.getElementById('audit-yield')?.value;
+            }
+            
+            const result = db.submitAudit(assignmentId, auditData);
+            
+            if (result.success) {
+                closeModal();
+                showToast('Audit submitted successfully! Thank you for your service. 🎉', 'success');
+                loadAuditorDashboard();
+            } else {
+                showToast(result.message, 'error');
+            }
+        }
+
+        function viewFarmAuditHistory(farmId) {
+            const audits = db.getFarmAuditHistory(farmId);
+            const farm = db.registeredFarms.find(f => f.id === farmId);
+            
+            const content = `
+                <div>
+                    <div class="text-center mb-6">
+                        <h3 class="text-xl font-bold">${farm.farmName} - Audit History</h3>
+                        <p class="text-[#B7D1E1]/70 text-sm">${audits.length} audits completed</p>
+                    </div>
+                    
+                    <div class="space-y-3 max-h-96 overflow-y-auto">
+                        ${audits.length === 0 ? '<p class="text-center text-[#B7D1E1]/70 py-8">No audits completed yet</p>' : 
+                            audits.map(audit => `
+                                <div class="bg-[#1B2330]/50 rounded-lg p-4">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <p class="font-semibold">Auditor: ${audit.auditorName}</p>
+                                        <span class="text-yellow-400">${'⭐'.repeat(parseInt(audit.auditData.overallRating))}</span>
+                                    </div>
+                                    <p class="text-sm text-[#B7D1E1]/70">${new Date(audit.completedDate).toLocaleDateString()}</p>
+                                    ${audit.auditData.notes ? `<p class="text-sm mt-2 text-[#B7D1E1]/80">"${audit.auditData.notes}"</p>` : ''}
+                                </div>
+                            `).join('')
+                        }
+                    </div>
+                    
+                    <button type="button" onclick="closeModal()" 
+                        class="w-full mt-6 px-4 py-3 bg-[#1B2330] hover:bg-[#1B2330]/70 rounded-lg transition-colors">
+                        Close
+                    </button>
+                </div>
+            `;
+            showModal(content);
+        }
+
+        // FIXED: copyLink now receives the button element directly instead of relying on implicit event
+        function copyLink(btn, elementId) {
+            const input = document.getElementById(elementId);
+            input.select();
+            document.execCommand('copy');
+            const originalText = btn.textContent;
+            btn.textContent = 'Copied!';
+            btn.classList.add('bg-green-500');
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.classList.remove('bg-green-500');
+            }, 2000);
+        }
+
+        function handleLogout() {
+            console.log('handleLogout called');
+            
+            showConfirm('Logout', 'Are you sure you want to logout?', 'confirmLogout');
+        }
+        
+        function confirmLogout() {
+            console.log('Logging out user:', db.currentUser?.username);
+            
+            // Clear user session
+            db.logout();
+            
+            // Hide all dashboards
+            document.getElementById('assembler-dashboard').classList.add('hidden');
+            document.getElementById('auditor-dashboard').classList.add('hidden');
+            document.getElementById('farm-auditor-dashboard').classList.add('hidden');
+            document.getElementById('kitchen-auditor-dashboard').classList.add('hidden');
+            document.getElementById('dashboard-section').classList.add('hidden');
+            
+            // Show login screen
+            document.getElementById('auth-section').classList.remove('hidden');
+            document.getElementById('login-container').classList.remove('hidden');
+            document.getElementById('signup-container').classList.add('hidden');
+            
+            // Clear forms
+            document.getElementById('login-form').reset();
+            document.getElementById('signup-form').reset();
+            
+            // Clear URL parameters
+            const url = new URL(window.location);
+            url.search = '';
+            window.history.replaceState({}, '', url);
+            
+            showToast('Logged out successfully', 'success');
+            console.log('Logout complete');
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const refUsername = urlParams.get('ref');
+        if (refUsername && !db.currentUser) {
+            toggleAuth('signup');
+            document.getElementById('referral-code').value = refUsername;
+        }
     </script>
 </body>
 </html>
