@@ -671,6 +671,21 @@
     box-shadow: none;
 }
 
+@media (max-width: 768px) {
+    #signinModal .modal-content {
+        flex-direction: column !important;
+        width: 90% !important;
+        max-height: 85vh;
+        overflow-y: auto;
+    }
+    #signinModal .modal-content > div {
+        width: 100% !important;
+    }
+    #signinModal img {
+        height: 150px !important;
+    }
+}
+
 @keyframes slideInBar { from { width: 0; opacity: 0; } to { opacity: 1; } }
 
 @keyframes slideInBar {
@@ -1301,6 +1316,36 @@
             </div>
         </div>
     </div>
+    <div class="modal" id="signinModal" onclick="if(event.target === this) closeSigninModal()">
+    <div class="modal-content" style="padding: 0; width: 800px; max-width: 90%; display: flex; overflow: hidden; border-radius: 24px;">
+        
+        <div style="width: 50%; background: #000; position: relative;">
+            <img src="signin.png" alt="Sign In" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.8;" onerror="this.style.display='none'">
+            <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);"></div>
+            <div style="position: absolute; bottom: 32px; left: 32px; right: 32px;">
+                <h3 style="font-size: 1.8rem; font-weight: 700; color: white; margin-bottom: 8px;">Welcome Back</h3>
+                <p style="color: rgba(255,255,255,0.7);">Sign in to save your progress, unlock premium themes, and access the P&L Store.</p>
+            </div>
+        </div>
+
+        <div style="width: 50%; padding: 48px; display: flex; flex-direction: column; justify-content: center; background: rgba(28, 28, 30, 0.95); backdrop-filter: blur(40px);">
+            <div style="margin-bottom: auto;">
+                <div style="width: 48px; height: 48px; background: rgba(255,255,255,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
+                </div>
+                <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 12px;">Sign In</h2>
+                <p style="color: var(--text-secondary);">Continue with Google to access your account.</p>
+            </div>
+
+            <button onclick="triggerGoogleLogin()" class="google-signin-btn" style="width: 100%; padding: 14px; font-size: 1rem; justify-content: center; background: white; color: black; border: none; margin-bottom: 24px;">
+                <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/><path d="M1 1h22v22H1z" fill="none"/></svg>
+                Sign in with Google
+            </button>
+            
+            <p style="font-size: 0.8rem; color: var(--text-tertiary); text-align: center;">By continuing, you agree to our Terms of Service.</p>
+        </div>
+    </div>
+</div>
 
     <!-- Import Syllabus Data before main script -->
     <script src="syllabus.js"></script>
@@ -1480,7 +1525,15 @@ function checkUpgradeStatus() {
 }
 
 // Update the existing activatePremium function to handle the new bar logic
-function activatePremium(planName, addedLines) {
+function activatePremium(planName, addedLines, isRestore = false) {
+    // 1. Auth Gate
+    if (!userProfile && !isRestore) {
+        // If clicking manually and not logged in, force sign in
+        closePremiumModal();
+        openSigninModal();
+        return; 
+    }
+
     isPremium = true;
     currentPlan = planName;
     
@@ -1490,12 +1543,18 @@ function activatePremium(planName, addedLines) {
     else if (planName.includes('Super')) maxLines = 10000;
     else if (planName.includes('Demo')) maxLines = 99999;
     
-    linesRemaining = maxLines; // Reset to full capacity
+    // Only reset lines if this is a new activation, not a page reload
+    if (!isRestore) {
+        linesRemaining = maxLines; 
+        // Save to Storage
+        localStorage.setItem('savedPlan', planName);
+        localStorage.setItem('savedLines', linesRemaining); // Optional: remember consumption
+        showAlert(`🌟 ${planName} activated!`, false, 4000);
+    }
     
     updateLinesDisplay();
     updatePremiumModalUI();
-    closePremiumModal();
-    showAlert(`🌟 ${planName} activated! Limit increased.`, false, 4000);
+    if (!isRestore) closePremiumModal();
 }
 
 // Initialize bar on load
@@ -1608,7 +1667,22 @@ function activatePremium(planName, addedLines) {
     closePremiumModal();
     showAlert(`🌟 ${planName} activated! Limit increased.`, false, 4000);
 }
+function openSigninModal() {
+    document.getElementById('signinModal').classList.add('active');
+}
 
+function closeSigninModal() {
+    document.getElementById('signinModal').classList.remove('active');
+}
+
+function triggerGoogleLogin() {
+    if (tokenClient) {
+        tokenClient.requestAccessToken();
+        // The modal will be closed by handleTokenResponse success
+    } else {
+        console.error("Google Token Client not initialized");
+    }
+}
 // Update UI to target the correct button IDs (btn-Pro)
 // Function to calculate and update bar widths dynamically
 function updatePlanVisuals() {
@@ -2190,6 +2264,7 @@ async function fetchUserInfo(accessToken) {
 
 // 3. Render the Menu UI (Called by fetch OR by page load restore)
 function renderLoginState(userObject) {
+closeSigninModal();
     userProfile = userObject; // Set global variable
     const sidebarFooter = document.querySelector('.sidebar-footer');
     const signInButton = document.getElementById('customGoogleSignInBtn');
@@ -2276,14 +2351,24 @@ function renderLoginState(userObject) {
 // 4. Logout Logic (Clear Storage)
 function handleLogout() {
     userProfile = null;
-    localStorage.removeItem('userProfile'); // Clear storage
-    
+    isPremium = false;
+    currentPlan = 'Free Plan';
+    maxLines = 250;
+    linesRemaining = 250;
+
+    localStorage.removeItem('userProfile');
+    localStorage.removeItem('savedPlan'); // Clear plan
+    localStorage.removeItem('savedLines');
+
+    // ... rest of your existing logout UI cleanup code ...
     const container = document.querySelector('.user-menu-container');
     if (container) container.remove();
     
     const signInButton = document.getElementById('customGoogleSignInBtn');
     if (signInButton) signInButton.style.display = 'flex';
     
+    updateLinesDisplay();
+    updatePremiumModalUI(); // Reset UI to free
     showAlert("Logged out successfully.", false);
 }
 
@@ -2455,16 +2540,26 @@ function triggerSupportEmail() {
         });
     }
 
-    // 3. Restore User Session
+    // Restore User Session
     const savedUser = localStorage.getItem('userProfile');
     if (savedUser) {
         try {
             const userObj = JSON.parse(savedUser);
             renderLoginState(userObj);
         } catch (e) {
-            console.error("Failed to restore session", e);
             localStorage.removeItem('userProfile');
         }
+    }
+    // NEW: Restore Premium Plan
+    const savedPlan = localStorage.getItem('savedPlan');
+    if (savedPlan) {
+        // Pass true for 'isRestore' to skip alerts/resetting lines
+        activatePremium(savedPlan, 0, true);
+        
+        // Optional: Restore exact line count if you saved it
+        const savedCount = localStorage.getItem('savedLines');
+        if (savedCount) linesRemaining = parseInt(savedCount);
+        updateLinesDisplay(); // Refresh bar
     }
 
     // 4. Initialize UI Elements
