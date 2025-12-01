@@ -1817,11 +1817,14 @@
         window.addEventListener('load', () => {
             try {
                 tokenClient = google.accounts.oauth2.initTokenClient({
-                    client_id: "9571013902-q69a5hulb67vquu8ud41qmr3l135pdbj.apps.googleusercontent.com",
-                    scope: 'https://www.googleapis.com/auth/userinfo.profile',
-                    callback: handleTokenResponse,
-                    error_callback: (error) => { console.error("Google Sign-In Error:", error); showAlert("Sign-in failed. Please try again.", true); }
-                });
+    client_id: "9571013902-q69a5hulb67vquu8ud41qmr3l135pdbj.apps.googleusercontent.com",
+    // UPDATE THIS LINE:
+    scope: 'email profile openid', 
+    callback: handleTokenResponse,
+    error_callback: (error) => {
+        console.error("Google Sign-In Error:", error);
+    }
+});
                 const customBtn = document.getElementById('customGoogleSignInBtn');
                 if (customBtn) { customBtn.addEventListener('click', () => { tokenClient.requestAccessToken(); }); }
             } catch (error) { console.error("Error initializing Google Token Client:", error); showAlert("Could not load Google Sign-In.", true); }
