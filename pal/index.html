@@ -366,10 +366,13 @@
         top: 8px; 
         left: 8px; 
         bottom: 8px; 
-        height: calc(100vh - 16px);
+       height: calc(100dvh - 80px); /* NEW - accounts for Safari UI */
         z-index: 1000; 
         transition: transform 0.4s var(--ease-spring);
         margin-top: 0 !important; /* Reset desktop margin-top on mobile */
+    }
+    .sidebar-footer {
+        padding-bottom: 24px !important;
     }
 
     .toggle-sidebar-btn {
@@ -427,9 +430,9 @@
         }
 
         /* Main Tabs */
-        .main-tabs { 
+.main-tabs { 
     display: flex; 
-    gap: 12px; 
+    gap: 20px; /* Changed from 12px */
     padding: 0; 
     background: transparent; 
     border-radius: 0; 
@@ -799,7 +802,7 @@
 
     .main-tabs, .sub-tabs {
         margin: 12px 16px !important;
-        gap: 6px;
+        gap: 26px; /* Changed from 6px - increase this for more space */
         padding: 6px;
     }
     
@@ -2276,16 +2279,21 @@ function updatePremiumModalUI() {
                  });
              });
              
-            // Mobile: Tap main content to dismiss sidebar
+// Mobile: Tap main content or tabs to dismiss sidebar
 if (window.innerWidth <= 768) {
-    const mainContent = document.querySelector('.main-content');
-    const sidebar = document.querySelector('.sidebar');
-    
-    mainContent.addEventListener('click', (e) => {
-        // Only close if sidebar is visible AND click is not on a modal
-        if (!sidebar.classList.contains('hidden') && 
-            !document.querySelector('.modal.active')) {
-            toggleSidebar();
+    document.addEventListener('click', (e) => {
+        const sidebar = document.querySelector('.sidebar');
+        const mainContent = document.querySelector('.main-content');
+        const toggleBtn = document.querySelector('.toggle-sidebar-btn');
+        
+        // Check if sidebar is open
+        if (sidebar && !sidebar.classList.contains('hidden')) {
+            // Check if click is outside sidebar AND not on toggle button
+            if (!sidebar.contains(e.target) && 
+                !toggleBtn?.contains(e.target) &&
+                !document.querySelector('.modal.active')) {
+                toggleSidebar();
+            }
         }
     });
 }
