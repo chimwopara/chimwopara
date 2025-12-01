@@ -263,27 +263,39 @@
                 <div class="flex flex-col md:flex-row items-center justify-between mb-6">
                     <div>
                         <h2 class="text-3xl font-bold mb-2">Welcome, <span id="user-fullname">User</span>!</h2>
-                        <p class="text-[#B7D1E1]/70">Username: <span id="user-username" class="font-mono">username</span></p>
-                        <p class="text-[#B7D1E1]/70">Member Type: <span id="user-type" class="font-semibold">Type</span></p>
-                        <p id="user-audit-info" class="text-[#B7D1E1]/70 hidden"></p>
+                        <p class="text-[#B7D1E1]/70">Username: <span id="user-username" class="font-mono">username</span> 
+                            <button type="button" onclick="showChangeUsernameModal()" class="text-sky-400 hover:text-sky-300 text-sm ml-2">✏️ Change</button>
+                        </p>
+                        <p class="text-[#B7D1E1]/70">
+                            <span id="user-badges" class="flex gap-2 mt-1"></span>
+                        </p>
                     </div>
-                    <div class="tier-badge mt-4 md:mt-0 px-6 py-3 rounded-full text-center">
-                        <p class="text-sm text-[#B7D1E1]/70">Current Tier</p>
-                        <p id="user-tier" class="text-2xl font-bold">Starter</p>
+                    <div class="flex items-center gap-4 mt-4 md:mt-0">
+                        <button type="button" onclick="showSettingsModal()" class="p-3 bg-[#1B2330]/50 hover:bg-[#1B2330] rounded-lg transition-colors" title="Settings">
+                            ⚙️
+                        </button>
+                        <div class="tier-badge px-6 py-3 rounded-full text-center">
+                            <p class="text-sm text-[#B7D1E1]/70">Current Tier</p>
+                            <p id="user-tier" class="text-2xl font-bold">Starter</p>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Type Switcher -->
-                <div id="role-switcher" class="mb-6 p-4 bg-[#1B2330]/50 rounded-lg hidden">
-                    <p class="text-sm text-[#B7D1E1]/70 mb-3">Switch Your Role:</p>
-                    <div class="flex gap-3">
+                <!-- Role Switcher -->
+                <div id="role-switcher" class="mb-6 p-4 bg-[#1B2330]/50 rounded-lg">
+                    <p class="text-sm text-[#B7D1E1]/70 mb-3">Switch Your View:</p>
+                    <div class="flex flex-wrap gap-3">
                         <button type="button" onclick="switchToAssembler()" id="switch-assembler" 
                             class="px-4 py-2 bg-sky-500/20 text-sky-400 rounded-lg hover:bg-sky-500/30 transition-colors">
-                            Assembler Mode
+                            🔗 Assembler
+                        </button>
+                        <button type="button" onclick="switchToFarmOwner()" id="switch-farm-owner"
+                            class="px-4 py-2 bg-green-500/20 text-green-400 rounded-lg hover:bg-green-500/30 transition-colors">
+                            🌾 My Farms
                         </button>
                         <button type="button" onclick="switchToAuditor()" id="switch-auditor"
-                            class="px-4 py-2 bg-green-500/20 text-green-400 rounded-lg hover:bg-green-500/30 transition-colors">
-                            Auditor Mode
+                            class="px-4 py-2 bg-purple-500/20 text-purple-400 rounded-lg hover:bg-purple-500/30 transition-colors">
+                            🔍 Auditor
                         </button>
                     </div>
                 </div>
@@ -399,278 +411,147 @@
                 </div>
             </div>
 
-            <!-- Auditor Dashboard -->
-            <div id="auditor-dashboard" class="hidden">
-                <!-- Farm Auditor Dashboard -->
-                <div id="farm-auditor-dashboard" class="hidden">
-                    <div class="glassy-card rounded-2xl p-8 mb-8">
-                        <div class="flex items-center justify-between mb-6">
-                            <div>
-                                <h3 class="text-2xl font-bold mb-2">Farm Audit Dashboard</h3>
-                                <p class="text-[#B7D1E1]/70" id="farm-name-display"></p>
-                                <p class="text-[#B7D1E1]/70 text-sm" id="farm-details-display"></p>
-                            </div>
-                            <button type="button" onclick="createNewAudit()" 
-                                class="px-6 py-3 bg-green-500 hover:bg-green-600 rounded-lg transition-colors">
-                                + New Audit
-                            </button>
+            <!-- Farm Owner Dashboard -->
+            <div id="farm-owner-dashboard" class="hidden">
+                <div class="glassy-card rounded-2xl p-8 mb-8">
+                    <div class="flex items-center justify-between mb-6">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2">🌾 My Registered Farms</h3>
+                            <p class="text-[#B7D1E1]/70">Register your farms to receive weekly audits and build investor trust</p>
                         </div>
+                        <button type="button" onclick="showRegisterFarmModal()" 
+                            class="px-6 py-3 bg-green-500 hover:bg-green-600 rounded-lg transition-colors font-semibold">
+                            + Register Farm
+                        </button>
+                    </div>
 
-                        <div class="grid md:grid-cols-3 gap-6 mb-6">
-                            <div class="bg-[#1B2330]/50 rounded-lg p-6 text-center">
-                                <p class="text-3xl font-bold text-green-400" id="total-audits">0</p>
-                                <p class="text-sm text-[#B7D1E1]/70 mt-2">Total Audits</p>
+                    <!-- Trust Building Info -->
+                    <div class="bg-gradient-to-r from-green-500/10 to-blue-500/10 border border-green-500/30 rounded-xl p-6 mb-6">
+                        <h4 class="font-bold text-lg mb-3 text-green-400">🛡️ Building Investor Trust</h4>
+                        <div class="grid md:grid-cols-3 gap-4 text-sm">
+                            <div class="flex items-start gap-3">
+                                <span class="text-2xl">🔄</span>
+                                <div>
+                                    <p class="font-semibold">Rotating Auditors</p>
+                                    <p class="text-[#B7D1E1]/70">Different auditor each week, same auditor can't return for 1 year</p>
+                                </div>
                             </div>
-                            <div class="bg-[#1B2330]/50 rounded-lg p-6 text-center">
-                                <p class="text-3xl font-bold text-yellow-400" id="pending-issues">0</p>
-                                <p class="text-sm text-[#B7D1E1]/70 mt-2">Pending Issues</p>
+                            <div class="flex items-start gap-3">
+                                <span class="text-2xl">⏰</span>
+                                <div>
+                                    <p class="font-semibold">Simultaneous Audits</p>
+                                    <p class="text-[#B7D1E1]/70">Every Saturday 11am-12pm nationwide</p>
+                                </div>
                             </div>
-                            <div class="bg-[#1B2330]/50 rounded-lg p-6 text-center">
-                                <p class="text-3xl font-bold text-blue-400" id="last-audit-date">Never</p>
-                                <p class="text-sm text-[#B7D1E1]/70 mt-2">Last Audit</p>
-                            </div>
-                        </div>
-
-                        <!-- Plant Farm Tracking -->
-                        <div id="plant-farm-tracking" class="hidden">
-                            <h4 class="text-xl font-bold mb-4">🌱 Plant Farm Tracking</h4>
-                            <div class="space-y-4">
-                                <div class="bg-[#1B2330]/50 rounded-lg p-6">
-                                    <h5 class="font-bold mb-3">Soil Quality Assessment</h5>
-                                    <div class="grid md:grid-cols-2 gap-4">
-                                        <div>
-                                            <label class="block text-sm mb-2">pH Level</label>
-                                            <input type="number" id="soil-ph" step="0.1" min="0" max="14"
-                                                class="w-full px-4 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white">
-                                        </div>
-                                        <div>
-                                            <label class="block text-sm mb-2">Moisture Level (%)</label>
-                                            <input type="number" id="soil-moisture" min="0" max="100"
-                                                class="w-full px-4 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white">
-                                        </div>
-                                        <div>
-                                            <label class="block text-sm mb-2">Nitrogen (ppm)</label>
-                                            <input type="number" id="soil-nitrogen"
-                                                class="w-full px-4 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white">
-                                        </div>
-                                        <div>
-                                            <label class="block text-sm mb-2">Phosphorus (ppm)</label>
-                                            <input type="number" id="soil-phosphorus"
-                                                class="w-full px-4 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white">
-                                        </div>
-                                    </div>
+                            <div class="flex items-start gap-3">
+                                <span class="text-2xl">🔒</span>
+                                <div>
+                                    <p class="font-semibold">Anti-Gaming</p>
+                                    <p class="text-[#B7D1E1]/70">No time to borrow animals or prepare</p>
                                 </div>
-
-                                <div class="bg-[#1B2330]/50 rounded-lg p-6">
-                                    <h5 class="font-bold mb-3">Crop Inventory</h5>
-                                    <div class="space-y-3" id="crop-inventory-list">
-                                        <p class="text-[#B7D1E1]/70 text-sm">No crops recorded yet</p>
-                                    </div>
-                                    <button type="button" onclick="addCropEntry()" 
-                                        class="mt-4 px-4 py-2 bg-green-500/20 text-green-400 rounded-lg hover:bg-green-500/30 transition-colors">
-                                        + Add Crop
-                                    </button>
-                                </div>
-
-                                <div class="bg-[#1B2330]/50 rounded-lg p-6">
-                                    <h5 class="font-bold mb-3">Fertilizers & Chemicals</h5>
-                                    <div class="space-y-3" id="fertilizer-list">
-                                        <p class="text-[#B7D1E1]/70 text-sm">No fertilizers recorded yet</p>
-                                    </div>
-                                    <button type="button" onclick="addFertilizerEntry()" 
-                                        class="mt-4 px-4 py-2 bg-blue-500/20 text-blue-400 rounded-lg hover:bg-blue-500/30 transition-colors">
-                                        + Add Fertilizer/Chemical
-                                    </button>
-                                </div>
-
-                                <button type="button" onclick="savePlantFarmAudit()" 
-                                    class="w-full px-6 py-3 bg-green-500 hover:bg-green-600 rounded-lg transition-colors">
-                                    Save Farm Audit
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Animal Farm Tracking -->
-                        <div id="animal-farm-tracking" class="hidden">
-                            <h4 class="text-xl font-bold mb-4">🐄 Animal Farm Tracking</h4>
-                            <div class="space-y-4">
-                                <div class="bg-[#1B2330]/50 rounded-lg p-6">
-                                    <h5 class="font-bold mb-3">Livestock Inventory</h5>
-                                    <div class="space-y-3" id="livestock-inventory-list">
-                                        <p class="text-[#B7D1E1]/70 text-sm">No livestock recorded yet</p>
-                                    </div>
-                                    <button type="button" onclick="addLivestockEntry()" 
-                                        class="mt-4 px-4 py-2 bg-green-500/20 text-green-400 rounded-lg hover:bg-green-500/30 transition-colors">
-                                        + Add Livestock
-                                    </button>
-                                </div>
-
-                                <div class="bg-[#1B2330]/50 rounded-lg p-6">
-                                    <h5 class="font-bold mb-3">Feed & Nutrition</h5>
-                                    <div class="space-y-3" id="feed-list">
-                                        <p class="text-[#B7D1E1]/70 text-sm">No feed records yet</p>
-                                    </div>
-                                    <button type="button" onclick="addFeedEntry()" 
-                                        class="mt-4 px-4 py-2 bg-blue-500/20 text-blue-400 rounded-lg hover:bg-blue-500/30 transition-colors">
-                                        + Add Feed Record
-                                    </button>
-                                </div>
-
-                                <div class="bg-[#1B2330]/50 rounded-lg p-6">
-                                    <h5 class="font-bold mb-3">Health & Veterinary</h5>
-                                    <div class="space-y-3" id="health-records-list">
-                                        <p class="text-[#B7D1E1]/70 text-sm">No health records yet</p>
-                                    </div>
-                                    <button type="button" onclick="addHealthRecord()" 
-                                        class="mt-4 px-4 py-2 bg-red-500/20 text-red-400 rounded-lg hover:bg-red-500/30 transition-colors">
-                                        + Add Health Record
-                                    </button>
-                                </div>
-
-                                <button type="button" onclick="saveAnimalFarmAudit()" 
-                                    class="w-full px-6 py-3 bg-green-500 hover:bg-green-600 rounded-lg transition-colors">
-                                    Save Farm Audit
-                                </button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Audit History -->
-                    <div class="glassy-card rounded-2xl p-8">
-                        <h3 class="text-2xl font-bold mb-6">Audit History</h3>
-                        <div id="farm-audit-history" class="space-y-3">
-                            <p class="text-[#B7D1E1]/70 text-center py-8">No audit history yet</p>
+                    <!-- Next Audit Countdown -->
+                    <div class="bg-[#1B2330]/50 rounded-xl p-6 mb-6">
+                        <h4 class="font-bold mb-3">⏱️ Next Audit Window</h4>
+                        <div id="audit-countdown" class="text-center">
+                            <p class="text-3xl font-bold text-sky-400" id="countdown-display">--</p>
+                            <p class="text-sm text-[#B7D1E1]/70 mt-2">Until Saturday 11:00 AM</p>
                         </div>
+                    </div>
+
+                    <!-- Registered Farms List -->
+                    <div id="my-farms-list" class="space-y-4">
+                        <p class="text-[#B7D1E1]/70 text-center py-8">No farms registered yet. Register your first farm to start building trust!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Auditor Dashboard -->
+            <div id="auditor-dashboard" class="hidden">
+                <!-- Become Auditor Prompt (shown if not an auditor) -->
+                <div id="become-auditor-prompt" class="glassy-card rounded-2xl p-8 mb-8">
+                    <div class="text-center">
+                        <div class="w-20 h-20 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-4xl">🔍</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2">Become a Certified Auditor</h3>
+                        <p class="text-[#B7D1E1]/70 mb-6 max-w-lg mx-auto">
+                            Help build trust in the agricultural supply chain. As an auditor, you'll conduct weekly farm inspections 
+                            every Saturday from 11am-12pm. You'll be randomly assigned to farms you haven't audited in the past year.
+                        </p>
+                        
+                        <div class="grid md:grid-cols-3 gap-4 mb-8 text-sm">
+                            <div class="bg-[#1B2330]/50 rounded-lg p-4">
+                                <p class="font-bold text-purple-400">💰 Earn Rewards</p>
+                                <p class="text-[#B7D1E1]/70">Get paid for each completed audit</p>
+                            </div>
+                            <div class="bg-[#1B2330]/50 rounded-lg p-4">
+                                <p class="font-bold text-purple-400">🎯 Make Impact</p>
+                                <p class="text-[#B7D1E1]/70">Help farmers access investment</p>
+                            </div>
+                            <div class="bg-[#1B2330]/50 rounded-lg p-4">
+                                <p class="font-bold text-purple-400">📈 Build Reputation</p>
+                                <p class="text-[#B7D1E1]/70">Grow your auditor rating</p>
+                            </div>
+                        </div>
+                        
+                        <button type="button" onclick="showBecomeAuditorModal()" 
+                            class="px-8 py-4 bg-purple-500 hover:bg-purple-600 rounded-lg transition-colors font-semibold text-lg">
+                            Apply to Become an Auditor
+                        </button>
                     </div>
                 </div>
 
-                <!-- Kitchen Auditor Dashboard -->
-                <div id="kitchen-auditor-dashboard" class="hidden">
+                <!-- Active Auditor Dashboard (shown if user is an auditor) -->
+                <div id="active-auditor-dashboard" class="hidden">
                     <div class="glassy-card rounded-2xl p-8 mb-8">
                         <div class="flex items-center justify-between mb-6">
                             <div>
-                                <h3 class="text-2xl font-bold mb-2">Kitchen Audit Dashboard</h3>
-                                <p class="text-[#B7D1E1]/70" id="kitchen-name-display"></p>
-                                <p class="text-[#B7D1E1]/70 text-sm" id="kitchen-details-display"></p>
+                                <h3 class="text-2xl font-bold mb-2">🔍 Auditor Dashboard</h3>
+                                <p class="text-[#B7D1E1]/70">Your assigned audits and schedule</p>
                             </div>
-                            <button type="button" onclick="startNewKitchenAudit()" 
-                                class="px-6 py-3 bg-orange-500 hover:bg-orange-600 rounded-lg transition-colors">
-                                + New Assessment
-                            </button>
+                            <div class="text-right">
+                                <p class="text-sm text-[#B7D1E1]/70">Your Rating</p>
+                                <p class="text-2xl font-bold text-yellow-400" id="auditor-rating">⭐ 5.0</p>
+                            </div>
                         </div>
 
+                        <!-- Audit Window Status -->
+                        <div id="audit-window-status" class="rounded-xl p-6 mb-6">
+                            <!-- Will be populated by JS -->
+                        </div>
+
+                        <!-- Stats -->
                         <div class="grid md:grid-cols-3 gap-6 mb-6">
                             <div class="bg-[#1B2330]/50 rounded-lg p-6 text-center">
-                                <p class="text-3xl font-bold text-orange-400" id="total-kitchen-audits">0</p>
-                                <p class="text-sm text-[#B7D1E1]/70 mt-2">Total Assessments</p>
+                                <p class="text-3xl font-bold text-purple-400" id="total-audits-completed">0</p>
+                                <p class="text-sm text-[#B7D1E1]/70 mt-2">Audits Completed</p>
                             </div>
                             <div class="bg-[#1B2330]/50 rounded-lg p-6 text-center">
-                                <p class="text-3xl font-bold text-green-400" id="total-receipts">0</p>
-                                <p class="text-sm text-[#B7D1E1]/70 mt-2">Receipts Uploaded</p>
+                                <p class="text-3xl font-bold text-green-400" id="pending-assignments">0</p>
+                                <p class="text-sm text-[#B7D1E1]/70 mt-2">Pending Assignments</p>
                             </div>
                             <div class="bg-[#1B2330]/50 rounded-lg p-6 text-center">
-                                <p class="text-3xl font-bold text-purple-400" id="total-streams">0</p>
-                                <p class="text-sm text-[#B7D1E1]/70 mt-2">Cooking Sessions</p>
+                                <p class="text-3xl font-bold text-sky-400" id="auditor-earnings">$0</p>
+                                <p class="text-sm text-[#B7D1E1]/70 mt-2">Total Earnings</p>
                             </div>
                         </div>
 
-                        <!-- Receipt Upload Section -->
-                        <div class="bg-[#1B2330]/50 rounded-lg p-6 mb-6">
-                            <h4 class="text-xl font-bold mb-4">📸 Upload Ingredient Receipts</h4>
-                            <p class="text-[#B7D1E1]/70 text-sm mb-4">Upload photos of receipts showing where you source your ingredients</p>
-                            
-                            <div class="space-y-4">
-                                <div>
-                                    <label class="block text-sm mb-2">Receipt Date</label>
-                                    <input type="date" id="receipt-date"
-                                        class="w-full px-4 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white">
-                                </div>
-                                <div>
-                                    <label class="block text-sm mb-2">Supplier/Vendor Name</label>
-                                    <input type="text" id="supplier-name" placeholder="e.g., Fresh Farms Market"
-                                        class="w-full px-4 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white">
-                                </div>
-                                <div>
-                                    <label class="block text-sm mb-2">Upload Receipt Photo</label>
-                                    <input type="file" id="receipt-upload" accept="image/*" 
-                                        class="w-full px-4 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white">
-                                    <p class="text-xs text-[#B7D1E1]/50 mt-1">Supported: JPG, PNG, HEIC (max 5MB)</p>
-                                </div>
-                                <div>
-                                    <label class="block text-sm mb-2">Notes (optional)</label>
-                                    <textarea id="receipt-notes" rows="2" placeholder="Any additional details..."
-                                        class="w-full px-4 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white"></textarea>
-                                </div>
-                                <button type="button" onclick="uploadReceipt()" 
-                                    class="px-6 py-3 bg-green-500 hover:bg-green-600 rounded-lg transition-colors">
-                                    Upload Receipt
-                                </button>
-                            </div>
-
-                            <div class="mt-6">
-                                <h5 class="font-bold mb-3">Recent Receipts</h5>
-                                <div id="receipt-list" class="space-y-2">
-                                    <p class="text-[#B7D1E1]/70 text-sm">No receipts uploaded yet</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Cooking Stream Section -->
-                        <div class="bg-[#1B2330]/50 rounded-lg p-6">
-                            <h4 class="text-xl font-bold mb-4">🎥 Cooking Session Documentation</h4>
-                            <p class="text-[#B7D1E1]/70 text-sm mb-4">Document your next cooking sessions (livestream or recorded video)</p>
-                            
-                            <div class="space-y-4">
-                                <div>
-                                    <label class="block text-sm mb-2">Number of Orders to Cook</label>
-                                    <input type="number" id="orders-count" min="1" placeholder="e.g., 5"
-                                        class="w-full px-4 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white">
-                                </div>
-                                <div>
-                                    <label class="block text-sm mb-2">Session Type</label>
-                                    <select id="session-type" 
-                                        class="w-full px-4 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white">
-                                        <option value="">Select type</option>
-                                        <option value="livestream">Live Stream</option>
-                                        <option value="recorded">Pre-recorded Video</option>
-                                        <option value="scheduled">Scheduled Stream</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-sm mb-2">Stream/Video Link (optional)</label>
-                                    <input type="url" id="stream-link" placeholder="YouTube, Twitch, or video link"
-                                        class="w-full px-4 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white">
-                                </div>
-                                <div>
-                                    <label class="block text-sm mb-2">Session Date & Time</label>
-                                    <input type="datetime-local" id="session-datetime"
-                                        class="w-full px-4 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white">
-                                </div>
-                                <div>
-                                    <label class="block text-sm mb-2">Session Notes</label>
-                                    <textarea id="session-notes" rows="3" placeholder="Menu items, techniques used, etc..."
-                                        class="w-full px-4 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white"></textarea>
-                                </div>
-                                <button type="button" onclick="saveCookingSession()" 
-                                    class="px-6 py-3 bg-purple-500 hover:bg-purple-600 rounded-lg transition-colors">
-                                    Log Cooking Session
-                                </button>
-                            </div>
-
-                            <div class="mt-6">
-                                <h5 class="font-bold mb-3">Session History</h5>
-                                <div id="session-list" class="space-y-2">
-                                    <p class="text-[#B7D1E1]/70 text-sm">No sessions recorded yet</p>
-                                </div>
-                            </div>
+                        <!-- Assigned Audits -->
+                        <h4 class="font-bold text-lg mb-4">📋 Your Assigned Audits</h4>
+                        <div id="assigned-audits-list" class="space-y-4">
+                            <p class="text-[#B7D1E1]/70 text-center py-8">No audits assigned yet. Check back soon!</p>
                         </div>
                     </div>
 
-                    <!-- Kitchen Audit History -->
+                    <!-- Completed Audits History -->
                     <div class="glassy-card rounded-2xl p-8">
-                        <h3 class="text-2xl font-bold mb-6">Assessment History</h3>
-                        <div id="kitchen-audit-history" class="space-y-3">
-                            <p class="text-[#B7D1E1]/70 text-center py-8">No assessment history yet</p>
+                        <h3 class="text-2xl font-bold mb-6">📜 Audit History</h3>
+                        <div id="audit-history-list" class="space-y-4">
+                            <p class="text-[#B7D1E1]/70 text-center py-8">No completed audits yet</p>
                         </div>
                     </div>
                 </div>
@@ -786,8 +667,10 @@
                 this.users = JSON.parse(localStorage.getItem('CWUsers') || '[]');
                 this.referrals = JSON.parse(localStorage.getItem('CWReferrals') || '[]');
                 this.currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
-                this.farmAudits = JSON.parse(localStorage.getItem('farmAudits') || '[]');
-                this.kitchenAudits = JSON.parse(localStorage.getItem('kitchenAudits') || '[]');
+                this.registeredFarms = JSON.parse(localStorage.getItem('registeredFarms') || '[]');
+                this.registeredKitchens = JSON.parse(localStorage.getItem('registeredKitchens') || '[]');
+                this.auditAssignments = JSON.parse(localStorage.getItem('auditAssignments') || '[]');
+                this.completedAudits = JSON.parse(localStorage.getItem('completedAudits') || '[]');
             }
 
             saveUsers() {
@@ -802,12 +685,20 @@
                 localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
             }
 
-            saveFarmAudits() {
-                localStorage.setItem('farmAudits', JSON.stringify(this.farmAudits));
+            saveFarms() {
+                localStorage.setItem('registeredFarms', JSON.stringify(this.registeredFarms));
             }
 
-            saveKitchenAudits() {
-                localStorage.setItem('kitchenAudits', JSON.stringify(this.kitchenAudits));
+            saveKitchens() {
+                localStorage.setItem('registeredKitchens', JSON.stringify(this.registeredKitchens));
+            }
+
+            saveAuditAssignments() {
+                localStorage.setItem('auditAssignments', JSON.stringify(this.auditAssignments));
+            }
+
+            saveCompletedAudits() {
+                localStorage.setItem('completedAudits', JSON.stringify(this.completedAudits));
             }
 
             usernameExists(username) {
@@ -818,21 +709,44 @@
                 return this.users.some(user => user.email.toLowerCase() === email.toLowerCase());
             }
 
+            // Username change functionality
+            changeUsername(userId, newUsername) {
+                if (this.usernameExists(newUsername)) {
+                    return { success: false, message: 'Username already taken' };
+                }
+                
+                const user = this.users.find(u => u.id === userId);
+                if (!user) {
+                    return { success: false, message: 'User not found' };
+                }
+                
+                const oldUsername = user.username;
+                user.username = newUsername;
+                user.usernameHistory = user.usernameHistory || [];
+                user.usernameHistory.push({ oldUsername, changedAt: new Date().toISOString() });
+                
+                this.currentUser = user;
+                this.saveUsers();
+                this.saveCurrentUser();
+                
+                return { success: true, message: 'Username changed successfully' };
+            }
+
             createUser(userData) {
                 const user = {
                     id: Date.now().toString(),
                     fullname: userData.fullname,
                     phone: userData.phone,
                     email: userData.email,
-                    AuditorType: userData.AuditorType,
                     username: userData.username,
                     password: userData.password, 
                     referralCode: userData.referralCode || null,
                     joinedDate: new Date().toISOString(),
                     totalReferrals: 0,
                     rewardPoints: 0,
-                    currentMode: userData.AuditorType,
-                    auditData: userData.auditData || null
+                    isAuditor: userData.isAuditor || false,
+                    auditorProfile: userData.auditorProfile || null,
+                    currentMode: 'Assembler'
                 };
                 
                 this.users.push(user);
@@ -848,6 +762,251 @@
                 return user;
             }
 
+            // Register a farm for auditing
+            registerFarm(farmData) {
+                const farm = {
+                    id: Date.now().toString(),
+                    ownerId: farmData.ownerId,
+                    ownerName: farmData.ownerName,
+                    farmName: farmData.farmName,
+                    farmType: farmData.farmType,
+                    location: farmData.location,
+                    size: farmData.size,
+                    registeredDate: new Date().toISOString(),
+                    status: 'pending_initial_audit',
+                    lastAuditDate: null,
+                    auditHistory: []
+                };
+                
+                this.registeredFarms.push(farm);
+                this.saveFarms();
+                
+                // Assign initial audit
+                this.assignInitialAudit(farm);
+                
+                return farm;
+            }
+
+            // Register a kitchen for auditing
+            registerKitchen(kitchenData) {
+                const kitchen = {
+                    id: Date.now().toString(),
+                    ownerId: kitchenData.ownerId,
+                    ownerName: kitchenData.ownerName,
+                    kitchenName: kitchenData.kitchenName,
+                    chefName: kitchenData.chefName,
+                    cuisineType: kitchenData.cuisineType,
+                    location: kitchenData.location,
+                    registeredDate: new Date().toISOString(),
+                    status: 'pending_initial_audit',
+                    lastAuditDate: null,
+                    auditHistory: []
+                };
+                
+                this.registeredKitchens.push(kitchen);
+                this.saveKitchens();
+                
+                return kitchen;
+            }
+
+            // Become an auditor
+            becomeAuditor(userId, auditorProfile) {
+                const user = this.users.find(u => u.id === userId);
+                if (!user) return null;
+                
+                user.isAuditor = true;
+                user.auditorProfile = {
+                    ...auditorProfile,
+                    certifiedDate: new Date().toISOString(),
+                    totalAuditsCompleted: 0,
+                    rating: 5.0,
+                    specializations: auditorProfile.specializations || ['Farm', 'Kitchen']
+                };
+                
+                this.currentUser = user;
+                this.saveUsers();
+                this.saveCurrentUser();
+                
+                return user;
+            }
+
+            // Get eligible auditors for a farm (not audited this farm in past year)
+            getEligibleAuditors(farmId) {
+                const oneYearAgo = new Date();
+                oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+                
+                return this.users.filter(user => {
+                    if (!user.isAuditor) return false;
+                    
+                    // Check if auditor has audited this farm in the past year
+                    const recentAudit = this.completedAudits.find(audit => 
+                        audit.farmId === farmId && 
+                        audit.auditorId === user.id &&
+                        new Date(audit.completedDate) > oneYearAgo
+                    );
+                    
+                    return !recentAudit;
+                });
+            }
+
+            // Assign initial audit when farm registers
+            assignInitialAudit(farm) {
+                const eligibleAuditors = this.getEligibleAuditors(farm.id);
+                if (eligibleAuditors.length === 0) return null;
+                
+                // Randomly select an auditor
+                const auditor = eligibleAuditors[Math.floor(Math.random() * eligibleAuditors.length)];
+                
+                const assignment = {
+                    id: Date.now().toString(),
+                    farmId: farm.id,
+                    farmName: farm.farmName,
+                    farmType: farm.farmType,
+                    farmLocation: farm.location,
+                    auditorId: auditor.id,
+                    auditorName: auditor.fullname,
+                    assignedDate: new Date().toISOString(),
+                    scheduledDate: this.getNextSaturdayAuditTime(),
+                    type: 'initial',
+                    status: 'scheduled'
+                };
+                
+                this.auditAssignments.push(assignment);
+                this.saveAuditAssignments();
+                
+                return assignment;
+            }
+
+            // Get next Saturday at 11am for audit scheduling
+            getNextSaturdayAuditTime() {
+                const now = new Date();
+                const daysUntilSaturday = (6 - now.getDay() + 7) % 7 || 7;
+                const nextSaturday = new Date(now);
+                nextSaturday.setDate(now.getDate() + daysUntilSaturday);
+                nextSaturday.setHours(11, 0, 0, 0);
+                return nextSaturday.toISOString();
+            }
+
+            // Check if current time is within audit window (Saturday 11am-12pm)
+            isAuditWindowOpen() {
+                const now = new Date();
+                const day = now.getDay();
+                const hour = now.getHours();
+                return day === 6 && hour >= 11 && hour < 12;
+            }
+
+            // Get time until next audit window
+            getTimeUntilAuditWindow() {
+                const now = new Date();
+                const nextSaturday = new Date(this.getNextSaturdayAuditTime());
+                const diff = nextSaturday - now;
+                
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                
+                return { days, hours, minutes, total: diff };
+            }
+
+            // Submit audit (only during audit window)
+            submitAudit(assignmentId, auditData) {
+                // In production, enforce audit window
+                // if (!this.isAuditWindowOpen()) {
+                //     return { success: false, message: 'Audit window is closed. Audits can only be submitted on Saturdays 11am-12pm.' };
+                // }
+                
+                const assignment = this.auditAssignments.find(a => a.id === assignmentId);
+                if (!assignment) {
+                    return { success: false, message: 'Assignment not found' };
+                }
+                
+                const completedAudit = {
+                    id: Date.now().toString(),
+                    assignmentId: assignment.id,
+                    farmId: assignment.farmId,
+                    farmName: assignment.farmName,
+                    auditorId: assignment.auditorId,
+                    auditorName: assignment.auditorName,
+                    completedDate: new Date().toISOString(),
+                    auditData: auditData,
+                    type: assignment.type
+                };
+                
+                this.completedAudits.push(completedAudit);
+                assignment.status = 'completed';
+                
+                // Update farm status
+                const farm = this.registeredFarms.find(f => f.id === assignment.farmId);
+                if (farm) {
+                    farm.status = 'audited';
+                    farm.lastAuditDate = completedAudit.completedDate;
+                    farm.auditHistory.push(completedAudit.id);
+                    this.saveFarms();
+                }
+                
+                // Update auditor stats
+                const auditor = this.users.find(u => u.id === assignment.auditorId);
+                if (auditor && auditor.auditorProfile) {
+                    auditor.auditorProfile.totalAuditsCompleted++;
+                    this.saveUsers();
+                }
+                
+                this.saveAuditAssignments();
+                this.saveCompletedAudits();
+                
+                // Schedule next weekly audit with different auditor
+                this.scheduleNextWeeklyAudit(farm);
+                
+                return { success: true, audit: completedAudit };
+            }
+
+            // Schedule next weekly audit with a different auditor
+            scheduleNextWeeklyAudit(farm) {
+                const eligibleAuditors = this.getEligibleAuditors(farm.id);
+                if (eligibleAuditors.length === 0) return null;
+                
+                const auditor = eligibleAuditors[Math.floor(Math.random() * eligibleAuditors.length)];
+                
+                const assignment = {
+                    id: Date.now().toString(),
+                    farmId: farm.id,
+                    farmName: farm.farmName,
+                    farmType: farm.farmType,
+                    farmLocation: farm.location,
+                    auditorId: auditor.id,
+                    auditorName: auditor.fullname,
+                    assignedDate: new Date().toISOString(),
+                    scheduledDate: this.getNextSaturdayAuditTime(),
+                    type: 'weekly',
+                    status: 'scheduled'
+                };
+                
+                this.auditAssignments.push(assignment);
+                this.saveAuditAssignments();
+                
+                return assignment;
+            }
+
+            // Get auditor's assigned audits
+            getAuditorAssignments(auditorId) {
+                return this.auditAssignments.filter(a => a.auditorId === auditorId && a.status === 'scheduled');
+            }
+
+            // Get auditor's completed audits
+            getAuditorCompletedAudits(auditorId) {
+                return this.completedAudits.filter(a => a.auditorId === auditorId);
+            }
+
+            // Get farm's audit history
+            getFarmAuditHistory(farmId) {
+                return this.completedAudits.filter(a => a.farmId === farmId);
+            }
+
+            // Get user's registered farms
+            getUserFarms(userId) {
+                return this.registeredFarms.filter(f => f.ownerId === userId);
+            }
+
             addReferral(referrerUsername, newUser) {
                 const referrer = this.users.find(u => u.username === referrerUsername);
                 if (!referrer) return;
@@ -856,7 +1015,6 @@
                     referrerId: referrer.id,
                     referredUserId: newUser.id,
                     referredUserName: newUser.fullname,
-                    referredUserType: newUser.AuditorType,
                     date: new Date().toISOString()
                 });
 
@@ -912,38 +1070,6 @@
             logout() {
                 this.currentUser = null;
                 localStorage.removeItem('currentUser');
-            }
-
-            addFarmAudit(userId, auditData) {
-                const audit = {
-                    id: Date.now().toString(),
-                    userId: userId,
-                    date: new Date().toISOString(),
-                    ...auditData
-                };
-                this.farmAudits.push(audit);
-                this.saveFarmAudits();
-                return audit;
-            }
-
-            getFarmAudits(userId) {
-                return this.farmAudits.filter(a => a.userId === userId);
-            }
-
-            addKitchenAudit(userId, auditData) {
-                const audit = {
-                    id: Date.now().toString(),
-                    userId: userId,
-                    date: new Date().toISOString(),
-                    ...auditData
-                };
-                this.kitchenAudits.push(audit);
-                this.saveKitchenAudits();
-                return audit;
-            }
-
-            getKitchenAudits(userId) {
-                return this.kitchenAudits.filter(a => a.userId === userId);
             }
         }
 
@@ -1116,20 +1242,18 @@
 
             document.getElementById('user-fullname').textContent = user.fullname;
             document.getElementById('user-username').textContent = user.username;
-            document.getElementById('user-type').textContent = user.AuditorType === 'Both' ? 'Assembler & Auditor' : user.AuditorType;
-
-            // Show audit info if applicable
-            const auditInfo = document.getElementById('user-audit-info');
-            if (user.auditData) {
-                auditInfo.classList.remove('hidden');
-                if (user.auditData.auditType === 'Farm') {
-                    auditInfo.textContent = `${user.auditData.farmType} Farm Auditor - ${user.auditData.farmName}`;
-                } else if (user.auditData.auditType === 'Kitchen') {
-                    auditInfo.textContent = `Kitchen Auditor - ${user.auditData.kitchenName}`;
-                }
-            } else {
-                auditInfo.classList.add('hidden');
+            
+            // Show badges
+            const badgesContainer = document.getElementById('user-badges');
+            let badges = '<span class="px-2 py-1 bg-sky-500/20 text-sky-400 rounded text-xs">Assembler</span>';
+            if (user.isAuditor) {
+                badges += '<span class="px-2 py-1 bg-purple-500/20 text-purple-400 rounded text-xs ml-2">Certified Auditor</span>';
             }
+            const userFarms = db.getUserFarms(user.id);
+            if (userFarms.length > 0) {
+                badges += '<span class="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs ml-2">Farm Owner</span>';
+            }
+            badgesContainer.innerHTML = badges;
 
             const tier = db.calculateTier(user.totalReferrals);
             document.getElementById('user-tier').textContent = tier;
@@ -1170,7 +1294,7 @@
                     <div class="bg-[#1B2330]/50 rounded-lg p-4 flex items-center justify-between">
                         <div>
                             <p class="font-semibold">${ref.referredUserName}</p>
-                            <p class="text-sm text-[#B7D1E1]/70">${ref.referredUserType} • ${new Date(ref.date).toLocaleDateString()}</p>
+                            <p class="text-sm text-[#B7D1E1]/70">${new Date(ref.date).toLocaleDateString()}</p>
                         </div>
                         <div class="text-green-400 font-bold">
                             +${db.getPointsPerReferral(db.calculateTier(user.totalReferrals))} pts
@@ -1179,158 +1303,385 @@
                 `).join('');
             }
 
-            // Always show role switcher since everyone can be both
-            const roleSwitcher = document.getElementById('role-switcher');
-            roleSwitcher.classList.remove('hidden');
-            console.log('Role switcher shown for all users');
-
             // Show appropriate dashboard based on current mode
-            const currentMode = user.currentMode || 'Assembler'; // Default to Assembler mode
-            console.log('Current mode:', currentMode);
+            const currentMode = user.currentMode || 'Assembler';
             
-            if (currentMode === 'Assembler' || !user.auditData) {
-                switchToAssembler();
-            } else if (currentMode === 'Auditor' && user.auditData) {
+            if (currentMode === 'FarmOwner') {
+                switchToFarmOwner();
+            } else if (currentMode === 'Auditor') {
                 switchToAuditor();
+            } else {
+                switchToAssembler();
+            }
+            
+            // Start countdown timer
+            updateAuditCountdown();
+            setInterval(updateAuditCountdown, 60000); // Update every minute
+        }
+
+        function updateAuditCountdown() {
+            const timeUntil = db.getTimeUntilAuditWindow();
+            const countdownEl = document.getElementById('countdown-display');
+            
+            if (db.isAuditWindowOpen()) {
+                countdownEl.innerHTML = '<span class="text-green-400">🟢 AUDIT WINDOW OPEN</span>';
+                countdownEl.nextElementSibling.textContent = 'Submit your audits now!';
+            } else {
+                countdownEl.textContent = `${timeUntil.days}d ${timeUntil.hours}h ${timeUntil.minutes}m`;
             }
         }
 
         function switchToAssembler() {
             console.log('switchToAssembler called');
             
-            if (!db.currentUser) {
-                console.error('No current user');
-                return;
-            }
+            if (!db.currentUser) return;
             
             document.getElementById('assembler-dashboard').classList.remove('hidden');
+            document.getElementById('farm-owner-dashboard').classList.add('hidden');
             document.getElementById('auditor-dashboard').classList.add('hidden');
             
             db.updateUserMode(db.currentUser.id, 'Assembler');
+            updateRoleSwitcherButtons('assembler');
+        }
+
+        function switchToFarmOwner() {
+            console.log('switchToFarmOwner called');
             
-            // Update button states
-            const switchAssembler = document.getElementById('switch-assembler');
-            const switchAuditor = document.getElementById('switch-auditor');
+            if (!db.currentUser) return;
             
-            if (switchAssembler) {
-                switchAssembler.classList.add('bg-sky-500', 'text-white');
-                switchAssembler.classList.remove('bg-sky-500/20', 'text-sky-400');
-            }
+            document.getElementById('assembler-dashboard').classList.add('hidden');
+            document.getElementById('farm-owner-dashboard').classList.remove('hidden');
+            document.getElementById('auditor-dashboard').classList.add('hidden');
             
-            if (switchAuditor) {
-                switchAuditor.classList.remove('bg-green-500', 'text-white');
-                switchAuditor.classList.add('bg-green-500/20', 'text-green-400');
-            }
+            db.updateUserMode(db.currentUser.id, 'FarmOwner');
+            updateRoleSwitcherButtons('farm-owner');
             
-            console.log('Switched to Assembler mode');
+            loadFarmOwnerDashboard();
         }
 
         function switchToAuditor() {
             console.log('switchToAuditor called');
             
-            if (!db.currentUser) {
-                console.error('No current user');
-                return;
-            }
+            if (!db.currentUser) return;
             
-            if (!db.currentUser.auditData) {
-                // Show setup form instead of alerting
-                showAuditSetupForm();
-                return;
-            }
-
             document.getElementById('assembler-dashboard').classList.add('hidden');
+            document.getElementById('farm-owner-dashboard').classList.add('hidden');
             document.getElementById('auditor-dashboard').classList.remove('hidden');
             
             db.updateUserMode(db.currentUser.id, 'Auditor');
-
-            // Update button states
-            const switchAuditor = document.getElementById('switch-auditor');
-            const switchAssembler = document.getElementById('switch-assembler');
+            updateRoleSwitcherButtons('auditor');
             
-            if (switchAuditor) {
-                switchAuditor.classList.add('bg-green-500', 'text-white');
-                switchAuditor.classList.remove('bg-green-500/20', 'text-green-400');
-            }
-            
-            if (switchAssembler) {
-                switchAssembler.classList.remove('bg-sky-500', 'text-white');
-                switchAssembler.classList.add('bg-sky-500/20', 'text-sky-400');
-            }
-
-            // Show appropriate audit dashboard
-            if (db.currentUser.auditData.auditType === 'Farm') {
-                loadFarmAuditorDashboard();
-            } else if (db.currentUser.auditData.auditType === 'Kitchen') {
-                loadKitchenAuditorDashboard();
-            }
-            
-            console.log('Switched to Auditor mode');
+            loadAuditorDashboard();
         }
 
-        function showAuditSetupForm() {
+        function updateRoleSwitcherButtons(activeRole) {
+            const buttons = {
+                'assembler': document.getElementById('switch-assembler'),
+                'farm-owner': document.getElementById('switch-farm-owner'),
+                'auditor': document.getElementById('switch-auditor')
+            };
+            
+            Object.entries(buttons).forEach(([role, btn]) => {
+                if (role === activeRole) {
+                    btn.classList.add('ring-2', 'ring-white/50');
+                } else {
+                    btn.classList.remove('ring-2', 'ring-white/50');
+                }
+            });
+        }
+
+        function loadFarmOwnerDashboard() {
+            const farms = db.getUserFarms(db.currentUser.id);
+            const listDiv = document.getElementById('my-farms-list');
+            
+            if (farms.length === 0) {
+                listDiv.innerHTML = '<p class="text-[#B7D1E1]/70 text-center py-8">No farms registered yet. Register your first farm to start building trust!</p>';
+                return;
+            }
+            
+            listDiv.innerHTML = farms.map(farm => {
+                const statusColors = {
+                    'pending_initial_audit': 'bg-yellow-500/20 text-yellow-400',
+                    'audited': 'bg-green-500/20 text-green-400'
+                };
+                const statusText = {
+                    'pending_initial_audit': '⏳ Awaiting Initial Audit',
+                    'audited': '✅ Verified'
+                };
+                
+                return `
+                    <div class="bg-[#1B2330]/50 rounded-xl p-6 border border-[#3f5268]">
+                        <div class="flex items-start justify-between mb-4">
+                            <div>
+                                <h4 class="font-bold text-lg">${farm.farmName}</h4>
+                                <p class="text-sm text-[#B7D1E1]/70">${farm.farmType} Farm • ${farm.location} • ${farm.size} acres</p>
+                            </div>
+                            <span class="px-3 py-1 rounded-full text-xs ${statusColors[farm.status]}">${statusText[farm.status]}</span>
+                        </div>
+                        <div class="grid grid-cols-3 gap-4 text-sm">
+                            <div>
+                                <p class="text-[#B7D1E1]/70">Registered</p>
+                                <p class="font-semibold">${new Date(farm.registeredDate).toLocaleDateString()}</p>
+                            </div>
+                            <div>
+                                <p class="text-[#B7D1E1]/70">Last Audit</p>
+                                <p class="font-semibold">${farm.lastAuditDate ? new Date(farm.lastAuditDate).toLocaleDateString() : 'Pending'}</p>
+                            </div>
+                            <div>
+                                <p class="text-[#B7D1E1]/70">Total Audits</p>
+                                <p class="font-semibold">${farm.auditHistory.length}</p>
+                            </div>
+                        </div>
+                        <button type="button" onclick="viewFarmAuditHistory('${farm.id}')" 
+                            class="mt-4 text-sky-400 hover:text-sky-300 text-sm">
+                            View Audit History →
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function loadAuditorDashboard() {
+            const user = db.currentUser;
+            
+            if (!user.isAuditor) {
+                document.getElementById('become-auditor-prompt').classList.remove('hidden');
+                document.getElementById('active-auditor-dashboard').classList.add('hidden');
+                return;
+            }
+            
+            document.getElementById('become-auditor-prompt').classList.add('hidden');
+            document.getElementById('active-auditor-dashboard').classList.remove('hidden');
+            
+            // Update stats
+            document.getElementById('auditor-rating').textContent = `⭐ ${user.auditorProfile.rating.toFixed(1)}`;
+            document.getElementById('total-audits-completed').textContent = user.auditorProfile.totalAuditsCompleted;
+            
+            const assignments = db.getAuditorAssignments(user.id);
+            document.getElementById('pending-assignments').textContent = assignments.length;
+            
+            // Earnings estimate ($25 per audit)
+            document.getElementById('auditor-earnings').textContent = `$${user.auditorProfile.totalAuditsCompleted * 25}`;
+            
+            // Update audit window status
+            const windowStatus = document.getElementById('audit-window-status');
+            if (db.isAuditWindowOpen()) {
+                windowStatus.className = 'bg-green-500/20 border border-green-500/50 rounded-xl p-6 mb-6';
+                windowStatus.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <span class="text-3xl">🟢</span>
+                        <div>
+                            <h4 class="font-bold text-lg text-green-400">Audit Window is OPEN</h4>
+                            <p class="text-sm text-[#B7D1E1]/70">You can submit audits now until 12:00 PM</p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                const timeUntil = db.getTimeUntilAuditWindow();
+                windowStatus.className = 'bg-[#1B2330]/50 border border-[#3f5268] rounded-xl p-6 mb-6';
+                windowStatus.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <span class="text-3xl">⏰</span>
+                        <div>
+                            <h4 class="font-bold text-lg">Next Audit Window</h4>
+                            <p class="text-sm text-[#B7D1E1]/70">Saturday 11:00 AM - 12:00 PM</p>
+                            <p class="text-sky-400 font-semibold">${timeUntil.days}d ${timeUntil.hours}h ${timeUntil.minutes}m</p>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Load assigned audits
+            const assignedList = document.getElementById('assigned-audits-list');
+            if (assignments.length === 0) {
+                assignedList.innerHTML = '<p class="text-[#B7D1E1]/70 text-center py-8">No audits assigned yet. Check back soon!</p>';
+            } else {
+                assignedList.innerHTML = assignments.map(assignment => `
+                    <div class="bg-[#1B2330]/50 rounded-xl p-6 border border-[#3f5268]">
+                        <div class="flex items-start justify-between mb-4">
+                            <div>
+                                <h4 class="font-bold text-lg">${assignment.farmName}</h4>
+                                <p class="text-sm text-[#B7D1E1]/70">${assignment.farmType} Farm • ${assignment.farmLocation}</p>
+                            </div>
+                            <span class="px-3 py-1 rounded-full text-xs bg-yellow-500/20 text-yellow-400">
+                                ${assignment.type === 'initial' ? '🆕 Initial Audit' : '📅 Weekly Audit'}
+                            </span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <p class="text-sm text-[#B7D1E1]/70">
+                                Scheduled: ${new Date(assignment.scheduledDate).toLocaleDateString()} at 11:00 AM
+                            </p>
+                            <button type="button" onclick="startAudit('${assignment.id}')" 
+                                class="px-4 py-2 bg-purple-500 hover:bg-purple-600 rounded-lg transition-colors text-sm font-semibold ${db.isAuditWindowOpen() ? '' : 'opacity-50 cursor-not-allowed'}"
+                                ${db.isAuditWindowOpen() ? '' : 'disabled'}>
+                                ${db.isAuditWindowOpen() ? 'Start Audit' : 'Wait for Window'}
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            // Load audit history
+            const completedAudits = db.getAuditorCompletedAudits(user.id);
+            const historyList = document.getElementById('audit-history-list');
+            
+            if (completedAudits.length === 0) {
+                historyList.innerHTML = '<p class="text-[#B7D1E1]/70 text-center py-8">No completed audits yet</p>';
+            } else {
+                historyList.innerHTML = completedAudits.slice(-10).reverse().map(audit => `
+                    <div class="bg-[#1B2330]/50 rounded-lg p-4 flex items-center justify-between">
+                        <div>
+                            <p class="font-semibold">${audit.farmName}</p>
+                            <p class="text-sm text-[#B7D1E1]/70">${new Date(audit.completedDate).toLocaleDateString()}</p>
+                        </div>
+                        <span class="text-green-400">✅ Completed</span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Username change modal
+        function showChangeUsernameModal() {
             const content = `
                 <div>
                     <div class="text-center mb-6">
-                        <div class="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="text-3xl">🔍</span>
+                        <div class="w-12 h-12 bg-sky-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <span class="text-2xl">✏️</span>
                         </div>
-                        <h3 class="text-2xl font-bold mb-2">Set Up Auditing</h3>
-                        <p class="text-[#B7D1E1]/70">You haven't set up auditing yet. Choose your audit type to get started.</p>
+                        <h3 class="text-xl font-bold">Change Username</h3>
+                        <p class="text-[#B7D1E1]/70 text-sm mt-1">Current: <span class="font-mono">${db.currentUser.username}</span></p>
                     </div>
                     
-                    <div class="grid grid-cols-2 gap-4 mb-6">
-                        <button type="button" onclick="showFarmSetupModal()" 
-                            class="glassy-card rounded-xl p-6 text-center hover:border-green-500 hover:bg-green-500/10 transition-all group">
-                            <div class="text-4xl mb-3">🌾</div>
-                            <h4 class="font-bold text-lg mb-1 group-hover:text-green-400">Farm Audit</h4>
-                            <p class="text-xs text-[#B7D1E1]/70">Track farm operations, crops, livestock</p>
+                    <form id="change-username-form" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">New Username *</label>
+                            <input type="text" id="new-username" required minlength="3"
+                                class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-sky-500 text-white"
+                                placeholder="Enter new username">
+                            <p id="new-username-status" class="text-xs mt-1 min-h-[1.25rem]"></p>
+                        </div>
+                        
+                        <div class="flex gap-3 pt-2">
+                            <button type="button" onclick="closeModal()" 
+                                class="flex-1 px-4 py-3 bg-[#1B2330] hover:bg-[#1B2330]/70 rounded-lg transition-colors">
+                                Cancel
+                            </button>
+                            <button type="submit" 
+                                class="flex-1 px-4 py-3 bg-sky-500 hover:bg-sky-600 rounded-lg transition-colors font-semibold">
+                                Change Username
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            showModal(content);
+            
+            setTimeout(() => {
+                const input = document.getElementById('new-username');
+                input.focus();
+                
+                input.addEventListener('input', function() {
+                    const username = this.value.trim();
+                    const statusEl = document.getElementById('new-username-status');
+                    
+                    if (username.length < 3) {
+                        statusEl.textContent = '';
+                        return;
+                    }
+                    
+                    if (db.usernameExists(username)) {
+                        statusEl.textContent = '❌ Username already taken';
+                        statusEl.className = 'text-xs mt-1 text-red-400';
+                    } else {
+                        statusEl.textContent = '✓ Username available';
+                        statusEl.className = 'text-xs mt-1 text-green-400';
+                    }
+                });
+                
+                document.getElementById('change-username-form').addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const newUsername = document.getElementById('new-username').value.trim();
+                    
+                    const result = db.changeUsername(db.currentUser.id, newUsername);
+                    
+                    if (result.success) {
+                        closeModal();
+                        showToast('Username changed successfully! 🎉', 'success');
+                        document.getElementById('user-username').textContent = newUsername;
+                        // Update referral links
+                        showDashboard(db.currentUser);
+                    } else {
+                        showToast(result.message, 'error');
+                    }
+                });
+            }, 100);
+        }
+
+        // Settings modal
+        function showSettingsModal() {
+            const content = `
+                <div>
+                    <div class="text-center mb-6">
+                        <div class="w-12 h-12 bg-gray-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <span class="text-2xl">⚙️</span>
+                        </div>
+                        <h3 class="text-xl font-bold">Settings</h3>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <button type="button" onclick="closeModal(); showChangeUsernameModal();" 
+                            class="w-full text-left px-4 py-3 bg-[#1B2330]/50 hover:bg-[#1B2330] rounded-lg transition-colors flex items-center gap-3">
+                            <span>✏️</span>
+                            <div>
+                                <p class="font-semibold">Change Username</p>
+                                <p class="text-xs text-[#B7D1E1]/70">Update your display name</p>
+                            </div>
                         </button>
-                        <button type="button" onclick="showKitchenSetupModal()" 
-                            class="glassy-card rounded-xl p-6 text-center hover:border-orange-500 hover:bg-orange-500/10 transition-all group">
-                            <div class="text-4xl mb-3">👨‍🍳</div>
-                            <h4 class="font-bold text-lg mb-1 group-hover:text-orange-400">Kitchen Audit</h4>
-                            <p class="text-xs text-[#B7D1E1]/70">Chef self-assessment & tracking</p>
+                        
+                        <button type="button" onclick="closeModal(); handleLogout();" 
+                            class="w-full text-left px-4 py-3 bg-red-500/10 hover:bg-red-500/20 rounded-lg transition-colors flex items-center gap-3 text-red-400">
+                            <span>🚪</span>
+                            <div>
+                                <p class="font-semibold">Logout</p>
+                                <p class="text-xs text-red-400/70">Sign out of your account</p>
+                            </div>
                         </button>
                     </div>
                     
                     <button type="button" onclick="closeModal()" 
-                        class="w-full px-6 py-3 bg-[#1B2330] hover:bg-[#1B2330]/70 rounded-lg transition-colors text-[#B7D1E1]/70">
-                        Maybe Later
+                        class="w-full mt-6 px-4 py-3 bg-[#1B2330] hover:bg-[#1B2330]/70 rounded-lg transition-colors">
+                        Close
                     </button>
                 </div>
             `;
             showModal(content);
         }
 
-        function showFarmSetupModal() {
+        // Register Farm Modal
+        function showRegisterFarmModal() {
             const content = `
                 <div>
-                    <button type="button" onclick="showAuditSetupForm()" class="text-[#B7D1E1]/70 hover:text-white mb-4 flex items-center gap-2">
-                        <span>←</span> Back
-                    </button>
-                    
                     <div class="text-center mb-6">
                         <div class="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
                             <span class="text-3xl">🌾</span>
                         </div>
-                        <h3 class="text-2xl font-bold mb-2">Farm Audit Setup</h3>
-                        <p class="text-[#B7D1E1]/70">Tell us about your farm</p>
+                        <h3 class="text-2xl font-bold mb-2">Register Your Farm</h3>
+                        <p class="text-[#B7D1E1]/70 text-sm">Your farm will receive weekly audits from rotating certified auditors</p>
                     </div>
                     
-                    <form id="farm-setup-form" class="space-y-4">
+                    <form id="register-farm-form" class="space-y-4">
                         <div>
                             <label class="block text-sm font-medium mb-2">Farm Type *</label>
                             <div class="grid grid-cols-2 gap-3">
                                 <label class="cursor-pointer">
-                                    <input type="radio" name="setupFarmType" value="Plant" class="peer sr-only" required>
+                                    <input type="radio" name="regFarmType" value="Plant" class="peer sr-only" required>
                                     <div class="glassy-card rounded-lg p-4 text-center transition-all peer-checked:border-2 peer-checked:border-green-500 peer-checked:bg-green-500/10">
                                         <span class="text-2xl">🌱</span>
                                         <p class="font-semibold mt-1">Plant Farm</p>
                                     </div>
                                 </label>
                                 <label class="cursor-pointer">
-                                    <input type="radio" name="setupFarmType" value="Animal" class="peer sr-only">
+                                    <input type="radio" name="regFarmType" value="Animal" class="peer sr-only">
                                     <div class="glassy-card rounded-lg p-4 text-center transition-all peer-checked:border-2 peer-checked:border-green-500 peer-checked:bg-green-500/10">
                                         <span class="text-2xl">🐄</span>
                                         <p class="font-semibold mt-1">Animal Farm</p>
@@ -1341,33 +1692,42 @@
                         
                         <div>
                             <label class="block text-sm font-medium mb-2">Farm Name *</label>
-                            <input type="text" id="setup-farm-name" required
+                            <input type="text" id="reg-farm-name" required
                                 class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-green-500 text-white"
                                 placeholder="e.g., Green Valley Farm">
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-medium mb-2">Farm Location *</label>
-                            <input type="text" id="setup-farm-location" required
+                            <label class="block text-sm font-medium mb-2">Location *</label>
+                            <input type="text" id="reg-farm-location" required
                                 class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-green-500 text-white"
                                 placeholder="City, State/Province">
                         </div>
                         
                         <div>
                             <label class="block text-sm font-medium mb-2">Farm Size (acres) *</label>
-                            <input type="number" id="setup-farm-size" required min="0" step="0.1"
+                            <input type="number" id="reg-farm-size" required min="0" step="0.1"
                                 class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-green-500 text-white"
                                 placeholder="e.g., 50">
                         </div>
                         
-                        <div class="flex gap-3 pt-4">
+                        <div class="bg-sky-500/10 border border-sky-500/30 rounded-lg p-4 text-sm">
+                            <p class="font-semibold text-sky-400 mb-1">📋 What happens next?</p>
+                            <ul class="text-[#B7D1E1]/70 space-y-1">
+                                <li>• An auditor will be assigned for your initial audit</li>
+                                <li>• Audits occur every Saturday 11am-12pm</li>
+                                <li>• Different auditor each week (no repeats for 1 year)</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="flex gap-3 pt-2">
                             <button type="button" onclick="closeModal()" 
-                                class="flex-1 px-6 py-3 bg-[#1B2330] hover:bg-[#1B2330]/70 rounded-lg transition-colors">
+                                class="flex-1 px-4 py-3 bg-[#1B2330] hover:bg-[#1B2330]/70 rounded-lg transition-colors">
                                 Cancel
                             </button>
                             <button type="submit" 
-                                class="flex-1 px-6 py-3 bg-green-500 hover:bg-green-600 rounded-lg transition-colors font-semibold">
-                                Complete Setup
+                                class="flex-1 px-4 py-3 bg-green-500 hover:bg-green-600 rounded-lg transition-colors font-semibold">
+                                Register Farm
                             </button>
                         </div>
                     </form>
@@ -1375,232 +1735,94 @@
             `;
             showModal(content);
             
-            // Add form submit handler
             setTimeout(() => {
-                document.getElementById('farm-setup-form').addEventListener('submit', function(e) {
+                document.getElementById('register-farm-form').addEventListener('submit', function(e) {
                     e.preventDefault();
                     
-                    const farmType = document.querySelector('input[name="setupFarmType"]:checked')?.value;
-                    const farmName = document.getElementById('setup-farm-name').value.trim();
-                    const farmLocation = document.getElementById('setup-farm-location').value.trim();
-                    const farmSize = document.getElementById('setup-farm-size').value;
-                    
+                    const farmType = document.querySelector('input[name="regFarmType"]:checked')?.value;
                     if (!farmType) {
                         showToast('Please select a farm type', 'error');
                         return;
                     }
                     
-                    const auditData = {
-                        auditType: 'Farm',
+                    const farm = db.registerFarm({
+                        ownerId: db.currentUser.id,
+                        ownerName: db.currentUser.fullname,
+                        farmName: document.getElementById('reg-farm-name').value.trim(),
                         farmType: farmType,
-                        farmName: farmName,
-                        farmLocation: farmLocation,
-                        farmSize: farmSize
-                    };
+                        location: document.getElementById('reg-farm-location').value.trim(),
+                        size: document.getElementById('reg-farm-size').value
+                    });
                     
-                    // Update user with audit data
-                    const userIndex = db.users.findIndex(u => u.id === db.currentUser.id);
-                    if (userIndex !== -1) {
-                        db.users[userIndex].auditData = auditData;
-                        db.currentUser.auditData = auditData;
-                        db.saveUsers();
-                        db.saveCurrentUser();
-                        
-                        closeModal();
-                        showToast('Farm audit setup complete! 🌾', 'success');
-                        showDashboard(db.currentUser);
-                    }
+                    closeModal();
+                    showToast('Farm registered successfully! An auditor will be assigned shortly. 🌾', 'success');
+                    loadFarmOwnerDashboard();
+                    showDashboard(db.currentUser);
                 });
             }, 100);
         }
 
-        function showKitchenSetupModal() {
-            const content = `
-                <div>
-                    <button type="button" onclick="showAuditSetupForm()" class="text-[#B7D1E1]/70 hover:text-white mb-4 flex items-center gap-2">
-                        <span>←</span> Back
-                    </button>
-                    
-                    <div class="text-center mb-6">
-                        <div class="w-16 h-16 bg-orange-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span class="text-3xl">👨‍🍳</span>
-                        </div>
-                        <h3 class="text-2xl font-bold mb-2">Kitchen Audit Setup</h3>
-                        <p class="text-[#B7D1E1]/70">Tell us about your kitchen</p>
-                    </div>
-                    
-                    <form id="kitchen-setup-form" class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Restaurant/Kitchen Name *</label>
-                            <input type="text" id="setup-kitchen-name" required
-                                class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-orange-500 text-white"
-                                placeholder="e.g., The Golden Spoon">
-                        </div>
-                        
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Chef Name *</label>
-                            <input type="text" id="setup-chef-name" required
-                                class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-orange-500 text-white"
-                                placeholder="Head Chef or Owner Chef">
-                        </div>
-                        
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Cuisine Type *</label>
-                            <input type="text" id="setup-cuisine-type" required
-                                class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-orange-500 text-white"
-                                placeholder="e.g., Italian, Asian Fusion, American">
-                        </div>
-                        
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Kitchen Location *</label>
-                            <input type="text" id="setup-kitchen-location" required
-                                class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-orange-500 text-white"
-                                placeholder="Restaurant address">
-                        </div>
-                        
-                        <div class="flex gap-3 pt-4">
-                            <button type="button" onclick="closeModal()" 
-                                class="flex-1 px-6 py-3 bg-[#1B2330] hover:bg-[#1B2330]/70 rounded-lg transition-colors">
-                                Cancel
-                            </button>
-                            <button type="submit" 
-                                class="flex-1 px-6 py-3 bg-orange-500 hover:bg-orange-600 rounded-lg transition-colors font-semibold">
-                                Complete Setup
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            `;
-            showModal(content);
-            
-            // Add form submit handler
-            setTimeout(() => {
-                document.getElementById('kitchen-setup-form').addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    const kitchenName = document.getElementById('setup-kitchen-name').value.trim();
-                    const chefName = document.getElementById('setup-chef-name').value.trim();
-                    const cuisineType = document.getElementById('setup-cuisine-type').value.trim();
-                    const kitchenLocation = document.getElementById('setup-kitchen-location').value.trim();
-                    
-                    const auditData = {
-                        auditType: 'Kitchen',
-                        kitchenName: kitchenName,
-                        chefName: chefName,
-                        cuisineType: cuisineType,
-                        kitchenLocation: kitchenLocation
-                    };
-                    
-                    // Update user with audit data
-                    const userIndex = db.users.findIndex(u => u.id === db.currentUser.id);
-                    if (userIndex !== -1) {
-                        db.users[userIndex].auditData = auditData;
-                        db.currentUser.auditData = auditData;
-                        db.saveUsers();
-                        db.saveCurrentUser();
-                        
-                        closeModal();
-                        showToast('Kitchen audit setup complete! 👨‍🍳', 'success');
-                        showDashboard(db.currentUser);
-                    }
-                });
-            }, 100);
-        }
-
-        function setupFarmAudit() {
-            showFarmSetupModal();
-        }
-
-        function setupKitchenAudit() {
-            showKitchenSetupModal();
-        }
-
-        function loadFarmAuditorDashboard() {
-            document.getElementById('farm-auditor-dashboard').classList.remove('hidden');
-            document.getElementById('kitchen-auditor-dashboard').classList.add('hidden');
-
-            const auditData = db.currentUser.auditData;
-            document.getElementById('farm-name-display').textContent = auditData.farmName;
-            document.getElementById('farm-details-display').textContent = `${auditData.farmType} Farm • ${auditData.farmLocation} • ${auditData.farmSize} acres`;
-
-            // Load farm-specific tracking
-            if (auditData.farmType === 'Plant') {
-                document.getElementById('plant-farm-tracking').classList.remove('hidden');
-                document.getElementById('animal-farm-tracking').classList.add('hidden');
-            } else if (auditData.farmType === 'Animal') {
-                document.getElementById('animal-farm-tracking').classList.remove('hidden');
-                document.getElementById('plant-farm-tracking').classList.add('hidden');
-            }
-
-            // Load audit stats
-            const audits = db.getFarmAudits(db.currentUser.id);
-            document.getElementById('total-audits').textContent = audits.length;
-            
-            if (audits.length > 0) {
-                const lastAudit = audits[audits.length - 1];
-                document.getElementById('last-audit-date').textContent = new Date(lastAudit.date).toLocaleDateString();
-            }
-
-            loadFarmAuditHistory();
-        }
-
-        function loadKitchenAuditorDashboard() {
-            document.getElementById('kitchen-auditor-dashboard').classList.remove('hidden');
-            document.getElementById('farm-auditor-dashboard').classList.add('hidden');
-
-            const auditData = db.currentUser.auditData;
-            document.getElementById('kitchen-name-display').textContent = auditData.kitchenName;
-            document.getElementById('kitchen-details-display').textContent = `Chef: ${auditData.chefName} • ${auditData.cuisineType} Cuisine • ${auditData.kitchenLocation}`;
-
-            // Load kitchen audit stats
-            const audits = db.getKitchenAudits(db.currentUser.id);
-            document.getElementById('total-kitchen-audits').textContent = audits.length;
-
-            // Count receipts and streams
-            let receipts = 0;
-            let streams = 0;
-            audits.forEach(audit => {
-                if (audit.type === 'receipt') receipts++;
-                if (audit.type === 'session') streams++;
-            });
-
-            document.getElementById('total-receipts').textContent = receipts;
-            document.getElementById('total-streams').textContent = streams;
-
-            loadKitchenAuditHistory();
-        }
-
-        // Farm audit functions
-        let cropEntries = [];
-        let fertilizerEntries = [];
-        let livestockEntries = [];
-        let feedEntries = [];
-        let healthRecords = [];
-
-        function addCropEntry() {
+        // Become Auditor Modal
+        function showBecomeAuditorModal() {
             const content = `
                 <div>
                     <div class="text-center mb-6">
-                        <div class="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                            <span class="text-2xl">🌱</span>
+                        <div class="w-16 h-16 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-3xl">🔍</span>
                         </div>
-                        <h3 class="text-xl font-bold">Add Crop</h3>
+                        <h3 class="text-2xl font-bold mb-2">Become an Auditor</h3>
+                        <p class="text-[#B7D1E1]/70 text-sm">Complete this application to start conducting farm audits</p>
                     </div>
                     
-                    <form id="add-crop-form" class="space-y-4">
+                    <form id="become-auditor-form" class="space-y-4">
                         <div>
-                            <label class="block text-sm font-medium mb-2">Crop Name *</label>
-                            <input type="text" id="modal-crop-name" required
-                                class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-green-500 text-white"
-                                placeholder="e.g., Wheat, Corn, Tomatoes">
+                            <label class="block text-sm font-medium mb-2">What qualifies you? *</label>
+                            <textarea id="auditor-qualifications" required rows="3"
+                                class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-purple-500 text-white"
+                                placeholder="Describe your relevant experience (farming, agriculture, inspection, etc.)"></textarea>
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-medium mb-2">Quantity *</label>
-                            <input type="text" id="modal-crop-quantity" required
-                                class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-green-500 text-white"
-                                placeholder="e.g., 100 bushels, 50 acres">
+                            <label class="block text-sm font-medium mb-2">Specializations</label>
+                            <div class="flex flex-wrap gap-2">
+                                <label class="cursor-pointer">
+                                    <input type="checkbox" name="specialization" value="Plant" class="peer sr-only" checked>
+                                    <span class="px-3 py-2 rounded-lg bg-[#1B2330] border border-[#3f5268] peer-checked:border-green-500 peer-checked:bg-green-500/20 transition-all inline-block">
+                                        🌱 Plant Farms
+                                    </span>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="checkbox" name="specialization" value="Animal" class="peer sr-only" checked>
+                                    <span class="px-3 py-2 rounded-lg bg-[#1B2330] border border-[#3f5268] peer-checked:border-green-500 peer-checked:bg-green-500/20 transition-all inline-block">
+                                        🐄 Animal Farms
+                                    </span>
+                                </label>
+                            </div>
                         </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Available Region *</label>
+                            <input type="text" id="auditor-region" required
+                                class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-purple-500 text-white"
+                                placeholder="City, State or Region you can audit in">
+                        </div>
+                        
+                        <div class="bg-purple-500/10 border border-purple-500/30 rounded-lg p-4 text-sm">
+                            <p class="font-semibold text-purple-400 mb-2">📋 Auditor Responsibilities</p>
+                            <ul class="text-[#B7D1E1]/70 space-y-1">
+                                <li>• Conduct audits every Saturday 11am-12pm</li>
+                                <li>• Submit honest, thorough reports</li>
+                                <li>• Cannot audit the same farm twice in one year</li>
+                                <li>• Earn $25 per completed audit</li>
+                            </ul>
+                        </div>
+                        
+                        <label class="flex items-start gap-3 cursor-pointer">
+                            <input type="checkbox" id="auditor-agreement" required class="mt-1">
+                            <span class="text-sm text-[#B7D1E1]/70">
+                                I agree to conduct audits honestly and understand that falsifying reports will result in permanent ban and legal action.
+                            </span>
+                        </label>
                         
                         <div class="flex gap-3 pt-2">
                             <button type="button" onclick="closeModal()" 
@@ -1608,8 +1830,8 @@
                                 Cancel
                             </button>
                             <button type="submit" 
-                                class="flex-1 px-4 py-3 bg-green-500 hover:bg-green-600 rounded-lg transition-colors font-semibold">
-                                Add Crop
+                                class="flex-1 px-4 py-3 bg-purple-500 hover:bg-purple-600 rounded-lg transition-colors font-semibold">
+                                Submit Application
                             </button>
                         </div>
                     </form>
@@ -1618,596 +1840,210 @@
             showModal(content);
             
             setTimeout(() => {
-                document.getElementById('modal-crop-name').focus();
-                document.getElementById('add-crop-form').addEventListener('submit', function(e) {
+                document.getElementById('become-auditor-form').addEventListener('submit', function(e) {
                     e.preventDefault();
-                    const cropName = document.getElementById('modal-crop-name').value.trim();
-                    const quantity = document.getElementById('modal-crop-quantity').value.trim();
-                    cropEntries.push({ crop: cropName, quantity: quantity, date: new Date().toISOString() });
-                    updateCropList();
+                    
+                    const specializations = Array.from(document.querySelectorAll('input[name="specialization"]:checked'))
+                        .map(cb => cb.value);
+                    
+                    db.becomeAuditor(db.currentUser.id, {
+                        qualifications: document.getElementById('auditor-qualifications').value.trim(),
+                        region: document.getElementById('auditor-region').value.trim(),
+                        specializations: specializations
+                    });
+                    
                     closeModal();
-                    showToast('Crop added successfully!', 'success');
+                    showToast('Welcome to the Auditor team! 🔍', 'success');
+                    loadAuditorDashboard();
+                    showDashboard(db.currentUser);
                 });
             }, 100);
         }
 
-        function updateCropList() {
-            const list = document.getElementById('crop-inventory-list');
-            if (cropEntries.length === 0) {
-                list.innerHTML = '<p class="text-[#B7D1E1]/70 text-sm">No crops recorded yet</p>';
+        // Start audit
+        function startAudit(assignmentId) {
+            if (!db.isAuditWindowOpen()) {
+                showToast('Audit window is closed. Come back Saturday 11am-12pm.', 'error');
                 return;
             }
-            list.innerHTML = cropEntries.map((entry, idx) => `
-                <div class="flex items-center justify-between bg-[#1B2330] rounded-lg p-3">
-                    <div>
-                        <p class="font-semibold">${entry.crop}</p>
-                        <p class="text-sm text-[#B7D1E1]/70">${entry.quantity}</p>
-                    </div>
-                    <button type="button" onclick="removeCropEntry(${idx})" class="text-red-400 hover:text-red-300">×</button>
-                </div>
-            `).join('');
-        }
-
-        function removeCropEntry(idx) {
-            cropEntries.splice(idx, 1);
-            updateCropList();
-        }
-
-        function addFertilizerEntry() {
+            
+            const assignment = db.auditAssignments.find(a => a.id === assignmentId);
+            if (!assignment) return;
+            
             const content = `
                 <div>
                     <div class="text-center mb-6">
-                        <div class="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                            <span class="text-2xl">🧪</span>
+                        <div class="w-16 h-16 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-3xl">📋</span>
                         </div>
-                        <h3 class="text-xl font-bold">Add Fertilizer/Chemical</h3>
+                        <h3 class="text-2xl font-bold mb-2">Audit: ${assignment.farmName}</h3>
+                        <p class="text-[#B7D1E1]/70 text-sm">${assignment.farmType} Farm • ${assignment.farmLocation}</p>
                     </div>
                     
-                    <form id="add-fertilizer-form" class="space-y-4">
+                    <form id="audit-form" class="space-y-4 max-h-96 overflow-y-auto pr-2">
+                        ${assignment.farmType === 'Animal' ? `
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Livestock Count *</label>
+                                <input type="number" id="audit-livestock-count" required min="0"
+                                    class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-purple-500 text-white"
+                                    placeholder="Total animals observed">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Animal Health Status *</label>
+                                <select id="audit-health-status" required
+                                    class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-purple-500 text-white">
+                                    <option value="">Select status</option>
+                                    <option value="excellent">Excellent - All animals healthy</option>
+                                    <option value="good">Good - Minor issues observed</option>
+                                    <option value="fair">Fair - Some concerns</option>
+                                    <option value="poor">Poor - Serious health issues</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Feed Quality *</label>
+                                <select id="audit-feed-quality" required
+                                    class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-purple-500 text-white">
+                                    <option value="">Select quality</option>
+                                    <option value="excellent">Excellent</option>
+                                    <option value="good">Good</option>
+                                    <option value="adequate">Adequate</option>
+                                    <option value="poor">Poor</option>
+                                </select>
+                            </div>
+                        ` : `
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Crop Health Status *</label>
+                                <select id="audit-crop-status" required
+                                    class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-purple-500 text-white">
+                                    <option value="">Select status</option>
+                                    <option value="excellent">Excellent - Healthy crops</option>
+                                    <option value="good">Good - Minor issues</option>
+                                    <option value="fair">Fair - Some disease/pests</option>
+                                    <option value="poor">Poor - Serious problems</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Estimated Yield *</label>
+                                <select id="audit-yield" required
+                                    class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-purple-500 text-white">
+                                    <option value="">Select estimate</option>
+                                    <option value="above-expected">Above Expected</option>
+                                    <option value="as-expected">As Expected</option>
+                                    <option value="below-expected">Below Expected</option>
+                                    <option value="poor">Poor Yield Expected</option>
+                                </select>
+                            </div>
+                        `}
+                        
                         <div>
-                            <label class="block text-sm font-medium mb-2">Fertilizer/Chemical Name *</label>
-                            <input type="text" id="modal-fertilizer-name" required
-                                class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-blue-500 text-white"
-                                placeholder="e.g., Nitrogen, Phosphorus, Pesticide">
+                            <label class="block text-sm font-medium mb-2">Overall Rating *</label>
+                            <div class="flex gap-2">
+                                ${[1,2,3,4,5].map(n => `
+                                    <label class="cursor-pointer flex-1">
+                                        <input type="radio" name="overallRating" value="${n}" class="peer sr-only" ${n === 5 ? 'checked' : ''}>
+                                        <div class="text-center py-3 rounded-lg bg-[#1B2330] border border-[#3f5268] peer-checked:border-yellow-500 peer-checked:bg-yellow-500/20 transition-all">
+                                            <span class="text-xl">${n <= 2 ? '😟' : n === 3 ? '😐' : n === 4 ? '🙂' : '😊'}</span>
+                                            <p class="text-xs mt-1">${n}</p>
+                                        </div>
+                                    </label>
+                                `).join('')}
+                            </div>
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-medium mb-2">Amount Applied *</label>
-                            <input type="text" id="modal-fertilizer-amount" required
-                                class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-blue-500 text-white"
-                                placeholder="e.g., 50 lbs/acre, 2 gallons">
+                            <label class="block text-sm font-medium mb-2">Notes & Observations</label>
+                            <textarea id="audit-notes" rows="3"
+                                class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-purple-500 text-white"
+                                placeholder="Any additional observations, concerns, or recommendations..."></textarea>
                         </div>
                         
-                        <div class="flex gap-3 pt-2">
-                            <button type="button" onclick="closeModal()" 
-                                class="flex-1 px-4 py-3 bg-[#1B2330] hover:bg-[#1B2330]/70 rounded-lg transition-colors">
-                                Cancel
-                            </button>
-                            <button type="submit" 
-                                class="flex-1 px-4 py-3 bg-blue-500 hover:bg-blue-600 rounded-lg transition-colors font-semibold">
-                                Add Entry
-                            </button>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Upload Photos (optional)</label>
+                            <input type="file" id="audit-photos" accept="image/*" multiple
+                                class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg text-white">
                         </div>
                     </form>
+                    
+                    <div class="flex gap-3 pt-4 mt-4 border-t border-[#3f5268]">
+                        <button type="button" onclick="closeModal()" 
+                            class="flex-1 px-4 py-3 bg-[#1B2330] hover:bg-[#1B2330]/70 rounded-lg transition-colors">
+                            Cancel
+                        </button>
+                        <button type="button" onclick="submitAudit('${assignmentId}')" 
+                            class="flex-1 px-4 py-3 bg-green-500 hover:bg-green-600 rounded-lg transition-colors font-semibold">
+                            Submit Audit
+                        </button>
+                    </div>
                 </div>
             `;
             showModal(content);
+        }
+
+        function submitAudit(assignmentId) {
+            const assignment = db.auditAssignments.find(a => a.id === assignmentId);
+            if (!assignment) return;
             
-            setTimeout(() => {
-                document.getElementById('modal-fertilizer-name').focus();
-                document.getElementById('add-fertilizer-form').addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    const name = document.getElementById('modal-fertilizer-name').value.trim();
-                    const amount = document.getElementById('modal-fertilizer-amount').value.trim();
-                    fertilizerEntries.push({ name: name, amount: amount, date: new Date().toISOString() });
-                    updateFertilizerList();
-                    closeModal();
-                    showToast('Fertilizer entry added!', 'success');
-                });
-            }, 100);
-        }
-
-        function updateFertilizerList() {
-            const list = document.getElementById('fertilizer-list');
-            if (fertilizerEntries.length === 0) {
-                list.innerHTML = '<p class="text-[#B7D1E1]/70 text-sm">No fertilizers recorded yet</p>';
-                return;
-            }
-            list.innerHTML = fertilizerEntries.map((entry, idx) => `
-                <div class="flex items-center justify-between bg-[#1B2330] rounded-lg p-3">
-                    <div>
-                        <p class="font-semibold">${entry.name}</p>
-                        <p class="text-sm text-[#B7D1E1]/70">${entry.amount}</p>
-                    </div>
-                    <button type="button" onclick="removeFertilizerEntry(${idx})" class="text-red-400 hover:text-red-300">×</button>
-                </div>
-            `).join('');
-        }
-
-        function removeFertilizerEntry(idx) {
-            fertilizerEntries.splice(idx, 1);
-            updateFertilizerList();
-        }
-
-        function addLivestockEntry() {
-            const content = `
-                <div>
-                    <div class="text-center mb-6">
-                        <div class="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                            <span class="text-2xl">🐄</span>
-                        </div>
-                        <h3 class="text-xl font-bold">Add Livestock</h3>
-                    </div>
-                    
-                    <form id="add-livestock-form" class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Animal Type *</label>
-                            <input type="text" id="modal-animal-type" required
-                                class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-green-500 text-white"
-                                placeholder="e.g., Cattle, Chickens, Pigs">
-                        </div>
-                        
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Number of Animals *</label>
-                            <input type="number" id="modal-animal-count" required min="1"
-                                class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-green-500 text-white"
-                                placeholder="e.g., 50">
-                        </div>
-                        
-                        <div class="flex gap-3 pt-2">
-                            <button type="button" onclick="closeModal()" 
-                                class="flex-1 px-4 py-3 bg-[#1B2330] hover:bg-[#1B2330]/70 rounded-lg transition-colors">
-                                Cancel
-                            </button>
-                            <button type="submit" 
-                                class="flex-1 px-4 py-3 bg-green-500 hover:bg-green-600 rounded-lg transition-colors font-semibold">
-                                Add Livestock
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            `;
-            showModal(content);
-            
-            setTimeout(() => {
-                document.getElementById('modal-animal-type').focus();
-                document.getElementById('add-livestock-form').addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    const animalType = document.getElementById('modal-animal-type').value.trim();
-                    const count = document.getElementById('modal-animal-count').value;
-                    livestockEntries.push({ type: animalType, count: count, date: new Date().toISOString() });
-                    updateLivestockList();
-                    closeModal();
-                    showToast('Livestock added successfully!', 'success');
-                });
-            }, 100);
-        }
-
-        function updateLivestockList() {
-            const list = document.getElementById('livestock-inventory-list');
-            if (livestockEntries.length === 0) {
-                list.innerHTML = '<p class="text-[#B7D1E1]/70 text-sm">No livestock recorded yet</p>';
-                return;
-            }
-            list.innerHTML = livestockEntries.map((entry, idx) => `
-                <div class="flex items-center justify-between bg-[#1B2330] rounded-lg p-3">
-                    <div>
-                        <p class="font-semibold">${entry.type}</p>
-                        <p class="text-sm text-[#B7D1E1]/70">Count: ${entry.count}</p>
-                    </div>
-                    <button type="button" onclick="removeLivestockEntry(${idx})" class="text-red-400 hover:text-red-300">×</button>
-                </div>
-            `).join('');
-        }
-
-        function removeLivestockEntry(idx) {
-            livestockEntries.splice(idx, 1);
-            updateLivestockList();
-        }
-
-        function addFeedEntry() {
-            const content = `
-                <div>
-                    <div class="text-center mb-6">
-                        <div class="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                            <span class="text-2xl">🌾</span>
-                        </div>
-                        <h3 class="text-xl font-bold">Add Feed Record</h3>
-                    </div>
-                    
-                    <form id="add-feed-form" class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Feed Type *</label>
-                            <input type="text" id="modal-feed-type" required
-                                class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-blue-500 text-white"
-                                placeholder="e.g., Hay, Grain, Silage">
-                        </div>
-                        
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Amount *</label>
-                            <input type="text" id="modal-feed-amount" required
-                                class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-blue-500 text-white"
-                                placeholder="e.g., 500 lbs, 10 bales">
-                        </div>
-                        
-                        <div class="flex gap-3 pt-2">
-                            <button type="button" onclick="closeModal()" 
-                                class="flex-1 px-4 py-3 bg-[#1B2330] hover:bg-[#1B2330]/70 rounded-lg transition-colors">
-                                Cancel
-                            </button>
-                            <button type="submit" 
-                                class="flex-1 px-4 py-3 bg-blue-500 hover:bg-blue-600 rounded-lg transition-colors font-semibold">
-                                Add Feed
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            `;
-            showModal(content);
-            
-            setTimeout(() => {
-                document.getElementById('modal-feed-type').focus();
-                document.getElementById('add-feed-form').addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    const feedType = document.getElementById('modal-feed-type').value.trim();
-                    const amount = document.getElementById('modal-feed-amount').value.trim();
-                    feedEntries.push({ type: feedType, amount: amount, date: new Date().toISOString() });
-                    updateFeedList();
-                    closeModal();
-                    showToast('Feed record added!', 'success');
-                });
-            }, 100);
-        }
-
-        function updateFeedList() {
-            const list = document.getElementById('feed-list');
-            if (feedEntries.length === 0) {
-                list.innerHTML = '<p class="text-[#B7D1E1]/70 text-sm">No feed records yet</p>';
-                return;
-            }
-            list.innerHTML = feedEntries.map((entry, idx) => `
-                <div class="flex items-center justify-between bg-[#1B2330] rounded-lg p-3">
-                    <div>
-                        <p class="font-semibold">${entry.type}</p>
-                        <p class="text-sm text-[#B7D1E1]/70">${entry.amount}</p>
-                    </div>
-                    <button type="button" onclick="removeFeedEntry(${idx})" class="text-red-400 hover:text-red-300">×</button>
-                </div>
-            `).join('');
-        }
-
-        function removeFeedEntry(idx) {
-            feedEntries.splice(idx, 1);
-            updateFeedList();
-        }
-
-        function addHealthRecord() {
-            const content = `
-                <div>
-                    <div class="text-center mb-6">
-                        <div class="w-12 h-12 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                            <span class="text-2xl">💉</span>
-                        </div>
-                        <h3 class="text-xl font-bold">Add Health Record</h3>
-                    </div>
-                    
-                    <form id="add-health-form" class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Record Type *</label>
-                            <select id="modal-health-type" required
-                                class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-red-500 text-white">
-                                <option value="">Select type</option>
-                                <option value="Vaccination">Vaccination</option>
-                                <option value="Treatment">Treatment</option>
-                                <option value="Check-up">Check-up</option>
-                                <option value="Injury">Injury</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-                        
-                        <div>
-                            <label class="block text-sm font-medium mb-2">Details *</label>
-                            <textarea id="modal-health-details" required rows="3"
-                                class="w-full px-4 py-3 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-red-500 text-white"
-                                placeholder="Describe the health event..."></textarea>
-                        </div>
-                        
-                        <div class="flex gap-3 pt-2">
-                            <button type="button" onclick="closeModal()" 
-                                class="flex-1 px-4 py-3 bg-[#1B2330] hover:bg-[#1B2330]/70 rounded-lg transition-colors">
-                                Cancel
-                            </button>
-                            <button type="submit" 
-                                class="flex-1 px-4 py-3 bg-red-500 hover:bg-red-600 rounded-lg transition-colors font-semibold">
-                                Add Record
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            `;
-            showModal(content);
-            
-            setTimeout(() => {
-                document.getElementById('modal-health-type').focus();
-                document.getElementById('add-health-form').addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    const description = document.getElementById('modal-health-type').value;
-                    const details = document.getElementById('modal-health-details').value.trim();
-                    healthRecords.push({ description: description, details: details, date: new Date().toISOString() });
-                    updateHealthRecordsList();
-                    closeModal();
-                    showToast('Health record added!', 'success');
-                });
-            }, 100);
-        }
-
-        function updateHealthRecordsList() {
-            const list = document.getElementById('health-records-list');
-            if (healthRecords.length === 0) {
-                list.innerHTML = '<p class="text-[#B7D1E1]/70 text-sm">No health records yet</p>';
-                return;
-            }
-            list.innerHTML = healthRecords.map((entry, idx) => `
-                <div class="flex items-center justify-between bg-[#1B2330] rounded-lg p-3">
-                    <div>
-                        <p class="font-semibold">${entry.description}</p>
-                        <p class="text-sm text-[#B7D1E1]/70">${entry.details}</p>
-                    </div>
-                    <button type="button" onclick="removeHealthRecord(${idx})" class="text-red-400 hover:text-red-300">×</button>
-                </div>
-            `).join('');
-        }
-
-        function removeHealthRecord(idx) {
-            healthRecords.splice(idx, 1);
-            updateHealthRecordsList();
-        }
-
-        function createNewAudit() {
-            // Reset all entries
-            cropEntries = [];
-            fertilizerEntries = [];
-            livestockEntries = [];
-            feedEntries = [];
-            healthRecords = [];
-            
-            updateCropList();
-            updateFertilizerList();
-            updateLivestockList();
-            updateFeedList();
-            updateHealthRecordsList();
-
-            // Clear soil inputs
-            document.getElementById('soil-ph').value = '';
-            document.getElementById('soil-moisture').value = '';
-            document.getElementById('soil-nitrogen').value = '';
-            document.getElementById('soil-phosphorus').value = '';
-
-            showToast('New audit started. Fill in the details and save when ready.', 'info');
-        }
-
-        function savePlantFarmAudit() {
-            const auditData = {
-                farmType: 'Plant',
-                soilQuality: {
-                    ph: document.getElementById('soil-ph').value,
-                    moisture: document.getElementById('soil-moisture').value,
-                    nitrogen: document.getElementById('soil-nitrogen').value,
-                    phosphorus: document.getElementById('soil-phosphorus').value
-                },
-                crops: [...cropEntries],
-                fertilizers: [...fertilizerEntries]
+            let auditData = {
+                overallRating: document.querySelector('input[name="overallRating"]:checked')?.value,
+                notes: document.getElementById('audit-notes')?.value || ''
             };
-
-            db.addFarmAudit(db.currentUser.id, auditData);
-            showToast('Plant farm audit saved successfully! 🌱', 'success');
-            createNewAudit();
-            loadFarmAuditHistory();
-            loadFarmAuditorDashboard();
-        }
-
-        function saveAnimalFarmAudit() {
-            const auditData = {
-                farmType: 'Animal',
-                livestock: [...livestockEntries],
-                feed: [...feedEntries],
-                health: [...healthRecords]
-            };
-
-            db.addFarmAudit(db.currentUser.id, auditData);
-            showToast('Animal farm audit saved successfully! 🐄', 'success');
-            createNewAudit();
-            loadFarmAuditHistory();
-            loadFarmAuditorDashboard();
-        }
-
-        function loadFarmAuditHistory() {
-            const audits = db.getFarmAudits(db.currentUser.id);
-            const historyDiv = document.getElementById('farm-audit-history');
-
-            if (audits.length === 0) {
-                historyDiv.innerHTML = '<p class="text-[#B7D1E1]/70 text-center py-8">No audit history yet</p>';
-                return;
+            
+            if (assignment.farmType === 'Animal') {
+                auditData.livestockCount = document.getElementById('audit-livestock-count')?.value;
+                auditData.healthStatus = document.getElementById('audit-health-status')?.value;
+                auditData.feedQuality = document.getElementById('audit-feed-quality')?.value;
+            } else {
+                auditData.cropStatus = document.getElementById('audit-crop-status')?.value;
+                auditData.yield = document.getElementById('audit-yield')?.value;
             }
+            
+            const result = db.submitAudit(assignmentId, auditData);
+            
+            if (result.success) {
+                closeModal();
+                showToast('Audit submitted successfully! Thank you for your service. 🎉', 'success');
+                loadAuditorDashboard();
+            } else {
+                showToast(result.message, 'error');
+            }
+        }
 
-            historyDiv.innerHTML = audits.reverse().map(audit => `
-                <div class="bg-[#1B2330]/50 rounded-lg p-4">
-                    <div class="flex items-center justify-between mb-2">
-                        <p class="font-semibold">${audit.farmType} Farm Audit</p>
-                        <p class="text-sm text-[#B7D1E1]/70">${new Date(audit.date).toLocaleString()}</p>
+        function viewFarmAuditHistory(farmId) {
+            const audits = db.getFarmAuditHistory(farmId);
+            const farm = db.registeredFarms.find(f => f.id === farmId);
+            
+            const content = `
+                <div>
+                    <div class="text-center mb-6">
+                        <h3 class="text-xl font-bold">${farm.farmName} - Audit History</h3>
+                        <p class="text-[#B7D1E1]/70 text-sm">${audits.length} audits completed</p>
                     </div>
-                    <div class="text-sm text-[#B7D1E1]/70">
-                        ${audit.farmType === 'Plant' ? 
-                            `Crops: ${audit.crops?.length || 0} | Fertilizers: ${audit.fertilizers?.length || 0} | pH: ${audit.soilQuality?.ph || 'N/A'}` :
-                            `Livestock: ${audit.livestock?.length || 0} types | Feed records: ${audit.feed?.length || 0} | Health: ${audit.health?.length || 0}`
+                    
+                    <div class="space-y-3 max-h-96 overflow-y-auto">
+                        ${audits.length === 0 ? '<p class="text-center text-[#B7D1E1]/70 py-8">No audits completed yet</p>' : 
+                            audits.map(audit => `
+                                <div class="bg-[#1B2330]/50 rounded-lg p-4">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <p class="font-semibold">Auditor: ${audit.auditorName}</p>
+                                        <span class="text-yellow-400">${'⭐'.repeat(parseInt(audit.auditData.overallRating))}</span>
+                                    </div>
+                                    <p class="text-sm text-[#B7D1E1]/70">${new Date(audit.completedDate).toLocaleDateString()}</p>
+                                    ${audit.auditData.notes ? `<p class="text-sm mt-2 text-[#B7D1E1]/80">"${audit.auditData.notes}"</p>` : ''}
+                                </div>
+                            `).join('')
                         }
                     </div>
+                    
+                    <button type="button" onclick="closeModal()" 
+                        class="w-full mt-6 px-4 py-3 bg-[#1B2330] hover:bg-[#1B2330]/70 rounded-lg transition-colors">
+                        Close
+                    </button>
                 </div>
-            `).join('');
-        }
-
-        // Kitchen audit functions
-        let receiptsList = [];
-        let sessionsList = [];
-
-        function uploadReceipt() {
-            const date = document.getElementById('receipt-date').value;
-            const supplier = document.getElementById('supplier-name').value;
-            const file = document.getElementById('receipt-upload').files[0];
-            const notes = document.getElementById('receipt-notes').value;
-
-            if (!date || !supplier || !file) {
-                showToast('Please fill in all required fields and upload a receipt photo', 'error');
-                return;
-            }
-
-            // Simulate file upload (in real app, would upload to server)
-            const receipt = {
-                date: date,
-                supplier: supplier,
-                filename: file.name,
-                notes: notes,
-                uploadDate: new Date().toISOString()
-            };
-
-            const auditData = {
-                type: 'receipt',
-                ...receipt
-            };
-
-            db.addKitchenAudit(db.currentUser.id, auditData);
-            receiptsList.push(receipt);
-
-            // Clear form
-            document.getElementById('receipt-date').value = '';
-            document.getElementById('supplier-name').value = '';
-            document.getElementById('receipt-upload').value = '';
-            document.getElementById('receipt-notes').value = '';
-
-            showToast('Receipt uploaded successfully! 📸', 'success');
-            loadReceiptsList();
-            loadKitchenAuditorDashboard();
-        }
-
-        function loadReceiptsList() {
-            const audits = db.getKitchenAudits(db.currentUser.id).filter(a => a.type === 'receipt');
-            const listDiv = document.getElementById('receipt-list');
-
-            if (audits.length === 0) {
-                listDiv.innerHTML = '<p class="text-[#B7D1E1]/70 text-sm">No receipts uploaded yet</p>';
-                return;
-            }
-
-            listDiv.innerHTML = audits.slice(-5).reverse().map(receipt => `
-                <div class="bg-[#1B2330] rounded-lg p-3">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="font-semibold">${receipt.supplier}</p>
-                            <p class="text-xs text-[#B7D1E1]/70">${new Date(receipt.date).toLocaleDateString()} • ${receipt.filename}</p>
-                        </div>
-                        <span class="text-green-400 text-xs">✓ Uploaded</span>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function saveCookingSession() {
-            const ordersCount = document.getElementById('orders-count').value;
-            const sessionType = document.getElementById('session-type').value;
-            const streamLink = document.getElementById('stream-link').value;
-            const datetime = document.getElementById('session-datetime').value;
-            const notes = document.getElementById('session-notes').value;
-
-            if (!ordersCount || !sessionType || !datetime) {
-                showToast('Please fill in all required fields', 'error');
-                return;
-            }
-
-            const session = {
-                ordersCount: ordersCount,
-                sessionType: sessionType,
-                streamLink: streamLink,
-                datetime: datetime,
-                notes: notes,
-                recordedDate: new Date().toISOString()
-            };
-
-            const auditData = {
-                type: 'session',
-                ...session
-            };
-
-            db.addKitchenAudit(db.currentUser.id, auditData);
-            sessionsList.push(session);
-
-            // Clear form
-            document.getElementById('orders-count').value = '';
-            document.getElementById('session-type').value = '';
-            document.getElementById('stream-link').value = '';
-            document.getElementById('session-datetime').value = '';
-            document.getElementById('session-notes').value = '';
-
-            showToast('Cooking session logged successfully! 🎥', 'success');
-            loadSessionsList();
-            loadKitchenAuditorDashboard();
-        }
-
-        function loadSessionsList() {
-            const audits = db.getKitchenAudits(db.currentUser.id).filter(a => a.type === 'session');
-            const listDiv = document.getElementById('session-list');
-
-            if (audits.length === 0) {
-                listDiv.innerHTML = '<p class="text-[#B7D1E1]/70 text-sm">No sessions recorded yet</p>';
-                return;
-            }
-
-            listDiv.innerHTML = audits.slice(-5).reverse().map(session => `
-                <div class="bg-[#1B2330] rounded-lg p-3">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="font-semibold">${session.ordersCount} Orders • ${session.sessionType}</p>
-                            <p class="text-xs text-[#B7D1E1]/70">${new Date(session.datetime).toLocaleString()}</p>
-                            ${session.streamLink ? `<a href="${session.streamLink}" target="_blank" class="text-xs text-sky-400 hover:underline">View Stream</a>` : ''}
-                        </div>
-                        <span class="text-purple-400 text-xs">✓ Logged</span>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function startNewKitchenAudit() {
-            showToast('Start a new assessment by uploading receipts or logging cooking sessions below.', 'info');
-        }
-
-        function loadKitchenAuditHistory() {
-            const audits = db.getKitchenAudits(db.currentUser.id);
-            const historyDiv = document.getElementById('kitchen-audit-history');
-
-            if (audits.length === 0) {
-                historyDiv.innerHTML = '<p class="text-[#B7D1E1]/70 text-center py-8">No assessment history yet</p>';
-                return;
-            }
-
-            historyDiv.innerHTML = audits.reverse().map(audit => `
-                <div class="bg-[#1B2330]/50 rounded-lg p-4">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <p class="font-semibold">${audit.type === 'receipt' ? '📸 Receipt Upload' : '🎥 Cooking Session'}</p>
-                            <p class="text-sm text-[#B7D1E1]/70">
-                                ${audit.type === 'receipt' ? 
-                                    `${audit.supplier} • ${new Date(audit.date).toLocaleDateString()}` :
-                                    `${audit.ordersCount} orders • ${audit.sessionType}`
-                                }
-                            </p>
-                        </div>
-                        <p class="text-xs text-[#B7D1E1]/70">${new Date(audit.uploadDate || audit.recordedDate).toLocaleString()}</p>
-                    </div>
-                </div>
-            `).join('');
-
-            // Also update individual lists
-            loadReceiptsList();
-            loadSessionsList();
+            `;
+            showModal(content);
         }
 
         // FIXED: copyLink now receives the button element directly instead of relying on implicit event
