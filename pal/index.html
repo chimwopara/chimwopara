@@ -667,7 +667,8 @@
 
 .lv-bar-loss {
     height: 100%;
-    background: #FF453A; /* Red = The Loss (Downgrade) */
+    background: #FF453A !important; /* Red color for loss */
+    box-shadow: none;
 }
 
 @keyframes slideInBar { from { width: 0; opacity: 0; } to { opacity: 1; } }
@@ -1058,10 +1059,11 @@
         <h4 style="font-size: 1.4rem; font-weight: 700;">Boost Member</h4>
         <div style="font-size: 2rem; font-weight: 800;">$4.99<span style="font-size: 1rem; font-weight: 500; color: var(--text-secondary);">/mo</span></div>
         
-        <div class="lines-visual" title="Blue: Free (250) | Green: Gain (+750)">
+        <div class="lines-visual">
+            <div class="lv-label"><span>1,000 lines</span></div>
             <div class="lv-track">
-                <div class="lv-bar-base" style="width: 2.5%"></div>
-                <div class="lv-bar-extra" style="width: 7.5%"></div>
+                <div id="p-bar-boost-base" class="lv-bar-base" style="width: 2.5%"></div>
+                <div id="p-bar-boost-extra" class="lv-bar-extra" style="width: 7.5%"></div>
             </div>
         </div>
 
@@ -1077,10 +1079,11 @@
         <h4 style="font-size: 1.4rem; font-weight: 700;">Pro Member</h4>
         <div style="font-size: 2rem; font-weight: 800;">$9.99<span style="font-size: 1rem; font-weight: 500; color: var(--text-secondary);">/mo</span></div>
         
-        <div class="lines-visual" title="Blue: Free (250) | Green: Gain (+4,750)">
+        <div class="lines-visual">
+            <div class="lv-label"><span>5,000 lines</span></div>
             <div class="lv-track">
-                <div class="lv-bar-base" style="width: 2.5%"></div>
-                <div class="lv-bar-extra" style="width: 47.5%"></div>
+                <div id="p-bar-pro-base" class="lv-bar-base" style="width: 2.5%"></div>
+                <div id="p-bar-pro-extra" class="lv-bar-extra" style="width: 47.5%"></div>
             </div>
         </div>
 
@@ -1095,10 +1098,11 @@
         <h4 style="font-size: 1.4rem; font-weight: 700;">Super Member</h4>
         <div style="font-size: 2rem; font-weight: 800;">$19.99<span style="font-size: 1rem; font-weight: 500; color: var(--text-secondary);">/mo</span></div>
         
-        <div class="lines-visual" title="Blue: Free (250) | Green: Gain (+9,750)">
+        <div class="lines-visual">
+            <div class="lv-label"><span>10,000 lines</span></div>
             <div class="lv-track">
-                <div class="lv-bar-base" style="width: 2.5%"></div>
-                <div class="lv-bar-extra" style="width: 97.5%"></div>
+                <div id="p-bar-super-base" class="lv-bar-base" style="width: 2.5%"></div>
+                <div id="p-bar-super-extra" class="lv-bar-extra" style="width: 97.5%"></div>
             </div>
         </div>
 
@@ -1527,47 +1531,48 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function applyTheme(themeId) {
-            const theme = themes.find(t => t.id === themeId);
-            if (!theme) return;
-            const root = document.documentElement;
-            
-            // Helper to set text colors
-            const setTextColor = (color) => {
-                if (color === 'dark') {
-                    root.style.setProperty('--text-primary', '#1D1D1F');
-                    root.style.setProperty('--text-secondary', 'rgba(0, 0, 0, 0.6)');
-                    root.style.setProperty('--text-tertiary', 'rgba(0, 0, 0, 0.3)');
-                    root.style.setProperty('--border-glass', 'rgba(0, 0, 0, 0.1)'); 
-                } else {
-                    // Reset to default (White/Dark Mode) variables
-                    root.style.removeProperty('--text-primary');
-                    root.style.removeProperty('--text-secondary');
-                    root.style.removeProperty('--text-tertiary');
-                    root.style.removeProperty('--border-glass');
-                }
-            };
+    const theme = themes.find(t => t.id === themeId);
+    if (!theme) return;
+    
+    // 1. SAVE TO STORAGE
+    localStorage.setItem('savedTheme', themeId); 
 
-            if (themeId === 'default') {
-                root.style.removeProperty('--bg-app');
-                root.style.removeProperty('--bg-gradient-start');
-                root.style.removeProperty('--bg-gradient-end');
-                root.style.removeProperty('--bg-glass');
-                root.style.removeProperty('--accent-primary');
-                root.style.removeProperty('--accent-highlight');
-                setTextColor('light'); // Default is dark mode
-            } else {
-                root.style.setProperty('--bg-app', theme.start);
-                root.style.setProperty('--bg-gradient-start', theme.start);
-                root.style.setProperty('--bg-gradient-end', theme.end);
-                root.style.setProperty('--bg-glass', `${theme.start}BF`);
-                root.style.setProperty('--accent-primary', theme.accent);
-                root.style.setProperty('--accent-highlight', theme.accent);
-                
-                // Apply text color based on theme property
-                setTextColor(theme.textColor || 'light');
-            }
-            closeThemeStoreModal();
+    const root = document.documentElement;
+    
+    const setTextColor = (color) => {
+        if (color === 'dark') {
+            root.style.setProperty('--text-primary', '#1D1D1F');
+            root.style.setProperty('--text-secondary', 'rgba(0, 0, 0, 0.6)');
+            root.style.setProperty('--text-tertiary', 'rgba(0, 0, 0, 0.3)');
+            root.style.setProperty('--border-glass', 'rgba(0, 0, 0, 0.1)'); 
+        } else {
+            root.style.removeProperty('--text-primary');
+            root.style.removeProperty('--text-secondary');
+            root.style.removeProperty('--text-tertiary');
+            root.style.removeProperty('--border-glass');
         }
+    };
+
+    if (themeId === 'default') {
+        root.style.removeProperty('--bg-app');
+        root.style.removeProperty('--bg-gradient-start');
+        root.style.removeProperty('--bg-gradient-end');
+        root.style.removeProperty('--bg-glass');
+        root.style.removeProperty('--accent-primary');
+        root.style.removeProperty('--accent-highlight');
+        setTextColor('light'); 
+    } else {
+        root.style.setProperty('--bg-app', theme.start);
+        root.style.setProperty('--bg-gradient-start', theme.start);
+        root.style.setProperty('--bg-gradient-end', theme.end);
+        root.style.setProperty('--bg-glass', `${theme.start}BF`);
+        root.style.setProperty('--accent-primary', theme.accent);
+        root.style.setProperty('--accent-highlight', theme.accent);
+        
+        setTextColor(theme.textColor || 'light');
+    }
+    closeThemeStoreModal();
+}
 
         window.alertTimeout = null;
         function showAlert(message, isError = false, duration = 5000) {
@@ -1585,16 +1590,113 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function unlockAllThemes() { closeThemeStoreModal(); showPremiumModal(); }
 
-        function activatePremium(planName, lines) {
-            isPremium = true; currentPlan = planName;
-            unlockedThemes = themes.map(t => t.id);
-            linesRemaining += lines;
-            updatelinesDisplay(); populateThemeGrid(); updatePremiumModalUI();
-            const premiumBtn = document.getElementById('sidebarPremiumBtn');
-            if (premiumBtn) { premiumBtn.textContent = 'Active'; premiumBtn.disabled = false; premiumBtn.style.opacity = '1'; }
-            closePremiumModal(); closeThemeStoreModal();
-            showAlert(`🌟 ${planName} activated! +${lines.toLocaleString()} lines.`, false, 4000);
+       // Update the activatePremium function to handle the 'Pro' plan
+function activatePremium(planName, addedLines) {
+    isPremium = true;
+    currentPlan = planName;
+    
+    // Set max lines based on plan
+    if (planName.includes('Boost')) maxLines = 1000;
+    else if (planName.includes('Pro')) maxLines = 5000; // Updated to match 'Pro'
+    else if (planName.includes('Super')) maxLines = 10000;
+    else if (planName.includes('Demo')) maxLines = 99999;
+    
+    linesRemaining = maxLines; // Reset to full capacity
+    
+    updateLinesDisplay();
+    updatePremiumModalUI();
+    closePremiumModal();
+    showAlert(`🌟 ${planName} activated! Limit increased.`, false, 4000);
+}
+
+// Update UI to target the correct button IDs (btn-Pro)
+// Function to calculate and update bar widths dynamically
+function updatePlanVisuals() {
+    // 1. Determine Current Capacity based on plan name
+    let currentCap = 250; // Default Free
+    if (isPremium && currentPlan) {
+        if (currentPlan.includes('Boost')) currentCap = 1000;
+        else if (currentPlan.includes('Pro')) currentCap = 5000;
+        else if (currentPlan.includes('Super')) currentCap = 10000;
+    }
+
+    const maxScale = 10000; // The Super plan is 100% width
+
+    // 2. Define the Plans to loop through
+    const plans = [
+        { id: 'boost', cap: 1000 },
+        { id: 'pro',   cap: 5000 },
+        { id: 'super', cap: 10000 }
+    ];
+
+    // 3. Loop and update each card
+    plans.forEach(p => {
+        const baseEl = document.getElementById(`p-bar-${p.id}-base`);
+        const extraEl = document.getElementById(`p-bar-${p.id}-extra`);
+        
+        if (!baseEl || !extraEl) return;
+
+        // Reset styles
+        extraEl.classList.remove('lv-bar-loss');
+
+        if (currentCap < p.cap) {
+            // SCENARIO: UPGRADE (Show Blue Current + Green Gain)
+            const bluePct = (currentCap / maxScale) * 100;
+            const greenPct = ((p.cap - currentCap) / maxScale) * 100;
+            
+            baseEl.style.width = `${bluePct}%`;
+            extraEl.style.width = `${greenPct}%`;
+        } 
+        else if (currentCap > p.cap) {
+            // SCENARIO: DOWNGRADE (Show Blue Target + Red Loss)
+            // Example: You have 5000, target is 1000.
+            // Blue = 1000 (What you keep). Red = 4000 (What you lose).
+            const bluePct = (p.cap / maxScale) * 100;
+            const redPct = ((currentCap - p.cap) / maxScale) * 100;
+
+            baseEl.style.width = `${bluePct}%`;
+            extraEl.style.width = `${redPct}%`;
+            extraEl.classList.add('lv-bar-loss'); // Turn red
+        } 
+        else {
+            // SCENARIO: CURRENT PLAN (Show only Blue)
+            const bluePct = (currentCap / maxScale) * 100;
+            baseEl.style.width = `${bluePct}%`;
+            extraEl.style.width = `0%`; // No gain or loss
         }
+    });
+}
+
+// Main Update UI Function
+function updatePremiumModalUI() {
+    // 1. Run the visual bar update
+    updatePlanVisuals();
+
+    // 2. Button Logic (Enable/Disable based on plan)
+    const btnShy = document.getElementById('btn-shy');
+    const btnPro = document.getElementById('btn-Pro');
+    const btnSuper = document.getElementById('btn-super');
+
+    // Reset buttons
+    if (btnShy) { btnShy.textContent = 'Select'; btnShy.disabled = false; }
+    if (btnPro) { btnPro.textContent = 'Select'; btnPro.disabled = false; }
+    if (btnSuper) { btnSuper.textContent = 'Select'; btnSuper.disabled = false; }
+
+    if (isPremium && currentPlan) {
+        let activeBtn;
+        if (currentPlan.includes('Boost')) activeBtn = btnShy;
+        if (currentPlan.includes('Pro')) activeBtn = btnPro;
+        if (currentPlan.includes('Super')) activeBtn = btnSuper;
+        
+        if (activeBtn) {
+            activeBtn.textContent = 'Current Plan';
+            activeBtn.disabled = true;
+        }
+        document.getElementById('downgradeOption').style.display = 'block';
+    } else {
+        document.getElementById('downgradeOption').style.display = 'none';
+    }
+}
 
         function downgradeToFree() {
             isPremium = false; currentPlan = null; unlockedThemes = ['default'];
@@ -1602,20 +1704,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const premiumBtn = document.getElementById('sidebarPremiumBtn');
             if (premiumBtn) premiumBtn.textContent = 'Upgrade';
             closePremiumModal();
-        }
-
-        function updatePremiumModalUI() {
-           document.getElementById('btn-shy').textContent = 'Select'; document.getElementById('btn-shy').disabled = false;
-           document.getElementById('btn-Pro').textContent = 'Select'; document.getElementById('btn-Pro').disabled = false;
-           document.getElementById('btn-super').textContent = 'Select'; document.getElementById('btn-super').disabled = false;
-           if (isPremium && currentPlan) {
-               let activeBtn;
-               if (currentPlan === 'Boost Member') activeBtn = document.getElementById('btn-shy');
-               if (currentPlan === 'Pro Member') activeBtn = document.getElementById('btn-Pro');
-               if (currentPlan === 'Super Member') activeBtn = document.getElementById('btn-super');
-               if (activeBtn) { activeBtn.textContent = 'Current Plan'; activeBtn.disabled = true; }
-               document.getElementById('downgradeOption').style.display = 'block';
-           } else { document.getElementById('downgradeOption').style.display = 'none'; }
         }
 
         function demoUnlockThemes() { activatePremium('Demo Mode', 99999); }
@@ -2066,141 +2154,142 @@ document.addEventListener('DOMContentLoaded', () => {
             loadChallengeStore();
         };
 
-       let tokenClient;
-        let userProfile = null;
+       // --- AUTH & PERSISTENCE LOGIC ---
+let tokenClient;
+let userProfile = null;
 
-        function handleTokenResponse(tokenResponse) {
-            if (tokenResponse && tokenResponse.access_token) {
-                getUserInfoAndUpdateUI(tokenResponse.access_token);
-            }
-        }
+// 1. Handle Google Response
+function handleTokenResponse(tokenResponse) {
+    if (tokenResponse && tokenResponse.access_token) {
+        fetchUserInfo(tokenResponse.access_token);
+    }
+}
 
-        // --- Helper Functions for Menu Items ---
+// 2. Fetch Data from Google (Only happens on fresh sign-in)
+async function fetchUserInfo(accessToken) {
+    try {
+        const response = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+            headers: { 'Authorization': `Bearer ${accessToken}` }
+        });
+        if (!response.ok) throw new Error('Failed to fetch user info');
+        
+        const userObject = await response.json();
+        
+        // SAVE TO STORAGE
+        localStorage.setItem('userProfile', JSON.stringify(userObject));
+        
+        // Render UI
+        renderLoginState(userObject);
+        showAlert(`👋 Welcome, ${userObject.given_name}!`, false, 4000);
 
-        function triggerSupportEmail() {
-            window.location.href = "mailto:support@chimwopara.com";
-        }
+    } catch (error) { 
+        console.error("Error fetching user info:", error); 
+        showAlert("Sign-in failed.", true); 
+    }
+}
 
-        function handleLogout() {
-            // 1. Clear profile
-            userProfile = null;
-            // 2. Remove the custom menu container
-            const container = document.querySelector('.user-menu-container');
-            if (container) container.remove();
-            // 3. Show the original Sign In button again
-            const signInButton = document.getElementById('customGoogleSignInBtn');
-            if (signInButton) signInButton.style.display = 'flex';
-            
-            showAlert("Logged out successfully.", false);
-        }
+// 3. Render the Menu UI (Called by fetch OR by page load restore)
+function renderLoginState(userObject) {
+    userProfile = userObject; // Set global variable
+    const sidebarFooter = document.querySelector('.sidebar-footer');
+    const signInButton = document.getElementById('customGoogleSignInBtn');
 
-        // --- Main Logic ---
+    if (sidebarFooter && signInButton) {
+        signInButton.style.display = 'none';
 
-        async function getUserInfoAndUpdateUI(accessToken) {
-            try {
-                const response = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-                    headers: { 'Authorization': `Bearer ${accessToken}` }
-                });
-                if (!response.ok) throw new Error('Failed to fetch user info');
+        // Check if menu already exists (prevent duplicates)
+        if (document.querySelector('.user-menu-container')) return;
+
+        const container = document.createElement('div');
+        container.className = 'user-menu-container';
+
+        const menuHtml = `
+            <div class="user-menu-popup" id="userMenuPopup">
+                <div class="menu-header-email">${userObject.email}</div>
                 
-                const userObject = await response.json();
-                userProfile = userObject;
+                <button class="menu-item" onclick="triggerSupportEmail()">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    Settings
+                </button>
+                <button class="menu-item" onclick="triggerSupportEmail()">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                    Get help
+                </button>
 
-                showAlert(`👋 Welcome, ${userObject.given_name}!`, false, 4000);
+                <div class="menu-divider"></div>
 
-                const sidebarFooter = document.querySelector('.sidebar-footer');
-                const signInButton = document.getElementById('customGoogleSignInBtn');
+                <button class="menu-item" onclick="showPremiumModal()">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+                    Upgrade plan
+                </button>
+                <button class="menu-item" onclick="window.location.href='terms.html'">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    Learn more
+                </button>
 
-                if (sidebarFooter && signInButton) {
-                    // Hide original button
-                    signInButton.style.display = 'none';
+                <div class="menu-divider"></div>
 
-                    // Create Menu Container
-                    const container = document.createElement('div');
-                    container.className = 'user-menu-container';
+                <button class="menu-item" onclick="handleLogout()">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                    Log out
+                </button>
+            </div>
+        `;
+        container.innerHTML = menuHtml;
 
-                    // 1. Create Popup Menu (Hidden by default)
-                    const menuHtml = `
-                        <div class="user-menu-popup" id="userMenuPopup">
-                            <div class="menu-header-email">${userObject.email}</div>
-                            
-                            <button class="menu-item" onclick="triggerSupportEmail()">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-                                Settings
-                            </button>
+        // Create Visible Profile Button
+        const profileBtn = document.createElement('div');
+        profileBtn.className = 'google-signin-btn profile-active';
+        profileBtn.style.cssText = `cursor: pointer; gap: 12px; justify-content: flex-start; padding: 8px; border-radius: 8px; width: 100%; display: flex; align-items: center; transition: background 0.2s;`;
+        
+        const userImg = document.createElement('img');
+        userImg.src = userObject.picture;
+        userImg.style.cssText = "width: 28px; height: 28px; border-radius: 50%; object-fit: cover;";
 
-                            <button class="menu-item" onclick="triggerSupportEmail()">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-                                Get help
-                            </button>
+        const userName = document.createElement('div');
+        userName.style.cssText = "font-size: 0.9rem; font-weight: 500; color: white;";
+        userName.textContent = userObject.name;
 
-                            <div class="menu-divider"></div>
+        profileBtn.appendChild(userImg);
+        profileBtn.appendChild(userName);
 
-                            <button class="menu-item" onclick="showPremiumModal()">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
-                                Upgrade plan
-                            </button>
+        // Toggle Logic
+        profileBtn.onclick = (e) => {
+            e.stopPropagation();
+            const menu = document.getElementById('userMenuPopup');
+            if (menu) menu.classList.toggle('active');
+        };
 
-                            <button class="menu-item" onclick="window.location.href='terms.html'">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                                Learn more
-                            </button>
+        container.appendChild(profileBtn);
+        sidebarFooter.appendChild(container);
 
-                            <div class="menu-divider"></div>
-
-                            <button class="menu-item" onclick="handleLogout()">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                                Log out
-                            </button>
-                        </div>
-                    `;
-                    container.innerHTML = menuHtml;
-
-                    // 2. Create Visible Profile Button
-                    const profileBtn = document.createElement('div');
-                    profileBtn.style.cssText = `
-                        cursor: pointer; gap: 12px; background-color: rgba(255,255,255,0.05); 
-                        padding: 8px; border-radius: 8px; width: 100%; display: flex; 
-                        align-items: center; transition: background 0.2s; border: 1px solid transparent;
-                    `;
-                    // Hover effect logic
-                    profileBtn.onmouseover = () => profileBtn.style.backgroundColor = 'rgba(255,255,255,0.1)';
-                    profileBtn.onmouseout = () => profileBtn.style.backgroundColor = 'rgba(255,255,255,0.05)';
-
-                    const userImg = document.createElement('img');
-                    userImg.src = userObject.picture;
-                    userImg.style.cssText = "width: 28px; height: 28px; border-radius: 50%; object-fit: cover;";
-
-                    const userName = document.createElement('div');
-                    userName.style.cssText = "font-size: 0.9rem; font-weight: 500; color: white;";
-                    userName.textContent = userObject.name;
-
-                    profileBtn.appendChild(userImg);
-                    profileBtn.appendChild(userName);
-
-                    // Toggle Logic
-                    profileBtn.onclick = (e) => {
-                        e.stopPropagation();
-                        const menu = document.getElementById('userMenuPopup');
-                        menu.classList.toggle('active');
-                    };
-
-                    container.appendChild(profileBtn);
-                    sidebarFooter.appendChild(container);
-
-                    // Close menu if clicking outside
-                    document.addEventListener('click', (e) => {
-                        const menu = document.getElementById('userMenuPopup');
-                        if (menu && menu.classList.contains('active') && !container.contains(e.target)) {
-                            menu.classList.remove('active');
-                        }
-                    });
-                }
-            } catch (error) { 
-                console.error("Error fetching user info:", error); 
-                showAlert("Sign-in failed. Could not fetch user data.", true); 
+        // Close menu if clicking outside
+        document.addEventListener('click', (e) => {
+            const menu = document.getElementById('userMenuPopup');
+            if (menu && menu.classList.contains('active') && !container.contains(e.target)) {
+                menu.classList.remove('active');
             }
-        }
+        });
+    }
+}
+
+// 4. Logout Logic (Clear Storage)
+function handleLogout() {
+    userProfile = null;
+    localStorage.removeItem('userProfile'); // Clear storage
+    
+    const container = document.querySelector('.user-menu-container');
+    if (container) container.remove();
+    
+    const signInButton = document.getElementById('customGoogleSignInBtn');
+    if (signInButton) signInButton.style.display = 'flex';
+    
+    showAlert("Logged out successfully.", false);
+}
+
+function triggerSupportEmail() {
+    window.location.href = "mailto:support@chimwopara.com";
+}
 
         window.addEventListener('load', () => {
             try {
@@ -2344,14 +2433,83 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         document.addEventListener('DOMContentLoaded', () => {
-            const publicToggle = document.getElementById('savePublic');
-            if (publicToggle) {
-                publicToggle.addEventListener('change', () => {
-                    document.getElementById('visibilityLabel').textContent = publicToggle.checked ? 'Public' : 'Private';
-                });
+    // 1. Restore Theme
+    const savedTheme = localStorage.getItem('savedTheme');
+    if (savedTheme) {
+        applyTheme(savedTheme);
+    }
+    populateThemeGrid();
+
+    // 2. Restore Text Input
+    const qInput = document.getElementById('questionInput');
+    const savedDraft = localStorage.getItem('promptDraft');
+    if (qInput && savedDraft) {
+        qInput.value = savedDraft;
+        checkSelections(); // Update button state
+    }
+    // Save text as you type
+    if (qInput) {
+        qInput.addEventListener('input', () => {
+            localStorage.setItem('promptDraft', qInput.value);
+            checkSelections();
+        });
+    }
+
+    // 3. Restore User Session
+    const savedUser = localStorage.getItem('userProfile');
+    if (savedUser) {
+        try {
+            const userObj = JSON.parse(savedUser);
+            renderLoginState(userObj);
+        } catch (e) {
+            console.error("Failed to restore session", e);
+            localStorage.removeItem('userProfile');
+        }
+    }
+
+    // 4. Initialize UI Elements
+    updatelinesDisplay();
+    updatePremiumModalUI();
+    loadChallengeStore();
+    
+    // ... (Existing URL params logic) ...
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('action') === 'university') {
+        checkEnrollmentAndOpen();
+    }
+    
+    // ... (Existing Modal click listeners) ...
+    document.querySelectorAll('.modal').forEach(modal => {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+                updateToggleButtonVisibility();
             }
         });
-        
+    });
+});
+
+// 5. Initialize Google Client (Wait for window load to ensure script is ready)
+window.addEventListener('load', () => {
+    try {
+        tokenClient = google.accounts.oauth2.initTokenClient({
+            client_id: "9571013902-q69a5hulb67vquu8ud41qmr3l135pdbj.apps.googleusercontent.com",
+            scope: 'email profile openid',
+            callback: handleTokenResponse,
+            error_callback: (error) => {
+                console.error("Google Sign-In Error:", error);
+            }
+        });
+        const customBtn = document.getElementById('customGoogleSignInBtn');
+        if (customBtn) { 
+            customBtn.addEventListener('click', () => { 
+                tokenClient.requestAccessToken(); 
+            }); 
+        }
+    } catch (error) { 
+        console.error("Error initializing Google Token Client:", error); 
+    }
+});
         function generateSerial() {
             const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
             let serial = '';
