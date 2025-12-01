@@ -476,7 +476,88 @@
         textarea#questionInput { position: relative; z-index: 2; color: var(--text-primary); }
         .input-highlight-overlay { position: absolute; top: 0; left: 0; z-index: 1; color: transparent; pointer-events: none; overflow: hidden; }
         .h-keyword { font-weight: 700; }
+    
         .h-reference { color: var(--accent-highlight); background: rgba(90, 200, 250, 0.15); border-radius: 3px; padding: 0 2px; }
+
+        /* User Menu (Claude Style) */
+.user-menu-container {
+    position: relative;
+    width: 100%;
+}
+
+.user-menu-popup {
+    position: absolute;
+    bottom: 100%; /* Sits above the footer */
+    left: 0;
+    width: 260px; /* Wider than the button */
+    background: #232325; /* Dark gray background */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 8px 0;
+    margin-bottom: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    display: none;
+    flex-direction: column;
+    z-index: 9999;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.user-menu-popup.active {
+    display: flex;
+    animation: fadeIn 0.15s ease-out;
+}
+
+.menu-header-email {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    color: #9ca3af; /* Gray text */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    color: #e5e7eb; /* Whiteish text */
+    font-size: 0.9rem;
+    background: transparent;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.menu-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.menu-item svg {
+    width: 16px;
+    height: 16px;
+    stroke: #9ca3af;
+    stroke-width: 2;
+}
+
+.menu-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 4px 0;
+}
+
+/* Update the profile button to look clickable */
+.google-signin-btn.profile-active {
+    background-color: transparent !important;
+    border: 1px solid transparent;
+}
+.google-signin-btn.profile-active:hover {
+    background-color: rgba(255,255,255,0.05) !important;
+}
         
         @media (max-width: 768px) {
             .structured-grid { grid-template-columns: 1fr; }
@@ -1790,41 +1871,153 @@
             loadChallengeStore();
         };
 
-        let tokenClient; 
-        let userProfile = null; 
-        function handleTokenResponse(tokenResponse) { if (tokenResponse && tokenResponse.access_token) { getUserInfoAndUpdateUI(tokenResponse.access_token); } }
+       let tokenClient;
+        let userProfile = null;
+
+        function handleTokenResponse(tokenResponse) {
+            if (tokenResponse && tokenResponse.access_token) {
+                getUserInfoAndUpdateUI(tokenResponse.access_token);
+            }
+        }
+
+        // --- Helper Functions for Menu Items ---
+
+        function triggerSupportEmail() {
+            window.location.href = "mailto:support@chimwopara.com";
+        }
+
+        function handleLogout() {
+            // 1. Clear profile
+            userProfile = null;
+            // 2. Remove the custom menu container
+            const container = document.querySelector('.user-menu-container');
+            if (container) container.remove();
+            // 3. Show the original Sign In button again
+            const signInButton = document.getElementById('customGoogleSignInBtn');
+            if (signInButton) signInButton.style.display = 'flex';
+            
+            showAlert("Logged out successfully.", false);
+        }
+
+        // --- Main Logic ---
 
         async function getUserInfoAndUpdateUI(accessToken) {
             try {
-                const response = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', { headers: { 'Authorization': `Bearer ${accessToken}` } });
+                const response = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+                    headers: { 'Authorization': `Bearer ${accessToken}` }
+                });
                 if (!response.ok) throw new Error('Failed to fetch user info');
-                const userObject = await response.json(); userProfile = userObject; 
+                
+                const userObject = await response.json();
+                userProfile = userObject;
+
                 showAlert(`👋 Welcome, ${userObject.given_name}!`, false, 4000);
+
                 const sidebarFooter = document.querySelector('.sidebar-footer');
                 const signInButton = document.getElementById('customGoogleSignInBtn');
+
                 if (sidebarFooter && signInButton) {
+                    // Hide original button
                     signInButton.style.display = 'none';
-                    const userInfo = document.createElement('div');
-                    userInfo.className = 'google-signin-btn';
-                    userInfo.style.cssText = `cursor: default; gap: 12px; background-color: rgba(255,255,255,0.05); justify-content: flex-start;`;
-                    const userImg = document.createElement('img'); userImg.src = userObject.picture; userImg.style.cssText = "width: 28px; height: 28px; border-radius: 50%;";
-                    const userName = document.createElement('div'); userName.style.cssText = "font-size: 0.85rem; font-weight: 500;"; userName.textContent = `Signed in as ${userObject.name}`;
-                    userInfo.appendChild(userImg); userInfo.appendChild(userName); sidebarFooter.appendChild(userInfo);
+
+                    // Create Menu Container
+                    const container = document.createElement('div');
+                    container.className = 'user-menu-container';
+
+                    // 1. Create Popup Menu (Hidden by default)
+                    const menuHtml = `
+                        <div class="user-menu-popup" id="userMenuPopup">
+                            <div class="menu-header-email">${userObject.email}</div>
+                            
+                            <button class="menu-item" onclick="triggerSupportEmail()">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                                Settings
+                            </button>
+
+                            <button class="menu-item" onclick="triggerSupportEmail()">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                Get help
+                            </button>
+
+                            <div class="menu-divider"></div>
+
+                            <button class="menu-item" onclick="showPremiumModal()">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+                                Upgrade plan
+                            </button>
+
+                            <button class="menu-item" onclick="window.location.href='terms.html'">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                                Learn more
+                            </button>
+
+                            <div class="menu-divider"></div>
+
+                            <button class="menu-item" onclick="handleLogout()">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                                Log out
+                            </button>
+                        </div>
+                    `;
+                    container.innerHTML = menuHtml;
+
+                    // 2. Create Visible Profile Button
+                    const profileBtn = document.createElement('div');
+                    profileBtn.style.cssText = `
+                        cursor: pointer; gap: 12px; background-color: rgba(255,255,255,0.05); 
+                        padding: 8px; border-radius: 8px; width: 100%; display: flex; 
+                        align-items: center; transition: background 0.2s; border: 1px solid transparent;
+                    `;
+                    // Hover effect logic
+                    profileBtn.onmouseover = () => profileBtn.style.backgroundColor = 'rgba(255,255,255,0.1)';
+                    profileBtn.onmouseout = () => profileBtn.style.backgroundColor = 'rgba(255,255,255,0.05)';
+
+                    const userImg = document.createElement('img');
+                    userImg.src = userObject.picture;
+                    userImg.style.cssText = "width: 28px; height: 28px; border-radius: 50%; object-fit: cover;";
+
+                    const userName = document.createElement('div');
+                    userName.style.cssText = "font-size: 0.9rem; font-weight: 500; color: white;";
+                    userName.textContent = userObject.name;
+
+                    profileBtn.appendChild(userImg);
+                    profileBtn.appendChild(userName);
+
+                    // Toggle Logic
+                    profileBtn.onclick = (e) => {
+                        e.stopPropagation();
+                        const menu = document.getElementById('userMenuPopup');
+                        menu.classList.toggle('active');
+                    };
+
+                    container.appendChild(profileBtn);
+                    sidebarFooter.appendChild(container);
+
+                    // Close menu if clicking outside
+                    document.addEventListener('click', (e) => {
+                        const menu = document.getElementById('userMenuPopup');
+                        if (menu && menu.classList.contains('active') && !container.contains(e.target)) {
+                            menu.classList.remove('active');
+                        }
+                    });
                 }
-            } catch (error) { console.error("Error fetching user info:", error); showAlert("Sign-in failed. Could not fetch user data.", true); }
+            } catch (error) { 
+                console.error("Error fetching user info:", error); 
+                showAlert("Sign-in failed. Could not fetch user data.", true); 
+            }
         }
 
         window.addEventListener('load', () => {
             try {
                 tokenClient = google.accounts.oauth2.initTokenClient({
-    client_id: "9571013902-q69a5hulb67vquu8ud41qmr3l135pdbj.apps.googleusercontent.com",
-    // UPDATE THIS LINE:
-    scope: 'email profile openid', 
-    callback: handleTokenResponse,
-    error_callback: (error) => {
-        console.error("Google Sign-In Error:", error);
-    }
-});
+                    client_id: "9571013902-q69a5hulb67vquu8ud41qmr3l135pdbj.apps.googleusercontent.com",
+                    scope: 'email profile openid',
+                    callback: handleTokenResponse,
+                    error_callback: (error) => {
+                        console.error("Google Sign-In Error:", error);
+                        showAlert("Sign-in failed. Please try again.", true);
+                    }
+                });
                 const customBtn = document.getElementById('customGoogleSignInBtn');
                 if (customBtn) { customBtn.addEventListener('click', () => { tokenClient.requestAccessToken(); }); }
             } catch (error) { console.error("Error initializing Google Token Client:", error); showAlert("Could not load Google Sign-In.", true); }
