@@ -1524,16 +1524,13 @@ function checkUpgradeStatus() {
     }
 }
 
-// Update the existing activatePremium function to handle the new bar logic
 function activatePremium(planName, addedLines, isRestore = false) {
     // 1. Auth Gate
     if (!userProfile && !isRestore) {
-        // If clicking manually and not logged in, force sign in
         closePremiumModal();
         openSigninModal();
         return; 
     }
-
     isPremium = true;
     currentPlan = planName;
     
@@ -1542,18 +1539,27 @@ function activatePremium(planName, addedLines, isRestore = false) {
     else if (planName.includes('Pro')) maxLines = 5000;
     else if (planName.includes('Super')) maxLines = 10000;
     else if (planName.includes('Demo')) maxLines = 99999;
+
+    // Premium users get all themes - no need to modify unlockedThemes array
+    // The populateThemeGrid() function will check isPremium status
+    
+    // UNLOCK ALL THEMES
+    unlockedThemes = themes.map(t => t.id);
+    localStorage.setItem('unlockedThemes', JSON.stringify(unlockedThemes));
+    console.log('Themes unlocked:', unlockedThemes.length); // Debug log
     
     // Only reset lines if this is a new activation, not a page reload
     if (!isRestore) {
         linesRemaining = maxLines; 
-        // Save to Storage
         localStorage.setItem('savedPlan', planName);
-        localStorage.setItem('savedLines', linesRemaining); // Optional: remember consumption
-        showAlert(`🌟 ${planName} activated!`, false, 4000);
+        localStorage.setItem('savedLines', linesRemaining);
+        localStorage.setItem('isPremium', 'true'); // Save premium status
+        showAlert(`🌟 ${planName} activated! All themes unlocked!`, false, 4000);
     }
     
     updateLinesDisplay();
     updatePremiumModalUI();
+    populateThemeGrid(); // Refresh grid to remove locks
     if (!isRestore) closePremiumModal();
 }
 
@@ -1562,11 +1568,18 @@ document.addEventListener('DOMContentLoaded', () => {
     updateLinesDisplay();
 });
 
+// Restore unlocked themes
+const savedUnlockedThemes = localStorage.getItem('unlockedThemes');
+if (savedUnlockedThemes) {
+    unlockedThemes = JSON.parse(savedUnlockedThemes);
+}
+
         function populateThemeGrid() {
-            const grid = document.getElementById('themeGrid');
-            grid.innerHTML = '';
-            themes.forEach(theme => {
-                const isLocked = !unlockedThemes.includes(theme.id);
+    const grid = document.getElementById('themeGrid');
+    grid.innerHTML = '';
+    themes.forEach(theme => {
+        // If premium, all themes are unlocked. If free, only default is unlocked.
+        const isLocked = !isPremium && theme.id !== 'default';
                 const wrapper = document.createElement('div');
                 wrapper.className = 'theme-wrapper';
                 wrapper.title = theme.name;
@@ -1649,24 +1662,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function unlockAllThemes() { closeThemeStoreModal(); showPremiumModal(); }
 
-       // Update the activatePremium function to handle the 'Pro' plan
-function activatePremium(planName, addedLines) {
-    isPremium = true;
-    currentPlan = planName;
-    
-    // Set max lines based on plan
-    if (planName.includes('Boost')) maxLines = 1000;
-    else if (planName.includes('Pro')) maxLines = 5000; // Updated to match 'Pro'
-    else if (planName.includes('Super')) maxLines = 10000;
-    else if (planName.includes('Demo')) maxLines = 99999;
-    
-    linesRemaining = maxLines; // Reset to full capacity
-    
-    updateLinesDisplay();
-    updatePremiumModalUI();
-    closePremiumModal();
-    showAlert(`🌟 ${planName} activated! Limit increased.`, false, 4000);
-}
+       
 function openSigninModal() {
     document.getElementById('signinModal').classList.add('active');
 }
@@ -1773,8 +1769,15 @@ function updatePremiumModalUI() {
 }
 
         function downgradeToFree() {
-            isPremium = false; currentPlan = null; unlockedThemes = ['default'];
-            applyTheme('default'); populateThemeGrid(); updatePremiumModalUI();
+    isPremium = false; 
+    currentPlan = null; 
+    unlockedThemes = ['default'];
+    localStorage.removeItem('unlockedThemes'); // Clear saved themes
+    localStorage.removeItem('savedPlan');
+    localStorage.removeItem('savedLines');
+    applyTheme('default'); 
+    populateThemeGrid(); 
+    updatePremiumModalUI();
             const premiumBtn = document.getElementById('sidebarPremiumBtn');
             if (premiumBtn) premiumBtn.textContent = 'Upgrade';
             closePremiumModal();
@@ -2352,13 +2355,19 @@ closeSigninModal();
 function handleLogout() {
     userProfile = null;
     isPremium = false;
-    currentPlan = 'Free Plan';
+    currentPlan = null;
     maxLines = 250;
     linesRemaining = 250;
-
+    
+    // Clear ALL saved data
     localStorage.removeItem('userProfile');
-    localStorage.removeItem('savedPlan'); // Clear plan
+    localStorage.removeItem('savedPlan');
     localStorage.removeItem('savedLines');
+    localStorage.removeItem('isPremium');
+    localStorage.removeItem('savedTheme'); // Reset to default theme
+    
+    // Reset to default theme
+    applyTheme('default');
 
     // ... rest of your existing logout UI cleanup code ...
     const container = document.querySelector('.user-menu-container');
@@ -2517,12 +2526,32 @@ function triggerSupportEmail() {
             document.querySelector(`.type-btn[data-type="${type}"]`).classList.add('active');
         }
         
-        document.addEventListener('DOMContentLoaded', () => {
-    // 1. Restore Theme
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Restore Premium Status FIRST
+    const savedPremiumStatus = localStorage.getItem('isPremium');
+    if (savedPremiumStatus === 'true') {
+        isPremium = true;
+    }
+    
+    // 2. Restore Plan (which will set isPremium again)
+    const savedPlan = localStorage.getItem('savedPlan');
+    if (savedPlan) {
+        activatePremium(savedPlan, 0, true); // isRestore = true
+        const savedCount = localStorage.getItem('savedLines');
+        if (savedCount) linesRemaining = parseInt(savedCount);
+        updateLinesDisplay();
+    }
+    
+    // 3. Restore Theme (only if premium or default)
     const savedTheme = localStorage.getItem('savedTheme');
     if (savedTheme) {
-        applyTheme(savedTheme);
+        if (isPremium || savedTheme === 'default') {
+            applyTheme(savedTheme);
+        } else {
+            applyTheme('default'); // Fallback to default if not premium
+        }
     }
+    
     populateThemeGrid();
 
     // 2. Restore Text Input
@@ -2550,16 +2579,11 @@ function triggerSupportEmail() {
             localStorage.removeItem('userProfile');
         }
     }
-    // NEW: Restore Premium Plan
-    const savedPlan = localStorage.getItem('savedPlan');
-    if (savedPlan) {
-        // Pass true for 'isRestore' to skip alerts/resetting lines
-        activatePremium(savedPlan, 0, true);
-        
-        // Optional: Restore exact line count if you saved it
-        const savedCount = localStorage.getItem('savedLines');
-        if (savedCount) linesRemaining = parseInt(savedCount);
-        updateLinesDisplay(); // Refresh bar
+    const savePublicToggle = document.getElementById('savePublic');
+    if (savePublicToggle) {
+        savePublicToggle.addEventListener('change', () => {
+            document.getElementById('visibilityLabel').textContent = savePublicToggle.checked ? 'Public' : 'Private';
+        });
     }
 
     // 4. Initialize UI Elements
