@@ -1,0 +1,114 @@
+/* Minimalist Progress Bar Styles */
+.usage-container {
+    padding: 16px 12px; /* Balanced padding around the bar */
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+
+.usage-container:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.usage-progress-track {
+    width: 100%;
+    height: 8px; /* Slightly thicker since it's the only element */
+    background: rgba(255, 255, 255, 0.1); /* Visible track */
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.usage-progress-fill {
+    height: 100%;
+    background: var(--accent-primary);
+    border-radius: 4px;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
+}
+/* Premium Plan Line Visualization */
+.lines-visual {
+    width: 100%;
+    margin-bottom: 12px;
+}
+
+.lv-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--text-primary);
+}
+
+.lv-track {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    display: flex;
+    overflow: hidden;
+}
+
+.lv-bar-base {
+    height: 100%;
+    background: var(--accent-primary);
+    border-right: 1px solid rgba(0,0,0,0.3);
+}
+
+.lv-bar-mid {
+    height: 100%;
+    background: #409CFF; 
+    opacity: 0.6;
+    border-right: 1px solid rgba(0,0,0,0.3);
+}
+
+.lv-bar-extra {
+    height: 100%;
+    background: #30D158;
+    box-shadow: 0 0 10px rgba(48, 209, 88, 0.4);
+    animation: slideInBar 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* The Free Plan Baseline (Gray) */
+.lv-bar-free {
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2); /* Dim Gray */
+    border-right: 1px solid rgba(0,0,0,0.5);
+}
+
+/* Visualization Bars */
+.lines-visual { width: 100%; margin-bottom: 12px; }
+
+.lv-track {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    display: flex;
+    overflow: hidden;
+}
+
+.lv-bar-base {
+    height: 100%;
+    background: var(--accent-primary); /* Blue = Your Current Plan */
+    border-right: 1px solid rgba(0,0,0,0.3);
+}
+
+.lv-bar-extra {
+    height: 100%;
+    background: #30D158; /* Green = The Gain */
+    box-shadow: 0 0 10px rgba(48, 209, 88, 0.4);
+    animation: slideInBar 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.lv-bar-loss {
+    height: 100%;
+    background: #FF453A !important; /* Red color for loss */
+    box-shadow: none;
+}
+
+
+
