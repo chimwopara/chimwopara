@@ -257,6 +257,14 @@ if (savedUnlockedThemes) {
 
     const root = document.documentElement;
     
+    // 2. UPDATE THEME-COLOR META TAG (for mobile status bar)
+    let metaThemeColor = document.querySelector('meta[name="theme-color"]');
+    if (!metaThemeColor) {
+        metaThemeColor = document.createElement('meta');
+        metaThemeColor.name = 'theme-color';
+        document.head.appendChild(metaThemeColor);
+    }
+    
     const setTextColor = (color) => {
         if (color === 'dark') {
             root.style.setProperty('--text-primary', '#1D1D1F');
@@ -278,7 +286,9 @@ if (savedUnlockedThemes) {
         root.style.removeProperty('--bg-glass');
         root.style.removeProperty('--accent-primary');
         root.style.removeProperty('--accent-highlight');
-        setTextColor('light'); 
+        setTextColor('light');
+        // Set default theme color for status bar
+        metaThemeColor.content = '#1c1c1e';
     } else {
         root.style.setProperty('--bg-app', theme.start);
         root.style.setProperty('--bg-gradient-start', theme.start);
@@ -288,6 +298,8 @@ if (savedUnlockedThemes) {
         root.style.setProperty('--accent-highlight', theme.accent);
         
         setTextColor(theme.textColor || 'light');
+        // Set theme color for status bar to match gradient start
+        metaThemeColor.content = theme.start;
     }
     closeThemeStoreModal();
 }

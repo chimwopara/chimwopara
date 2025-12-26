@@ -19,13 +19,14 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         html {
-            background: linear-gradient(to bottom right, var(--bg-gradient-start), var(--bg-gradient-end));
-            background-color: var(--bg-gradient-start);
+            /* Use CSS variable so it adapts to theme changes */
+            background: var(--bg-gradient-start);
             min-height: 100%;
         }
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+            /* Use CSS variables so background adapts to theme */
             background: linear-gradient(to bottom right, var(--bg-gradient-start), var(--bg-gradient-end));
             color: var(--text-primary);
             min-height: 100vh;
@@ -34,7 +35,7 @@
             font-size: 14px;
             line-height: 1.4;
             -webkit-font-smoothing: antialiased;
-            transition: background-color 0.5s ease, color 0.5s ease;
+            transition: background 0.5s ease, background-color 0.5s ease, color 0.5s ease;
             /* Extend background under safe areas */
             padding-top: env(safe-area-inset-top);
             padding-bottom: env(safe-area-inset-bottom);
