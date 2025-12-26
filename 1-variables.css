@@ -19,21 +19,26 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         html {
-            background-color: var(--bg-app);
+            background: linear-gradient(to bottom right, var(--bg-gradient-start), var(--bg-gradient-end));
+            background-color: var(--bg-gradient-start);
             min-height: 100%;
-            min-height: 100dvh; /* Dynamic viewport height for mobile */
         }
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
-            background-color: var(--bg-app);
+            background: linear-gradient(to bottom right, var(--bg-gradient-start), var(--bg-gradient-end));
             color: var(--text-primary);
             min-height: 100vh;
-            min-height: 100dvh; /* Dynamic viewport height for mobile */
+            min-height: 100dvh;
             overflow: hidden;
             font-size: 14px;
             line-height: 1.4;
             -webkit-font-smoothing: antialiased;
             transition: background-color 0.5s ease, color 0.5s ease;
+            /* Extend background under safe areas */
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+            padding-left: env(safe-area-inset-left);
+            padding-right: env(safe-area-inset-right);
         }
         
