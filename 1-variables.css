@@ -19,10 +19,10 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         html {
-            /* Use CSS variable so it adapts to theme changes */
-            background: var(--bg-gradient-start);
-            min-height: 100%;
-        }
+        /* Use CSS variable so it adapts to theme changes */
+        background: var(--bg-gradient-start) !important;
+        min-height: 100%;
+            }
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
