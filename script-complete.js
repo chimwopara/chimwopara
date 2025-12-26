@@ -256,6 +256,7 @@ if (savedUnlockedThemes) {
     localStorage.setItem('savedTheme', themeId); 
 
     const root = document.documentElement;
+    root.style.backgroundColor = ''; // Clear inline style from initial script
     
     // 2. UPDATE THEME-COLOR META TAG (for mobile status bar)
     let metaThemeColor = document.querySelector('meta[name="theme-color"]');
