@@ -288,8 +288,8 @@ if (savedUnlockedThemes) {
         root.style.removeProperty('--accent-primary');
         root.style.removeProperty('--accent-highlight');
         setTextColor('light');
-        // Set default theme color for status bar
         metaThemeColor.content = '#1c1c1e';
+        root.style.backgroundColor = '#1c1c1e';
     } else {
         root.style.setProperty('--bg-app', theme.start);
         root.style.setProperty('--bg-gradient-start', theme.start);
@@ -297,10 +297,9 @@ if (savedUnlockedThemes) {
         root.style.setProperty('--bg-glass', `${theme.start}BF`);
         root.style.setProperty('--accent-primary', theme.accent);
         root.style.setProperty('--accent-highlight', theme.accent);
-        
         setTextColor(theme.textColor || 'light');
-        // Set theme color for status bar to match gradient start
         metaThemeColor.content = theme.start;
+        root.style.backgroundColor = theme.start;
     }
     closeThemeStoreModal();
 }
