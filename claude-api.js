@@ -5,44 +5,42 @@
  */
 const ClaudeAPI = {
     // API Configuration
-   // Inside ClaudeAPI.js
+    // API_KEY: REMOVED! We don't need it here anymore.
+    // API_URL: Changed to point to your internal function
+    API_URL: '/.netlify/functions/askClaude', 
 
-// API_KEY: REMOVED! We don't need it here anymore.
-// API_URL: Changed to point to your internal function
-API_URL: '/.netlify/functions/askClaude', 
-
-async generateChallenge(question, language = null, difficulty = 'intermediate') {
-    const systemPrompt = this.buildSystemPrompt();
-    const userPrompt = this.buildUserPrompt(question, language, difficulty);
-    
-    try {
-        // We are now calling YOUR server, not Anthropic directly
-        const response = await fetch(this.API_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-                // No API Key header here!
-                // No "dangerous-browser-access" header here!
-            },
-            body: JSON.stringify({
-                // We just pass the text data to our function
-                prompt: userPrompt,
-                system: systemPrompt
-            })
-        });
+    async generateChallenge(question, language = null, difficulty = 'intermediate') {
+        const systemPrompt = this.buildSystemPrompt();
+        const userPrompt = this.buildUserPrompt(question, language, difficulty);
         
-        if (!response.ok) throw new Error('Network response was not ok');
-        
-        const data = await response.json();
-        const content = data.content[0]?.text || '';
-        
-        return this.parseResponse(content, question, language, difficulty);
-        
-    } catch (error) {
-        console.error('API Error:', error);
-        throw error;
-    }
-},
+        try {
+            // We are now calling YOUR server, not Anthropic directly
+            const response = await fetch(this.API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                    // No API Key header here!
+                    // No "dangerous-browser-access" header here!
+                },
+                body: JSON.stringify({
+                    // We just pass the text data to our function
+                    prompt: userPrompt,
+                    system: systemPrompt
+                })
+            });
+            
+            if (!response.ok) throw new Error('Network response was not ok');
+            
+            const data = await response.json();
+            const content = data.content[0]?.text || '';
+            
+            return this.parseResponse(content, question, language, difficulty);
+            
+        } catch (error) {
+            console.error('API Error:', error);
+            throw error;
+        }
+    },
     
     /**
      * Build the system prompt for challenge generation
@@ -171,24 +169,17 @@ Rules:
     
     /**
      * Handle general (non-code) chat questions
+     * Routes through Netlify function for security
      */
     async generalChat(question) {
         try {
-            const response = await fetch('https://api.anthropic.com/v1/messages', {
+            const response = await fetch(this.API_URL, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'x-api-key': this.apiKey,
-                    'anthropic-version': '2023-06-01',
-                    'anthropic-dangerous-direct-browser-access': 'true'
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    model: this.model,
-                    max_tokens: 1024,
-                    messages: [{
-                        role: 'user',
-                        content: question
-                    }],
+                    prompt: question,
                     system: `You are a helpful assistant. Provide clear, concise answers to general questions. 
 Format your responses nicely with:
 - Short paragraphs
