@@ -23,10 +23,20 @@ const ClaudeAPI = {
                 })
             });
             
-            if (!response.ok) throw new Error('Network response was not ok');
-            
             const data = await response.json();
-            const content = data.content[0]?.text || '';
+            
+            // Check for error responses
+            if (!response.ok || data.error) {
+                const errorMsg = data.error?.message || `API Error: ${response.status}`;
+                console.error('Challenge generation error:', errorMsg);
+                throw new Error(errorMsg);
+            }
+            
+            const content = data.content?.[0]?.text || '';
+            
+            if (!content) {
+                throw new Error('Empty response from API');
+            }
             
             return this.parseResponse(content, question, language, difficulty);
             
@@ -183,14 +193,28 @@ Keep responses focused and practical.`
                 })
             });
             
-            if (!response.ok) {
-                const errorData = await response.json().catch(() => ({}));
-                throw new Error(errorData.error?.message || `API Error: ${response.status}`);
-            }
-            
             const data = await response.json();
             
+            // Check for error responses (from Netlify function or Anthropic)
+            if (!response.ok || data.error) {
+                const errorMsg = data.error?.message || `API Error: ${response.status}`;
+                console.error('General chat API error:', errorMsg);
+                
+                // Provide user-friendly error messages
+                if (errorMsg.includes('API key not configured')) {
+                    throw new Error('Service temporarily unavailable. API key not configured.');
+                } else if (errorMsg.includes('authentication') || errorMsg.includes('invalid_api_key')) {
+                    throw new Error('Authentication error. Please contact support.');
+                } else if (response.status === 429) {
+                    throw new Error('Rate limit reached. Please try again in a moment.');
+                }
+                
+                throw new Error(errorMsg);
+            }
+            
+            // Validate response structure
             if (!data.content || !data.content[0] || !data.content[0].text) {
+                console.error('Invalid response structure:', data);
                 throw new Error('Invalid response from API');
             }
             
