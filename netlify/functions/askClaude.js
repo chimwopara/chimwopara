@@ -1,44 +1,67 @@
 // netlify/functions/askClaude.js
 exports.handler = async function(event, context) {
-    // 1. Check if the method is POST
-    if (event.httpMethod !== "POST") {
-        return { statusCode: 405, body: "Method Not Allowed" };
-    }
+  
+  // CORS headers - need these on ALL responses
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Content-Type': 'application/json'
+  };
 
-    // 2. Get the user's message from the incoming request
-    const body = JSON.parse(event.body);
-    const userPrompt = body.prompt;
-    const systemPrompt = body.system;
+  // Handle CORS preflight request
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 200,
+      headers,
+      body: ''
+    };
+  }
 
-    // 3. Call Anthropic (Here is where we use the secret key!)
-    try {
-        const response = await fetch('https://api.anthropic.com/v1/messages', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-api-key': process.env.ANTHROPIC_API_KEY, // This variable lives on the server
-                'anthropic-version': '2023-06-01'
-            },
-            body: JSON.stringify({
-                model: 'claude-3-sonnet-20240229', // Update model as needed
-                max_tokens: 4096,
-                system: systemPrompt,
-                messages: [{ role: 'user', content: userPrompt }]
-            })
-        });
+  // Check if the method is POST
+  if (event.httpMethod !== 'POST') {
+    return { 
+      statusCode: 405, 
+      headers,
+      body: JSON.stringify({ error: 'Method Not Allowed' })
+    };
+  }
 
-        const data = await response.json();
+  // Get the user's message from the incoming request
+  const body = JSON.parse(event.body);
+  const userPrompt = body.prompt;
+  const systemPrompt = body.system;
 
-        // 4. Send the answer back to the frontend
-        return {
-            statusCode: 200,
-            body: JSON.stringify(data)
-        };
+  // Call Anthropic
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': process.env.ANTHROPIC_API_KEY,
+        'anthropic-version': '2023-06-01'
+      },
+      body: JSON.stringify({
+        model: 'claude-3-5-sonnet-20241022',
+        max_tokens: 4096,
+        system: systemPrompt,
+        messages: [{ role: 'user', content: userPrompt }]
+      })
+    });
 
-    } catch (error) {
-        return {
-            statusCode: 500,
-            body: JSON.stringify({ error: "Failed to talk to Claude" })
-        };
-    }
+    const data = await response.json();
+
+    return {
+      statusCode: 200,
+      headers,
+      body: JSON.stringify(data)
+    };
+
+  } catch (error) {
+    return {
+      statusCode: 500,
+      headers,
+      body: JSON.stringify({ error: 'Failed to talk to Claude' })
+    };
+  }
 };
