@@ -3,7 +3,6 @@
  * This module handles communication with the Anthropic Claude API
  * to convert user questions into interactive coding challenges.
  */
-<script src="config.js"></script>
 const ClaudeAPI = {
     // API Configuration
    // Inside ClaudeAPI.js
