@@ -4,26 +4,20 @@
  * to convert user questions into interactive coding challenges.
  */
 const ClaudeAPI = {
-    // API Configuration
-    // API_KEY: REMOVED! We don't need it here anymore.
-    // API_URL: Changed to point to your internal function
-    API_URL: '/.netlify/functions/askClaude', 
+    // API Configuration - Using full Netlify URL since site is on GitHub Pages
+    API_URL: 'https://cerulean-sawine-dd190b.netlify.app/.netlify/functions/askClaude',
 
     async generateChallenge(question, language = null, difficulty = 'intermediate') {
         const systemPrompt = this.buildSystemPrompt();
         const userPrompt = this.buildUserPrompt(question, language, difficulty);
         
         try {
-            // We are now calling YOUR server, not Anthropic directly
             const response = await fetch(this.API_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
-                    // No API Key header here!
-                    // No "dangerous-browser-access" header here!
                 },
                 body: JSON.stringify({
-                    // We just pass the text data to our function
                     prompt: userPrompt,
                     system: systemPrompt
                 })
