@@ -1,0 +1,55 @@
+        :root {
+            /* Default Theme (Dark/Midnight) Variables */
+            --bg-app: #1c1c1e;
+            --bg-gradient-start: #1c1c1e;
+            --bg-gradient-end: #000000;
+            --bg-glass: rgba(28, 28, 30, 0.75);
+            --bg-glass-light: rgba(255, 255, 255, 0.1);
+            --border-glass: rgba(255, 255, 255, 0.1);
+            --accent-primary: #0A84FF;
+            --accent-highlight: #409CFF;
+            --text-primary: #FFFFFF;
+            --text-secondary: rgba(235, 235, 245, 0.6);
+            --text-tertiary: rgba(235, 235, 245, 0.3);
+            --success: #30D158;
+            --error: #FF453A;
+            --ease-spring: cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        /* CRITICAL: html element must have solid background color for bezels */
+        html {
+            background-color: var(--bg-gradient-start);
+            min-height: 100%;
+            min-height: 100dvh;
+            /* Prevent overscroll showing white */
+            overscroll-behavior: none;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+            /* Gradient on body, solid on html for bezel match */
+            background: linear-gradient(to bottom right, var(--bg-gradient-start), var(--bg-gradient-end));
+            /* Also set background-color for areas outside gradient */
+            background-color: var(--bg-gradient-start);
+            color: var(--text-primary);
+            /* Use dvh for proper mobile viewport */
+            min-height: 100dvh;
+            height: 100dvh;
+            /* CRITICAL: No overflow hidden on body - causes extra space */
+            overflow: hidden;
+            font-size: 14px;
+            line-height: 1.4;
+            -webkit-font-smoothing: antialiased;
+            /* Fast transition for theme changes */
+            transition: background 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+            /* Extend background under safe areas - CRITICAL for flush bezels */
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
+            padding-left: env(safe-area-inset-left);
+            padding-right: env(safe-area-inset-right);
+            /* Prevent overscroll bounce showing wrong color */
+            overscroll-behavior: none;
+            -webkit-overflow-scrolling: touch;
+        }

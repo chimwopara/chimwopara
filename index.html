@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="config.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#1c1c1e">
+<!-- IMMEDIATE THEME FIX - Must be before CSS loads -->
+<script>
+(function() {
+    var themes = {
+        'default': { start: '#1c1c1e', end: '#000000' },
+        'ocean': { start: '#005f73', end: '#0a9396' },
+        'sunset': { start: '#941b0c', end: '#bc3908' },
+        'forest': { start: '#1b4332', end: '#2d6a4f' },
+        'lavender': { start: '#240046', end: '#3c096c' },
+        'cherry': { start: '#590d22', end: '#800f2f' },
+        'gold': { start: '#332900', end: '#4d3d00' },
+        'neon': { start: '#0d0d0d', end: '#1a1a1a' },
+        'slate': { start: '#334155', end: '#475569' },
+        'coffee': { start: '#4a3529', end: '#5c4739' },
+        'dracula': { start: '#44475a', end: '#6272a4' },
+        'arctic': { start: '#003f5c', end: '#2f4b7c' },
+        'mint': { start: '#164e44', end: '#065f46' },
+        'matrix': { start: '#001a00', end: '#003300' },
+        'vaporwave': { start: '#5b2c6f', end: '#d60270' },
+        'ruby': { start: '#3d0000', end: '#9b2226' },
+        'sapphire': { start: '#001233', end: '#002855' },
+        'emerald': { start: '#013a1a', end: '#014f25' },
+        'amethyst': { start: '#240046', end: '#5a189a' },
+        'tokyo': { start: '#19002e', end: '#3a0ca3' },
+        'miami': { start: '#c71585', end: '#4b0082' },
+        'nordic': { start: '#2e3440', end: '#4c566a' },
+        'graphite': { start: '#212121', end: '#424242' },
+        'sepia': { start: '#3e2723', end: '#5d4037' },
+        'cotton': { start: '#ffcbf2', end: '#a2d2ff' },
+        'cyber': { start: '#1a1a00', end: '#333300' },
+        'bordeaux': { start: '#2b0000', end: '#5c001e' },
+        'gunmetal': { start: '#263238', end: '#37474f' },
+        'sky': { start: '#0c4a6e', end: '#075985' },
+        'rose': { start: '#4a0404', end: '#7f1d1d' },
+        'storm': { start: '#1f2937', end: '#374151' },
+        'moss': { start: '#354f52', end: '#52796f' },
+        'pumpkin': { start: '#7c2d12', end: '#9a3412' },
+        'void': { start: '#000000', end: '#0a0a0a' },
+        'indigo': { start: '#312e81', end: '#4338ca' },
+        'terminal': { start: '#1a1a1a', end: '#0f0f0f' },
+        'coral': { start: '#7f1d1d', end: '#991b1b' },
+        'glacier': { start: '#082f49', end: '#0369a1' },
+        'plum': { start: '#4a044e', end: '#701a75' },
+        'sand': { start: '#451a03', end: '#78350f' },
+        'teal': { start: '#042f2e', end: '#115e59' },
+        'blueprint': { start: '#1e3a8a', end: '#1d4ed8' },
+        'aurora': { start: '#0b132b', end: '#1c2a48' },
+        'peacock': { start: '#0a3d62', end: '#134e4a' },
+        'bloodorange': { start: '#3d0000', end: '#991b00' },
+        'frostbite': { start: '#e0f2fe', end: '#bae6fd' },
+        'obsidian': { start: '#0c0a09', end: '#1c1917' },
+        'limepunch': { start: '#1a2e05', end: '#2d5a0a' },
+        'royalpurple': { start: '#240046', end: '#5a189a' },
+        'copper': { start: '#3c1f0c', end: '#6b3a1a' },
+        'abyss': { start: '#000814', end: '#001d3d' },
+        'flamingo': { start: '#78001a', end: '#c71585' },
+        'olive': { start: '#283618', end: '#3d4f24' },
+        'crimson': { start: '#450000', end: '#8b0000' },
+        'turquoise': { start: '#014f4f', end: '#016666' },
+        'charcoal': { start: '#1e1e1e', end: '#2d2d2d' },
+        'lilac': { start: '#6b5b95', end: '#8876b3' },
+        'electric': { start: '#1e0038', end: '#3d0075' },
+        'maroon': { start: '#3f0000', end: '#720026' },
+        'seaglass': { start: '#ccfbf1', end: '#99f6e4' },
+        'amber': { start: '#4a2c00', end: '#783c00' },
+        'midnightblue': { start: '#03071e', end: '#370617' },
+        'matcha': { start: '#3a5a40', end: '#588157' },
+        'onyx': { start: '#0f0f0f', end: '#1f1f1f' },
+        'orchid': { start: '#660066', end: '#990099' },
+        'rust': { start: '#4a1e04', end: '#7f3300' },
+        'aquamarine': { start: '#007f7f', end: '#009999' },
+        'slateblue': { start: '#2b2d42', end: '#3d4060' },
+        'tangerine': { start: '#992b00', end: '#cc3d00' },
+        'evergreen': { start: '#0a3d2a', end: '#1a5c42' },
+        'wine': { start: '#420420', end: '#6b0a3d' },
+        'cyanide': { start: '#001a1a', end: '#003333' },
+        'mauve': { start: '#5c2a3d', end: '#8a4a6b' },
+        'bronze': { start: '#4a2e0a', end: '#7d4e1a' },
+        'bubblegum': { start: '#ffb3d9', end: '#ff99c8' },
+        'deepsea': { start: '#000033', end: '#000066' },
+        'hazelnut': { start: '#5c3d2e', end: '#8b5a3c' },
+        'fuchsia': { start: '#9d0b54', end: '#c71585' },
+        'ivory': { start: '#f5f5dc', end: '#e8e8d0' },
+        'scarlet': { start: '#800000', end: '#a41313' },
+        'lagoon': { start: '#006d77', end: '#0099aa' },
+        'mystic': { start: '#2e1a47', end: '#4d2a7a' },
+        'citrine': { start: '#5c4400', end: '#8b6600' },
+        'violet': { start: '#3f0071', end: '#7209b7' },
+        'pine': { start: '#173019', end: '#254d28' },
+        'cerulean': { start: '#1e40af', end: '#2563eb' },
+        'garnet': { start: '#5e0a1a', end: '#8b1129' },
+        'honey': { start: '#783900', end: '#a0522d' },
+        'phantom': { start: '#1a1a2e', end: '#16213e' },
+        'vermillion': { start: '#a63d00', end: '#d94f00' },
+        'pearl': { start: '#f8f9fa', end: '#e9ecef' },
+        'dawn': { start: '#ffe4e6', end: '#fecaca' },
+        'twilight': { start: '#1e1b4b', end: '#312e81' },
+        'sherbet': { start: '#fff7ed', end: '#fed7aa' },
+        'midnightrose': { start: '#4c1d95', end: '#7c3aed' },
+        'cantaloupe': { start: '#ffedd5', end: '#fdba74' },
+        'obsidianfire': { start: '#0c0a09', end: '#1a0d00' },
+        'mintcream': { start: '#f0fdfa', end: '#ccfbf1' },
+        'bloodmoon': { start: '#450a0a', end: '#7f1d1d' },
+        'polar': { start: '#ecfeff', end: '#cffafe' }
+    };
+    var saved = localStorage.getItem('savedTheme');
+    var theme = themes[saved] || themes['default'];
+    var root = document.documentElement;
+    root.style.setProperty('--bg-gradient-start', theme.start);
+    root.style.setProperty('--bg-gradient-end', theme.end);
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.content = theme.start;
+})();
+</script>
+
+<!-- CSS Files -->
+<link rel="stylesheet" href="1-variables.css">
+
+
+    <title>Chim Wopara</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- CSS Files - Load in order -->
+    <link rel="stylesheet" href="1-variables.css">
+    <link rel="stylesheet" href="2-base-layout.css">
+    <link rel="stylesheet" href="3-modals-portals.css">
+    <link rel="stylesheet" href="4-tabs-components.css">
+    <link rel="stylesheet" href="5-user-menu.css">
+    <link rel="stylesheet" href="6-progress-bars.css">
+    <link rel="stylesheet" href="7-responsive.css">
+</head>
+<body>
+    <div class="container">
+    <button class="toggle-sidebar-btn" onclick="toggleSidebar()" id="toggleSidebarBtn" title="Toggle Sidebar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </button>
+    
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <img src="logo.png" alt=" P&L Logo" class="logo-img">
+                    <span class="logo-text"> Chim Wopara</span>
+                </div>
+            </div>
+
+            <button class="sidebar-btn new-chat-btn" onclick="newChallenge()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                New P&L
+            </button>
+            
+            <button class="sidebar-btn" onclick="showStoreModal()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+    P&L Store
+</button>
+            
+            <button class="sidebar-btn" onclick="checkEnrollmentAndOpen()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                University
+            </button>
+            
+            <button class="sidebar-btn" onclick="showThemeStoreModal()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
+                Environment
+            </button>
+
+            <button class="sidebar-btn" onclick="showStructuredModal()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                Structured
+            </button>
+
+            <button class="sidebar-btn" onclick="window.open('https://wopara.com', '_blank')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                Founder
+            </button>
+
+            <button class="sidebar-btn" onclick="window.open('https://devgameshow.com', '_blank')">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4"/><path d="M14 12h.01"/><path d="M18 12h.01"/></svg>
+                Dev Game Show
+            </button>
+            
+            <div class="sidebar-section-title">Recents</div>
+            <div class="history-container">
+                <div id="historyList"></div>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="usage-container" onclick="checkUpgradeStatus()" title="Plan Usage">
+    <div class="usage-progress-track">
+        <div class="usage-progress-fill" id="linesProgressBar" style="width: 0%;"></div>
+    </div>
+</div>
+
+                <button class="google-signin-btn" id="customGoogleSignInBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="18" viewBox="0 0 24 24" width="18"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/><path d="M1 1h22v22H1z" fill="none"/></svg>
+                    Sign in with Google
+                </button>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <!-- Main Tabs -->
+            <div class="main-tabs">
+                <button class="main-tab active" data-tab="chat" onclick="switchMainTab('chat')">Chat</button>
+                <button class="main-tab" data-tab="contexts" onclick="switchMainTab('contexts')">Contexts</button>
+                <button class="main-tab" data-tab="prompts" onclick="switchMainTab('prompts')">Prompts</button>
+            </div>
+
+            <!-- Chat Tab Content -->
+            <div class="tab-content active" id="chatTab">
+                <div class="content-area" id="mainContentArea">
+                    <div class="creator-panel" id="creatorPanel">
+                        <!-- Main Content Area - Shows either greeting or challenge -->
+                        <div class="main-display-area" id="mainDisplayArea">
+                            <!-- Greeting (shown initially) -->
+                            <div class="greeting" id="greetingSection">
+                                <h1>Learn Different.</h1>
+                                <p>Prompt it, we make it work, you solve it logically.</p>
+                            </div>
+                            
+                            <!-- Loading State (shown while generating) - Skeleton Shimmer -->
+                            <div class="center-loading" id="centerLoading">
+                                <div class="skeleton-content">
+                                    <div class="skeleton-line short"></div>
+                                    <div class="skeleton-code-area"></div>
+                                    <div class="skeleton-line medium"></div>
+                                    <div class="skeleton-buttons">
+                                        <div class="skeleton-btn"></div>
+                                        <div class="skeleton-btn"></div>
+                                        <div class="skeleton-btn"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Challenge Viewer (shown after generation) -->
+                            <div class="challenge-display" id="challengeDisplay">
+                                <iframe id="challengeFrame" src=""></iframe>
+                            </div>
+                        </div>
+
+                        <div class="input-area-wrapper">
+                            <div class="input-container">
+                                <div class="textarea-container">
+                                    <div id="highlightOverlay" class="input-highlight-overlay"></div>
+                                    <textarea id="questionInput" placeholder="Ask anything... (How to tie a shoelace, update macOS, etc.)" oninput="checkSelections()"></textarea>
+                                </div>
+                                <div class="input-footer">
+                                    <div class="input-tools">
+                                        <select id="modeSelect" class="minimal-select" onchange="toggleMode()">
+                                            <option value="general" selected>General</option>
+                                            <option value="code">Code</option>
+                                            <option value="structured">Structured</option>
+                                        </select>
+
+                                        <div id="codeTools" style="display: none; gap: 8px; align-items: center; flex-wrap: wrap;">
+                                            <button id="languageTrigger" class="minimal-btn" onclick="openLanguageModal()">
+                                                <span id="currentLanguageLabel">Language...</span>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                                            </button>
+
+                                            <select id="languageSelect" style="display: none;">
+                                                <option value="" disabled selected>Language</option>
+                                                <option value="javascript">JavaScript</option>
+                                                <option value="python">Python</option>
+                                                <option value="c">C</option>
+                                                <option value="custom">custom</option>
+                                            </select>
+                                            
+                                            <select id="difficultySelect" class="minimal-select" onchange="checkSelections()">
+                                                <option value="" disabled selected>Difficulty...</option>
+                                                <option value="beginner">Beginner</option>
+                                                <option value="intermediate">Intermediate</option>
+                                                <option value="advanced">Advanced</option>
+                                            </select>
+                                            
+                                            <input id="customLanguageInput" class="minimal-select hidden" style="border: 1px solid var(--accent-primary); cursor: text; min-width: 120px;" placeholder="e.g. Assembly..." oninput="checkSelections()">
+                                        </div>
+                                    </div>
+                                    <div style="display: flex; gap: 8px; align-items: center;">
+                                        <button class="save-btn" onclick="openSaveModal()" title="Save">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                                        </button>
+                                        <button class="send-btn" onclick="generateChallenge()" id="generateBtn" title="Generate" disabled>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contexts Tab Content -->
+            <div class="tab-content" id="contextsTab">
+                <div class="tab-content-inner">
+                    <div class="sub-tabs">
+                        <button class="sub-tab active" data-subtab="mine-contexts" onclick="switchSubTab('contexts', 'mine-contexts')">Mine</button>
+                        <button class="sub-tab" data-subtab="Pro-contexts" onclick="switchSubTab('contexts', 'Pro-contexts')">Pro</button>
+                    </div>
+                    <div class="sub-tab-content active" id="mine-contexts">
+                        <div class="items-container" id="contextsContainer"></div>
+                        <button class="add-new-btn" onclick="addNewContext()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            Add New Context
+                        </button>
+                    </div>
+                    <div class="sub-tab-content" id="Pro-contexts">
+                        <p style="color: var(--text-secondary); text-align: center; padding: 40px;">Store contexts coming soon...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prompts Tab Content -->
+            <div class="tab-content" id="promptsTab">
+                <div class="tab-content-inner">
+                    <div class="sub-tabs">
+                        <button class="sub-tab active" data-subtab="mine-prompts" onclick="switchSubTab('prompts', 'mine-prompts')">Prompts</button>
+                        <button class="sub-tab" data-subtab="forges" onclick="switchSubTab('prompts', 'forges')">Forges</button>
+                        <button class="sub-tab" data-subtab="molds" onclick="switchSubTab('prompts', 'molds')">Molds</button>
+                        <button class="sub-tab" data-subtab="explore" onclick="switchSubTab('prompts', 'explore')">Explore</button>
+                    </div>
+                    <div class="sub-tab-content active" id="mine-prompts">
+                        <div class="items-container" id="promptsContainer"></div>
+                        <button class="add-new-btn" onclick="addNewPrompt()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                            Add New Prompt
+                        </button>
+                    </div>
+                    <div class="sub-tab-content" id="forges">
+                        <p style="color: var(--text-secondary); text-align: center; padding: 40px;">Forges coming soon...</p>
+                    </div>
+                    <div class="sub-tab-content" id="molds">
+                        <p style="color: var(--text-secondary); text-align: center; padding: 40px;">Molds coming soon...</p>
+                    </div>
+                    <div class="sub-tab-content" id="explore">
+                        <p style="color: var(--text-secondary); text-align: center; padding: 40px;">Explore coming soon...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="status-area">
+                <div class="loading-indicator" id="loadingIndicator">
+                    <div class="spinner"></div>
+                    <span>Designing your challenge...</span>
+                </div>
+                <div class="error-message" id="errorMessage">
+                    <span class="alert-text"></span>
+                    <button class="alert-close-btn" onclick="this.parentElement.classList.remove('active')" aria-label="Close">×</button>
+                </div>
+                <div class="success-message" id="successMessage">
+                    <span class="alert-text"></span>
+                    <button class="alert-close-btn" onclick="this.parentElement.classList.remove('active')" aria-label="Close">×</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Student Portal Dashboard -->
+    <div id="studentPortal" class="student-portal">
+        <button class="close-portal" onclick="closeStudentPortal()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+        <div class="portal-header">
+            <div class="portal-title-group">
+                <div class="portal-title">University Portal</div>
+                <div class="portal-subtitle" id="enrolledFacultyName">Enrolled: Faculty of Media</div>
+            </div>
+            <div class="portal-progress-group">
+                <div style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 4px;">Progress</div>
+                <div class="progress-container">
+                    <div class="progress-fill" id="portalProgressBar" style="width: 2%;"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="portal-body">
+            <!-- Left Sidebar: Weeks -->
+            <div class="weeks-sidebar" id="weeksSidebar">
+                <!-- Generated by JS -->
+            </div>
+            
+            <!-- Right Content: Resources -->
+            <div class="week-content-view">
+                
+                <!-- Hero Video Section -->
+                <div class="portal-hero">
+                    <iframe id="heroVideoFrame" src="https://www.youtube.com/embed/1KFPknAH0do?controls=0&rel=0" title="Weekly Intro" allowfullscreen></iframe>
+                </div>
+
+                <div class="content-header">
+                    <div class="content-title" id="viewWeekTitle">Week 1</div>
+                    <div class="content-desc" id="viewWeekDesc">Introduction to the curriculum and setup.</div>
+                </div>
+                
+                <div class="resource-grid">
+                    <!-- Video Lecture -->
+                    <div class="resource-card" onclick="alert('Opening Video Lecture...')">
+                        <svg class="res-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>
+                        <div class="res-title">Video Lecture</div>
+                    </div>
+                    
+                    <!-- Notes -->
+                    <div class="resource-card" id="notesCard" onclick="openClassNotes()">
+                        <svg class="res-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        <div class="res-title">Class Notes</div>
+                    </div>
+                    
+                    <!-- P&L Challenge (Locked till Wednesday) -->
+                    <div class="resource-card locked" id="pnlCard" onclick="openPnLChallenge()">
+                        <svg class="lock-icon" id="pnlLock" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:block;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        <svg class="res-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                        <div class="res-title">P&L Challenge</div>
+                        <div style="font-size: 0.7rem; color: var(--text-tertiary); margin-top: -8px;">Opens Wednesday</div>
+                    </div>
+                    
+                    <!-- Weekly Project (Locked except Fridays) -->
+                    <div class="resource-card locked" id="projectCard" onclick="openWeeklyProject()">
+                        <svg class="lock-icon" id="projectLock" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:block;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        <svg class="res-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                        <div class="res-title">Weekly Project</div>
+                        <div style="font-size: 0.7rem; color: var(--text-tertiary); margin-top: -8px;">Fridays Only (24h)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal" id="languageModal" onclick="if(event.target === this) closeLanguageModal()">
+        <div class="language-modal-content" style="background: transparent; backdrop-filter: none; border: none; box-shadow: none; padding: 32px; max-height: 90vh;">
+             <div style="display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 800px; margin: 0 auto;">
+                 <h2 style="font-size: 2.5rem; color: var(--text-primary); font-weight: 800; text-align: center; text-shadow: 0 4px 20px rgba(0,0,0,0.5);">Browse Languages</h2>
+                 <input type="text" id="languageSearch" class="language-search-bar" placeholder="Search languages..." onkeyup="filterLanguages()" style="background: rgba(28, 28, 30, 0.8); backdrop-filter: blur(20px); border: 1px solid var(--border-glass); padding: 16px 16px 16px 48px; font-size: 1.1rem; border-radius: 16px; background-position: 18px center;">
+             </div>
+             
+             <div class="language-grid-container" style="margin-top: 24px; padding: 0;">
+                 <div class="language-grid" id="languageGrid" style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px;"></div>
+             </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="storeModal" onclick="if(event.target === this) closeStoreModal()">
+        <div style="text-align: center; padding: 40px 40px 80px; width: 90%; max-width: 1400px; max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column; margin: auto;">
+             <h2 style="font-size: 2.5rem; margin-bottom: 32px; font-weight: 800; color: var(--text-primary); text-shadow: 0 4px 20px rgba(0,0,0,0.5);">P&L Store</h2>
+             <div id="challengeStoreGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 10px; flex: 1;"></div>
+             <p id="noSharedChallenges" style="color: var(--text-secondary); font-size: 1.1rem; margin-top: 40px; display: none;">No shared challenges yet. Complete a challenge and share it with the Pro!</p>
+        </div>
+    </div>
+
+    <!-- University Modal (Selection & Admission) -->
+    <div class="modal" id="universityModal" onclick="if(event.target === this) closeUniversityModal()">
+        <div style="text-align: center; padding: 40px; width: 90%; max-width: 1000px; max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column; margin: auto;">
+             <h2 style="font-size: 2.5rem; font-weight: 800; color: var(--text-primary); margin-bottom: 8px; text-shadow: 0 4px 20px rgba(0,0,0,0.5);">University of P&L</h2>
+             <p style="color: var(--text-secondary); font-size: 1.1rem; margin-bottom: 32px;">Select a faculty to view its curriculum and submit your admission application.</p>
+             <div class="university-grid" id="facultyGrid"></div>
+             <div class="admission-form">
+                 <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); text-align: left;">Admission Application</h3>
+                 
+                 <iframe src="https://forms.fillout.com/t/g4cACLJZUcus" style="width: 100%; height: 1500px; min-height: 90vh; border: none; border-radius: 12px;" title="Admission Form"></iframe>
+             </div>
+        </div>
+    </div>
+
+    <div class="modal" id="uniSettingsModal" onclick="if(event.target === this) closeUniSettings()">
+        <div class="modal-content" style="padding: 32px; width: 90%; max-width: 500px;">
+            <div style="text-align: center; margin-bottom: 24px;">
+                <h2 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 8px;">University Settings</h2>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">ID: <span id="displayStudentID" style="font-family: 'JetBrains Mono', monospace; color: var(--accent-primary);">LOADING...</span></p>
+            </div>
+
+            <div class="uni-info-block">
+                <strong>Requirements to Graduate:</strong><br>
+                Complete at least 50% of coursework.<br>
+                <em>Note: Your certificate will only include the weeks you actively participate in.</em>
+            </div>
+
+            <div class="uni-settings-list">
+                <button class="uni-setting-item" onclick="alert('Feature coming soon: Switch Faculty')">
+                    Switch Faculty Request
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
+                </button>
+                
+                <button class="uni-setting-item" onclick="alert('Feature coming soon: Double/Triple Major')">
+                    Double / Triple Major
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                </button>
+
+                <button class="uni-setting-item" onclick="alert('Feature coming soon: Auto Renewal')">
+                    Auto Renewal
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"></path><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+                </button>
+
+                <button class="uni-setting-item" onclick="alert('Generating Reportbook...')">
+                    Grades Reportbook
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                </button>
+
+                <button class="uni-setting-item" onclick="alert('Current Rank: Top 15%')">
+                    Current Rank
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                </button>
+
+                <button class="uni-setting-item" onclick="alert('Change Username coming soon')">
+                    Change Username
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+                </button>
+
+                <button class="uni-setting-item" onclick="window.location.href='mailto:University@chimwopara.com'">
+                    Contact Us
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                </button>
+
+                <button class="uni-setting-item danger" onclick="handleUniDropout()">
+                    Dropout
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="modal" id="paymentModal" onclick="if(event.target === this) closePaymentModal()">
+        <div class="modal-content payment-modal-content" style="padding: 32px;">
+            <h3 style="font-size: 1.8rem; margin-bottom: 24px; font-weight: 700; text-align: center;">Secure Checkout</h3>
+            
+            <div class="card-preview">
+                <div class="chip"></div>
+                <div class="card-number-display">•••• •••• •••• 4242</div>
+                <div class="card-details-display">
+                    <div><div class="detail-label">Card Holder</div><div class="detail-value">John Doe</div></div>
+                    <div><div class="detail-label">Expires</div><div class="detail-value">12/28</div></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Card Number</label>
+                <input type="text" class="form-input" placeholder="0000 0000 0000 0000">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px;">
+                <div class="form-group"><label class="form-label">Expiry</label><input type="text" class="form-input" placeholder="MM/YY"></div>
+                <div class="form-group"><label class="form-label">CVC</label><input type="text" class="form-input" placeholder="123"></div>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin: 24px 0 16px 0; border-top: 1px solid var(--border-glass); padding-top: 16px;">
+                <span style="color: var(--text-secondary);">Total Admission Fee</span>
+                <span style="font-size: 1.5rem; font-weight: 700;">$499.00</span>
+            </div>
+
+            <button onclick="processPayment()" class="minimal-btn" style="width: 100%; background: #30D158; color: white; justify-content: center; padding: 14px; font-size: 1.1rem; font-weight: 600;">Pay Now</button>
+        </div>
+    </div>
+
+    <div class="modal" id="themeStoreModal" onclick="if(event.target === this) closeThemeStoreModal()">
+        <div style="text-align: center; padding: 40px 40px 80px; width: 90%; max-width: 1400px; max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column; margin: auto;">
+             <h2 style="font-size: 2.5rem; margin-bottom: 32px; font-weight: 800; color: var(--text-primary); text-shadow: 0 4px 20px rgba(0,0,0,0.5);">Environment</h2>
+             <div class="theme-grid" id="themeGrid" style="gap: 20px; padding: 10px; flex: 1;" onclick="if(event.target === this) closeThemeStoreModal()"></div>
+        </div>
+    </div>
+
+    <div class="modal" id="premiumModal" onclick="if(event.target === this) closePremiumModal()">
+        <div style="padding: 32px; width: 100%; max-width: 900px; position: relative; display: flex; flex-direction: column; align-items: center;">
+             <button id="demoThemesBtn" class="minimal-btn" onclick="demoUnlockThemes()" style="position: absolute; top: 0; left: 0; padding: 6px 10px; font-size: 0.8rem; opacity: 0; pointer-events: none; transition: all 0.3s ease; background: rgba(255,255,255,0.1);">Demo Unlock</button>
+             <h3 style="font-size: 2.5rem; margin-bottom: 40px; color: var(--text-primary); font-weight: 800; text-align: center; text-shadow: 0 4px 20px rgba(0,0,0,0.5);">Premium Plans</h3>
+             
+<div class="premium-plans-container">
+    <div style="background: rgba(28, 28, 30, 0.8); backdrop-filter: blur(40px); border: 1px solid var(--border-glass); border-radius: 24px; padding: 32px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
+        <h4 style="font-size: 1.4rem; font-weight: 700;">Boost Member</h4>
+        <div style="font-size: 2rem; font-weight: 800;">$4.99<span style="font-size: 1rem; font-weight: 500; color: var(--text-secondary);">/mo</span></div>
+        
+        <div class="lines-visual">
+            <div class="lv-label"><span>1,000 lines</span></div>
+            <div class="lv-track">
+                <div id="p-bar-boost-base" class="lv-bar-base" style="width: 2.5%"></div>
+                <div id="p-bar-boost-extra" class="lv-bar-extra" style="width: 7.5%"></div>
+            </div>
+        </div>
+
+        <ul style="text-align: left; color: var(--text-secondary); font-size: 1rem; padding-left: 20px; margin-bottom: auto; list-style-type: disc; line-height: 1.5;">
+            <li>Unlimited theme access</li>
+            <li>All previous perks</li>
+        </ul>
+        <button id="btn-shy" class="minimal-btn" onclick="activatePremium('Boost Member', 1000)" style="width: 100%; justify-content: center; background: rgba(255,255,255,0.1); margin-top: 24px; padding: 12px; font-size: 1rem;">Select</button>
+    </div>
+
+    <div style="background: rgba(10, 132, 255, 0.1); backdrop-filter: blur(40px); border: 1px solid rgba(10, 132, 255, 0.3); border-radius: 24px; padding: 32px; display: flex; flex-direction: column; gap: 16px; position: relative; box-shadow: 0 20px 60px rgba(10, 132, 255, 0.2);">
+        <div style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--accent-primary); padding: 6px 16px; border-radius: 16px; font-size: 0.85rem; font-weight: 700; color: white; box-shadow: 0 4px 12px rgba(10, 132, 255, 0.4);">POPULAR</div>
+        <h4 style="font-size: 1.4rem; font-weight: 700;">Pro Member</h4>
+        <div style="font-size: 2rem; font-weight: 800;">$9.99<span style="font-size: 1rem; font-weight: 500; color: var(--text-secondary);">/mo</span></div>
+        
+        <div class="lines-visual">
+            <div class="lv-label"><span>5,000 lines</span></div>
+            <div class="lv-track">
+                <div id="p-bar-pro-base" class="lv-bar-base" style="width: 2.5%"></div>
+                <div id="p-bar-pro-extra" class="lv-bar-extra" style="width: 47.5%"></div>
+            </div>
+        </div>
+
+        <ul style="text-align: left; color: var(--text-secondary); font-size: 1rem; padding-left: 20px; margin-bottom: auto; list-style-type: disc; line-height: 1.5;">
+            <li>Access Pro</li>
+            <li>All previous perks</li>
+        </ul>
+        <button id="btn-Pro" class="minimal-btn" onclick="activatePremium('Pro Member', 5000)" style="width: 100%; justify-content: center; background: var(--accent-primary); color: white; margin-top: 24px; padding: 12px; font-size: 1rem;">Select</button>
+    </div>
+
+    <div style="background: linear-gradient(145deg, rgba(94, 92, 230, 0.15), rgba(191, 90, 242, 0.15)); backdrop-filter: blur(40px); border: 1px solid rgba(94, 92, 230, 0.5); border-radius: 24px; padding: 32px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 20px 60px rgba(94, 92, 230, 0.2);">
+        <h4 style="font-size: 1.4rem; font-weight: 700;">Super Member</h4>
+        <div style="font-size: 2rem; font-weight: 800;">$19.99<span style="font-size: 1rem; font-weight: 500; color: var(--text-secondary);">/mo</span></div>
+        
+        <div class="lines-visual">
+            <div class="lv-label"><span>10,000 lines</span></div>
+            <div class="lv-track">
+                <div id="p-bar-super-base" class="lv-bar-base" style="width: 2.5%"></div>
+                <div id="p-bar-super-extra" class="lv-bar-extra" style="width: 97.5%"></div>
+            </div>
+        </div>
+
+        <ul style="text-align: left; color: var(--text-secondary); font-size: 1rem; padding-left: 20px; margin-bottom: auto; list-style-type: disc; line-height: 1.5;">
+            <li>Build with other Languages</li>
+            <li>All previous perks</li>
+        </ul>
+        <button id="btn-super" class="minimal-btn" onclick="activatePremium('Super Member', 10000)" style="width: 100%; justify-content: center; background: linear-gradient(135deg, #5e5ce6, #bf5af2); color: white; margin-top: 24px; padding: 12px; font-size: 1rem; border: none;">Select</button>
+    </div>
+</div>
+             <p style="text-align: center; color: rgba(255,255,255,0.5); margin-top: 32px; font-size: 1rem; font-weight: 500;">Free plan includes 250 output lines monthly and 18 languages.</p>
+             <div id="downgradeOption" onclick="downgradeToFree()">Return to Free Plan</div>
+        </div>
+    </div>
+
+    <!-- Structured Tutorial Modal -->
+    <div class="modal" id="structuredModal" onclick="if(event.target === this) closeStructuredModal()">
+        <div class="modal-content" style="text-align: center; padding: 40px; width: 90%; max-width: 1000px; max-height: 90vh; overflow-y: auto;">
+            <h2 style="font-size: 2rem; margin-bottom: 12px; font-weight: 800;">Structured P&L</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 32px;">Use these keywords in <strong>Structured Mode</strong> to precisely control the AI. <em>Tap any keyword to learn more.</em></p>
+            
+            <div class="structured-grid">
+                <!-- Start -->
+                <div class="struct-category">
+                    <div class="struct-title">Start</div>
+                    <div class="struct-items">
+                        <span class="struct-chip" onclick="showKeywordInfo('in')">in</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('for')">for</span>
+                    </div>
+                </div>
+                
+                <!-- References -->
+                <div class="struct-category">
+                    <div class="struct-title">References</div>
+                    <div class="struct-items">
+                        <span class="struct-chip" onclick="showKeywordInfo('context')">context</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('line')">line</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('chimcontext')">chimcontext</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('prompt')">prompt</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('chimprompt')">chimprompt</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('file')">file</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('error')">error</span>
+                    </div>
+                </div>
+
+                <!-- Generation -->
+                <div class="struct-category">
+                    <div class="struct-title">Generation</div>
+                    <div class="struct-items">
+                        <span class="struct-chip" onclick="showKeywordInfo('spawn')">spawn</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('rare')">rare</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('create')">create</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('refactor')">refactor</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('explain')">explain</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('optimize')">optimize</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('debug')">debug</span>
+                    </div>
+                </div>
+
+                <!-- Attributes -->
+                <div class="struct-category">
+                    <div class="struct-title">Attributes</div>
+                    <div class="struct-items">
+                        <span class="struct-chip" onclick="showKeywordInfo('from')">from</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('makeit')">makeit</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('like')">like</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('but')">but</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('with')">with</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('without')">without</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('prefer')">prefer</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('format')">format</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('steps')">steps</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('between')">between</span>
+                    </div>
+                </div>
+
+                <!-- Position & Style -->
+                <div class="struct-category">
+                    <div class="struct-title">Position & Style</div>
+                    <div class="struct-items">
+                        <span class="struct-chip" onclick="showKeywordInfo('nextto')">nextto</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('blame')">blame</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('animate')">animate</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('background')">background</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('font')">font</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('style')">style</span>
+                    </div>
+                </div>
+
+                <!-- Organization -->
+                <div class="struct-category">
+                    <div class="struct-title">Organization</div>
+                    <div class="struct-items">
+                        <span class="struct-chip" onclick="showKeywordInfo('maybe')">maybe</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('then')">then</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('forge')">forge</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('mold')">mold</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('jump')">jump</span>
+                        <span class="struct-chip" onclick="showKeywordInfo('using')">using</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Keyword Info Display -->
+            <div id="keywordInfoBox" style="margin-top: 24px; padding: 20px; background: rgba(0,0,0,0.4); border: 1px solid var(--accent-primary); border-radius: 12px; text-align: left; display: none;">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                    <span id="keywordInfoName" style="font-family: 'JetBrains Mono', monospace; font-size: 1.2rem; color: var(--accent-primary); font-weight: 700;"></span>
+                    <span id="keywordInfoCategory" style="font-size: 0.75rem; background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 4px; color: var(--text-tertiary);"></span>
+                </div>
+                <p id="keywordInfoDesc" style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5; margin-bottom: 12px;"></p>
+                <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 12px; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;">
+                    <span style="color: var(--text-tertiary);">Example:</span><br>
+                    <span id="keywordInfoExample" style="color: var(--text-secondary);"></span>
+                </div>
+            </div>
+            
+            <!-- Example (shown when no keyword selected) -->
+            <div id="keywordDefaultExample" style="margin-top: 24px; padding: 20px; background: rgba(0,0,0,0.3); border-radius: 12px; text-align: left; font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--text-secondary);">
+                <strong style="color: var(--accent-primary);">Example:</strong><br><br>
+                <span style="color: #5AC8FA; font-weight: bold;">in</span> swift ; <span style="color: #5AC8FA; font-weight: bold;">for</span> iPhone ; <span style="color: #5AC8FA; font-weight: bold;">context</span> 1 ; <span style="color: #30D158; font-weight: bold;">create</span> search bar ; <span style="color: #5AC8FA; font-weight: bold;">from</span> WhatsApp ; <span style="color: #5AC8FA; font-weight: bold;">makeit</span> static ; <span style="color: #5AC8FA; font-weight: bold;">like</span> iMessage ; <span style="color: #5AC8FA; font-weight: bold;">but</span> new Siri effect ; no search icon
+            </div>
+        </div>
+    </div>
+
+    <!-- Save Modal -->
+    <div class="modal" id="saveModal" onclick="if(event.target === this) closeSaveModal()">
+        <div class="modal-content" style="padding: 32px; width: 90%; max-width: 500px;">
+            <h2 style="font-size: 1.5rem; margin-bottom: 24px; font-weight: 700; text-align: center;">Save Content</h2>
+            
+            <div class="save-type-toggle">
+                <button class="type-btn active" data-type="context" onclick="setSaveType('context')">Context</button>
+                <button class="type-btn" data-type="prompt" onclick="setSaveType('prompt')">Prompt</button>
+            </div>
+            
+            <div class="form-group" style="margin-top: 20px;">
+                <label class="form-label">Title *</label>
+                <input type="text" id="saveTitle" class="form-input" placeholder="Enter a title..." required>
+            </div>
+            
+            <div class="form-group" style="margin-top: 16px;">
+                <label class="form-label">Description (optional)</label>
+                <textarea id="saveDescription" class="form-input" style="min-height: 80px; resize: vertical;" placeholder="Add a description..."></textarea>
+            </div>
+            
+            <div class="visibility-toggle" style="margin-top: 20px;">
+                <span style="color: var(--text-secondary);">Visibility:</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="savePublic">
+                    <span class="toggle-slider"></span>
+                </label>
+                <span id="visibilityLabel" style="color: var(--text-secondary);">Private</span>
+            </div>
+            
+            <div style="display: flex; gap: 12px; margin-top: 24px;">
+                <button onclick="closeSaveModal()" class="minimal-btn" style="flex: 1; justify-content: center; padding: 12px;">Cancel</button>
+                <button onclick="confirmSave()" class="minimal-btn" style="flex: 1; justify-content: center; padding: 12px; background: var(--accent-primary); color: white;">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal" id="editModal" onclick="if(event.target === this) closeEditModal()">
+        <div class="modal-content" style="padding: 32px; width: 90%; max-width: 600px;">
+            <h2 style="font-size: 1.5rem; margin-bottom: 24px; font-weight: 700; text-align: center;" id="editModalTitle">Edit Item</h2>
+            
+            <input type="hidden" id="editItemType">
+            <input type="hidden" id="editItemSerial">
+            
+            <div class="form-group">
+                <label class="form-label">Title</label>
+                <input type="text" id="editTitle" class="form-input" placeholder="Enter a title...">
+            </div>
+            
+            <div class="form-group" style="margin-top: 16px;">
+                <label class="form-label">Content</label>
+                <textarea id="editContent" class="form-input" style="min-height: 150px; resize: vertical; font-family: 'JetBrains Mono', monospace;" placeholder="Enter content..."></textarea>
+            </div>
+            
+            <div class="form-group" style="margin-top: 16px;">
+                <label class="form-label">Description (optional)</label>
+                <textarea id="editDescription" class="form-input" style="min-height: 80px; resize: vertical;" placeholder="Add a description..."></textarea>
+            </div>
+            
+            <div class="visibility-toggle" style="margin-top: 20px;">
+                <span style="color: var(--text-secondary);">Visibility:</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="editPublic">
+                    <span class="toggle-slider"></span>
+                </label>
+                <span id="editVisibilityLabel" style="color: var(--text-secondary);">Private</span>
+            </div>
+            
+            <div style="display: flex; gap: 12px; margin-top: 24px;">
+                <button onclick="closeEditModal()" class="minimal-btn" style="flex: 1; justify-content: center; padding: 12px;">Cancel</button>
+                <button onclick="confirmEdit()" class="minimal-btn" style="flex: 1; justify-content: center; padding: 12px; background: var(--accent-primary); color: white;">Save Changes</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="signinModal" onclick="if(event.target === this) closeSigninModal()">
+    <div class="modal-content" style="padding: 0; width: 900px; max-width: 95%; display: flex; overflow: hidden; border-radius: 24px; height: 600px;">
+        
+        <!-- Left Side: Image -->
+        <div style="width: 55%; background: #000; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;" class="signin-image-side">
+    <img src="assets/signin.png" alt="Sign In" style="width: 100%; height: 100%; object-fit: contain;" onerror="this.style.backgroundColor='#1a1a1a'">
+</div>
+
+        <!-- Right Side: Sign In -->
+        <div style="width: 45%; padding: 60px 48px; display: flex; flex-direction: column; justify-content: center; align-items: center; background: rgba(28, 28, 30, 0.98); backdrop-filter: blur(40px);" class="signin-content-side">
+            
+            <div style="text-align: center; margin-bottom: 48px; width: 100%;">
+                <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 16px; color: var(--text-primary);">Chim Wopara sign in</h2>
+                <p style="color: var(--text-secondary); font-size: 1rem; line-height: 1.5;">Sign in to unlock all themes, save your progress, and access premium features.</p>
+            </div>
+
+            <button onclick="triggerGoogleLogin()" class="google-signin-btn" style="width: 100%; max-width: 320px; padding: 16px; font-size: 1rem; justify-content: center; background: white; color: #1f1f1f; border: none; font-weight: 600; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: all 0.2s ease;">
+                <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/><path d="M1 1h22v22H1z" fill="none"/></svg>
+                Continue with Google
+            </button>
+            
+            <p style="font-size: 0.8rem; color: var(--text-tertiary); text-align: center; margin-top: 48px; max-width: 300px;"><a href="https://chimwopara.com/terms.html#terms" target="_blank" style="color: var(--accent-primary); text-decoration: none;">Terms of Service</a></p>
+        </div>
+    </div>
+    <!-- Import Syllabus Data before main script -->
+    <script src="syllabus.js"></script>
+    
+    <!-- Claude API Integration -->
+    <script src="claude-api.js"></script>
+    
+    <!-- Challenge Handler -->
+    <script src="challenge-handler.js"></script>
+    
+    <!-- Main Application Script -->
+    <script src="script-complete.js"></script>
+</body>
+</html>

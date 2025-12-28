@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Chim Wopara - Master AI Development Courses | Learn to Code with AI</title>
+    <meta name="description" content="Learn to code with AI through hands-on courses from Chim Wopara. Master AI web development, app creation, game design, and more. Start building the future, today.">
+    <meta name="keywords" content="Chim Wopara, Wopara, learn AI, AI development course, learn to code with AI, AI web builder, AI advertising, AI app development, AI game development, master AI, coding with AI, AI for developers, AI programming">
+    <meta name="author" content="Chim Wopara Enterprises">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://chimwopara.com/"> 
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://chimwopara.com/">
+    <meta property="og:title" content="Chim Wopara - Learn to Code with AI">
+    <meta property="og:description" content="Learn to code with AI through hands-on courses from Chim Wopara. Master AI web development, app creation, game design, and more.">
+    <meta property="og:image" content="https://chimwopara.com/assets/logo.png">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://chimwopara.com/">
+    <meta property="twitter:title" content="Chim Wopara - Master AI Development Courses | Learn to Code with AI">
+    <meta property="twitter:description" content="Learn to code with AI through hands-on courses from Chim Wopara. Master AI web development, app creation, game design, and more.">
+    <meta property="twitter:image" content="https://chimwopara.com/assets/twitter-image.png">
+
+    <link rel="icon" href="assets/logo.png" type="image/png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1B2330;
+            color: #B7D1E1;
+        }
+        @keyframes animate-gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .hero-bg {
+            position: relative;
+            background: linear-gradient(-45deg, #1B2330, #3f5268, #B7D1E1, #3f5268);
+            background-size: 400% 400%;
+            animation: animate-gradient 25s ease infinite;
+            overflow: hidden;
+        }
+        .hero-image-bg {
+            position: relative;
+            /* Updated Path */
+            background-image: url('assets/hero.png');
+            background-size: cover;
+            background-position: center;
+        }
+        .culture-bg {
+            position: relative;
+            /* Updated Path */
+            background-image: url('assets/hero.png');
+            background-size: cover;
+            background-position: center;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        .cta-button {
+            transition: all 0.3s ease;
+        }
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .clothing-card {
+            background: rgba(63, 82, 104, 0.35);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(183, 209, 225, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .clothing-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        .glassy-card {
+            background: rgba(63, 82, 104, 0.35);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(183, 209, 225, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            padding: 2rem;
+            border-radius: 1rem;
+        }
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Unified School Section Styles */
+        .school-collage {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            margin: 1rem auto;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .orbit-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: auto;
+            animation: spin 30s linear infinite;
+        }
+        
+        .central-image {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 30;
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        .surrounding-image {
+            position: absolute;
+            transition: all 0.3s ease;
+        }
+
+        .surrounding-image:hover {
+            filter: brightness(1.2);
+            transform: scale(1.2) !important;
+            z-index: 35 !important;
+        }
+        
+        /* Updated positioning for cycling images */
+        .surrounding-image-1 { 
+            width: 85px;
+            height: 85px;
+            top: calc(50% - 200px - 42.5px);
+            left: calc(50% - 42.5px);
+            z-index: 28;
+            animation: counter-spin-1 32s linear infinite;
+        }
+        .surrounding-image-2 { 
+            width: 60px;
+            height: 60px;
+            top: calc(50% - 98px - 30px);
+            left: calc(50% + 127px - 30px);
+            z-index: 15;
+            animation: counter-spin-2 28s linear infinite;
+        }
+        .surrounding-image-3 { 
+            width: 80px;
+            height: 80px;
+            top: calc(50% + 55px - 40px);
+            left: calc(50% + 194px - 40px);
+            z-index: 25;
+            animation: counter-spin-3 35s linear infinite;
+        }
+        .surrounding-image-4 { 
+            width: 55px;
+            height: 55px;
+            top: calc(50% + 125px - 27.5px);
+            left: calc(50% - 95px - 27.5px);
+            z-index: 12;
+            animation: counter-spin-4 26s linear infinite;
+        }
+        .surrounding-image-5 { 
+            width: 82px;
+            height: 82px;
+            top: calc(50% + 80px - 41px);
+            left: calc(50% - 175px - 41px);
+            z-index: 26;
+            animation: counter-spin-5 33s linear infinite;
+        }
+        .surrounding-image-6 { 
+            width: 65px;
+            height: 65px;
+            top: calc(50% - 25px - 32.5px);
+            left: calc(50% - 158px - 32.5px);
+            z-index: 20;
+            animation: counter-spin-6 29s linear infinite;
+        }
+        .surrounding-image-7 { 
+            width: 75px;
+            height: 75px;
+            top: calc(50% - 145px - 37.5px);
+            left: calc(50% + 115px - 37.5px);
+            z-index: 22;
+            animation: counter-spin-7 31s linear infinite;
+        }
+
+        @keyframes counter-spin-1 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+        @keyframes counter-spin-2 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+        @keyframes counter-spin-3 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+        @keyframes counter-spin-4 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+        @keyframes counter-spin-5 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+        @keyframes counter-spin-6 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+        @keyframes counter-spin-7 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .school-collage {
+                width: 350px;
+                height: 350px;
+            }
+            .central-image {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
+        /* About Section Collage Styles */
+        .about-collage {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            margin: 1rem auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .about-orbit-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: auto;
+            animation: spin 35s linear infinite;
+        }
+
+        .about-central-image {
+            width: 256px;
+            height: 256px;
+            border-radius: 50%;
+            object-fit: cover;
+            position: relative;
+            z-index: 30;
+            border: 4px solid #3f5268;
+        }
+
+        .about-surrounding-image {
+            position: absolute;
+            transition: all 0.3s ease;
+            z-index: 32;
+            display: block; 
+        }
+        .about-surrounding-image img {
+            width: 100%;
+            height: auto;
+        }
+
+        .about-surrounding-image:hover {
+            filter: brightness(1.2);
+            transform: scale(1.3) !important;
+            z-index: 35 !important;
+        }
+
+        .about-surrounding-image-1 { /* Github */
+            width: 50px; height: 50px;
+            top: calc(50% - 180px - 25px);
+            left: calc(50% - 25px);
+            animation: counter-spin-1 35s linear infinite;
+        }
+        .about-surrounding-image-2 { /* Instagram */
+            width: 55px; height: 55px;
+            top: calc(50% - 90px - 27.5px);
+            left: calc(50% + 140px - 27.5px);
+            animation: counter-spin-2 33s linear infinite;
+        }
+        .about-surrounding-image-3 { /* TikTok */
+            width: 50px; height: 50px;
+            top: calc(50% + 90px - 25px);
+            left: calc(50% + 145px - 25px);
+            animation: counter-spin-3 38s linear infinite;
+        }
+        .about-surrounding-image-4 { /* WhatsApp */
+            width: 52px; height: 52px;
+            top: calc(50% + 170px - 26px);
+            left: calc(50% - 100px - 26px);
+            animation: counter-spin-4 32s linear infinite;
+        }
+        .about-surrounding-image-5 { /* UAlberta */
+            width: 55px; height: 55px;
+            top: calc(50% + 95px - 27.5px);
+            left: calc(50% - 160px - 27.5px);
+            animation: counter-spin-5 36s linear infinite;
+        }
+        .about-surrounding-image-6 { /* YouTube */
+            width: 50px; height: 50px;
+            top: calc(50% - 100px - 25px);
+            left: calc(50% - 150px - 25px);
+            animation: counter-spin-6 34s linear infinite;
+        }
+        .about-surrounding-image-7 { /* Facebook */
+            width: 50px; height: 50px;
+            top: calc(50% - 150px - 25px);
+            left: calc(50% + 100px - 25px);
+            animation: counter-spin-7 37s linear infinite;
+        }
+        .about-surrounding-image-8 { /* LinkedIn */
+            width: 52px; height: 52px;
+            top: calc(50% + 165px - 26px);
+            left: calc(50% + 20px - 26px);
+            animation: counter-spin-8 39s linear infinite;
+        }
+
+        @keyframes counter-spin-8 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+
+        /* Responsive adjustments for about collage */
+        @media (max-width: 768px) {
+            .about-collage {
+                width: 300px;
+                height: 300px;
+            }
+            .about-central-image {
+                width: 180px;
+                height: 180px;
+            }
+        }
+
+        /* Footer Background Style */
+        .footer-bg {
+            position: relative;
+            /* Updated Path */
+            background-image: url('assets/hero.png');
+            background-size: cover;
+            background-position: center;
+        }
+        .footer-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-color: rgba(27, 35, 48, 0.85); /* Dark overlay for readability */
+        }
+    </style>
+    
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "name": "Chim Wopara Enterprises",
+          "url": "https://chimwopara.com/",
+          "logo": "https://chimwopara.com/assets/logo.png",
+          "founder": {
+            "@type": "Person",
+            "name": "Chim Wopara",
+            "jobTitle": "Entrepreneur and Technologist",
+            "url": "https://chimwopara.com/#about"
+          }
+        },
+        {
+          "@type": "Person",
+          "name": "Chim Wopara",
+          "url": "https://chimwopara.com/#about",
+          "image": "https://chimwopara.com/assets/chim.png",
+          "jobTitle": "AI Development Instructor",
+          "alumniOf": "Self-Taught",
+          "description": "An entrepreneur and technologist passionate about empowering people with cutting-edge skills in AI development, web development, and digital marketing."
+        }
+      ]
+    }
+    </script>
+</head>
+<body class="bg-[#1B2330] text-[#B7D1E1]">
+
+    <header class="bg-[#1B2330]/80 backdrop-blur-sm fixed top-0 left-0 right-0 z-50">
+        <div class="container mx-auto px-6 py-3 flex justify-center items-center">
+            <a href="#"><img src="assets/logo.png" alt="Chim Wopara Logo" class="h-10 w-auto" onerror="this.onerror=null; this.src='https://placehold.co/120x40/1B2330/FFFFFF?text=CW'"></a>
+        </div>
+    </header>
+
+    <main class="pt-16">
+        <section class="hero-image-bg py-20 md:py-32">
+            <div class="container mx-auto px-6 text-center hero-content">
+                <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4 text-[#B7D1E1]">The Future, not the now.</h1>
+                <p class="text-lg md:text-xl text-[#B7D1E1]/80 max-w-3xl mx-auto mb-8">We make  products that point to the future of technology in Africa .</p>
+                <div class="max-w-4xl mx-auto mb-8">
+                    
+                </div>
+                
+                <div class="max-w-4xl mx-auto">
+                    <div class="bg-[#3f5268] rounded-lg p-4">
+                        <iframe width="100%" height="400" src="https://www.youtube.com/embed/1KFPknAH0do" title="AI Development Tutorial with Chim Wopara" frameborder="0" allowfullscreen class="rounded-lg"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="schools" class="py-20 hero-bg overflow-hidden">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-8 fade-in-up">
+                    <div class="school-collage">
+                       <img id="central-image" src="assets/media.png" alt="AI School" class="central-image">
+                       <div class="orbit-container">
+                            <img id="surrounding-1" src="assets/media1.png" alt="Program icon 1" class="surrounding-image surrounding-image-1">
+                            <img id="surrounding-2" src="assets/media2.png" alt="Program icon 2" class="surrounding-image surrounding-image-2">
+                            <img id="surrounding-3" src="assets/media3.png" alt="Program icon 3" class="surrounding-image surrounding-image-3">
+                            <img id="surrounding-4" src="assets/media4.png" alt="Program icon 4" class="surrounding-image surrounding-image-4">
+                            <img id="surrounding-5" src="assets/media5.png" alt="Program icon 5" class="surrounding-image surrounding-image-5">
+                            <img id="surrounding-6" src="assets/media6.png" alt="Program icon 6" class="surrounding-image surrounding-image-6">
+                            <img id="surrounding-7" src="assets/media7.png" alt="Program icon 7" class="surrounding-image surrounding-image-7">
+                       </div>
+                    </div>
+                    <div class="glassy-card text-center md:text-left">
+    <h3 class="text-4xl font-bold mb-4 text-[#B7D1E1]">Prompts & Logic</h3>
+    <p id="school-description" class="text-[#B7D1E1]/80 max-w-lg mx-auto md:mx-0 mb-8">
+        P&L is our state of the art protocol for unleashing your creativity with Artificial Intelligence. Enrol in our Media, Coding or Business school.
+    </p>
+
+    <a href="pal/index.html?action=university" class="bg-[#1B2330] hover:bg-opacity-80 text-white font-bold py-3 px-10 rounded-lg text-lg cta-button inline-block mb-4">
+    Enroll Now
+</a>
+
+    <a href="pal/index.html?action=prompt" class="bg-[#1B2330] hover:bg-opacity-80 text-white font-bold py-3 px-10 rounded-lg text-lg cta-button inline-block">
+        Prompt Now
+    </a>
+</div>
+
+                </div>
+            </div>
+        </section>
+        
+        <section id="clothing" class="py-20 culture-bg">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12 fade-in-up">
+                    <h2 class="text-4xl font-bold mb-2 text-[#B7D1E1]">Culture On My Back</h2>
+                    <p class="text-[#B7D1E1]/80 max-w-2xl mx-auto">Exclusive apparel designed by Chim Wopara. Wear the culture, embody the future.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="rounded-xl overflow-hidden clothing-card fade-in-up">
+                        <img src="assets/daytrip.png" alt="Daytrip 3/4 Sleeve Shirt" class="w-full h-auto object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-[#B7D1E1]">Daytrip</h3>
+                            <p class="text-[#B7D1E1]/80 mb-4">3/4 Sleeve Shirt</p>
+                            <div class="flex justify-start items-center">
+                                <button class="bg-[#1B2330] hover:bg-opacity-80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('Daytrip', 'notify')">Get Notified</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rounded-xl overflow-hidden clothing-card fade-in-up" style="transition-delay: 100ms;">
+                        <img src="assets/dapter.png" alt="Dapter Premium Apparel" class="w-full h-auto object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-[#B7D1E1]">Dapter</h3>
+                            <p class="text-[#B7D1E1]/80 mb-4">Premium Apparel</p>
+                            <div class="flex justify-start items-center">
+                                <button class="bg-[#1B2330] hover:bg-opacity-80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('Dapter', 'notify')">Get Notified</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="rounded-xl overflow-hidden clothing-card fade-in-up" style="transition-delay: 200ms;">
+                        <img src="assets/manuch.png" alt="Manuch Designer Collection" class="w-full h-auto object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-[#B7D1E1]">Manuch</h3>
+                            <p class="text-[#B7D1E1]/80 mb-4">Designer Collection</p>
+                            <div class="flex justify-start items-center">
+                                <button class="bg-[#1B2330] hover:bg-opacity-80 text-white font-semibold py-2 px-4 rounded-lg cta-button text-sm" onclick="openPurchaseModal('Manuch', 'notify')">Get Notified</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 <div class="text-center mt-12 fade-in-up">
+                    <p class="text-[#B7D1E1]/80 text-lg">New product annually</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="py-20 hero-bg overflow-hidden">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-12 fade-in-up">
+                    <div class="about-collage">
+                        <img src="assets/chim.png" alt="Profile photo of Chim Wopara" class="about-central-image">
+                        <div class="about-orbit-container">
+                            <a href="https://github.com/chimwopara" target="_blank" rel="noopener noreferrer" class="about-surrounding-image about-surrounding-image-1"><img src="assets/github.png" alt="GitHub"></a>
+                            <a href="https://www.instagram.com/chimwopara" target="_blank" rel="noopener noreferrer" class="about-surrounding-image about-surrounding-image-2"><img src="assets/instagram.png" alt="Instagram"></a>
+                            <a href="https://www.tiktok.com/@chimwopara?_t=ZS-8zXMw9gpRDO&_r=1" target="_blank" rel="noopener noreferrer" class="about-surrounding-image about-surrounding-image-3"><img src="assets/tiktok.png" alt="TikTok"></a>
+                            <a href="https://chat.whatsapp.com/Bn75K4eoSVvLUOylfu9Urt?mode=ems_copy_c" target="_blank" rel="noopener noreferrer" class="about-surrounding-image about-surrounding-image-4"><img src="assets/whatsapp.png" alt="WhatsApp"></a>
+                            <a href="https://ualberta.ca" target="_blank" rel="noopener noreferrer" class="about-surrounding-image about-surrounding-image-5"><img src="assets/ualberta.png" alt="UAlberta"></a>
+                            <a href="https://youtube.com/@chimwopara?si=rMgMJHTLgJJzwL_D" target="_blank" rel="noopener noreferrer" class="about-surrounding-image about-surrounding-image-6"><img src="assets/youtube.png" alt="YouTube"></a>
+                            <a href="https://www.facebook.com/profile.php?id=61579876920080" target="_blank" rel="noopener noreferrer" class="about-surrounding-image about-surrounding-image-7"><img src="assets/facebook.png" alt="Facebook"></a>
+                            <a href="https://www.linkedin.com/in/wopara/" target="_blank" rel="noopener noreferrer" class="about-surrounding-image about-surrounding-image-8"><img src="assets/linkedin.png" alt="LinkedIn"></a>
+                        </div>
+                    </div>
+                    <div class="glassy-card text-center md:text-left">
+                        <h2 class="text-3xl font-bold mb-4 text-[#B7D1E1]">Hi,</h2>
+                        <p class="text-[#B7D1E1]/80 mb-4">I'm Chim Wopara, and i create enterprise solutions with my strong background in Computer Science and Economics.</p>
+                        <p class="text-[#B7D1E1]/80 mb-6"> A better Africa uses Artificial Intelligence to power the world.</p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                             <a href="https://wopara.com" target="_blank" rel="noopener noreferrer" class="bg-[#1B2330] hover:bg-opacity-80 text-white font-bold py-3 px-10 rounded-lg text-lg cta-button inline-block">
+                                Book me
+                            </a>
+                            <a href="affiliate-system.html" class="bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-bold py-3 px-10 rounded-lg cta-button inline-block text-lg shadow-lg">
+                                Join Network
+                            </a>
+                            <a href="/cdn-cgi/l/email-protection#fc9f949591bc8b938c9d8e9dd29f9391" class="bg-[#3f5268] hover:bg-opacity-80 text-[#B7D1E1] font-bold py-3 px-10 rounded-lg cta-button inline-block text-lg">
+                                Email Me
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div id="purchase-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
+            <div class="bg-[#3f5268] rounded-xl p-8 max-w-md w-full border border-[#1B2330]">
+                <h3 class="text-2xl font-bold mb-2 text-[#B7D1E1]" id="modal-product-name">Product Name</h3>
+                <p class="text-[#B7D1E1]/80 mb-6" id="modal-description">Enter your details below.</p>
+                
+                <form id="purchase-form">
+                    <div class="mb-4">
+                        <label for="customer-name-purchase" class="block text-sm font-medium mb-2">Full Name</label>
+                        <input id="customer-name-purchase" type="text" required class="w-full px-3 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-sky-500 text-white" placeholder="Enter your full name">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="customer-email-purchase" class="block text-sm font-medium mb-2">Email Address</label>
+                        <input id="customer-email-purchase" type="email" required class="w-full px-3 py-2 bg-[#1B2330] border border-[#3f5268] rounded-lg focus:outline-none focus:border-sky-500 text-white" placeholder="Enter your email address">
+                    </div>
+
+                    <div class="flex space-x-4 mb-6">
+                        <button type="submit" id="modal-submit-button" class="w-full bg-[#1B2330]/50 backdrop-blur-sm hover:bg-[#1B2330]/80 text-white font-bold py-3 px-6 rounded-lg">
+                            Get Notified
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="footer-bg border-t border-[#3f5268]">
+        <div class="container mx-auto px-6 py-12 relative z-10">
+            <div class="text-center mb-8">
+                <h4 class="text-sm uppercase text-[#B7D1E1]/60 tracking-widest mb-4">A Chim Wopara Enterprises Company</h4>
+                <div class="flex justify-center items-center space-x-6 md:space-x-10">
+                    <a href="http://fromsupply.com" target="_blank" class="hover:opacity-80 transition-opacity">
+                        <img src="assets/fs.png" alt="Fromsupply Logo" class="h-8 w-auto">
+                    </a>
+                    <span class="text-[#3f5268]">|</span>
+                    <a href="http://devgameshow.com" target="_blank" class="hover:opacity-80 transition-opacity">
+                        <img src="assets/dgs.png" alt="Dev Game Show Logo" class="h-8 w-auto">
+                    </a>
+                    <span class="text-[#3f5268]">|</span>
+                    <a href="http://pautacos.com" target="_blank" class="hover:opacity-80 transition-opacity">
+                        <img src="assets/pautacos.png" alt="Pautacos Logo" class="h-8 w-auto">
+                    </a>
+                    <span class="text-[#3f5268]">|</span>
+                    <a href="https://chimwopara.com" target="_blank" rel="noopener noreferrer" class="text-white hover:opacity-80 transition-opacity">
+                        <img src="assets/logo.png" alt="Chim Wopara" class="h-8 w-auto">
+                    </a>
+                </div>
+            </div>
+            <div class="text-center text-[#B7D1E1]/60 text-sm">
+                <p>&copy; 2024 Chim Wopara Enterprises. All Rights Reserved.</p>
+                <p class="mt-2">
+                    <a href="terms.html#privacy" class="hover:text-[#B7D1E1]">Privacy Policy</a>
+                    <span class="mx-2">&middot;</span>
+                    <a href="terms.html#terms" class="hover:text-[#B7D1E1]">Terms of Service</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Updated School Cycling Data with 'assets/' prefix
+            const schoolData = {
+                media: {
+                    title: 'Media Artificial Intelligence',
+                    mainImage: 'assets/media.png',
+                    surroundingImages: [
+                        'assets/media1.png', 'assets/media2.png', 'assets/media3.png', 
+                        'assets/media4.png', 'assets/media5.png', 'assets/media7.png', 'assets/media6.png'
+                    ]
+                },
+                business: {
+                    title: 'Business Artificial Intelligence',
+                    mainImage: 'assets/business.png',
+                    surroundingImages: [
+                        'assets/business1.png', 'assets/fillout.png', 'assets/business3.png', 
+                        'assets/business4.png', 'assets/business5.png', 'assets/business6.png', 'assets/calendly.png'
+                    ]
+                },
+                coding: {
+                    title: 'Dependent Coding Artificial Intelligence',
+                    mainImage: 'assets/coding.png',
+                    surroundingImages: [
+                        'assets/coding1.png', 'assets/xcode.png', 'assets/coding3.png', 
+                        'assets/coding4.png', 'assets/unity.png', 'assets/coding6.png', 'assets/roblox.png'
+                    ]
+                }
+            };
+
+            let currentSchoolIndex = 0;
+            const schoolKeys = Object.keys(schoolData);
+            
+            // Function to cycle through schools
+            function cycleSchools() {
+                const centralImage = document.getElementById('central-image');
+                const surroundingImages = [];
+                
+                // Get all surrounding images
+                for (let i = 1; i <= 7; i++) {
+                    const img = document.getElementById(`surrounding-${i}`);
+                    if (img) surroundingImages.push(img);
+                }
+                
+                currentSchoolIndex = (currentSchoolIndex + 1) % schoolKeys.length;
+                const currentSchool = schoolData[schoolKeys[currentSchoolIndex]];
+                
+                // Update central image
+                centralImage.src = currentSchool.mainImage;
+                centralImage.alt = currentSchool.title;
+                
+                // Update surrounding images
+                surroundingImages.forEach((img, index) => {
+                    if (currentSchool.surroundingImages[index]) {
+                        img.src = currentSchool.surroundingImages[index];
+                        img.alt = `${currentSchool.title} Program ${index + 1}`;
+                    }
+                });
+            }
+
+            // Start cycling every 3 seconds
+            setInterval(cycleSchools, 3000);
+
+            // Scroll-based animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            const elementsToAnimate = document.querySelectorAll('.fade-in-up');
+            elementsToAnimate.forEach(el => observer.observe(el));
+
+            // Customer data storage
+            let customerDatabase = [];
+
+            // Modal functions for Clothing items
+            window.openPurchaseModal = function(productName, type) {
+                document.getElementById('modal-product-name').textContent = productName;
+                const description = document.getElementById('modal-description');
+                const submitButton = document.getElementById('modal-submit-button');
+
+                if (type === 'notify') {
+                    description.textContent = "Enter your details below and we'll notify you when this product is available.";
+                    submitButton.textContent = 'Get Notified';
+                }
+                document.getElementById('purchase-modal').classList.remove('hidden');
+            }
+
+            window.closeModal = function() {
+                document.getElementById('purchase-modal').classList.add('hidden');
+                document.getElementById('purchase-form').reset();
+            }
+
+            // Handle Purchase/Notify form submission
+            document.getElementById('purchase-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('customer-name-purchase').value;
+                const email = document.getElementById('customer-email-purchase').value;
+                const product = document.getElementById('modal-product-name').textContent;
+                
+                // Save to mailing list
+                customerDatabase.push({
+                    name: name,
+                    email: email,
+                    product: product,
+                    type: 'Notification',
+                    timestamp: new Date().toISOString()
+                });
+
+                alert(`Thank you ${name}! We will notify you at ${email} when ${product} becomes available.`);
+                closeModal();
+            });
+
+            // Close modals when clicking outside
+            document.getElementById('purchase-modal').addEventListener('click', function(e) {
+                    if (e.target === e.currentTarget) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

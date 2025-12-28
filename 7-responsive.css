@@ -1,0 +1,177 @@
+/* Sign-in Modal Mobile Styles */
+@media (max-width: 768px) {
+    #signinModal .modal-content {
+        flex-direction: column !important;
+        height: auto !important;
+        max-height: 90vh !important;
+        width: 95% !important;
+    }
+
+     #signinModal .modal-content > div {
+        width: 100% !important;
+    }
+    #signinModal img {
+        height: 150px !important;
+    }
+    
+    .signin-image-side {
+        width: 100% !important;
+        height: 200px !important;
+        min-height: 200px !important;
+    }
+
+    .main-tabs, .sub-tabs {
+        margin: 12px 16px !important;
+        gap: 16px;
+        padding: 6px;
+    }
+    
+    .main-tab, .sub-tab {
+        padding: 10px 16px;
+        font-size: 0.85rem;
+    }
+    
+    .toggle-sidebar-btn { z-index: 1001; }
+
+    
+    .signin-content-side {
+        width: 100% !important;
+        padding: 40px 24px !important;
+    }
+    
+    .signin-content-side h2 {
+        font-size: 2rem !important;
+    }
+    
+    .signin-content-side p {
+        font-size: 0.9rem !important;
+    }
+}
+
+/* CRITICAL: Ensure body and html fill exactly the viewport */
+html, body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+}
+
+@keyframes slideInBar { from { width: 0; opacity: 0; } to { opacity: 1; } }
+
+/* Mobile Specific Fixes */
+@media (max-width: 768px) {
+    /* CRITICAL: Fix for mobile viewport */
+    html {
+        height: 100%;
+        height: 100dvh;
+        overflow: hidden;
+    }
+    
+    body {
+        height: 100%;
+        height: 100dvh;
+        overflow: hidden;
+        /* Prevent pull-to-refresh showing wrong color */
+        overscroll-behavior-y: none;
+    }
+    
+    .container {
+        /* Account for safe areas on mobile */
+        height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+        /* Remove any extra padding that might cause space */
+        padding: 8px;
+    }
+    
+    .sidebar {
+        position: fixed; 
+        top: calc(env(safe-area-inset-top) + 8px); 
+        left: 8px; 
+        /* FIXED: Proper height calculation */
+        height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 16px);
+        z-index: 1000; 
+        transition: transform 0.4s var(--ease-spring);
+        margin-top: 0 !important;
+    }
+    
+    .sidebar-footer {
+        /* Extra padding for home indicator */
+        padding-bottom: 16px !important;
+    }
+
+    .toggle-sidebar-btn {
+        display: flex !important;
+        top: calc(env(safe-area-inset-top) + 12px);
+        left: 12px;
+        width: 36px;
+        height: 36px;
+        background: var(--bg-glass);
+        backdrop-filter: blur(20px);
+        border: 1px solid var(--border-glass);
+        z-index: 1001;
+    }
+    
+    .toggle-sidebar-btn.collapsed {
+        left: 12px;
+    }
+    
+    /* When sidebar is open on mobile, move toggle button */
+    .sidebar:not(.hidden) ~ .toggle-sidebar-btn,
+    .sidebar:not(.hidden) + .toggle-sidebar-btn {
+        left: calc(100% - 48px);
+    }
+    
+    .sidebar:not(.hidden) { transform: translateX(0); }
+    .sidebar.hidden { margin-left: 0; }
+    .main-content { flex: 1 1 100%; }
+    .greeting h1 { font-size: 2.2rem; margin-bottom: 16px; }
+    .greeting p { font-size: 1.1rem; }
+    .prompt-container { padding: 24px 16px; }
+    .input-area-wrapper { padding: 0 8px; margin-bottom: 16px; }
+    textarea#questionInput { font-size: 1rem; }
+    .input-container { padding: 12px; border-radius: 20px; }
+    
+    .structured-grid { grid-template-columns: 1fr; }
+    .main-tabs { padding: 8px 12px; }
+    .main-tab { padding: 6px 12px; font-size: 0.85rem; }
+}
+
+/* Status Colors */
+.usage-progress-fill.full { background: #FF453A; }
+
+/* Extra small screens */
+@media (max-width: 480px) {
+    .container {
+        padding: 6px;
+    }
+    
+    .sidebar {
+        top: calc(env(safe-area-inset-top) + 6px); 
+        left: 6px;
+        height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 12px);
+        width: calc(100vw - 12px);
+    }
+}
+
+/* Landscape mode fixes */
+@media (max-height: 500px) and (orientation: landscape) {
+    .container {
+        height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    }
+    
+    .sidebar {
+        height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 16px);
+    }
+    
+    .greeting h1 {
+        font-size: 1.8rem;
+        margin-bottom: 8px;
+    }
+    
+    .greeting p {
+        font-size: 1rem;
+    }
+    
+    .prompt-container {
+        padding: 16px;
+    }
+}
