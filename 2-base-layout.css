@@ -49,6 +49,8 @@
             width: 0; 
             margin-left: -12px; 
         }
+
+        
         
         /* ========== TOGGLE SIDEBAR BUTTON ========== */
         .toggle-sidebar-btn {
@@ -605,3 +607,4 @@
             transform: none; 
             cursor: default; 
         }
+        

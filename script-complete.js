@@ -1,3 +1,101 @@
+// === CRITICAL GLOBAL FUNCTIONS - DEFINED FIRST ===
+window.toggleSidebar = function() {
+    const sidebar = document.querySelector('.sidebar');
+    const btn = document.getElementById('toggleSidebarBtn');
+    const mainContent = document.querySelector('.main-content');
+    
+    if (!sidebar || !btn) return;
+    
+    sidebar.classList.toggle('hidden');
+    btn.classList.toggle('collapsed');
+    
+    if (sidebar.classList.contains('hidden')) {
+        if (mainContent) mainContent.classList.add('sidebar-hidden');
+    } else {
+        if (mainContent) mainContent.classList.remove('sidebar-hidden');
+    }
+    
+    // Mobile positioning
+    if (window.innerWidth <= 768) {
+        if (sidebar.classList.contains('hidden')) {
+            btn.style.left = '12px';
+            btn.style.right = 'auto';
+        } else {
+            btn.style.left = 'auto';
+            btn.style.right = '12px';
+        }
+    }
+};
+
+window.showKeywordInfo = function(keyword) {
+    const keywordDefs = {
+        'in': { category: 'Start', desc: 'Specifies the programming language or environment.', example: '*in* swift ; *create* login screen' },
+        'for': { category: 'Start', desc: 'Defines the target platform or device.', example: '*for* iPhone ; *create* navigation bar' },
+        'context': { category: 'References', desc: 'References a saved context by serial number.', example: '*context* #C23b5js8 ; *refactor* with new API' },
+        'line': { category: 'References', desc: 'References specific line numbers.', example: '*line* 45-60 ; *explain* this function' },
+        'chimcontext': { category: 'References', desc: 'References a public store context.', example: '*chimcontext* #C8hn2k4m ; *create* similar layout' },
+        'prompt': { category: 'References', desc: 'References a saved prompt.', example: '*prompt* %P9x2k3m1 ; apply to new project' },
+        'chimprompt': { category: 'References', desc: 'References a public store prompt.', example: '*chimprompt* #Pab3k9x2 ; customize for my needs' },
+        'file': { category: 'References', desc: 'References an uploaded file.', example: '*file* design.png ; *create* matching UI' },
+        'error': { category: 'References', desc: 'References an error message to debug.', example: '*error* "undefined is not a function" ; *debug*' },
+        'spawn': { category: 'Generation', desc: 'Generates multiple variations.', example: '*spawn* 5 color themes ; *like* Material Design' },
+        'rare': { category: 'Generation', desc: 'Requests unique, creative solutions.', example: '*rare* ; *create* loading animation' },
+        'create': { category: 'Generation', desc: 'Generate new code or components.', example: '*create* user profile card ; *with* avatar' },
+        'refactor': { category: 'Generation', desc: 'Improves code structure.', example: '*context* 1 ; *refactor* for readability' },
+        'explain': { category: 'Generation', desc: 'Provides detailed explanation.', example: '*line* 20-35 ; *explain* step by step' },
+        'optimize': { category: 'Generation', desc: 'Improves performance.', example: '*context* 1 ; *optimize* for speed' },
+        'debug': { category: 'Generation', desc: 'Finds and fixes bugs.', example: '*error* "null reference" ; *debug*' },
+        'from': { category: 'Attributes', desc: 'References a design as inspiration.', example: '*create* chat bubble ; *from* WhatsApp' },
+        'makeit': { category: 'Attributes', desc: 'Applies a specific quality.', example: '*create* button ; *makeit* rounded' },
+        'like': { category: 'Attributes', desc: 'Makes output similar to a style.', example: '*create* navbar ; *like* Apple.com' },
+        'but': { category: 'Attributes', desc: 'Modifies a specific aspect.', example: '*like* Instagram ; *but* vertical scroll' },
+        'with': { category: 'Attributes', desc: 'Includes additional features.', example: '*create* form ; *with* validation' },
+        'without': { category: 'Attributes', desc: 'Excludes specific features.', example: '*create* modal ; *without* close button' },
+        'prefer': { category: 'Attributes', desc: 'Sets a preference for approach.', example: '*prefer* flexbox ; *create* grid' },
+        'format': { category: 'Attributes', desc: 'Specifies output format.', example: '*explain* API ; *format* bullet points' },
+        'steps': { category: 'Attributes', desc: 'Requests numbered steps.', example: '*create* auth flow ; *steps* 5' },
+        'between': { category: 'Attributes', desc: 'Specifies a range.', example: '*spawn* icons ; *between* 24px and 48px' },
+        'nextto': { category: 'Position', desc: 'Positions element relative to another.', example: '*create* tooltip ; *nextto* button' },
+        'blame': { category: 'Position', desc: 'Highlights code with explanations.', example: '*blame* ; *context* 1' },
+        'animate': { category: 'Position', desc: 'Adds animation to elements.', example: '*create* card ; *animate* on hover' },
+        'background': { category: 'Position', desc: 'Specifies background styling.', example: '*create* hero ; *background* gradient' },
+        'font': { category: 'Position', desc: 'Specifies typography.', example: '*create* heading ; *font* Inter' },
+        'style': { category: 'Position', desc: 'Applies a design system.', example: '*style* glassmorphism ; *create* card' },
+        'maybe': { category: 'Organization', desc: 'Marks something as optional.', example: '*create* form ; *maybe* phone' },
+        'then': { category: 'Organization', desc: 'Chains sequential actions.', example: '*create* button ; *then* show modal' },
+        'forge': { category: 'Organization', desc: 'Combines prompts into template.', example: '*forge* "auth-flow"' },
+        'mold': { category: 'Organization', desc: 'Creates reusable pattern.', example: '*mold* "api-call"' },
+        'jump': { category: 'Organization', desc: 'Skips to a section.', example: '*jump* line 100' },
+        'using': { category: 'Organization', desc: 'Specifies libraries to use.', example: '*create* chart ; *using* Chart.js' }
+    };
+    
+    const info = keywordDefs[keyword];
+    if (!info) return;
+    
+    document.querySelectorAll('.struct-chip').forEach(c => c.classList.remove('active'));
+    event && event.target && event.target.classList.add('active');
+    
+    const defaultEx = document.getElementById('keywordDefaultExample');
+    if (defaultEx) defaultEx.style.display = 'none';
+    
+    const infoBox = document.getElementById('keywordInfoBox');
+    if (infoBox) {
+        infoBox.style.display = 'block';
+        const nameEl = document.getElementById('keywordInfoName');
+        const catEl = document.getElementById('keywordInfoCategory');
+        const descEl = document.getElementById('keywordInfoDesc');
+        const exEl = document.getElementById('keywordInfoExample');
+        if (nameEl) nameEl.textContent = keyword;
+        if (catEl) catEl.textContent = info.category;
+        if (descEl) descEl.textContent = info.desc;
+        if (exEl) exEl.innerHTML = info.example.replace(/\*(\w+)\*/g, '<span style="color:#5AC8FA;font-weight:bold">$1</span>');
+        infoBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+};
+
+console.log('[P&L] toggleSidebar and showKeywordInfo loaded');
+// === END CRITICAL FUNCTIONS ===
+
         const languages = [
             { id: 'assembly', name: 'Assembly', desc: 'Low-level hardware control', img: 'Assembly.png' },
             { id: 'bash', name: 'Bash', desc: 'Command line scripting', img: 'Bash.png' },
@@ -799,32 +897,39 @@ function updatePremiumModalUI() {
         }
         
         function toggleMode() {
-            const mode = document.getElementById('modeSelect').value;
+            const modeEl = document.getElementById('modeSelect');
+            const mode = modeEl ? modeEl.value : 'general';
             const codeTools = document.getElementById('codeTools');
             const questionInput = document.getElementById('questionInput');
             
             if (mode === 'code') {
-                codeTools.style.display = 'flex';
+                if (codeTools) codeTools.style.display = 'flex';
                 if (questionInput) questionInput.placeholder = 'Describe your coding challenge...';
                 checkSelections();
             } else if (mode === 'general') {
-                codeTools.style.display = 'none';
+                if (codeTools) codeTools.style.display = 'none';
                 if (questionInput) questionInput.placeholder = 'Ask anything... (How to tie a shoelace, update macOS, etc.)';
                 // For general mode, enable button if there's input
                 const hasInput = questionInput && questionInput.value.trim().length > 0;
-                document.getElementById('generateBtn').disabled = !hasInput;
+                const btn = document.getElementById('generateBtn');
+                if (btn) btn.disabled = !hasInput;
             } else {
-                codeTools.style.display = 'none';
+                if (codeTools) codeTools.style.display = 'none';
                 if (questionInput) questionInput.placeholder = 'Enter your structured request...';
-                document.getElementById('generateBtn').disabled = false;
+                const btn = document.getElementById('generateBtn');
+                if (btn) btn.disabled = false;
             }
         }
 
         function checkSelections() {
-            const questionInput = document.getElementById('questionInput').value.trim();
-            const mode = document.getElementById('modeSelect').value;
+            const questionEl = document.getElementById('questionInput');
+            const questionInput = questionEl ? questionEl.value.trim() : '';
+            const modeEl = document.getElementById('modeSelect');
+            const mode = modeEl ? modeEl.value : 'general';
             const generateBtn = document.getElementById('generateBtn');
 
+            if (!generateBtn) return;
+            
             const hasInput = questionInput.length > 0;
 
             if (mode === 'general') {
@@ -905,6 +1010,8 @@ if (window.innerWidth <= 768) {
             const mainContent = document.querySelector('.main-content');
             const creatorPanel = document.querySelector('.creator-panel');
             
+            if (!sidebar || !btn) return;
+            
             sidebar.classList.toggle('hidden');
             btn.classList.toggle('collapsed');
             
@@ -917,12 +1024,15 @@ if (window.innerWidth <= 768) {
                 if (creatorPanel) creatorPanel.classList.remove('centered');
             }
             
-            if (window.innerWidth <= 768 && !sidebar.classList.contains('hidden')) {
-                setTimeout(() => {
-                    if (mainContent && !mainContent.dataset.sidebarTapListener) {
-                        mainContent.dataset.sidebarTapListener = 'true';
-                    }
-                }, 100);
+            // MOBILE: Move button position
+            if (window.innerWidth <= 768) {
+                if (sidebar.classList.contains('hidden')) {
+                    btn.style.left = '12px';
+                    btn.style.right = 'auto';
+                } else {
+                    btn.style.left = 'auto';
+                    btn.style.right = '12px';
+                }
             }
         };
         
@@ -1279,29 +1389,7 @@ function triggerSupportEmail() {
             'using': { category: 'Organization', desc: 'Specifies libraries, frameworks, or tools to use.', example: '*create* chart ; *using* Chart.js ; *in* React' }
         };
 
-        function showKeywordInfo(keyword) {
-            const info = keywordDefinitions[keyword];
-            if (!info) return;
-            
-            // Remove active class from all chips
-            document.querySelectorAll('.struct-chip').forEach(chip => chip.classList.remove('active'));
-            // Add active class to clicked chip
-            event.target.classList.add('active');
-            
-            // Hide default example, show info box
-            document.getElementById('keywordDefaultExample').style.display = 'none';
-            const infoBox = document.getElementById('keywordInfoBox');
-            infoBox.style.display = 'block';
-            
-            // Populate info
-            document.getElementById('keywordInfoName').textContent = keyword;
-            document.getElementById('keywordInfoCategory').textContent = info.category;
-            document.getElementById('keywordInfoDesc').textContent = info.desc;
-            document.getElementById('keywordInfoExample').innerHTML = info.example.replace(/\*(\w+)\*/g, '<span style="color: #5AC8FA; font-weight: bold;">$1</span>');
-            
-            // Scroll to info box
-            infoBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
+        // showKeywordInfo is defined as window.showKeywordInfo at end of file
 
         // ============ SAVE MODAL ============
         let saveType = 'context';
@@ -1708,7 +1796,9 @@ window.addEventListener('load', () => {
         // ============ STRUCTURED HIGHLIGHTING ============
         function updateStructuredHighlights(text) {
             const overlay = document.getElementById('highlightOverlay');
-            if (!overlay || document.getElementById('modeSelect').value !== 'structured') return;
+            const modeEl = document.getElementById('modeSelect');
+            const mode = modeEl ? modeEl.value : 'general';
+            if (!overlay || mode !== 'structured') return;
             
             const keywords = ['in', 'for', 'context', 'line', 'chimcontext', 'prompt', 'chimprompt', 'file', 'error', 'spawn', 'rare', 'create', 'refactor', 'explain', 'optimize', 'debug', 'from', 'makeit', 'like', 'but', 'with', 'without', 'prefer', 'format', 'steps', 'between', 'nextto', 'blame', 'animate', 'background', 'font', 'style', 'maybe', 'then', 'forge', 'mold', 'jump', 'using'];
             
@@ -1724,28 +1814,30 @@ window.addEventListener('load', () => {
             });
             if (formatted[formatted.length - 1] === '\n') formatted += '&nbsp;';
             overlay.innerHTML = formatted;
-            overlay.scrollTop = document.getElementById('questionInput').scrollTop;
+            const qInput = document.getElementById('questionInput');
+            if (qInput) overlay.scrollTop = qInput.scrollTop;
         }
 
         // Update toggleMode to handle structured mode
         const originalToggleMode = typeof toggleMode !== 'undefined' ? toggleMode : null;
         function toggleMode() {
-            const mode = document.getElementById('modeSelect').value;
+            const modeEl = document.getElementById('modeSelect');
+            const mode = modeEl ? modeEl.value : 'general';
             const codeTools = document.getElementById('codeTools');
             const overlay = document.getElementById('highlightOverlay');
             const qInput = document.getElementById('questionInput');
             
             if (mode === 'code') {
-                codeTools.style.display = 'flex';
+                if (codeTools) codeTools.style.display = 'flex';
             } else {
-                codeTools.style.display = 'none';
+                if (codeTools) codeTools.style.display = 'none';
             }
             
             if (mode === 'structured') {
-                qInput.classList.add('structured-active');
+                if (qInput) qInput.classList.add('structured-active');
                 checkSelections();
             } else {
-                qInput.classList.remove('structured-active');
+                if (qInput) qInput.classList.remove('structured-active');
                 if (overlay) overlay.innerHTML = '';
             }
             
@@ -1756,9 +1848,12 @@ window.addEventListener('load', () => {
         const originalCheckSelections = typeof checkSelections !== 'undefined' ? checkSelections : null;
         function checkSelections() {
             const questionInput = document.getElementById('questionInput');
+            if (!questionInput) return;
             const val = questionInput.value;
-            const mode = document.getElementById('modeSelect').value;
+            const modeEl = document.getElementById('modeSelect');
+            const mode = modeEl ? modeEl.value : 'general';
             const generateBtn = document.getElementById('generateBtn');
+            if (!generateBtn) return;
             const hasInput = val.trim().length > 0;
 
             if (mode === 'general') {
@@ -1773,9 +1868,12 @@ window.addEventListener('load', () => {
             }
 
             // Code mode
-            const language = document.getElementById('languageSelect').value;
-            const difficulty = document.getElementById('difficultySelect').value;
-            const customLanguage = document.getElementById('customLanguageInput').value;
+            const langEl = document.getElementById('languageSelect');
+            const diffEl = document.getElementById('difficultySelect');
+            const customEl = document.getElementById('customLanguageInput');
+            const language = langEl ? langEl.value : '';
+            const difficulty = diffEl ? diffEl.value : '';
+            const customLanguage = customEl ? customEl.value : '';
             let isLanguageValid = language !== "";
             if (language === 'custom') isLanguageValid = customLanguage.trim() !== "";
             const isDifficultyValid = difficulty !== "";
@@ -1899,3 +1997,177 @@ function handleUniDropout() {
         showAlert("You have successfully dropped out.", false);
     }
 }
+// ============================================
+// FIXES ADDED - showKeywordInfo, toggleSidebar, keyword highlighting
+// ============================================
+
+// FIX 1: Export showKeywordInfo to window (it was missing!)
+window.showKeywordInfo = function(keyword) {
+    const keywordDefs = {
+        'in': { category: 'Start', desc: 'Specifies the programming language or environment for your request.', example: '*in* swift ; *create* login screen' },
+        'for': { category: 'Start', desc: 'Defines the target platform or device.', example: '*for* iPhone ; *create* navigation bar' },
+        'context': { category: 'References', desc: 'References a saved context by its serial number.', example: '*context* #C23b5js8 ; *refactor* with new API' },
+        'line': { category: 'References', desc: 'References specific line numbers in your code or context.', example: '*line* 45-60 ; *explain* this function' },
+        'chimcontext': { category: 'References', desc: 'References a public store context shared by other users.', example: '*chimcontext* #C8hn2k4m ; *create* similar layout' },
+        'prompt': { category: 'References', desc: 'References one of your saved prompts by its serial number.', example: '*prompt* %P9x2k3m1 ; apply to new project' },
+        'chimprompt': { category: 'References', desc: 'References a public store prompt shared by other users.', example: '*chimprompt* #Pab3k9x2 ; customize for my needs' },
+        'file': { category: 'References', desc: 'References an uploaded file or attachment.', example: '*file* design.png ; *create* matching UI' },
+        'error': { category: 'References', desc: 'References an error message to help debug.', example: '*error* "undefined is not a function" ; *debug*' },
+        'spawn': { category: 'Generation', desc: 'Generates multiple variations or instances of something.', example: '*spawn* 5 color themes ; *like* Material Design' },
+        'rare': { category: 'Generation', desc: 'Requests unique, creative solutions instead of standard approaches.', example: '*rare* ; *create* loading animation' },
+        'create': { category: 'Generation', desc: 'The primary command to generate new code or components.', example: '*create* user profile card ; *with* avatar and bio' },
+        'refactor': { category: 'Generation', desc: 'Improves existing code structure without changing behavior.', example: '*context* 1 ; *refactor* for better readability' },
+        'explain': { category: 'Generation', desc: 'Provides detailed explanation of code or concepts.', example: '*line* 20-35 ; *explain* step by step' },
+        'optimize': { category: 'Generation', desc: 'Improves code performance or efficiency.', example: '*context* 1 ; *optimize* for speed' },
+        'debug': { category: 'Generation', desc: 'Finds and fixes bugs or issues in the code.', example: '*error* "null reference" ; *debug* ; *explain* fix' },
+        'from': { category: 'Attributes', desc: 'References a design from an existing app as inspiration.', example: '*create* chat bubble ; *from* WhatsApp' },
+        'makeit': { category: 'Attributes', desc: 'Applies a specific quality to the output.', example: '*create* button ; *makeit* rounded ; *makeit* animated' },
+        'like': { category: 'Attributes', desc: 'Makes the output similar to a referenced style.', example: '*create* navbar ; *like* Apple.com' },
+        'but': { category: 'Attributes', desc: 'Modifies a specific aspect of the reference.', example: '*like* Instagram stories ; *but* vertical scroll' },
+        'with': { category: 'Attributes', desc: 'Includes additional features or elements.', example: '*create* form ; *with* validation ; *with* dark mode' },
+        'without': { category: 'Attributes', desc: 'Excludes specific features or elements.', example: '*create* modal ; *without* close button' },
+        'prefer': { category: 'Attributes', desc: 'Sets a preference for approach or method.', example: '*prefer* flexbox ; *create* grid layout' },
+        'format': { category: 'Attributes', desc: 'Specifies the output format or structure.', example: '*explain* API ; *format* bullet points' },
+        'steps': { category: 'Attributes', desc: 'Requests output broken into numbered steps.', example: '*create* auth flow ; *steps* 5' },
+        'between': { category: 'Attributes', desc: 'Specifies a range or constraint between values.', example: '*spawn* icons ; *between* 24px and 48px' },
+        'nextto': { category: 'Position & Style', desc: 'Positions an element relative to another.', example: '*create* tooltip ; *nextto* button' },
+        'blame': { category: 'Position & Style', desc: 'Highlights parts of code with explanations.', example: '*blame* ; *context* 1 ; show problem areas' },
+        'animate': { category: 'Position & Style', desc: 'Adds animation or motion to elements.', example: '*create* card ; *animate* on hover' },
+        'background': { category: 'Position & Style', desc: 'Specifies background styling.', example: '*create* hero section ; *background* gradient blue' },
+        'font': { category: 'Position & Style', desc: 'Specifies typography settings.', example: '*create* heading ; *font* Inter ; *makeit* bold' },
+        'style': { category: 'Position & Style', desc: 'Applies general styling or a design system.', example: '*style* glassmorphism ; *create* card' },
+        'maybe': { category: 'Organization', desc: 'Marks something as optional in the output.', example: '*create* form ; *with* email ; *maybe* phone' },
+        'then': { category: 'Organization', desc: 'Chains sequential actions.', example: '*create* button ; *then* show modal on click' },
+        'forge': { category: 'Organization', desc: 'Combines multiple prompts into a template.', example: '*forge* "auth-flow" ; *from* login + signup' },
+        'mold': { category: 'Organization', desc: 'Creates a reusable pattern from existing code.', example: '*mold* "api-call" ; *from* context 1' },
+        'jump': { category: 'Organization', desc: 'Skips to a specific section or context.', example: '*jump* line 100 ; *explain* from there' },
+        'using': { category: 'Organization', desc: 'Specifies libraries or tools to use.', example: '*create* chart ; *using* Chart.js ; *in* React' }
+    };
+    
+    const info = keywordDefs[keyword];
+    if (!info) return;
+    
+    // Remove active class from all chips
+    document.querySelectorAll('.struct-chip').forEach(chip => chip.classList.remove('active'));
+    
+    // Add active class to clicked chip
+    if (event && event.target) {
+        event.target.classList.add('active');
+    }
+    
+    // Hide default example, show info box
+    const defaultExample = document.getElementById('keywordDefaultExample');
+    if (defaultExample) defaultExample.style.display = 'none';
+    
+    const infoBox = document.getElementById('keywordInfoBox');
+    if (infoBox) {
+        infoBox.style.display = 'block';
+        
+        const nameEl = document.getElementById('keywordInfoName');
+        const catEl = document.getElementById('keywordInfoCategory');
+        const descEl = document.getElementById('keywordInfoDesc');
+        const exampleEl = document.getElementById('keywordInfoExample');
+        
+        if (nameEl) nameEl.textContent = keyword;
+        if (catEl) catEl.textContent = info.category;
+        if (descEl) descEl.textContent = info.desc;
+        if (exampleEl) {
+            exampleEl.innerHTML = info.example.replace(/\*(\w+)\*/g, '<span style="color: #5AC8FA; font-weight: bold;">$1</span>');
+        }
+        
+        infoBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+};
+
+// FIX 3: Real-time keyword highlighting in input
+const structuredKeywords = ['in', 'for', 'context', 'line', 'chimcontext', 'prompt', 'chimprompt', 'file', 'error', 'spawn', 'rare', 'create', 'refactor', 'explain', 'optimize', 'debug', 'from', 'makeit', 'like', 'but', 'with', 'without', 'prefer', 'format', 'steps', 'between', 'nextto', 'blame', 'animate', 'background', 'font', 'style', 'maybe', 'then', 'forge', 'mold', 'jump', 'using'];
+
+function setupKeywordHighlighting() {
+    const input = document.getElementById('questionInput');
+    const overlay = document.getElementById('highlightOverlay');
+    
+    if (!input || !overlay) return;
+    
+    const keywordPattern = new RegExp('\\b(' + structuredKeywords.join('|') + ')\\b', 'gi');
+    
+    function updateHighlight() {
+        const text = input.value;
+        
+        // Only highlight if there's a semicolon
+        if (text.includes(';')) {
+            let highlighted = text
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(keywordPattern, '<span style="color: #5AC8FA; font-weight: 600;">$1</span>')
+                .replace(/;/g, '<span style="color: #FF375F; font-weight: 600;">;</span>');
+            
+            // Preserve whitespace and line breaks
+            highlighted = highlighted.replace(/\n/g, '<br>');
+            
+            overlay.innerHTML = highlighted + '<br>';
+            overlay.style.display = 'block';
+            input.classList.add('structured-active');
+        } else {
+            overlay.innerHTML = '';
+            overlay.style.display = 'none';
+            input.classList.remove('structured-active');
+        }
+    }
+    
+    input.addEventListener('input', updateHighlight);
+    input.addEventListener('scroll', function() {
+        overlay.scrollTop = input.scrollTop;
+        overlay.scrollLeft = input.scrollLeft;
+    });
+    
+    // Run once on load in case there's existing text
+    updateHighlight();
+}
+
+// FIX 4: Simple checkSelections without mode logic
+window.checkSelections = function() {
+    const question = document.getElementById('questionInput');
+    const generateBtn = document.getElementById('generateBtn');
+    
+    if (generateBtn && question) {
+        generateBtn.disabled = !question.value.trim() || question.value.trim().length < 3;
+    }
+};
+
+// Initialize on DOM ready
+document.addEventListener('DOMContentLoaded', function() {
+    setupKeywordHighlighting();
+    
+    // Fix mobile button position on load
+    if (window.innerWidth <= 768) {
+        const btn = document.getElementById('toggleSidebarBtn');
+        const sidebar = document.querySelector('.sidebar');
+        if (btn && sidebar && sidebar.classList.contains('hidden')) {
+            btn.style.left = '12px';
+            btn.style.right = 'auto';
+        }
+    }
+});
+
+// Handle resize
+window.addEventListener('resize', function() {
+    const btn = document.getElementById('toggleSidebarBtn');
+    const sidebar = document.querySelector('.sidebar');
+    if (!btn || !sidebar) return;
+    
+    if (window.innerWidth > 768) {
+        btn.style.left = '';
+        btn.style.right = '';
+    } else {
+        if (sidebar.classList.contains('hidden')) {
+            btn.style.left = '12px';
+            btn.style.right = 'auto';
+        } else {
+            btn.style.left = 'auto';
+            btn.style.right = '12px';
+        }
+    }
+});
+
+console.log('[P&L Fixes] All fixes applied - showKeywordInfo, toggleSidebar, keyword highlighting');

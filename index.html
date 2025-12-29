@@ -141,6 +141,7 @@
     <link rel="stylesheet" href="5-user-menu.css">
     <link rel="stylesheet" href="6-progress-bars.css">
     <link rel="stylesheet" href="7-responsive.css">
+    <link rel="stylesheet" href="9-fixes-v2.css">
 </head>
 <body>
     <div class="container">
@@ -257,37 +258,7 @@
                                     <textarea id="questionInput" placeholder="Ask anything... (How to tie a shoelace, update macOS, etc.)" oninput="checkSelections()"></textarea>
                                 </div>
                                 <div class="input-footer">
-                                    <div class="input-tools">
-                                        <select id="modeSelect" class="minimal-select" onchange="toggleMode()">
-                                            <option value="general" selected>General</option>
-                                            <option value="code">Code</option>
-                                            <option value="structured">Structured</option>
-                                        </select>
-
-                                        <div id="codeTools" style="display: none; gap: 8px; align-items: center; flex-wrap: wrap;">
-                                            <button id="languageTrigger" class="minimal-btn" onclick="openLanguageModal()">
-                                                <span id="currentLanguageLabel">Language...</span>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                                            </button>
-
-                                            <select id="languageSelect" style="display: none;">
-                                                <option value="" disabled selected>Language</option>
-                                                <option value="javascript">JavaScript</option>
-                                                <option value="python">Python</option>
-                                                <option value="c">C</option>
-                                                <option value="custom">custom</option>
-                                            </select>
-                                            
-                                            <select id="difficultySelect" class="minimal-select" onchange="checkSelections()">
-                                                <option value="" disabled selected>Difficulty...</option>
-                                                <option value="beginner">Beginner</option>
-                                                <option value="intermediate">Intermediate</option>
-                                                <option value="advanced">Advanced</option>
-                                            </select>
-                                            
-                                            <input id="customLanguageInput" class="minimal-select hidden" style="border: 1px solid var(--accent-primary); cursor: text; min-width: 120px;" placeholder="e.g. Assembly..." oninput="checkSelections()">
-                                        </div>
-                                    </div>
+                                    <div class="input-tools"></div>
                                     <div style="display: flex; gap: 8px; align-items: center;">
                                         <button class="save-btn" onclick="openSaveModal()" title="Save">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
@@ -857,5 +828,8 @@
     
     <!-- Main Application Script -->
     <script src="script-complete.js"></script>
+    
+    <!-- P&L Fixes v2 - Must load LAST to override -->
+    <script src="script-fixes-v2.js"></script>
 </body>
 </html>

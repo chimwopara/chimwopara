@@ -3,26 +3,30 @@
 ## What Changed
 
 ### 1. **Unified Smart Detection** - No More Mode Selector!
-The dropdown with "General / Code / Structured" is removed. Now the system automatically detects:
+The dropdown with "General / Code / Structured" is **completely removed**. The system automatically detects:
 
 | You type... | System detects | Result |
 |-------------|---------------|--------|
 | "how to update iOS" | **How-To** | Step-by-step P&L challenge |
 | "python for loop" | **Code** | Code sequencing P&L challenge |
 | "button like Apple; card like Stripe" | **Structured** | UI preview with copyable code |
-| "what time is it" | **Chat** | Simple text response |
 
-### 2. **Google Sign-In Fixed**
-- Added proper initialization timing
-- Button handlers now attach correctly
-- Better error messages
+### 2. **Login Required**
+Users must sign in with Google before generating any challenges.
 
-### 3. **New Structured Mode**
-When you use UI description syntax (keywords + semicolons), you get:
-- Live UI preview in an iframe
-- Copyable HTML code
-- Copyable CSS code
-- Component breakdown
+### 3. **Recents Fixed**
+Challenges now properly show in the sidebar under "Recents".
+
+### 4. **Google Sign-In Fixed**
+Improved initialization timing and error handling.
+
+### 5. **Sidebar Toggle Fixed**
+- Works properly on mobile
+- Moves to right side when sidebar is open
+
+### 6. **Structured Keywords Work**
+- Tapping keywords in the Structured P&L modal now shows explanations
+- Real-time keyword highlighting as you type (when you use `;`)
 
 ---
 
@@ -35,7 +39,7 @@ When you use UI description syntax (keywords + semicolons), you get:
 | `claude-api.js` | Root folder | Smart detection + unified API calls |
 | `challenge-handler.js` | Root folder | Unified routing for all challenge types |
 | `8-structured-preview.css` | Root folder | Styles for UI preview |
-| `script-additions.js` | Root folder | Google Sign-In fix + helper functions |
+| `script-fixes.js` | Root folder | **All fixes**: Google sign-in, sidebar toggle, keyword highlighting, login requirement |
 | `netlify/functions/askClaude.js` | Netlify folder | Improved error handling |
 
 ### Files to Modify:
@@ -52,54 +56,13 @@ When you use UI description syntax (keywords + semicolons), you get:
 <div id="structuredPreview" class="structured-preview-container"></div>
 ```
 
-**3. Replace the input footer** (~lines 259-299):
+**3. DELETE lines 261-289** - Remove the modeSelect dropdown and codeTools div entirely.
+Leave the `<div class="input-tools"></div>` empty.
 
-**REMOVE THIS:**
+**4. Add script before `</body>`:**
 ```html
-<div class="input-footer">
-    <div class="input-tools">
-        <select id="modeSelect" class="minimal-select" onchange="toggleMode()">
-            <option value="general" selected>General</option>
-            <option value="code">Code</option>
-            <option value="structured">Structured</option>
-        </select>
-        <div id="codeTools" style="display: none; ...">
-            ... language/difficulty selects ...
-        </div>
-    </div>
-    ...
-</div>
+<script src="script-fixes.js"></script>
 ```
-
-**REPLACE WITH:**
-```html
-<div class="input-footer">
-    <div class="input-tools">
-        <span style="font-size: 0.75rem; color: var(--text-tertiary);">
-            Auto-detects: code, how-to, or UI
-        </span>
-    </div>
-    <div style="display: flex; gap: 8px; align-items: center;">
-        <button class="save-btn" onclick="openSaveModal()" title="Save">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
-        </button>
-        <button class="send-btn" onclick="generateChallenge()" id="generateBtn" title="Generate" disabled>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
-        </button>
-    </div>
-</div>
-```
-
-**4. Add new script** (before `</body>`):
-```html
-<script src="script-additions.js"></script>
-```
-
-#### `script-complete.js`
-
-You can either:
-- **Option A:** Delete the `toggleMode()` function and replace `checkSelections()` with the simpler version in `script-additions.js`
-- **Option B:** Just load `script-additions.js` after `script-complete.js` (it will override the necessary functions)
 
 ---
 

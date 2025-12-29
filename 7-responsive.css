@@ -98,26 +98,10 @@ html, body {
         padding-bottom: 16px !important;
     }
 
-    .toggle-sidebar-btn {
-        display: flex !important;
-        top: calc(env(safe-area-inset-top) + 12px);
-        left: 12px;
-        width: 36px;
-        height: 36px;
-        background: var(--bg-glass);
-        backdrop-filter: blur(20px);
-        border: 1px solid var(--border-glass);
-        z-index: 1001;
-    }
-    
-    .toggle-sidebar-btn.collapsed {
-        left: 12px;
-    }
-    
-    /* When sidebar is open on mobile, move toggle button */
-    .sidebar:not(.hidden) ~ .toggle-sidebar-btn,
-    .sidebar:not(.hidden) + .toggle-sidebar-btn {
-        left: calc(100% - 48px);
+    /* When button has sidebar-open class (set by JS), move to right */
+    .toggle-sidebar-btn.sidebar-open {
+        left: auto !important;
+        right: 12px !important;
     }
     
     .sidebar:not(.hidden) { transform: translateX(0); }

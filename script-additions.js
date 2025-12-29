@@ -9,10 +9,18 @@
 function checkSelections() {
     const question = document.getElementById('questionInput')?.value?.trim();
     const generateBtn = document.getElementById('generateBtn');
+    const userProfile = localStorage.getItem('userProfile');
     
     if (generateBtn) {
         // Enable if there's at least 3 characters
         generateBtn.disabled = !question || question.length < 3;
+        
+        // Update button title based on login state
+        if (!userProfile) {
+            generateBtn.title = 'Sign in to generate';
+        } else {
+            generateBtn.title = 'Generate';
+        }
     }
 }
 
@@ -143,6 +151,9 @@ async function fetchUserInfo(accessToken) {
         if (typeof renderLoginState === 'function') {
             renderLoginState(userObject);
         }
+        
+        // Re-check selections to update button state
+        checkSelections();
         
         // Show welcome message
         if (typeof showAlert === 'function') {

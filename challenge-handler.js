@@ -425,7 +425,7 @@ const ChallengeHandler = {
     },
     
     renderHistory() {
-        const historyList = document.getElementById('recentsList');
+        const historyList = document.getElementById('historyList');
         if (!historyList) return;
         
         if (this.challengeHistory.length === 0) {
@@ -536,7 +536,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 window.ChallengeHandler = ChallengeHandler;
 
-// === GLOBAL FUNCTION - SIMPLIFIED ===
+// === GLOBAL FUNCTION ===
 window.generateChallenge = async function() {
     const question = document.getElementById('questionInput')?.value?.trim();
     
@@ -547,7 +547,18 @@ window.generateChallenge = async function() {
         return;
     }
     
-    // Smart unified processing - no mode selection needed
+    // Check if signed in
+    const userProfile = localStorage.getItem('userProfile');
+    if (!userProfile) {
+        // Show sign-in modal directly
+        const modal = document.getElementById('signinModal');
+        if (modal) {
+            modal.classList.add('active');
+        }
+        return;
+    }
+    
+    // Process question
     await ChallengeHandler.processQuestion(question);
 };
 
