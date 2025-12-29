@@ -192,10 +192,6 @@
             .sidebar-footer {
                 padding-bottom: 16px !important;
             }
-
-            .toggle-sidebar-btn {
-                display: none !important;
-            }
     
             .sidebar:not(.hidden) { transform: translateX(0); }
             .sidebar.hidden { margin-left: 0; }
