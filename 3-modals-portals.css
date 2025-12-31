@@ -335,5 +335,14 @@
     color: var(--text-secondary);
     line-height: 1.5;
     text-align: left;
-} 
+}
+
+/* Fix: University Settings modal must appear above student portal (z-index: 5000) */
+#uniSettingsModal {
+    z-index: 6000;
+}
+
+#uniSettingsModal .modal-content {
+    z-index: 6001;
+}
 
