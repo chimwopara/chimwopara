@@ -994,7 +994,7 @@ function updatePremiumModalUI() {
 
         document.addEventListener('DOMContentLoaded', () => {
              populateThemeGrid();
-             updatelinesDisplay();
+             updateLinesDisplay();
              updatePremiumModalUI();
              loadChallengeStore();
              
@@ -1513,7 +1513,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 4. Initialize UI Elements
-    updatelinesDisplay();
+    updateLinesDisplay();
     updatePremiumModalUI();
     loadChallengeStore();
     
