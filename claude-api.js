@@ -1,16 +1,21 @@
 /**
  * Claude API Integration for P&L Challenge Generation
- * UNIFIED VERSION - Smart detection for code, how-to, and structured modes
+ * UPDATED VERSION - Checks store first, saves after generation
+ * 
+ * IMPORTANT: Update API_URL to your Cloudflare Worker URL after deployment
  */
 const ClaudeAPI = {
-    API_URL: 'https://cerulean-sawine-dd190b.netlify.app/.netlify/functions/askClaude',
+    // TODO: Replace with your Cloudflare Worker URL after deployment
+    API_URL: 'https://YOUR-WORKER-NAME.YOUR-SUBDOMAIN.workers.dev',
+    
+    // Set to true to check store before calling API (saves money!)
+    USE_STORE_CACHE: true,
+    
+    // Similarity threshold for considering a cached result "good enough"
+    SIMILARITY_THRESHOLD: 0.4,
 
     /**
-     * Detect the type of question:
-     * - 'code': Programming/coding questions
-     * - 'howto': Step-by-step process questions (non-code)
-     * - 'structured': UI description with references (contains ";" and UI keywords)
-     * - 'chat': General conversation (fallback)
+     * Detect the type of question
      */
     detectQuestionType(question) {
         const q = question.toLowerCase().trim();
@@ -40,8 +45,7 @@ const ClaudeAPI = {
             'for loop', 'foreach', 'map', 'filter', 'reduce', 'lambda'
         ];
         
-        const isCodeQuestion = codeKeywords.some(kw => q.includes(kw));
-        if (isCodeQuestion) {
+        if (codeKeywords.some(kw => q.includes(kw))) {
             return 'code';
         }
         
@@ -59,12 +63,11 @@ const ClaudeAPI = {
             /connect|pair|link|disconnect/i
         ];
         
-        const isHowTo = howtoPatterns.some(pattern => pattern.test(q));
-        if (isHowTo) {
+        if (howtoPatterns.some(pattern => pattern.test(q))) {
             return 'howto';
         }
         
-        // 4. Additional code detection: questions about making/building things
+        // 4. Build patterns -> code
         const buildPatterns = [
             /^(make|create|build|write|implement|develop) (a |an |the )?.*\b(app|website|script|bot|tool|game|calculator|converter)\b/i,
             /^(make|create|build|write) (a |an )?.*\b(that|which|to)\b/i
@@ -74,13 +77,11 @@ const ClaudeAPI = {
             return 'code';
         }
         
-        // 5. Default: If it's a question about doing something, treat as how-to
+        // 5. Default
         if (/^(how|what|where|when|why|can|should|would|could)/i.test(q) && q.length > 20) {
-            // Longer questions starting with question words are likely how-to
             return 'howto';
         }
         
-        // Fallback to chat for very short or unclear questions
         return 'chat';
     },
 
@@ -115,35 +116,82 @@ const ClaudeAPI = {
             }
         }
         
-        return 'Python'; // Default
+        return 'Python';
     },
 
     /**
-     * Main entry point - unified question handler
+     * Main entry point - checks store first, then calls API if needed
      */
     async processQuestion(question) {
         const type = this.detectQuestionType(question);
         console.log('[ClaudeAPI] Detected question type:', type);
         
+        // Check store for existing similar P&L first (saves API calls!)
+        if (this.USE_STORE_CACHE && window.PnLStore && window.PnLStore.initialized) {
+            console.log('[ClaudeAPI] Checking store for similar P&L...');
+            const cached = await window.PnLStore.findSimilar(question, this.SIMILARITY_THRESHOLD);
+            
+            if (cached) {
+                console.log('[ClaudeAPI] ✓ Found cached P&L! Skipping API call.');
+                return {
+                    ...cached,
+                    fromCache: true,
+                    cacheId: cached.id
+                };
+            }
+            console.log('[ClaudeAPI] No cache hit, calling API...');
+        }
+        
+        // Generate new P&L from API
+        let result;
         switch (type) {
             case 'code':
                 const language = this.detectLanguage(question);
-                return await this.generateCodeChallenge(question, language);
+                result = await this.generateCodeChallenge(question, language);
+                break;
             
             case 'howto':
-                return await this.generateHowToChallenge(question);
+                result = await this.generateHowToChallenge(question);
+                break;
             
             case 'structured':
-                return await this.generateStructuredUI(question);
+                result = await this.generateStructuredUI(question);
+                break;
             
             case 'chat':
             default:
-                // For very short/unclear questions, still try how-to format
                 if (question.length > 15) {
-                    return await this.generateHowToChallenge(question);
+                    result = await this.generateHowToChallenge(question);
+                } else {
+                    return await this.generalChat(question);
                 }
-                return await this.generalChat(question);
         }
+        
+        // Save successful result to store for future use
+        if (result && !result.error && window.PnLStore && window.PnLStore.initialized) {
+            const userId = this._getCurrentUserId();
+            const savedId = await window.PnLStore.save(question, result, userId);
+            if (savedId) {
+                result.storeId = savedId;
+                console.log('[ClaudeAPI] ✓ Saved to store:', savedId);
+            }
+        }
+        
+        return result;
+    },
+
+    /**
+     * Get current user ID for attribution
+     */
+    _getCurrentUserId() {
+        try {
+            const profile = localStorage.getItem('userProfile');
+            if (profile) {
+                const user = JSON.parse(profile);
+                return user.email || user.sub || 'anonymous';
+            }
+        } catch (e) {}
+        return 'anonymous';
     },
 
     /**
@@ -239,8 +287,6 @@ Respond ONLY with JSON.`;
     async generateStructuredUI(question) {
         const systemPrompt = `You are a UI/UX expert that converts structured descriptions into visual components.
 
-The user describes UI elements using references to existing designs (e.g., "button like Apple; card similar to Stripe").
-
 RESPOND ONLY WITH VALID JSON:
 
 {
@@ -250,29 +296,23 @@ RESPOND ONLY WITH VALID JSON:
         {
             "name": "string - component name",
             "type": "string - button/card/modal/input/etc",
-            "style": "string - style reference (e.g., 'Apple-style', 'Minimal')",
-            "html": "string - HTML code for the component",
-            "css": "string - CSS code for the component"
+            "style": "string - style reference",
+            "html": "string - HTML code",
+            "css": "string - CSS code"
         }
     ],
     "fullCode": {
         "html": "string - complete HTML",
         "css": "string - complete CSS",
-        "preview": "string - combined HTML with embedded CSS for preview"
+        "preview": "string - combined HTML with embedded CSS"
     }
-}
-
-Rules:
-- Parse the semicolon-separated parts as different components or properties
-- Generate clean, modern CSS
-- Make the preview self-contained (inline styles or embedded CSS)
-- Use CSS variables for easy customization`;
+}`;
 
         const userPrompt = `Convert this UI description to code:
 
 ${question}
 
-Generate clean, modern HTML/CSS that matches the style references.
+Generate clean, modern HTML/CSS.
 Respond ONLY with JSON.`;
 
         return await this._callAPI(systemPrompt, userPrompt, 'structured', {});
@@ -315,7 +355,6 @@ Respond ONLY with JSON.`;
     _parseResponse(content, expectedType, metadata) {
         let jsonStr = content.trim();
         
-        // Remove markdown code blocks if present
         if (jsonStr.startsWith('```')) {
             jsonStr = jsonStr.replace(/```json?\n?/g, '').replace(/```$/g, '').trim();
         }
@@ -323,12 +362,10 @@ Respond ONLY with JSON.`;
         try {
             const parsed = JSON.parse(jsonStr);
             
-            // Validate structure
             if (!parsed.goal && !parsed.description) {
-                throw new Error('Missing goal/description in response');
+                throw new Error('Missing goal/description');
             }
             
-            // Normalize sequence items
             if (parsed.sequence) {
                 parsed.sequence = parsed.sequence.map((step, idx) => ({
                     correct: step.correct || '',
@@ -341,22 +378,21 @@ Respond ONLY with JSON.`;
                 }));
             }
             
-            // Add metadata
             parsed.type = parsed.type || expectedType;
             parsed.generatedAt = new Date().toISOString();
+            parsed.fromCache = false;
             Object.assign(parsed, metadata);
             
             return parsed;
             
         } catch (e) {
             console.error('[ClaudeAPI] Parse error:', e);
-            console.error('[ClaudeAPI] Raw content:', content);
             throw new Error('Failed to parse API response');
         }
     },
 
     /**
-     * Simple chat fallback (no P&L format)
+     * Simple chat fallback
      */
     async generalChat(question) {
         try {
@@ -365,7 +401,7 @@ Respond ONLY with JSON.`;
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     prompt: question,
-                    system: `You are a helpful assistant. Provide clear, concise answers.`
+                    system: 'You are a helpful assistant. Provide clear, concise answers.'
                 })
             });
             
