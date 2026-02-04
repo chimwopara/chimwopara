@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Studio - Chim Wopara University</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #1B2330;
+            --surface: rgba(63, 82, 104, 0.4);
+            --border: rgba(183, 209, 225, 0.2);
+            --text: #B7D1E1;
+            --text-muted: rgba(183, 209, 225, 0.6);
+            --accent: #B7D1E1;
+            --deep: #3f5268;
+        }
+        
+        * { box-sizing: border-box; }
+        
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .font-handwritten { font-family: 'Caveat', cursive; }
+        
+        /* Glassmorphism */
+        .glass {
+            background: rgba(63, 82, 104, 0.25);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+        }
+        
+        .glass-strong {
+            background: rgba(27, 35, 48, 0.8);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid var(--border);
+        }
+        
+        /* Paint splatter elements */
+        .splatter {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0.15;
+        }
+        
+        .splatter-1 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(ellipse at 30% 40%, var(--accent) 0%, transparent 50%),
+                        radial-gradient(ellipse at 70% 60%, var(--deep) 0%, transparent 40%),
+                        radial-gradient(ellipse at 50% 80%, var(--accent) 0%, transparent 30%);
+            filter: blur(40px);
+            animation: drift 20s ease-in-out infinite;
+        }
+        
+        .splatter-2 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(ellipse at 60% 30%, #5a7a9a 0%, transparent 45%),
+                        radial-gradient(ellipse at 20% 70%, var(--accent) 0%, transparent 35%);
+            filter: blur(50px);
+            animation: drift 25s ease-in-out infinite reverse;
+        }
+        
+        @keyframes drift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(30px, -20px) rotate(5deg); }
+            50% { transform: translate(-20px, 30px) rotate(-3deg); }
+            75% { transform: translate(10px, 10px) rotate(2deg); }
+        }
+        
+        /* Brush stroke decoration */
+        .brush-stroke {
+            position: absolute;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            border-radius: 2px;
+            opacity: 0.3;
+        }
+        
+        /* Topic cards */
+        .topic-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .topic-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(183, 209, 225, 0.1) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .topic-card:hover::before {
+            opacity: 1;
+        }
+        
+        .topic-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            border-color: var(--accent);
+        }
+        
+        .topic-card.locked {
+            opacity: 0.4;
+            filter: grayscale(0.5);
+        }
+        
+        .topic-card.locked:hover {
+            transform: none;
+            cursor: not-allowed;
+        }
+        
+        .topic-card.completed {
+            border-color: rgba(52, 211, 153, 0.5);
+        }
+        
+        /* Video thumbnail */
+        .video-preview {
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+        }
+        
+        .video-preview img {
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .video-preview:hover img {
+            transform: scale(1.08);
+        }
+        
+        .video-preview::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(27, 35, 48, 0.9) 0%, transparent 60%);
+        }
+        
+        .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70px;
+            height: 70px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px rgba(183, 209, 225, 0.3);
+        }
+        
+        .video-preview:hover .play-icon {
+            transform: translate(-50%, -50%) scale(1.15);
+            box-shadow: 0 15px 50px rgba(183, 209, 225, 0.5);
+        }
+        
+        /* Lock overlay */
+        .lock-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(27, 35, 48, 0.85);
+            backdrop-filter: blur(4px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+            border-radius: inherit;
+        }
+        
+        /* Progress paint fill */
+        .paint-progress {
+            position: relative;
+            height: 8px;
+            background: rgba(63, 82, 104, 0.5);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .paint-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #34d399, #5eead4);
+            border-radius: 4px;
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        
+        .paint-fill::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 20px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3));
+        }
+        
+        /* Floating shapes */
+        .float-shape {
+            position: absolute;
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            animation: float-rotate 15s linear infinite;
+        }
+        
+        @keyframes float-rotate {
+            from { transform: rotate(0deg) translateX(20px) rotate(0deg); }
+            to { transform: rotate(360deg) translateX(20px) rotate(-360deg); }
+        }
+        
+        /* Modal */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(27, 35, 48, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-backdrop.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            transform: scale(0.9) translateY(30px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .modal-backdrop.active .modal-content {
+            transform: scale(1) translateY(0);
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { 
+            background: var(--deep); 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+        
+        /* Login float animation */
+        @keyframes gentle-float {
+            0%, 100% { transform: translateY(0) rotate(-1deg); }
+            50% { transform: translateY(-15px) rotate(1deg); }
+        }
+        
+        .login-float { animation: gentle-float 6s ease-in-out infinite; }
+        
+        /* Spray paint text effect */
+        .spray-text {
+            text-shadow: 
+                2px 2px 0 rgba(183, 209, 225, 0.1),
+                -1px -1px 0 rgba(183, 209, 225, 0.05),
+                4px 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Content reveal */
+        @keyframes reveal {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .reveal { animation: reveal 0.6s ease forwards; }
+        .reveal-delay-1 { animation-delay: 0.1s; opacity: 0; }
+        .reveal-delay-2 { animation-delay: 0.2s; opacity: 0; }
+        .reveal-delay-3 { animation-delay: 0.3s; opacity: 0; }
+    </style>
+</head>
+<body>
+
+    <!-- ========== LOGIN SCREEN ========== -->
+    <div id="login-screen" class="min-h-screen flex items-center justify-center p-6 relative overflow-hidden">
+        
+        <!-- Background Art -->
+        <div class="splatter splatter-1 top-0 left-0"></div>
+        <div class="splatter splatter-2 bottom-0 right-0"></div>
+        <div class="float-shape w-32 h-32 top-20 right-20 opacity-20"></div>
+        <div class="float-shape w-20 h-20 bottom-32 left-32 opacity-10" style="animation-delay: -5s;"></div>
+        
+        <div class="w-full max-w-md relative z-10">
+            <!-- Logo -->
+            <div class="text-center mb-10">
+                <a href="index.html" class="inline-block group">
+                    <img src="logo.png" alt="Chim Wopara University" class="w-16 h-16 rounded-2xl mx-auto mb-4 shadow-2xl group-hover:scale-110 transition-transform">
+                    <h1 class="text-2xl font-bold spray-text">Chim Wopara University</h1>
+                    <p class="font-handwritten text-2xl text-[--text-muted] mt-1">The Studio</p>
+                </a>
+            </div>
+            
+            <!-- Login Card -->
+            <div class="glass rounded-3xl p-8 login-float shadow-2xl">
+                <div class="text-center mb-8">
+                    <h2 class="text-xl font-semibold mb-2">Welcome, Creator</h2>
+                    <p class="text-[--text-muted] text-sm">Enter your studio to continue your journey</p>
+                </div>
+                
+                <form id="login-form" onsubmit="handleLogin(event)" class="space-y-5">
+                    <div>
+                        <label class="block text-xs font-medium text-[--text-muted] mb-2 uppercase tracking-wider">Email</label>
+                        <input 
+                            type="email" 
+                            id="login-email"
+                            required
+                            placeholder="your@email.com"
+                            class="w-full px-5 py-4 rounded-xl bg-[--bg] border border-[--border] text-[--text] placeholder-[--text-muted] focus:outline-none focus:border-[--accent] transition-colors"
+                        >
+                    </div>
+                    
+                    <div>
+                        <label class="block text-xs font-medium text-[--text-muted] mb-2 uppercase tracking-wider">Access Code</label>
+                        <input 
+                            type="text" 
+                            id="login-code"
+                            required
+                            placeholder="••••••"
+                            class="w-full px-5 py-4 rounded-xl bg-[--bg] border border-[--border] text-[--text] placeholder-[--text-muted] focus:outline-none focus:border-[--accent] transition-colors tracking-[0.3em] text-center text-lg"
+                        >
+                    </div>
+                    
+                    <div id="login-error" class="hidden text-red-400 text-sm text-center py-2">
+                        Hmm, that code doesn't look right. Try again?
+                    </div>
+                    
+                    <button type="submit" class="w-full py-4 rounded-xl bg-[--accent] text-[--bg] font-bold text-lg hover:bg-white transition-colors shadow-lg hover:shadow-xl">
+                        Enter Studio →
+                    </button>
+                </form>
+                
+                <div class="mt-6 pt-6 border-t border-[--border] text-center">
+                    <p class="text-xs text-[--text-muted]">
+                        Try demo code: <span class="font-mono bg-[--bg] px-2 py-1 rounded text-[--text]">000001</span>
+                    </p>
+                </div>
+            </div>
+            
+            <p class="text-center text-sm text-[--text-muted] mt-8">
+                New here? <a href="https://forms.fillout.com/t/35bB73fVpSus" target="_blank" class="text-[--accent] hover:text-white transition-colors underline underline-offset-4">Join the university →</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- ========== MAIN PORTAL ========== -->
+    <div id="portal-screen" class="hidden min-h-screen relative">
+        
+        <!-- Background Art -->
+        <div class="fixed inset-0 pointer-events-none overflow-hidden">
+            <div class="splatter splatter-1 top-0 left-0"></div>
+            <div class="splatter splatter-2 bottom-0 right-[-100px]"></div>
+            <div class="brush-stroke w-96 top-40 -left-20 -rotate-12"></div>
+            <div class="brush-stroke w-64 bottom-60 right-10 rotate-6"></div>
+        </div>
+        
+        <!-- Header -->
+        <header class="fixed top-0 left-0 right-0 z-50 glass-strong">
+            <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <img src="logo.png" alt="Chim Wopara University" class="w-9 h-9 rounded-xl group-hover:scale-110 transition-transform">
+                    <div>
+                        <span class="font-semibold text-sm">Chim Wopara University</span>
+                        <span class="font-handwritten text-[--text-muted] text-lg ml-2">Studio</span>
+                    </div>
+                </a>
+                
+                <div class="flex items-center gap-6">
+                    <div class="hidden md:flex items-center gap-3">
+                        <div class="text-right">
+                            <div class="text-xs text-[--text-muted]">Your Progress</div>
+                            <div class="text-sm font-bold"><span id="header-progress">0</span>/26 Mastered</div>
+                        </div>
+                        <div class="w-24 paint-progress">
+                            <div id="header-progress-bar" class="paint-fill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <button onclick="logout()" class="text-sm text-[--text-muted] hover:text-[--text] transition-colors">
+                        Exit Studio
+                    </button>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Main Content -->
+        <main class="pt-24 pb-16 px-6 relative z-10">
+            <div class="max-w-6xl mx-auto">
+                
+                <!-- Hero -->
+                <div class="text-center mb-16 reveal">
+                    <p class="font-handwritten text-3xl text-[--text-muted] mb-2">Your creative journey</p>
+                    <h1 class="text-4xl md:text-5xl font-bold spray-text mb-4">26 Skills to Master</h1>
+                    <p class="text-[--text-muted] max-w-xl mx-auto">Each topic unlocks after completing the previous one. Take your time — creativity can't be rushed.</p>
+                </div>
+                
+                <!-- Certificate Banner -->
+                <div class="glass rounded-2xl p-6 mb-12 flex flex-col md:flex-row items-center gap-6 reveal reveal-delay-1">
+                    <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-3xl shadow-lg">
+                        🏆
+                    </div>
+                    <div class="flex-1 text-center md:text-left">
+                        <h3 class="text-xl font-bold mb-1">Certificate of Mastery</h3>
+                        <p class="text-[--text-muted]">Complete all 26 challenges to earn your $500 certificate — proof of every skill you've conquered.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-emerald-400"><span id="cert-count">0</span></div>
+                        <div class="text-xs text-[--text-muted]">challenges done</div>
+                    </div>
+                </div>
+                
+                <!-- Topics Grid -->
+                <div id="topics-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 reveal reveal-delay-2">
+                    <!-- Generated by JS -->
+                </div>
+                
+            </div>
+        </main>
+    </div>
+
+    <!-- ========== TOPIC MODAL ========== -->
+    <div id="topic-modal" class="modal-backdrop flex items-center justify-center p-4">
+        <div class="modal-content glass-strong rounded-3xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
+            
+            <!-- Modal Header -->
+            <div class="p-6 border-b border-[--border] flex items-center justify-between sticky top-0 glass-strong rounded-t-3xl z-10">
+                <div>
+                    <p id="modal-week" class="font-handwritten text-xl text-[--text-muted]">Week 1-2</p>
+                    <h2 id="modal-title" class="text-2xl font-bold">Topic Title</h2>
+                </div>
+                <button onclick="closeModal()" class="w-10 h-10 rounded-full bg-[--surface] hover:bg-[--deep] transition-colors flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <!-- Modal Content -->
+            <div class="p-6 space-y-6">
+                
+                <!-- Main Lecture Video -->
+                <div>
+                    <h3 class="text-sm font-medium text-[--text-muted] uppercase tracking-wider mb-3">
+                        <i class="fa-solid fa-play-circle mr-2"></i>Weekly Lecture
+                    </h3>
+                    <a href="#" onclick="playVideo(); return false;" class="block video-preview aspect-video bg-[--surface]">
+                        <img id="modal-lecture-thumb" src="" alt="Lecture" class="w-full h-full object-cover">
+                        <div class="play-icon">
+                            <i class="fa-solid fa-play text-[--bg] text-2xl ml-1"></i>
+                        </div>
+                        <div class="absolute bottom-4 left-4 z-10">
+                            <span id="modal-duration" class="bg-black/70 text-white text-sm px-3 py-1 rounded-full">45 min</span>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Debriefing Video -->
+                <div>
+                    <h3 class="text-sm font-medium text-[--text-muted] uppercase tracking-wider mb-3">
+                        <i class="fa-brands fa-youtube mr-2 text-red-400"></i>Weekly Debriefing
+                    </h3>
+                    <a href="https://youtube.com" target="_blank" class="block video-preview aspect-video bg-[--surface] rounded-xl">
+                        <img id="modal-debrief-thumb" src="" alt="Debriefing" class="w-full h-full object-cover rounded-xl">
+                        <div class="play-icon" style="background: #ff0000;">
+                            <i class="fa-brands fa-youtube text-white text-2xl"></i>
+                        </div>
+                        <div class="absolute bottom-4 left-4 z-10">
+                            <span class="bg-red-600 text-white text-xs px-3 py-1 rounded-full uppercase tracking-wider">Live Q&A</span>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Notes & Challenge Row -->
+                <div class="grid md:grid-cols-2 gap-4">
+                    <!-- Notes -->
+                    <a href="#" onclick="downloadNotes(); return false;" class="glass rounded-xl p-5 hover:border-[--accent] transition-colors group block">
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 rounded-xl bg-purple-500/20 flex items-center justify-center text-purple-400 text-2xl">
+                                <i class="fa-solid fa-scroll"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-semibold mb-1">Weekly Notes</h4>
+                                <p class="text-sm text-[--text-muted]">Download PDF guide</p>
+                            </div>
+                            <i class="fa-solid fa-download text-[--text-muted] group-hover:text-[--accent] transition-colors"></i>
+                        </div>
+                    </a>
+                    
+                    <!-- Challenge -->
+                    <a href="#" onclick="startChallenge(); return false;" class="glass rounded-xl p-5 hover:border-emerald-400 transition-colors group block border-emerald-500/30">
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400 text-2xl">
+                                <i class="fa-solid fa-fire-flame-curved"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-semibold mb-1">Weekly Challenge</h4>
+                                <p id="modal-challenge-status" class="text-sm text-[--text-muted]">Prove your skills</p>
+                            </div>
+                            <i class="fa-solid fa-arrow-right text-emerald-400"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Modal Footer -->
+            <div id="modal-footer" class="p-6 border-t border-[--border]">
+                <button id="complete-btn" onclick="markComplete()" class="w-full py-4 rounded-xl bg-emerald-500 text-white font-bold text-lg hover:bg-emerald-400 transition-colors flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-check-double"></i>
+                    Mark as Mastered
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== DATA ==========
+        const curriculum = [
+            { id: 1, title: "Microsoft Excel AI", desc: "Transform spreadsheets with AI-powered analysis", thumb: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=450&fit=crop", debriefThumb: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=340&fit=crop", duration: "47 min" },
+            { id: 2, title: "PowerPoint & Word AI", desc: "Create stunning presentations with AI", thumb: "https://images.unsplash.com/photo-1542744094-3a31f272c490?w=800&h=450&fit=crop", debriefThumb: "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&h=340&fit=crop", duration: "52 min" },
+            { id: 3, title: "Create a GitHub Account", desc: "Set up your developer identity", thumb: "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=800&h=450&fit=crop", debriefThumb: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=340&fit=crop", duration: "28 min" },
+            { id: 4, title: "Set Up IDEs", desc: "Configure VS Code and Xcode", thumb: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&h=450&fit=crop", debriefThumb: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600&h=340&fit=crop", duration: "35 min" },
+            { id: 5, title: "Terminal & Bash", desc: "Master command line navigation", thumb: "https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=800&h=450&fit=crop", debriefThumb: "https://images.unsplash.com/photo-1573495612937-f01934eeaaa7?w=600&h=340&fit=crop", duration: "41 min" },
+            { id: 6, title: "Git & GitHub", desc: "Repos, commits, pushes, branches", thumb: "https://images.unsplash.com/photo-1556075798-4825dfaaf498?w=800&h=450&fit=crop", debriefThumb: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&h=340&fit=crop", duration: "58 min" },
+            { id: 7, title: "Porkbun Account", desc: "Set up your domain registrar", thumb: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=450&fit=crop", debriefThumb: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&h=340&fit=crop", duration: "22 min" },
+            { id: 8, title: "Buy a Domain", desc: "Purchase your first domain", thumb: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&h=450&fit=crop", debriefThumb: "https://images.unsplash.com/photo-1557426272-fc759fdf7a8d?w=600&h=340&fit=crop", duration: "19 min" },
+            { id: 9, title: "Domain Transfers", desc: "Move existing domains safely", thumb: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&h=450&fit=crop", debriefThumb: "https://images.unsplash.com/photo-1573167507387-6b4b98cb7c13?w=600&h=340&fit=crop", duration: "24 min" },
+            { id: 10, title: "Art of Prompting", desc: "Write prompts that get results", thumb: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=450&fit=crop", debriefThumb: "https://images.unsplash.com/photo-1543286386-713bdd548da4?w=600&h=340&fit=crop", duration: "63 min" },
+            { id: 11, title: "Pages & File Structure", desc: "Organize web projects properly", thumb: "https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?w=800&h=450&fit=crop", debriefThumb: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&h=340&fit=crop", duration: "38 min" },
+            { id: 12, title: "DNS & Hosting", desc: "Connect domains to servers", thumb: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800&h=450&fit=crop", debriefThumb: "https://images.unsplash.com/photo-1551434678-e076c223a692?w=600&h=340&fit=crop", duration: "44 min" },
+            { id: 13, title: "GitHub Pages", desc: "Free hosting for your projects", thumb: "https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=800&h=450&fit=crop", debriefThumb: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&h=340&fit=crop", duration: "31 min" },
+            { id: 14, title: "Netlify Hosting", desc: "Continuous deployment made easy", thumb: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&h=450&fit=crop", debriefThumb: "https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?w=600&h=340&fit=crop", duration: "29 min" },
+            { id: 15, title: "Cloudflare Setup", desc: "SSL, analytics, performance", thumb: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&h=450&fit=crop", debriefThumb: "https://images.unsplash.com/photo-1573497491208-6b1acb260507?w=600&h=340&fit=crop", duration: "47 min" },
+            { id: 16, title: "Firebase Basics", desc: "Console, hosting, database", thumb: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&h=450&fit=crop", debriefThumb: "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&h=340&fit=crop", duration: "55 min" },
+            { id: 17, title: "Google Sign-In", desc: "Authentication with Google", thumb: "https://images.unsplash.com/photo-1573804633927-bfcbcd909acd?w=800&h=450&fit=crop", debriefThumb: "https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?w=600&h=340&fit=crop", duration: "42 min" },
+            { id: 18, title: "API Tokens", desc: "Secure API integration", thumb: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=450&fit=crop", debriefThumb: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=340&fit=crop", duration: "36 min" },
+            { id: 19, title: "AI Media Generation", desc: "Create images with AI", thumb: "https://images.unsplash.com/photo-1547954575-855750c57bd3?w=800&h=450&fit=crop", debriefThumb: "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&h=340&fit=crop", duration: "51 min" },
+            { id: 20, title: "Fillout Forms", desc: "Professional form building", thumb: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=800&h=450&fit=crop", debriefThumb: "https://images.unsplash.com/photo-1557426272-fc759fdf7a8d?w=600&h=340&fit=crop", duration: "33 min" },
+            { id: 21, title: "Stripe Payments", desc: "Accept payments online", thumb: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=450&fit=crop", debriefThumb: "https://images.unsplash.com/photo-1556745757-8d76bdb6984b?w=600&h=340&fit=crop", duration: "48 min" },
+            { id: 22, title: "Email Marketing", desc: "Campaigns and automation", thumb: "https://images.unsplash.com/photo-1596526131083-e8c633c948d2?w=800&h=450&fit=crop", debriefThumb: "https://images.unsplash.com/photo-1573497491208-6b1acb260507?w=600&h=340&fit=crop", duration: "39 min" },
+            { id: 23, title: "Email Automation", desc: "Trigger emails with buttons", thumb: "https://images.unsplash.com/photo-1557200134-90327ee9fafa?w=800&h=450&fit=crop", debriefThumb: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&h=340&fit=crop", duration: "27 min" },
+            { id: 24, title: "PDF Generation", desc: "Create PDFs programmatically", thumb: "https://images.unsplash.com/photo-1568667256549-094345857637?w=800&h=450&fit=crop", debriefThumb: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=600&h=340&fit=crop", duration: "34 min" },
+            { id: 25, title: "Three.js 3D", desc: "Interactive 3D for the web", thumb: "https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=800&h=450&fit=crop", debriefThumb: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&h=340&fit=crop", duration: "67 min" },
+            { id: 26, title: "Google Sheets & Apps Script", desc: "Automation and triggers", thumb: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=450&fit=crop", debriefThumb: "https://images.unsplash.com/photo-1551434678-e076c223a692?w=600&h=340&fit=crop", duration: "54 min" }
+        ];
+
+        // State
+        let completedTopics = new Set();
+        let currentTopic = null;
+        const validCodes = ['000001', '123456', 'DEMO2024'];
+
+        // ========== AUTH ==========
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const code = document.getElementById('login-code').value;
+            
+            if (validCodes.includes(code)) {
+                document.getElementById('login-error').classList.add('hidden');
+                localStorage.setItem('cwu_auth', JSON.stringify({ email }));
+                showPortal();
+            } else {
+                document.getElementById('login-error').classList.remove('hidden');
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('cwu_auth');
+            location.reload();
+        }
+
+        function showPortal() {
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('portal-screen').classList.remove('hidden');
+            renderTopics();
+            updateProgress();
+        }
+
+        // ========== RENDER ==========
+        function isUnlocked(index) {
+            if (index === 0) return true;
+            return completedTopics.has(curriculum[index - 1].id);
+        }
+
+        function renderTopics() {
+            const grid = document.getElementById('topics-grid');
+            
+            grid.innerHTML = curriculum.map((topic, i) => {
+                const weekStart = (i * 2) + 1;
+                const weekEnd = weekStart + 1;
+                const isComplete = completedTopics.has(topic.id);
+                const unlocked = isUnlocked(i);
+                
+                return `
+                    <div class="topic-card glass rounded-2xl overflow-hidden ${isComplete ? 'completed' : ''} ${!unlocked ? 'locked' : ''}" 
+                         onclick="${unlocked ? `openTopic(${i})` : 'showLockMessage()'}">
+                        
+                        <!-- Thumbnail -->
+                        <div class="aspect-video relative overflow-hidden">
+                            <img src="${topic.thumb}" alt="${topic.title}" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-[--bg] via-transparent to-transparent"></div>
+                            
+                            ${isComplete ? `
+                                <div class="absolute top-3 right-3 w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center">
+                                    <i class="fa-solid fa-check text-white text-sm"></i>
+                                </div>
+                            ` : ''}
+                            
+                            ${!unlocked ? `
+                                <div class="lock-overlay">
+                                    <i class="fa-solid fa-lock text-4xl mb-3 opacity-50"></i>
+                                    <p class="text-sm text-[--text-muted]">Complete previous topic first</p>
+                                </div>
+                            ` : ''}
+                        </div>
+                        
+                        <!-- Info -->
+                        <div class="p-5">
+                            <p class="font-handwritten text-lg text-[--text-muted] mb-1">Week ${weekStart}–${weekEnd}</p>
+                            <h3 class="text-lg font-semibold mb-2">${topic.title}</h3>
+                            <p class="text-sm text-[--text-muted]">${topic.desc}</p>
+                            
+                            <div class="flex items-center gap-3 mt-4 pt-4 border-t border-[--border]">
+                                <span class="text-xs text-[--text-muted]"><i class="fa-solid fa-clock mr-1"></i>${topic.duration}</span>
+                                ${unlocked && !isComplete ? '<span class="text-xs text-[--accent] ml-auto">Start →</span>' : ''}
+                                ${isComplete ? '<span class="text-xs text-emerald-400 ml-auto"><i class="fa-solid fa-circle-check mr-1"></i>Mastered</span>' : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateProgress() {
+            const done = completedTopics.size;
+            const pct = Math.round((done / curriculum.length) * 100);
+            
+            document.getElementById('header-progress').textContent = done;
+            document.getElementById('header-progress-bar').style.width = `${pct}%`;
+            document.getElementById('cert-count').textContent = done;
+        }
+
+        // ========== MODAL ==========
+        function openTopic(index) {
+            currentTopic = curriculum[index];
+            const weekStart = (index * 2) + 1;
+            const weekEnd = weekStart + 1;
+            const isComplete = completedTopics.has(currentTopic.id);
+            
+            document.getElementById('modal-week').textContent = `Week ${weekStart}–${weekEnd}`;
+            document.getElementById('modal-title').textContent = currentTopic.title;
+            document.getElementById('modal-lecture-thumb').src = currentTopic.thumb;
+            document.getElementById('modal-debrief-thumb').src = currentTopic.debriefThumb;
+            document.getElementById('modal-duration').textContent = currentTopic.duration;
+            
+            const challengeStatus = document.getElementById('modal-challenge-status');
+            const completeBtn = document.getElementById('complete-btn');
+            const footer = document.getElementById('modal-footer');
+            
+            if (isComplete) {
+                challengeStatus.textContent = 'Completed ✓';
+                footer.style.display = 'none';
+            } else {
+                challengeStatus.textContent = 'Prove your skills';
+                footer.style.display = 'block';
+            }
+            
+            document.getElementById('topic-modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('topic-modal').classList.remove('active');
+            document.body.style.overflow = '';
+            currentTopic = null;
+        }
+
+        function showLockMessage() {
+            alert('🔒 Complete the previous topic to unlock this one!');
+        }
+
+        // ========== ACTIONS ==========
+        function playVideo() {
+            alert('🎬 Video player would open in the full version!');
+        }
+
+        function downloadNotes() {
+            alert('📜 Notes PDF would download in the full version!');
+        }
+
+        function startChallenge() {
+            alert('🔥 Challenge interface would open in the full version!');
+        }
+
+        function markComplete() {
+            if (currentTopic) {
+                completedTopics.add(currentTopic.id);
+                localStorage.setItem('cwu_progress', JSON.stringify([...completedTopics]));
+                closeModal();
+                renderTopics();
+                updateProgress();
+            }
+        }
+
+        // ========== INIT ==========
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load progress
+            const saved = localStorage.getItem('cwu_progress');
+            if (saved) completedTopics = new Set(JSON.parse(saved));
+            
+            // Check auth
+            const auth = localStorage.getItem('cwu_auth');
+            if (auth) showPortal();
+        });
+
+        // Close modal on escape or backdrop click
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+        document.getElementById('topic-modal').addEventListener('click', e => {
+            if (e.target === e.currentTarget) closeModal();
+        });
+    </script>
+</body>
+</html>
