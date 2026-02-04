@@ -453,25 +453,8 @@
             </div>
             
             <!-- Modal Content -->
-            <div class="p-6 space-y-6">
+           <div class="p-6 space-y-6">
                 
-                <!-- Main Lecture Video -->
-                <div>
-                    <h3 class="text-sm font-medium text-[--text-muted] uppercase tracking-wider mb-3">
-                        <i class="fa-solid fa-play-circle mr-2"></i>Weekly Lecture
-                    </h3>
-                    <a href="#" onclick="playVideo(); return false;" class="block video-preview aspect-video bg-[--surface]">
-                        <img id="modal-lecture-thumb" src="" alt="Lecture" class="w-full h-full object-cover">
-                        <div class="play-icon">
-                            <i class="fa-solid fa-play text-[--bg] text-2xl ml-1"></i>
-                        </div>
-                        <div class="absolute bottom-4 left-4 z-10">
-                            <span id="modal-duration" class="bg-black/70 text-white text-sm px-3 py-1 rounded-full">45 min</span>
-                        </div>
-                    </a>
-                </div>
-                
-                <!-- Debriefing Video -->
                 <div>
                     <h3 class="text-sm font-medium text-[--text-muted] uppercase tracking-wider mb-3">
                         <i class="fa-brands fa-youtube mr-2 text-red-400"></i>Weekly Debriefing
@@ -483,6 +466,21 @@
                         </div>
                         <div class="absolute bottom-4 left-4 z-10">
                             <span class="bg-red-600 text-white text-xs px-3 py-1 rounded-full uppercase tracking-wider">Live Q&A</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div>
+                    <h3 class="text-sm font-medium text-[--text-muted] uppercase tracking-wider mb-3">
+                        <i class="fa-solid fa-play-circle mr-2"></i>Weekly Lecture
+                    </h3>
+                    <a href="#" onclick="playVideo(); return false;" class="block video-preview aspect-video bg-[--surface]">
+                        <img id="modal-lecture-thumb" src="" alt="Lecture" class="w-full h-full object-cover">
+                        <div class="play-icon">
+                            <i class="fa-solid fa-play text-[--bg] text-2xl ml-1"></i>
+                        </div>
+                        <div class="absolute bottom-4 left-4 z-10">
+                            <span id="modal-duration" class="bg-black/70 text-white text-sm px-3 py-1 rounded-full">45 min</span>
                         </div>
                     </a>
                 </div>
