@@ -288,6 +288,74 @@
         .reveal-delay-1 { animation-delay: 0.1s; opacity: 0; }
         .reveal-delay-2 { animation-delay: 0.2s; opacity: 0; }
         .reveal-delay-3 { animation-delay: 0.3s; opacity: 0; }
+        
+        /* Skill badge animation */
+        @keyframes skillPopIn {
+            0% { 
+                transform: scale(0) rotate(-180deg); 
+                opacity: 0;
+            }
+            50% { 
+                transform: scale(1.3) rotate(10deg);
+            }
+            70% { 
+                transform: scale(0.9) rotate(-5deg);
+            }
+            100% { 
+                transform: scale(1) rotate(0deg); 
+                opacity: 1;
+            }
+        }
+        
+        @keyframes skillGlow {
+            0%, 100% { 
+                box-shadow: 0 0 5px rgba(251, 191, 36, 0.3);
+            }
+            50% { 
+                box-shadow: 0 0 20px rgba(251, 191, 36, 0.6), 0 0 30px rgba(251, 191, 36, 0.4);
+            }
+        }
+        
+        @keyframes celebrationBurst {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+        
+        .skill-badge {
+            animation: skillPopIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(245, 158, 11, 0.1));
+            border: 1px solid rgba(251, 191, 36, 0.4);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #fbbf24;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .skill-badge.new {
+            animation: skillPopIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards, 
+                       skillGlow 1s ease-in-out 0.6s 3;
+        }
+        
+        .celebration-particle {
+            position: absolute;
+            pointer-events: none;
+            animation: celebrationBurst 0.8s ease-out forwards;
+            border-radius: 50%;
+        }
     </style>
 </head>
 <body>
@@ -413,20 +481,63 @@
                     <p class="text-[--text-muted] max-w-xl mx-auto">Each topic unlocks after completing the previous one. Take your time — creativity can't be rushed.</p>
                 </div>
                 
-                <!-- Certificate Banner -->
-                <div class="glass rounded-2xl p-6 mb-12 flex flex-col md:flex-row items-center gap-6 reveal reveal-delay-1">
-                    <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-3xl shadow-lg">
-                        🏆
+                <!-- Certificate Banner with Virtual Certificate -->
+                <div class="glass rounded-2xl p-6 mb-8 reveal reveal-delay-1">
+                    <div class="flex flex-col lg:flex-row items-center gap-6">
+                        <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-3xl shadow-lg shrink-0">
+                            🏆
+                        </div>
+                        <div class="flex-1 text-center lg:text-left">
+                            <h3 class="text-xl font-bold mb-1">Certificate of Mastery</h3>
+                            <p class="text-[--text-muted]">Complete all 26 challenges to earn your $500 certificate — proof of every skill you've conquered.</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-emerald-400"><span id="cert-count">0</span></div>
+                            <div class="text-xs text-[--text-muted]">challenges done</div>
+                        </div>
                     </div>
-                    <div class="flex-1 text-center md:text-left">
-                        <h3 class="text-xl font-bold mb-1">Certificate of Mastery</h3>
-                        <p class="text-[--text-muted]">Complete all 26 challenges to earn your $500 certificate — proof of every skill you've conquered.</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-3xl font-bold text-emerald-400"><span id="cert-count">0</span></div>
-                        <div class="text-xs text-[--text-muted]">challenges done</div>
+                    
+                    <!-- Virtual Certificate Preview -->
+                    <div id="virtual-certificate" class="mt-6 p-6 bg-gradient-to-br from-amber-900/20 to-orange-900/20 rounded-xl border-2 border-amber-500/30 relative overflow-hidden">
+                        <!-- Decorative corners -->
+                        <div class="absolute top-2 left-2 w-8 h-8 border-t-2 border-l-2 border-amber-500/50"></div>
+                        <div class="absolute top-2 right-2 w-8 h-8 border-t-2 border-r-2 border-amber-500/50"></div>
+                        <div class="absolute bottom-2 left-2 w-8 h-8 border-b-2 border-l-2 border-amber-500/50"></div>
+                        <div class="absolute bottom-2 right-2 w-8 h-8 border-b-2 border-r-2 border-amber-500/50"></div>
+                        
+                        <div class="text-center mb-4">
+                            <p class="font-handwritten text-2xl text-amber-300/80">Certificate of Mastery</p>
+                            <h4 class="text-lg font-bold text-[--text]">Chim Wopara University</h4>
+                        </div>
+                        
+                        <p class="text-sm text-center text-[--text-muted] mb-4">Skills Earned:</p>
+                        
+                        <!-- Skills Container -->
+                        <div id="certificate-skills" class="flex flex-wrap justify-center gap-2 min-h-[60px]">
+                            <p id="no-skills-message" class="text-xs text-[--text-muted] italic">Complete challenges to add skills here...</p>
+                        </div>
+                        
+                        <div class="text-center mt-4 pt-4 border-t border-amber-500/20">
+                            <p class="text-xs text-[--text-muted]">Value: <span class="text-amber-400 font-bold">$500</span></p>
+                        </div>
                     </div>
                 </div>
+                
+                <!-- WhatsApp Community Banner -->
+                <a href="https://chat.whatsapp.com/Kl7wsqIjw0s0Z0o0MovW3m" target="_blank" class="block glass rounded-2xl p-6 mb-12 hover:border-green-500/50 transition-all group reveal reveal-delay-1">
+                    <div class="flex flex-col md:flex-row items-center gap-6">
+                        <div class="w-16 h-16 rounded-2xl bg-green-500/20 flex items-center justify-center text-green-400 text-3xl group-hover:scale-110 transition-transform">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </div>
+                        <div class="flex-1 text-center md:text-left">
+                            <h3 class="text-lg font-bold mb-1">Join the WhatsApp Community</h3>
+                            <p class="text-[--text-muted] text-sm">Share your GitHub Pages assignment links with classmates, get feedback, and connect with fellow learners.</p>
+                        </div>
+                        <div class="text-green-400 group-hover:translate-x-2 transition-transform">
+                            <i class="fa-solid fa-arrow-right text-xl"></i>
+                        </div>
+                    </div>
+                </a>
                 
                 <!-- Topics Grid -->
                 <div id="topics-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 reveal reveal-delay-2">
@@ -652,6 +763,79 @@
             document.getElementById('header-progress').textContent = done;
             document.getElementById('header-progress-bar').style.width = `${pct}%`;
             document.getElementById('cert-count').textContent = done;
+            
+            // Update certificate skills display
+            renderCertificateSkills();
+        }
+        
+        function renderCertificateSkills() {
+            const container = document.getElementById('certificate-skills');
+            const noSkillsMsg = document.getElementById('no-skills-message');
+            
+            if (completedTopics.size === 0) {
+                if (noSkillsMsg) noSkillsMsg.style.display = 'block';
+                return;
+            }
+            
+            if (noSkillsMsg) noSkillsMsg.style.display = 'none';
+            
+            // Get all completed topic names
+            const completedSkills = curriculum.filter(t => completedTopics.has(t.id));
+            
+            // Check what skills are already displayed
+            const existingSkills = new Set();
+            container.querySelectorAll('.skill-badge').forEach(badge => {
+                existingSkills.add(badge.dataset.topicId);
+            });
+            
+            // Add any missing skills
+            completedSkills.forEach(topic => {
+                if (!existingSkills.has(String(topic.id))) {
+                    addSkillBadge(topic, false);
+                }
+            });
+        }
+        
+        function addSkillBadge(topic, isNew = true) {
+            const container = document.getElementById('certificate-skills');
+            const noSkillsMsg = document.getElementById('no-skills-message');
+            
+            if (noSkillsMsg) noSkillsMsg.style.display = 'none';
+            
+            const badge = document.createElement('span');
+            badge.className = `skill-badge ${isNew ? 'new' : ''}`;
+            badge.dataset.topicId = topic.id;
+            badge.innerHTML = `<i class="fa-solid fa-check-circle"></i> ${topic.title}`;
+            
+            container.appendChild(badge);
+            
+            // Create celebration particles if it's a new skill
+            if (isNew) {
+                createCelebrationParticles(badge);
+            }
+        }
+        
+        function createCelebrationParticles(element) {
+            const rect = element.getBoundingClientRect();
+            const container = document.getElementById('virtual-certificate');
+            const containerRect = container.getBoundingClientRect();
+            
+            const colors = ['#fbbf24', '#f59e0b', '#34d399', '#60a5fa', '#f472b6'];
+            
+            for (let i = 0; i < 12; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'celebration-particle';
+                particle.style.width = `${6 + Math.random() * 8}px`;
+                particle.style.height = particle.style.width;
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.left = `${rect.left - containerRect.left + rect.width / 2}px`;
+                particle.style.top = `${rect.top - containerRect.top + rect.height / 2}px`;
+                particle.style.transform = `translate(${(Math.random() - 0.5) * 100}px, ${(Math.random() - 0.5) * 100}px)`;
+                
+                container.appendChild(particle);
+                
+                setTimeout(() => particle.remove(), 800);
+            }
         }
 
         // ========== MODAL ==========
@@ -708,11 +892,22 @@
 
         function markComplete() {
             if (currentTopic) {
+                // Add the new skill badge with animation
+                addSkillBadge(currentTopic, true);
+                
                 completedTopics.add(currentTopic.id);
                 localStorage.setItem('cwu_progress', JSON.stringify([...completedTopics]));
                 closeModal();
                 renderTopics();
                 updateProgress();
+                
+                // Scroll to certificate to show the new skill
+                setTimeout(() => {
+                    document.getElementById('virtual-certificate').scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'center' 
+                    });
+                }, 300);
             }
         }
 
