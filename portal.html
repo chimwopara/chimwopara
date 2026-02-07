@@ -675,19 +675,69 @@
         const validCodes = ['000001', '123456', 'DEMO2024'];
 
         // ========== AUTH ==========
-        function handleLogin(e) {
-            e.preventDefault();
-            const email = document.getElementById('login-email').value;
-            const code = document.getElementById('login-code').value;
-            
-            if (validCodes.includes(code)) {
-                document.getElementById('login-error').classList.add('hidden');
-                localStorage.setItem('cwu_auth', JSON.stringify({ email }));
-                showPortal();
-            } else {
-                document.getElementById('login-error').classList.remove('hidden');
-            }
+// PASTE YOUR GOOGLE APPS SCRIPT URL HERE
+const API_URL = "https://script.google.com/macros/s/AKfycbx_763prT6neouzyUOS1o37oxBit55gwcW5RLQb6zV7QlpVnzGqg4hFVjxaj7bhuy9fCQ/exec"; 
+
+async function handleLogin(e) {
+    e.preventDefault();
+    const email = document.getElementById('login-email').value;
+    const code = document.getElementById('login-code').value;
+    const btn = e.target.querySelector('button');
+    const originalText = btn.innerText;
+
+    // Loading State
+    btn.disabled = true;
+    btn.innerText = "Verifying...";
+    
+    // Check Demo Codes first (optional, keep if you want testing access)
+    const demoCodes = ['DEMO2024', '000001'];
+    if (demoCodes.includes(code)) {
+        completeLogin(email);
+        return;
+    }
+
+    try {
+        // Call Google Sheet API
+        const response = await fetch(`${API_URL}?email=${encodeURIComponent(email)}&code=${encodeURIComponent(code)}`);
+        const data = await response.json();
+
+        if (data.result === "success") {
+            completeLogin(email);
+        } else {
+            showError();
         }
+    } catch (error) {
+        console.error("Login error:", error);
+        showError();
+    } finally {
+        btn.disabled = false;
+        btn.innerText = originalText;
+    }
+}
+
+function completeLogin(email) {
+    document.getElementById('login-error').classList.add('hidden');
+    localStorage.setItem('cwu_auth', JSON.stringify({ email }));
+    showPortal();
+}
+
+function showError() {
+    document.getElementById('login-error').classList.remove('hidden');
+    // Shake animation
+    const card = document.querySelector('.glass');
+    card.style.animation = 'shake 0.5s';
+    setTimeout(() => card.style.animation = '', 500);
+}
+
+// Add this style for the shake animation if needed
+const style = document.createElement('style');
+style.innerHTML = `
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}`;
+document.head.appendChild(style);
 
         function logout() {
             localStorage.removeItem('cwu_auth');
