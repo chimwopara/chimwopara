@@ -41,7 +41,7 @@
         }
         
         .glass-strong {
-            background: rgba(27, 35, 48, 0.8);
+            background: rgba(27, 35, 48, 0.95);
             backdrop-filter: blur(30px);
             -webkit-backdrop-filter: blur(30px);
             border: 1px solid var(--border);
@@ -360,17 +360,14 @@
 </head>
 <body>
 
-    <!-- ========== LOGIN SCREEN ========== -->
     <div id="login-screen" class="min-h-screen flex items-center justify-center p-6 relative overflow-hidden">
         
-        <!-- Background Art -->
         <div class="splatter splatter-1 top-0 left-0"></div>
         <div class="splatter splatter-2 bottom-0 right-0"></div>
         <div class="float-shape w-32 h-32 top-20 right-20 opacity-20"></div>
         <div class="float-shape w-20 h-20 bottom-32 left-32 opacity-10" style="animation-delay: -5s;"></div>
         
         <div class="w-full max-w-md relative z-10">
-            <!-- Logo -->
             <div class="text-center mb-10">
                 <a href="index.html" class="inline-block group">
                     <img src="logo.png" alt="Chim Wopara University" class="w-16 h-16 rounded-2xl mx-auto mb-4 shadow-2xl group-hover:scale-110 transition-transform">
@@ -379,52 +376,52 @@
                 </a>
             </div>
             
-            <!-- Login Card -->
             <div class="glass p-8 rounded-2xl w-full max-w-md relative overflow-hidden">
     
-    <div class="text-center mb-8">
-        <h2 id="login-title" class="text-2xl font-bold mb-2">Student Portal</h2>
-        <p id="login-subtitle" class="text-[#94a3b8]">Enter your email to access The Studio</p>
-    </div>
-
-    <form onsubmit="return false;"> <div id="step-email">
-            <div class="mb-6">
-                <label class="block text-xs font-bold uppercase tracking-widest text-[#4f8fff] mb-2">Email Address</label>
-                <input type="email" id="login-email" 
-                    class="w-full bg-[#1B2330] border border-[#4f8fff]/20 rounded-lg p-4 text-white focus:outline-none focus:border-[#4f8fff] transition-colors"
-                    placeholder="name@example.com">
-            </div>
-        </div>
-
-        <div id="step-verify" class="hidden">
-            <div class="mb-6 relative">
-                <div class="flex justify-between items-center mb-2">
-                    <label class="block text-xs font-bold uppercase tracking-widest text-[#4f8fff]">Credentials</label>
-                    <button type="button" onclick="goBack()" class="text-xs text-[#94a3b8] hover:text-white">Change Email</button>
+                <div class="text-center mb-8">
+                    <h2 id="login-title" class="text-2xl font-bold mb-2">Student Portal</h2>
+                    <p id="login-subtitle" class="text-[#94a3b8]">Enter your email to access The Studio</p>
                 </div>
-                <input type="text" id="login-code" 
-                    class="w-full bg-[#1B2330] border border-[#4f8fff]/20 rounded-lg p-4 text-white focus:outline-none focus:border-[#4f8fff] transition-colors"
-                    placeholder="Enter Access Code">
+
+                <form onsubmit="return false;"> 
+                    <div id="step-email">
+                        <div class="mb-6">
+                            <label class="block text-xs font-bold uppercase tracking-widest text-[#4f8fff] mb-2">Email Address</label>
+                            <input type="email" id="login-email" 
+                                class="w-full bg-[#1B2330] border border-[#4f8fff]/20 rounded-lg p-4 text-white focus:outline-none focus:border-[#4f8fff] transition-colors"
+                                placeholder="name@example.com">
+                        </div>
+                    </div>
+
+                    <div id="step-verify" class="hidden">
+                        <div class="mb-6 relative">
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="block text-xs font-bold uppercase tracking-widest text-[#4f8fff]">Credentials</label>
+                                <button type="button" onclick="goBack()" class="text-xs text-[#94a3b8] hover:text-white">Change Email</button>
+                            </div>
+                            <input type="text" id="login-code" 
+                                class="w-full bg-[#1B2330] border border-[#4f8fff]/20 rounded-lg p-4 text-white focus:outline-none focus:border-[#4f8fff] transition-colors"
+                                placeholder="Enter Access Code">
+                        </div>
+                    </div>
+
+                    <div id="login-error" class="hidden bg-red-500/10 border border-red-500/50 text-red-200 text-sm p-3 rounded mb-4 text-center">
+                        Invalid credentials found
+                    </div>
+
+                    <button id="login-btn" onclick="if(document.getElementById('step-email').classList.contains('hidden')) handleStep2(event); else handleStep1(event);"
+                        class="w-full bg-[#4f8fff] hover:bg-[#3b82f6] text-[#070b14] font-bold py-4 rounded-lg transition-all transform hover:scale-[1.02]">
+                        Continue
+                    </button>
+
+                    <div class="text-center mt-4">
+                        <button id="forgot-btn" type="button" onclick="handleForgotPassword()" class="hidden text-sm text-[#4f8fff]/70 hover:text-[#4f8fff] transition">
+                            Forgot Password?
+                        </button>
+                    </div>
+
+                </form>
             </div>
-        </div>
-
-        <div id="login-error" class="hidden bg-red-500/10 border border-red-500/50 text-red-200 text-sm p-3 rounded mb-4 text-center">
-            Invalid credentials found
-        </div>
-
-        <button id="login-btn" onclick="if(document.getElementById('step-email').classList.contains('hidden')) handleStep2(event); else handleStep1(event);"
-            class="w-full bg-[#4f8fff] hover:bg-[#3b82f6] text-[#070b14] font-bold py-4 rounded-lg transition-all transform hover:scale-[1.02]">
-            Continue
-        </button>
-
-        <div class="text-center mt-4">
-            <button id="forgot-btn" type="button" onclick="handleForgotPassword()" class="hidden text-sm text-[#4f8fff]/70 hover:text-[#4f8fff] transition">
-                Forgot Password?
-            </button>
-        </div>
-
-    </form>
-</div>
             
             <p class="text-center text-sm text-[--text-muted] mt-8">
                 New here? <a href="https://forms.fillout.com/t/35bB73fVpSus" target="_blank" class="text-[--accent] hover:text-white transition-colors underline underline-offset-4">Join the university →</a>
@@ -432,10 +429,8 @@
         </div>
     </div>
 
-    <!-- ========== MAIN PORTAL ========== -->
     <div id="portal-screen" class="hidden min-h-screen relative">
         
-        <!-- Background Art -->
         <div class="fixed inset-0 pointer-events-none overflow-hidden">
             <div class="splatter splatter-1 top-0 left-0"></div>
             <div class="splatter splatter-2 bottom-0 right-[-100px]"></div>
@@ -443,7 +438,6 @@
             <div class="brush-stroke w-64 bottom-60 right-10 rotate-6"></div>
         </div>
         
-        <!-- Header -->
         <header class="fixed top-0 left-0 right-0 z-50 glass-strong">
             <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
                 <a href="index.html" class="flex items-center gap-3 group">
@@ -471,18 +465,15 @@
             </div>
         </header>
         
-        <!-- Main Content -->
         <main class="pt-24 pb-16 px-6 relative z-10">
             <div class="max-w-6xl mx-auto">
                 
-                <!-- Hero -->
                 <div class="text-center mb-16 reveal">
                     <p class="font-handwritten text-3xl text-[--text-muted] mb-2">Your creative journey</p>
                     <h1 class="text-4xl md:text-5xl font-bold spray-text mb-4">26 Skills to Master</h1>
                     <p class="text-[--text-muted] max-w-xl mx-auto">Each topic unlocks after completing the previous one. Take your time — creativity can't be rushed.</p>
                 </div>
                 
-                <!-- Certificate Banner with Virtual Certificate -->
                 <div class="glass rounded-2xl p-6 mb-8 reveal reveal-delay-1">
                     <div class="flex flex-col lg:flex-row items-center gap-6">
                         <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-3xl shadow-lg shrink-0">
@@ -498,9 +489,7 @@
                         </div>
                     </div>
                     
-                    <!-- Virtual Certificate Preview -->
                     <div id="virtual-certificate" class="mt-6 p-6 bg-gradient-to-br from-amber-900/20 to-orange-900/20 rounded-xl border-2 border-amber-500/30 relative overflow-hidden">
-                        <!-- Decorative corners -->
                         <div class="absolute top-2 left-2 w-8 h-8 border-t-2 border-l-2 border-amber-500/50"></div>
                         <div class="absolute top-2 right-2 w-8 h-8 border-t-2 border-r-2 border-amber-500/50"></div>
                         <div class="absolute bottom-2 left-2 w-8 h-8 border-b-2 border-l-2 border-amber-500/50"></div>
@@ -513,7 +502,6 @@
                         
                         <p class="text-sm text-center text-[--text-muted] mb-4">Skills Earned:</p>
                         
-                        <!-- Skills Container -->
                         <div id="certificate-skills" class="flex flex-wrap justify-center gap-2 min-h-[60px]">
                             <p id="no-skills-message" class="text-xs text-[--text-muted] italic">Complete challenges to add skills here...</p>
                         </div>
@@ -524,7 +512,6 @@
                     </div>
                 </div>
                 
-                <!-- WhatsApp Community Banner -->
                 <a href="https://chat.whatsapp.com/Kl7wsqIjw0s0Z0o0MovW3m" target="_blank" class="block glass rounded-2xl p-6 mb-12 hover:border-green-500/50 transition-all group reveal reveal-delay-1">
                     <div class="flex flex-col md:flex-row items-center gap-6">
                         <div class="w-16 h-16 rounded-2xl bg-green-500/20 flex items-center justify-center text-green-400 text-3xl group-hover:scale-110 transition-transform">
@@ -540,20 +527,16 @@
                     </div>
                 </a>
                 
-                <!-- Topics Grid -->
                 <div id="topics-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 reveal reveal-delay-2">
-                    <!-- Generated by JS -->
-                </div>
+                    </div>
                 
             </div>
         </main>
     </div>
 
-    <!-- ========== TOPIC MODAL ========== -->
     <div id="topic-modal" class="modal-backdrop flex items-center justify-center p-4">
         <div class="modal-content glass-strong rounded-3xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
             
-            <!-- Modal Header -->
             <div class="p-6 border-b border-[--border] flex items-center justify-between sticky top-0 glass-strong rounded-t-3xl z-10">
                 <div>
                     <p id="modal-week" class="font-handwritten text-xl text-[--text-muted]">Week 1-2</p>
@@ -564,8 +547,7 @@
                 </button>
             </div>
             
-            <!-- Modal Content -->
-           <div class="p-6 space-y-6">
+            <div class="p-6 space-y-6">
                 
                 <div>
                     <h3 class="text-sm font-medium text-[--text-muted] uppercase tracking-wider mb-3">
@@ -597,9 +579,7 @@
                     </a>
                 </div>
                 
-                <!-- Notes & Challenge Row -->
                 <div class="grid md:grid-cols-2 gap-4">
-                    <!-- Notes -->
                     <a href="#" onclick="downloadNotes(); return false;" class="glass rounded-xl p-5 hover:border-[--accent] transition-colors group block">
                         <div class="flex items-center gap-4">
                             <div class="w-14 h-14 rounded-xl bg-purple-500/20 flex items-center justify-center text-purple-400 text-2xl">
@@ -613,7 +593,6 @@
                         </div>
                     </a>
                     
-                    <!-- Challenge -->
                     <a href="#" onclick="startChallenge(); return false;" class="glass rounded-xl p-5 hover:border-emerald-400 transition-colors group block border-emerald-500/30">
                         <div class="flex items-center gap-4">
                             <div class="w-14 h-14 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400 text-2xl">
@@ -629,7 +608,6 @@
                 </div>
             </div>
             
-            <!-- Modal Footer -->
             <div id="modal-footer" class="p-6 border-t border-[--border]">
                 <button id="complete-btn" onclick="markComplete()" class="w-full py-4 rounded-xl bg-emerald-500 text-white font-bold text-lg hover:bg-emerald-400 transition-colors flex items-center justify-center gap-2">
                     <i class="fa-solid fa-check-double"></i>
@@ -639,36 +617,51 @@
         </div>
     </div>
 
+    <div id="unregistered-modal" class="modal-backdrop flex items-center justify-center p-4">
+        <div class="modal-content glass-strong p-8 rounded-2xl w-full max-w-md text-center border border-red-500/30">
+            <div class="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-4 text-red-400 text-2xl">
+                <i class="fa-solid fa-user-slash"></i>
+            </div>
+            <h3 class="text-2xl font-bold mb-2">Access Denied</h3>
+            <p class="text-[#94a3b8] mb-6">This email is not enrolled in The Studio. Please join the university to get your access code.</p>
+            <div class="flex gap-3">
+                <button onclick="closeAuthModal('unregistered-modal')" class="flex-1 py-3 rounded-lg border border-[#4f8fff]/30 hover:bg-[#4f8fff]/10 transition text-sm">Back</button>
+                <a href="https://forms.fillout.com/t/35bB73fVpSus" target="_blank" class="flex-1 py-3 rounded-lg bg-[#4f8fff] text-[#070b14] font-bold hover:bg-[#3b82f6] transition flex items-center justify-center text-sm">Enroll Now</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="forgot-modal" class="modal-backdrop flex items-center justify-center p-4">
+        <div class="modal-content glass-strong p-8 rounded-2xl w-full max-w-md border border-[#4f8fff]/20">
+            <h3 class="text-2xl font-bold mb-2">Reset Password</h3>
+            <p class="text-[#94a3b8] mb-6 text-sm">Enter your email to receive a temporary access code.</p>
+            <input type="email" id="reset-email" placeholder="name@example.com" 
+                   class="w-full bg-[#1B2330] border border-[#4f8fff]/30 rounded-lg p-3 text-white mb-4 focus:outline-none focus:border-[#4f8fff]">
+            <button onclick="submitResetRequest()" id="btn-reset-submit" class="w-full py-3 rounded-lg bg-[#4f8fff] text-[#070b14] font-bold hover:bg-[#3b82f6] transition mb-3">Send Reset Code</button>
+            <button onclick="closeAuthModal('forgot-modal')" class="w-full text-sm text-[#94a3b8] hover:text-white">Cancel</button>
+        </div>
+    </div>
+
+    <div id="setup-modal" class="modal-backdrop flex items-center justify-center p-4">
+        <div class="modal-content glass-strong p-8 rounded-2xl w-full max-w-md border border-emerald-500/30">
+            <div class="w-12 h-12 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-4 text-emerald-400">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2 text-center">Secure Your Account</h3>
+            <p class="text-[#94a3b8] text-center text-sm mb-6">Create a permanent password to replace your temporary access code.</p>
+            <div class="space-y-3">
+                <input type="password" id="new-password" placeholder="New Password" class="w-full bg-[#1B2330] border border-[#4f8fff]/30 rounded-lg p-3 text-white focus:outline-none focus:border-[#4f8fff]">
+                <input type="password" id="confirm-password" placeholder="Confirm Password" class="w-full bg-[#1B2330] border border-[#4f8fff]/30 rounded-lg p-3 text-white focus:outline-none focus:border-[#4f8fff]">
+            </div>
+            <button onclick="submitPasswordSetup()" id="btn-setup-submit" class="w-full mt-6 py-3 rounded-lg bg-emerald-500 text-white font-bold hover:bg-emerald-400 transition">Set Password & Login</button>
+        </div>
+    </div>
+
     <script>
-        async function handleForgotPassword() {
-    // 1. Simple prompt (You can make a fancy modal if you prefer)
-    const email = prompt("Please enter your registered email address:");
-    
-    if (!email) return;
-    if (!email.includes('@')) {
-        alert("Please enter a valid email.");
-        return;
-    }
+        // ========== CONFIGURATION ==========
+        // PASTE YOUR DEPLOYED GOOGLE APPS SCRIPT URL HERE
+        const API_URL = "https://script.google.com/macros/s/AKfycbxvabLKN0fUlqtkDOw_royRC776GwXsuA8_o3Kw9Xw_GBK9vOz9ro-c8mVFPMGgrW7dRQ/exec"; 
 
-    // 2. Notify user we are working
-    const originalText = document.querySelector('h2').innerText; // Or use a toast
-    alert("Sending reset instructions to " + email + "...");
-
-    try {
-        // 3. Call API
-        const res = await fetch(`${API_URL}?action=reset_request&email=${encodeURIComponent(email)}`);
-        const data = await res.json();
-
-        if (data.result === "success") {
-            alert("Check your email! \n\nWe have sent you a temporary code.\n\nEnter that code in the login box to create a new password.");
-        } else {
-            alert("Error: " + data.message);
-        }
-    } catch (err) {
-        console.error(err);
-        alert("Connection failed.");
-    }
-}
         // ========== DATA ==========
         const curriculum = [
             { id: 1, title: "Microsoft Excel AI", desc: "Transform spreadsheets with AI-powered analysis", thumb: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=450&fit=crop", debriefThumb: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=340&fit=crop", duration: "47 min" },
@@ -699,219 +692,195 @@
             { id: 26, title: "Google Sheets & Apps Script", desc: "Automation and triggers", thumb: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=450&fit=crop", debriefThumb: "https://images.unsplash.com/photo-1551434678-e076c223a692?w=600&h=340&fit=crop", duration: "54 min" }
         ];
 
-        // State
         let completedTopics = new Set();
         let currentTopic = null;
-        const validCodes = ['000001', '123456', 'DEMO2024'];
+        let tempAuth = {};
 
-        // ========== AUTH ==========
-// PASTE YOUR GOOGLE APPS SCRIPT URL HERE
-const API_URL = "https://script.google.com/macros/s/AKfycbykwdpAprlFZ6DDUcUju4QoK2VJFHiw-LsZZhOG7fOnCpyUeqs5kro13e3SNlg_5i7BlQ/exec"; 
+        // ========== AUTH UI HELPERS ==========
+        const els = {
+            step1: document.getElementById('step-email'),
+            step2: document.getElementById('step-verify'),
+            emailInput: document.getElementById('login-email'),
+            codeInput: document.getElementById('login-code'),
+            title: document.getElementById('login-title'),
+            subtitle: document.getElementById('login-subtitle'),
+            btn: document.getElementById('login-btn'),
+            forgotBtn: document.getElementById('forgot-btn')
+        };
 
-let tempAuth = {}; // Stores email state
-
-// UI Element References
-const els = {
-    step1: document.getElementById('step-email'),
-    step2: document.getElementById('step-verify'),
-    emailInput: document.getElementById('login-email'),
-    codeInput: document.getElementById('login-code'),
-    title: document.getElementById('login-title'),
-    subtitle: document.getElementById('login-subtitle'),
-    btn: document.getElementById('login-btn'),
-    backBtn: document.getElementById('back-btn'),
-    forgotBtn: document.getElementById('forgot-btn')
-};
-
-// 1. HANDLE EMAIL SUBMIT (Step 1)
-async function handleStep1(e) {
-    e.preventDefault();
-    const email = els.emailInput.value.trim();
-    if (!email || !email.includes('@')) {
-        showError("Please enter a valid email");
-        return;
-    }
-
-    setLoading(true, "Checking...");
-
-    try {
-        const res = await fetch(`${API_URL}?action=check_user&email=${encodeURIComponent(email)}`);
-        const data = await res.json();
-
-        setLoading(false, "Continue");
-
-        if (data.result === "success") {
-            // Setup UI for Step 2
-            tempAuth.email = email;
-            tempAuth.mode = data.mode; // 'password' or 'code'
-
-            if (data.mode === 'password') {
-                els.codeInput.type = 'password';
-                els.codeInput.placeholder = "Enter your password";
-                els.title.innerText = `Welcome back, ${data.name.split(' ')[0]}`;
-                els.subtitle.innerText = "Enter your password to continue";
-                els.forgotBtn.classList.remove('hidden');
-            } else {
-                els.codeInput.type = 'text';
-                els.codeInput.placeholder = "Enter 6-digit access code";
-                els.title.innerText = "Verify Access";
-                els.subtitle.innerText = "Check your email for your code";
-                els.forgotBtn.classList.add('hidden');
-            }
-
-            // Slide Animation
-            els.step1.classList.add('hidden');
-            els.step2.classList.remove('hidden');
-            els.codeInput.focus();
-        }
-    } catch (err) {
-        console.error(err);
-        setLoading(false, "Continue");
-        showError("Connection error");
-    }
-}
-
-// 2. HANDLE LOGIN SUBMIT (Step 2)
-async function handleStep2(e) {
-    e.preventDefault();
-    const input = els.codeInput.value.trim();
-    if (!input) return;
-
-    setLoading(true, "Verifying...");
-
-    try {
-        const res = await fetch(`${API_URL}?action=login&email=${encodeURIComponent(tempAuth.email)}&code=${encodeURIComponent(input)}`);
-        const data = await res.json();
-
-        if (data.result === "success") {
-            if (data.status === "setup_required") {
-                // New user -> Set Password Flow
-                tempAuth.oldCode = input;
-                showPasswordSetupModal();
-            } else {
-                // Active user -> Success
-                completeLogin(tempAuth.email);
-            }
-        } else {
-            showError("Invalid credentials");
-            setLoading(false, "Try Again");
-        }
-    } catch (err) {
-        setLoading(false, "Login");
-        showError("Login failed");
-    }
-}
-
-// Helper: Back Button
-function goBack() {
-    els.step2.classList.add('hidden');
-    els.step1.classList.remove('hidden');
-    els.emailInput.focus();
-    els.title.innerText = "Student Portal";
-    els.subtitle.innerText = "Enter your email to access The Studio";
-    els.btn.innerText = "Continue";
-    els.btn.onclick = handleStep1;
-}
-
-// Helper: Loading State
-function setLoading(isLoading, text) {
-    els.btn.disabled = isLoading;
-    els.btn.innerText = text;
-    if (isLoading) els.btn.classList.add('opacity-75', 'cursor-not-allowed');
-    else els.btn.classList.remove('opacity-75', 'cursor-not-allowed');
-}
-
-async function handlePasswordSetup() {
-    const newPass = document.getElementById('new-password').value;
-    const confirmPass = document.getElementById('confirm-password').value;
-    const btn = document.getElementById('setup-btn');
-
-    if (newPass.length < 6) {
-        alert("Password must be at least 6 characters");
-        return;
-    }
-    if (newPass !== confirmPass) {
-        alert("Passwords do not match");
-        return;
-    }
-
-    btn.innerText = "Encrypting...";
-    btn.disabled = true;
-
-    try {
-        // 2. Send New Password to be Hashed
-        const url = `${API_URL}?action=set_password&email=${encodeURIComponent(tempAuth.email)}&old_code=${encodeURIComponent(tempAuth.oldCode)}&password=${encodeURIComponent(newPass)}`;
+        function openAuthModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeAuthModal(id) { document.getElementById(id).classList.remove('active'); }
         
-        const res = await fetch(url);
-        const data = await res.json();
-
-        if (data.result === "success") {
-            alert("Security Setup Complete. Logging you in...");
-            completeLogin(tempAuth.email);
-            document.getElementById('password-modal').classList.add('hidden');
-        } else {
-            alert("Error: " + data.message);
+        function setLoading(isLoading, text) {
+            els.btn.disabled = isLoading;
+            els.btn.innerText = text;
+            if(isLoading) els.btn.classList.add('opacity-75', 'cursor-not-allowed');
+            else els.btn.classList.remove('opacity-75', 'cursor-not-allowed');
         }
-    } catch (err) {
-        alert("Setup failed. Please try again.");
-    } finally {
-        btn.innerText = "Set Password";
-        btn.disabled = false;
-    }
-}
 
-// Helper to show the password modal (Add this HTML to your portal.html body)
-function showPasswordSetupModal() {
-    // Check if modal exists, if not create it
-    if (!document.getElementById('password-modal')) {
-        const modal = document.createElement('div');
-        modal.id = 'password-modal';
-        modal.className = 'fixed inset-0 bg-black/90 flex items-center justify-center z-50';
-        modal.innerHTML = `
-            <div class="bg-[#111827] p-8 rounded-xl border border-[#4f8fff]/20 w-full max-w-md text-center">
-                <h3 class="text-xl font-bold text-white mb-2">Secure Your Account</h3>
-                <p class="text-[#94a3b8] text-sm mb-6">For your security, please replace your temporary access code with a permanent password.</p>
-                
-                <input type="password" id="new-password" placeholder="New Password" 
-                    class="w-full bg-[#1B2330] border border-[#4f8fff]/30 rounded p-3 text-white mb-3 focus:outline-none focus:border-[#4f8fff]">
-                
-                <input type="password" id="confirm-password" placeholder="Confirm Password" 
-                    class="w-full bg-[#1B2330] border border-[#4f8fff]/30 rounded p-3 text-white mb-6 focus:outline-none focus:border-[#4f8fff]">
-                
-                <button id="setup-btn" onclick="handlePasswordSetup()" 
-                    class="w-full bg-[#4f8fff] text-[#070b14] font-bold py-3 rounded hover:bg-[#3b82f6] transition">
-                    Set Password & Login
-                </button>
-            </div>
-        `;
-        document.body.appendChild(modal);
-    }
-    document.getElementById('password-modal').classList.remove('hidden');
-}
+        function showError(msg) {
+            const errDiv = document.getElementById('login-error');
+            errDiv.textContent = msg;
+            errDiv.classList.remove('hidden');
+            setTimeout(() => errDiv.classList.add('hidden'), 3000);
+        }
 
-function completeLogin(email) {
-    document.getElementById('login-error').classList.add('hidden');
-    localStorage.setItem('cwu_auth', JSON.stringify({ email }));
-    showPortal();
-}
+        // ========== AUTH LOGIC ==========
+        
+        // STEP 1: CHECK EMAIL
+        async function handleStep1(e) {
+            e.preventDefault();
+            const email = els.emailInput.value.trim();
+            if (!email || !email.includes('@')) return showError("Invalid email address");
 
-function showError() {
-    document.getElementById('login-error').classList.remove('hidden');
-    // Shake animation
-    const card = document.querySelector('.glass');
-    card.style.animation = 'shake 0.5s';
-    setTimeout(() => card.style.animation = '', 500);
-}
+            setLoading(true, "Checking...");
 
-// Add this style for the shake animation if needed
-const style = document.createElement('style');
-style.innerHTML = `
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-10px); }
-  75% { transform: translateX(10px); }
-}`;
-document.head.appendChild(style);
+            try {
+                const res = await fetch(`${API_URL}?action=check_user&email=${encodeURIComponent(email)}`);
+                const data = await res.json();
+                setLoading(false, "Continue");
+
+                if (data.result === "success") {
+                    if (data.status === "unregistered") {
+                        openAuthModal('unregistered-modal');
+                        return;
+                    }
+                    // Success: Prepare Step 2
+                    tempAuth.email = email;
+                    tempAuth.mode = data.mode;
+                    
+                    if (data.mode === 'password') {
+                        els.codeInput.type = 'password';
+                        els.codeInput.placeholder = "Enter your password";
+                        els.title.innerText = `Welcome back`;
+                        els.subtitle.innerText = "Enter your password";
+                        els.forgotBtn.classList.remove('hidden');
+                    } else {
+                        els.codeInput.type = 'text';
+                        els.codeInput.placeholder = "Enter 6-digit access code";
+                        els.title.innerText = "Verify Access";
+                        els.subtitle.innerText = "Check your email for code";
+                        els.forgotBtn.classList.add('hidden');
+                    }
+                    
+                    els.step1.classList.add('hidden');
+                    els.step2.classList.remove('hidden');
+                    els.codeInput.focus();
+                } else {
+                    showError(data.message || "Connection failed");
+                }
+            } catch (err) {
+                setLoading(false, "Continue");
+                showError("Server error. Try again.");
+            }
+        }
+
+        // STEP 2: LOGIN
+        async function handleStep2(e) {
+            e.preventDefault();
+            const input = els.codeInput.value.trim();
+            if (!input) return;
+
+            setLoading(true, "Verifying...");
+
+            try {
+                const res = await fetch(`${API_URL}?action=login&email=${encodeURIComponent(tempAuth.email)}&code=${encodeURIComponent(input)}`);
+                const data = await res.json();
+
+                if (data.result === "success") {
+                    if (data.status === "setup_required") {
+                        tempAuth.oldCode = input;
+                        openAuthModal('setup-modal');
+                    } else {
+                        completeLogin(tempAuth.email);
+                    }
+                } else {
+                    showError("Invalid credentials");
+                    setLoading(false, "Try Again");
+                }
+            } catch (err) {
+                setLoading(false, "Login");
+                showError("Login failed");
+            }
+        }
+
+        function goBack() {
+            els.step2.classList.add('hidden');
+            els.step1.classList.remove('hidden');
+            els.title.innerText = "Student Portal";
+            els.subtitle.innerText = "Enter your email to access The Studio";
+        }
+
+        // RESET FLOW
+        function handleForgotPassword() {
+            document.getElementById('reset-email').value = tempAuth.email || "";
+            openAuthModal('forgot-modal');
+        }
+
+        async function submitResetRequest() {
+            const email = document.getElementById('reset-email').value;
+            const btn = document.getElementById('btn-reset-submit');
+            btn.innerText = "Sending...";
+            btn.disabled = true;
+
+            try {
+                const res = await fetch(`${API_URL}?action=reset_request&email=${encodeURIComponent(email)}`);
+                const data = await res.json();
+                if (data.result === "success") {
+                    closeAuthModal('forgot-modal');
+                    // Reset UI to Code Mode
+                    els.step1.classList.add('hidden');
+                    els.step2.classList.remove('hidden');
+                    els.codeInput.type = 'text';
+                    els.codeInput.placeholder = "Enter new access code";
+                    els.title.innerText = "Check Email";
+                    els.subtitle.innerText = "Enter the reset code sent to you";
+                    els.forgotBtn.classList.add('hidden');
+                } else {
+                    if(data.message.includes("not found")) {
+                        closeAuthModal('forgot-modal');
+                        openAuthModal('unregistered-modal');
+                    } else {
+                        alert(data.message);
+                    }
+                }
+            } catch(e) { alert("Error"); }
+            btn.innerText = "Send Reset Code";
+            btn.disabled = false;
+        }
+
+        // SETUP PASSWORD FLOW
+        async function submitPasswordSetup() {
+            const newPass = document.getElementById('new-password').value;
+            const confirmPass = document.getElementById('confirm-password').value;
+            const btn = document.getElementById('btn-setup-submit');
+
+            if (newPass.length < 6) return alert("Password too short");
+            if (newPass !== confirmPass) return alert("Passwords do not match");
+
+            btn.innerText = "Encrypting...";
+            btn.disabled = true;
+
+            try {
+                const url = `${API_URL}?action=set_password&email=${encodeURIComponent(tempAuth.email)}&old_code=${encodeURIComponent(tempAuth.oldCode)}&password=${encodeURIComponent(newPass)}`;
+                const res = await fetch(url);
+                const data = await res.json();
+                if (data.result === "success") {
+                    closeAuthModal('setup-modal');
+                    completeLogin(tempAuth.email);
+                } else {
+                    alert(data.message);
+                }
+            } catch (e) { alert("Setup failed"); }
+            btn.innerText = "Set Password & Login";
+            btn.disabled = false;
+        }
+
+        // ========== APP STATE ==========
+        function completeLogin(email) {
+            localStorage.setItem('cwu_auth', JSON.stringify({ email }));
+            showPortal();
+        }
 
         function logout() {
             localStorage.removeItem('cwu_auth');
@@ -925,7 +894,6 @@ document.head.appendChild(style);
             updateProgress();
         }
 
-        // ========== RENDER ==========
         function isUnlocked(index) {
             if (index === 0) return true;
             return completedTopics.has(curriculum[index - 1].id);
@@ -933,18 +901,16 @@ document.head.appendChild(style);
 
         function renderTopics() {
             const grid = document.getElementById('topics-grid');
-            
             grid.innerHTML = curriculum.map((topic, i) => {
-                const weekStart = (i * 2) + 1;
-                const weekEnd = weekStart + 1;
                 const isComplete = completedTopics.has(topic.id);
                 const unlocked = isUnlocked(i);
-                
+                const weekStart = (i * 2) + 1;
+                const weekEnd = weekStart + 1;
+
                 return `
                     <div class="topic-card glass rounded-2xl overflow-hidden ${isComplete ? 'completed' : ''} ${!unlocked ? 'locked' : ''}" 
                          onclick="${unlocked ? `openTopic(${i})` : 'showLockMessage()'}">
                         
-                        <!-- Thumbnail -->
                         <div class="aspect-video relative overflow-hidden">
                             <img src="${topic.thumb}" alt="${topic.title}" class="w-full h-full object-cover">
                             <div class="absolute inset-0 bg-gradient-to-t from-[--bg] via-transparent to-transparent"></div>
@@ -963,7 +929,6 @@ document.head.appendChild(style);
                             ` : ''}
                         </div>
                         
-                        <!-- Info -->
                         <div class="p-5">
                             <p class="font-handwritten text-lg text-[--text-muted] mb-1">Week ${weekStart}–${weekEnd}</p>
                             <h3 class="text-lg font-semibold mb-2">${topic.title}</h3>
@@ -982,40 +947,18 @@ document.head.appendChild(style);
 
         function updateProgress() {
             const done = completedTopics.size;
-            const pct = Math.round((done / curriculum.length) * 100);
-            
             document.getElementById('header-progress').textContent = done;
-            document.getElementById('header-progress-bar').style.width = `${pct}%`;
+            document.getElementById('header-progress-bar').style.width = `${(done/curriculum.length)*100}%`;
             document.getElementById('cert-count').textContent = done;
             
-            // Update certificate skills display
-            renderCertificateSkills();
-        }
-        
-        function renderCertificateSkills() {
+            // Cert Skills
             const container = document.getElementById('certificate-skills');
-            const noSkillsMsg = document.getElementById('no-skills-message');
+            if(done > 0) document.getElementById('no-skills-message').style.display = 'none';
             
-            if (completedTopics.size === 0) {
-                if (noSkillsMsg) noSkillsMsg.style.display = 'block';
-                return;
-            }
-            
-            if (noSkillsMsg) noSkillsMsg.style.display = 'none';
-            
-            // Get all completed topic names
-            const completedSkills = curriculum.filter(t => completedTopics.has(t.id));
-            
-            // Check what skills are already displayed
-            const existingSkills = new Set();
-            container.querySelectorAll('.skill-badge').forEach(badge => {
-                existingSkills.add(badge.dataset.topicId);
-            });
-            
-            // Add any missing skills
-            completedSkills.forEach(topic => {
-                if (!existingSkills.has(String(topic.id))) {
-                    addSkillBadge(topic, false);
+            const currentBadges = Array.from(container.children).map(c => c.dataset.topicId);
+            curriculum.filter(t => completedTopics.has(t.id)).forEach(t => {
+                if(!currentBadges.includes(String(t.id))) {
+                    addSkillBadge(t, false);
                 }
             });
         }
@@ -1033,10 +976,7 @@ document.head.appendChild(style);
             
             container.appendChild(badge);
             
-            // Create celebration particles if it's a new skill
-            if (isNew) {
-                createCelebrationParticles(badge);
-            }
+            if (isNew) createCelebrationParticles(badge);
         }
         
         function createCelebrationParticles(element) {
@@ -1057,12 +997,11 @@ document.head.appendChild(style);
                 particle.style.transform = `translate(${(Math.random() - 0.5) * 100}px, ${(Math.random() - 0.5) * 100}px)`;
                 
                 container.appendChild(particle);
-                
                 setTimeout(() => particle.remove(), 800);
             }
         }
 
-        // ========== MODAL ==========
+        // ========== MODAL LOGIC ==========
         function openTopic(index) {
             currentTopic = curriculum[index];
             const weekStart = (index * 2) + 1;
@@ -1079,53 +1018,27 @@ document.head.appendChild(style);
             const completeBtn = document.getElementById('complete-btn');
             const footer = document.getElementById('modal-footer');
             
-            if (isComplete) {
+            if(isComplete) {
                 challengeStatus.textContent = 'Completed ✓';
                 footer.style.display = 'none';
             } else {
                 challengeStatus.textContent = 'Prove your skills';
                 footer.style.display = 'block';
+                completeBtn.innerHTML = '<i class="fa-solid fa-check-double"></i> Mark as Mastered';
             }
-            
             document.getElementById('topic-modal').classList.add('active');
-            document.body.style.overflow = 'hidden';
         }
 
-        function closeModal() {
-            document.getElementById('topic-modal').classList.remove('active');
-            document.body.style.overflow = '';
-            currentTopic = null;
-        }
-
-        function showLockMessage() {
-            alert('🔒 Complete the previous topic to unlock this one!');
-        }
-
-        // ========== ACTIONS ==========
-        function playVideo() {
-            alert('🎬 Video player would open in the full version!');
-        }
-
-        function downloadNotes() {
-            alert('📜 Notes PDF would download in the full version!');
-        }
-
-        function startChallenge() {
-            alert('🔥 Challenge interface would open in the full version!');
-        }
+        function closeModal() { document.getElementById('topic-modal').classList.remove('active'); }
 
         function markComplete() {
-            if (currentTopic) {
-                // Add the new skill badge with animation
-                addSkillBadge(currentTopic, true);
-                
+            if(currentTopic) {
                 completedTopics.add(currentTopic.id);
                 localStorage.setItem('cwu_progress', JSON.stringify([...completedTopics]));
                 closeModal();
                 renderTopics();
                 updateProgress();
                 
-                // Scroll to certificate to show the new skill
                 setTimeout(() => {
                     document.getElementById('virtual-certificate').scrollIntoView({ 
                         behavior: 'smooth', 
@@ -1135,22 +1048,24 @@ document.head.appendChild(style);
             }
         }
 
-        // ========== INIT ==========
+        // INIT
         document.addEventListener('DOMContentLoaded', () => {
-            // Load progress
             const saved = localStorage.getItem('cwu_progress');
             if (saved) completedTopics = new Set(JSON.parse(saved));
-            
-            // Check auth
-            const auth = localStorage.getItem('cwu_auth');
-            if (auth) showPortal();
+            if (localStorage.getItem('cwu_auth')) showPortal();
         });
-
-        // Close modal on escape or backdrop click
+        
+        // Key handlers
         document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
         document.getElementById('topic-modal').addEventListener('click', e => {
             if (e.target === e.currentTarget) closeModal();
         });
+        
+        function showLockMessage() { alert('🔒 Complete the previous topic to unlock this one!'); }
+        function playVideo() { alert('🎬 Video player would open in the full version!'); }
+        function downloadNotes() { alert('📜 Notes PDF would download in the full version!'); }
+        function startChallenge() { alert('🔥 Challenge interface would open in the full version!'); }
+
     </script>
 </body>
 </html>
