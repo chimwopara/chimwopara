@@ -380,44 +380,51 @@
             </div>
             
             <!-- Login Card -->
-            <div class="glass rounded-3xl p-8 login-float shadow-2xl">
-                <div class="text-center mb-8">
-                    <h2 class="text-xl font-semibold mb-2">Welcome, Creator</h2>
-                    <p class="text-[--text-muted] text-sm">Enter your studio to continue your journey</p>
-                </div>
-                
-                <form id="login-form" onsubmit="handleLogin(event)" class="space-y-5">
-                    <div>
-                        <label class="block text-xs font-medium text-[--text-muted] mb-2 uppercase tracking-wider">Email</label>
-                        <input 
-                            type="email" 
-                            id="login-email"
-                            required
-                            placeholder="your@email.com"
-                            class="w-full px-5 py-4 rounded-xl bg-[--bg] border border-[--border] text-[--text] placeholder-[--text-muted] focus:outline-none focus:border-[--accent] transition-colors"
-                        >
-                    </div>
-                    
-                    <div>
-                        <label class="block text-xs font-medium text-[--text-muted] mb-2 uppercase tracking-wider">Access Code</label>
-                        <input 
-                            type="text" 
-                            id="login-code"
-                            required
-                            placeholder="••••••"
-                            class="w-full px-5 py-4 rounded-xl bg-[--bg] border border-[--border] text-[--text] placeholder-[--text-muted] focus:outline-none focus:border-[--accent] transition-colors tracking-[0.3em] text-center text-lg"
-                        >
-                    </div>
-                    
-                    <div id="login-error" class="hidden text-red-400 text-sm text-center py-2">
-                        Hmm, that code doesn't look right. Try again?
-                    </div>
-                    
-                    <button type="submit" class="w-full py-4 rounded-xl bg-[--accent] text-[--bg] font-bold text-lg hover:bg-white transition-colors shadow-lg hover:shadow-xl">
-                        Enter Studio →
-                    </button>
-                </form>
+            <div class="glass p-8 rounded-2xl w-full max-w-md relative overflow-hidden">
+    
+    <div class="text-center mb-8">
+        <h2 id="login-title" class="text-2xl font-bold mb-2">Student Portal</h2>
+        <p id="login-subtitle" class="text-[#94a3b8]">Enter your email to access The Studio</p>
+    </div>
+
+    <form onsubmit="return false;"> <div id="step-email">
+            <div class="mb-6">
+                <label class="block text-xs font-bold uppercase tracking-widest text-[#4f8fff] mb-2">Email Address</label>
+                <input type="email" id="login-email" 
+                    class="w-full bg-[#1B2330] border border-[#4f8fff]/20 rounded-lg p-4 text-white focus:outline-none focus:border-[#4f8fff] transition-colors"
+                    placeholder="name@example.com">
             </div>
+        </div>
+
+        <div id="step-verify" class="hidden">
+            <div class="mb-6 relative">
+                <div class="flex justify-between items-center mb-2">
+                    <label class="block text-xs font-bold uppercase tracking-widest text-[#4f8fff]">Credentials</label>
+                    <button type="button" onclick="goBack()" class="text-xs text-[#94a3b8] hover:text-white">Change Email</button>
+                </div>
+                <input type="text" id="login-code" 
+                    class="w-full bg-[#1B2330] border border-[#4f8fff]/20 rounded-lg p-4 text-white focus:outline-none focus:border-[#4f8fff] transition-colors"
+                    placeholder="Enter Access Code">
+            </div>
+        </div>
+
+        <div id="login-error" class="hidden bg-red-500/10 border border-red-500/50 text-red-200 text-sm p-3 rounded mb-4 text-center">
+            Invalid credentials found
+        </div>
+
+        <button id="login-btn" onclick="if(document.getElementById('step-email').classList.contains('hidden')) handleStep2(event); else handleStep1(event);"
+            class="w-full bg-[#4f8fff] hover:bg-[#3b82f6] text-[#070b14] font-bold py-4 rounded-lg transition-all transform hover:scale-[1.02]">
+            Continue
+        </button>
+
+        <div class="text-center mt-4">
+            <button id="forgot-btn" type="button" onclick="handleForgotPassword()" class="hidden text-sm text-[#4f8fff]/70 hover:text-[#4f8fff] transition">
+                Forgot Password?
+            </button>
+        </div>
+
+    </form>
+</div>
             
             <p class="text-center text-sm text-[--text-muted] mt-8">
                 New here? <a href="https://forms.fillout.com/t/35bB73fVpSus" target="_blank" class="text-[--accent] hover:text-white transition-colors underline underline-offset-4">Join the university →</a>
@@ -633,6 +640,35 @@
     </div>
 
     <script>
+        async function handleForgotPassword() {
+    // 1. Simple prompt (You can make a fancy modal if you prefer)
+    const email = prompt("Please enter your registered email address:");
+    
+    if (!email) return;
+    if (!email.includes('@')) {
+        alert("Please enter a valid email.");
+        return;
+    }
+
+    // 2. Notify user we are working
+    const originalText = document.querySelector('h2').innerText; // Or use a toast
+    alert("Sending reset instructions to " + email + "...");
+
+    try {
+        // 3. Call API
+        const res = await fetch(`${API_URL}?action=reset_request&email=${encodeURIComponent(email)}`);
+        const data = await res.json();
+
+        if (data.result === "success") {
+            alert("Check your email! \n\nWe have sent you a temporary code.\n\nEnter that code in the login box to create a new password.");
+        } else {
+            alert("Error: " + data.message);
+        }
+    } catch (err) {
+        console.error(err);
+        alert("Connection failed.");
+    }
+}
         // ========== DATA ==========
         const curriculum = [
             { id: 1, title: "Microsoft Excel AI", desc: "Transform spreadsheets with AI-powered analysis", thumb: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=450&fit=crop", debriefThumb: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=340&fit=crop", duration: "47 min" },
@@ -672,45 +708,117 @@
 // PASTE YOUR GOOGLE APPS SCRIPT URL HERE
 const API_URL = "https://script.google.com/macros/s/AKfycbzi1GrL2TuUP01pl5xrUlE632ROAB7EkcE5bgmoredeeT8l5mpHJ-K8Vtq5JKDC6UwmzQ/exec"; 
 
-let tempAuth = {}; // Store temporary credentials during setup
+let tempAuth = {}; // Stores email state
 
-async function handleLogin(e) {
+// UI Element References
+const els = {
+    step1: document.getElementById('step-email'),
+    step2: document.getElementById('step-verify'),
+    emailInput: document.getElementById('login-email'),
+    codeInput: document.getElementById('login-code'),
+    title: document.getElementById('login-title'),
+    subtitle: document.getElementById('login-subtitle'),
+    btn: document.getElementById('login-btn'),
+    backBtn: document.getElementById('back-btn'),
+    forgotBtn: document.getElementById('forgot-btn')
+};
+
+// 1. HANDLE EMAIL SUBMIT (Step 1)
+async function handleStep1(e) {
     e.preventDefault();
-    const email = document.getElementById('login-email').value;
-    const input = document.getElementById('login-code').value; // Can be code or password
-    const btn = e.target.querySelector('button');
-    
-    // UI Loading
-    const originalText = btn.innerText;
-    btn.innerText = "Authenticating...";
-    btn.disabled = true;
+    const email = els.emailInput.value.trim();
+    if (!email || !email.includes('@')) {
+        showError("Please enter a valid email");
+        return;
+    }
+
+    setLoading(true, "Checking...");
 
     try {
-        // 1. Attempt Login
-        const res = await fetch(`${API_URL}?action=login&email=${encodeURIComponent(email)}&code=${encodeURIComponent(input)}`);
+        const res = await fetch(`${API_URL}?action=check_user&email=${encodeURIComponent(email)}`);
         const data = await res.json();
 
+        setLoading(false, "Continue");
+
         if (data.result === "success") {
-            
-            if (data.status === "setup_required") {
-                // CASE 1: First time user (needs to set password)
-                tempAuth = { email: email, oldCode: input };
-                showPasswordSetupModal();
+            // Setup UI for Step 2
+            tempAuth.email = email;
+            tempAuth.mode = data.mode; // 'password' or 'code'
+
+            if (data.mode === 'password') {
+                els.codeInput.type = 'password';
+                els.codeInput.placeholder = "Enter your password";
+                els.title.innerText = `Welcome back, ${data.name.split(' ')[0]}`;
+                els.subtitle.innerText = "Enter your password to continue";
+                els.forgotBtn.classList.remove('hidden');
             } else {
-                // CASE 2: Returning user (logged in with password)
-                completeLogin(email);
+                els.codeInput.type = 'text';
+                els.codeInput.placeholder = "Enter 6-digit access code";
+                els.title.innerText = "Verify Access";
+                els.subtitle.innerText = "Check your email for your code";
+                els.forgotBtn.classList.add('hidden');
             }
 
-        } else {
-            showError("Invalid credentials");
+            // Slide Animation
+            els.step1.classList.add('hidden');
+            els.step2.classList.remove('hidden');
+            els.codeInput.focus();
         }
     } catch (err) {
         console.error(err);
-        showError("Connection failed");
-    } finally {
-        btn.innerText = originalText;
-        btn.disabled = false;
+        setLoading(false, "Continue");
+        showError("Connection error");
     }
+}
+
+// 2. HANDLE LOGIN SUBMIT (Step 2)
+async function handleStep2(e) {
+    e.preventDefault();
+    const input = els.codeInput.value.trim();
+    if (!input) return;
+
+    setLoading(true, "Verifying...");
+
+    try {
+        const res = await fetch(`${API_URL}?action=login&email=${encodeURIComponent(tempAuth.email)}&code=${encodeURIComponent(input)}`);
+        const data = await res.json();
+
+        if (data.result === "success") {
+            if (data.status === "setup_required") {
+                // New user -> Set Password Flow
+                tempAuth.oldCode = input;
+                showPasswordSetupModal();
+            } else {
+                // Active user -> Success
+                completeLogin(tempAuth.email);
+            }
+        } else {
+            showError("Invalid credentials");
+            setLoading(false, "Try Again");
+        }
+    } catch (err) {
+        setLoading(false, "Login");
+        showError("Login failed");
+    }
+}
+
+// Helper: Back Button
+function goBack() {
+    els.step2.classList.add('hidden');
+    els.step1.classList.remove('hidden');
+    els.emailInput.focus();
+    els.title.innerText = "Student Portal";
+    els.subtitle.innerText = "Enter your email to access The Studio";
+    els.btn.innerText = "Continue";
+    els.btn.onclick = handleStep1;
+}
+
+// Helper: Loading State
+function setLoading(isLoading, text) {
+    els.btn.disabled = isLoading;
+    els.btn.innerText = text;
+    if (isLoading) els.btn.classList.add('opacity-75', 'cursor-not-allowed');
+    else els.btn.classList.remove('opacity-75', 'cursor-not-allowed');
 }
 
 async function handlePasswordSetup() {
