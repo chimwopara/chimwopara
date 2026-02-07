@@ -670,36 +670,115 @@
 
         // ========== AUTH ==========
 // PASTE YOUR GOOGLE APPS SCRIPT URL HERE
-const API_URL = "https://script.google.com/macros/s/AKfycbx_763prT6neouzyUOS1o37oxBit55gwcW5RLQb6zV7QlpVnzGqg4hFVjxaj7bhuy9fCQ/exec"; 
+const API_URL = "https://script.google.com/macros/s/AKfycbzi1GrL2TuUP01pl5xrUlE632ROAB7EkcE5bgmoredeeT8l5mpHJ-K8Vtq5JKDC6UwmzQ/exec"; 
+
+let tempAuth = {}; // Store temporary credentials during setup
 
 async function handleLogin(e) {
     e.preventDefault();
     const email = document.getElementById('login-email').value;
-    const code = document.getElementById('login-code').value;
+    const input = document.getElementById('login-code').value; // Can be code or password
     const btn = e.target.querySelector('button');
-    const originalText = btn.innerText;
-
-    // Loading State
-    btn.disabled = true;
-    btn.innerText = "Verifying...";
     
+    // UI Loading
+    const originalText = btn.innerText;
+    btn.innerText = "Authenticating...";
+    btn.disabled = true;
+
     try {
-        // Call Google Sheet API
-        const response = await fetch(`${API_URL}?email=${encodeURIComponent(email)}&code=${encodeURIComponent(code)}`);
-        const data = await response.json();
+        // 1. Attempt Login
+        const res = await fetch(`${API_URL}?action=login&email=${encodeURIComponent(email)}&code=${encodeURIComponent(input)}`);
+        const data = await res.json();
 
         if (data.result === "success") {
-            completeLogin(email);
+            
+            if (data.status === "setup_required") {
+                // CASE 1: First time user (needs to set password)
+                tempAuth = { email: email, oldCode: input };
+                showPasswordSetupModal();
+            } else {
+                // CASE 2: Returning user (logged in with password)
+                completeLogin(email);
+            }
+
         } else {
-            showError();
+            showError("Invalid credentials");
         }
-    } catch (error) {
-        console.error("Login error:", error);
-        showError();
+    } catch (err) {
+        console.error(err);
+        showError("Connection failed");
     } finally {
-        btn.disabled = false;
         btn.innerText = originalText;
+        btn.disabled = false;
     }
+}
+
+async function handlePasswordSetup() {
+    const newPass = document.getElementById('new-password').value;
+    const confirmPass = document.getElementById('confirm-password').value;
+    const btn = document.getElementById('setup-btn');
+
+    if (newPass.length < 6) {
+        alert("Password must be at least 6 characters");
+        return;
+    }
+    if (newPass !== confirmPass) {
+        alert("Passwords do not match");
+        return;
+    }
+
+    btn.innerText = "Encrypting...";
+    btn.disabled = true;
+
+    try {
+        // 2. Send New Password to be Hashed
+        const url = `${API_URL}?action=set_password&email=${encodeURIComponent(tempAuth.email)}&old_code=${encodeURIComponent(tempAuth.oldCode)}&password=${encodeURIComponent(newPass)}`;
+        
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if (data.result === "success") {
+            alert("Security Setup Complete. Logging you in...");
+            completeLogin(tempAuth.email);
+            document.getElementById('password-modal').classList.add('hidden');
+        } else {
+            alert("Error: " + data.message);
+        }
+    } catch (err) {
+        alert("Setup failed. Please try again.");
+    } finally {
+        btn.innerText = "Set Password";
+        btn.disabled = false;
+    }
+}
+
+// Helper to show the password modal (Add this HTML to your portal.html body)
+function showPasswordSetupModal() {
+    // Check if modal exists, if not create it
+    if (!document.getElementById('password-modal')) {
+        const modal = document.createElement('div');
+        modal.id = 'password-modal';
+        modal.className = 'fixed inset-0 bg-black/90 flex items-center justify-center z-50';
+        modal.innerHTML = `
+            <div class="bg-[#111827] p-8 rounded-xl border border-[#4f8fff]/20 w-full max-w-md text-center">
+                <h3 class="text-xl font-bold text-white mb-2">Secure Your Account</h3>
+                <p class="text-[#94a3b8] text-sm mb-6">For your security, please replace your temporary access code with a permanent password.</p>
+                
+                <input type="password" id="new-password" placeholder="New Password" 
+                    class="w-full bg-[#1B2330] border border-[#4f8fff]/30 rounded p-3 text-white mb-3 focus:outline-none focus:border-[#4f8fff]">
+                
+                <input type="password" id="confirm-password" placeholder="Confirm Password" 
+                    class="w-full bg-[#1B2330] border border-[#4f8fff]/30 rounded p-3 text-white mb-6 focus:outline-none focus:border-[#4f8fff]">
+                
+                <button id="setup-btn" onclick="handlePasswordSetup()" 
+                    class="w-full bg-[#4f8fff] text-[#070b14] font-bold py-3 rounded hover:bg-[#3b82f6] transition">
+                    Set Password & Login
+                </button>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+    document.getElementById('password-modal').classList.remove('hidden');
 }
 
 function completeLogin(email) {
