@@ -660,7 +660,7 @@
     <script>
         // ========== CONFIGURATION ==========
         // PASTE YOUR DEPLOYED GOOGLE APPS SCRIPT URL HERE
-        const API_URL = "https://script.google.com/macros/s/AKfycbyiqzFvZrd8kFWGbiWthYFRDtyM_-b1ZD-0svRJ68YCsKE2JgfcuQqOp8vlQeQ8vPx0sw/exec"; 
+        const API_URL = "https://script.google.com/macros/s/AKfycbxvabLKN0fUlqtkDOw_royRC776GwXsuA8_o3Kw9Xw_GBK9vOz9ro-c8mVFPMGgrW7dRQ/exec"; 
 
         // ========== DATA ==========
         const curriculum = [
@@ -879,6 +879,10 @@
         // ========== APP STATE ==========
         function completeLogin(email) {
             localStorage.setItem('cwu_auth', JSON.stringify({ email }));
+            // Store enrollment start date on first login
+            if (!localStorage.getItem('cwu_start_date')) {
+                localStorage.setItem('cwu_start_date', new Date().toISOString());
+            }
             showPortal();
         }
 
@@ -894,22 +898,69 @@
             updateProgress();
         }
 
+        function isWithinTrialPeriod() {
+            const startDate = localStorage.getItem('cwu_start_date');
+            if (!startDate) return true; // no start date = treat as trial
+            const elapsed = Date.now() - new Date(startDate).getTime();
+            const sevenDays = 7 * 24 * 60 * 60 * 1000;
+            return elapsed < sevenDays;
+        }
+
+        function getTrialDaysRemaining() {
+            const startDate = localStorage.getItem('cwu_start_date');
+            if (!startDate) return 7;
+            const elapsed = Date.now() - new Date(startDate).getTime();
+            const sevenDays = 7 * 24 * 60 * 60 * 1000;
+            return Math.max(0, Math.ceil((sevenDays - elapsed) / (24 * 60 * 60 * 1000)));
+        }
+
         function isUnlocked(index) {
+            // During the first 7 days, only Week 1 content (topic 0) is accessible
+            if (isWithinTrialPeriod() && index > 0) return false;
+            // After 7 days, normal sequential unlock
             if (index === 0) return true;
             return completedTopics.has(curriculum[index - 1].id);
         }
 
         function renderTopics() {
             const grid = document.getElementById('topics-grid');
+            const inTrial = isWithinTrialPeriod();
+            const daysLeft = getTrialDaysRemaining();
+
+            // Show/hide trial banner
+            let banner = document.getElementById('trial-banner');
+            if (inTrial) {
+                if (!banner) {
+                    banner = document.createElement('div');
+                    banner.id = 'trial-banner';
+                    banner.className = 'glass rounded-2xl p-5 mb-8 border border-amber-500/30';
+                    grid.parentNode.insertBefore(banner, grid);
+                }
+                banner.innerHTML = `
+                    <div class="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
+                        <div class="w-12 h-12 rounded-xl bg-amber-500/20 flex items-center justify-center text-amber-400 text-xl shrink-0">
+                            <i class="fa-solid fa-hourglass-half"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-amber-300 mb-1">Week 1 — Getting Started</h3>
+                            <p class="text-sm text-[--text-muted]">You're in your first 7 days. Focus on mastering Week 1 content — the rest of the program unlocks in <strong class="text-[--text]">${daysLeft} day${daysLeft !== 1 ? 's' : ''}</strong>.</p>
+                        </div>
+                    </div>
+                `;
+            } else if (banner) {
+                banner.remove();
+            }
+
             grid.innerHTML = curriculum.map((topic, i) => {
                 const isComplete = completedTopics.has(topic.id);
                 const unlocked = isUnlocked(i);
                 const weekStart = (i * 2) + 1;
                 const weekEnd = weekStart + 1;
+                const isTrialLocked = inTrial && i > 0;
 
                 return `
                     <div class="topic-card glass rounded-2xl overflow-hidden ${isComplete ? 'completed' : ''} ${!unlocked ? 'locked' : ''}" 
-                         onclick="${unlocked ? `openTopic(${i})` : 'showLockMessage()'}">
+                         onclick="${unlocked ? `openTopic(${i})` : (isTrialLocked ? 'showTrialLockMessage()' : 'showLockMessage()')}">
                         
                         <div class="aspect-video relative overflow-hidden">
                             <img src="${topic.thumb}" alt="${topic.title}" class="w-full h-full object-cover">
@@ -923,8 +974,8 @@
                             
                             ${!unlocked ? `
                                 <div class="lock-overlay">
-                                    <i class="fa-solid fa-lock text-4xl mb-3 opacity-50"></i>
-                                    <p class="text-sm text-[--text-muted]">Complete previous topic first</p>
+                                    <i class="fa-solid fa-${isTrialLocked ? 'hourglass-half' : 'lock'} text-4xl mb-3 opacity-50"></i>
+                                    <p class="text-sm text-[--text-muted]">${isTrialLocked ? `Unlocks in ${daysLeft} day${daysLeft !== 1 ? 's' : ''}` : 'Complete previous topic first'}</p>
                                 </div>
                             ` : ''}
                         </div>
@@ -1062,6 +1113,10 @@
         });
         
         function showLockMessage() { alert('🔒 Complete the previous topic to unlock this one!'); }
+        function showTrialLockMessage() { 
+            const days = getTrialDaysRemaining();
+            alert(`⏳ This content unlocks in ${days} day${days !== 1 ? 's' : ''}.\n\nDuring your first week, focus on mastering Week 1. After that, you can progress at your own pace!`); 
+        }
         function playVideo() { alert('🎬 Video player would open in the full version!'); }
         function downloadNotes() { alert('📜 Notes PDF would download in the full version!'); }
         function startChallenge() { alert('🔥 Challenge interface would open in the full version!'); }
