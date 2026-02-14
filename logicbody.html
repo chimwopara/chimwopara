@@ -280,6 +280,45 @@ input, textarea {
         .score-item.failing {
             border-left-color: var(--error-color);
         }
+
+        /* Screenshot Blocking Overlay */
+        #screenshot-block {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        #screenshot-block.active {
+            display: flex;
+        }
+
+        /* Give Up Button */
+        #give-up-btn {
+            position: absolute;
+            top: 8px;
+            left: 12px;
+            font-size: 0.75rem;
+            color: var(--error-color);
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid var(--error-color);
+            border-radius: 6px;
+            padding: 4px 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+
+        #give-up-btn:hover {
+            background: var(--error-color);
+            color: white;
+        }
         .wrong-comment { 
     color: var(--error-color); 
     font-style: italic; 
@@ -667,9 +706,15 @@ button, input, select, textarea,
 
         <!-- Code Display Area -->
         <div id="code-display-container">
+            <button id="give-up-btn" onclick="giveUpChallenge()">Give Up</button>
             <div id="timer-display">15s</div>
             <div id="code-display-area"></div>
             <div id="attempts-counter" onclick="showScoreHistory()">Attempts: 1 • Click for history</div>
+        </div>
+
+        <!-- Screenshot Blocking Overlay -->
+        <div id="screenshot-block">
+            🚫 Screenshots are disabled during challenges
         </div>
 
         <!-- Hint Container -->
@@ -1036,36 +1081,47 @@ button, input, select, textarea,
         }
 
         function handleTimerExpired() {
-            // Timer expired counts as a wrong answer
+            // Timer expired - add correct answer and move on
             console.log('Timer expired!');
-            currentStepAttempts++;
-            currentStepPoints = currentStepAttempts === 1 ? 1 : 0; // 1 point left if first try, 0 if second try
+            stopTimer();
+
+            const currentChallenge = challengesData[currentLevelIndex];
+            const stepData = currentChallenge?.sequence[currentStep];
+
+            if (!stepData) return;
+
+            // Lock options
+            optionsLocked = true;
+            interactionArea.querySelectorAll('.option-btn').forEach(btn => btn.disabled = true);
 
             // Show feedback
             showFeedbackOverlay('incorrect');
 
-            // Add time penalty comment to code
-            const currentChallenge = challengesData[currentLevelIndex];
-            const stepData = currentChallenge?.sequence[currentStep];
-            if (stepData) {
-                let timeoutComment = getIndent(stepData.indent) + `<span class="wrong-comment">\\n/* Time expired! (-${currentStepAttempts === 1 ? 2 : 3} points) */</span>\\n\\n`;
-                constructedCode += timeoutComment;
-                codeDisplayArea.innerHTML = constructedCode;
-                scrollCodeDisplay();
-            }
+            // Calculate points: 0 for timer expiration
+            totalPointsEarned += 0;
+            totalPointsPossible += 3;
 
-            // If this was the third attempt (timer on third option), fail the question
-            if (currentStepAttempts >= 2) {
-                // Record 0 points for this step
-                totalPointsEarned += 0;
-                totalPointsPossible += 3;
+            // Add timeout comment
+            let codeToAdd = '';
+            codeToAdd += getIndent(stepData.indent) + `<span class="wrong-comment">/* ⏰ Time expired! */</span>\n`;
 
-                // Move to next step
-                setTimeout(() => {
-                    currentStep++;
-                    displayStep();
-                }, 1000);
+            // Add the correct answer (formatted properly)
+            if (stepData.explanation) {
+                codeToAdd += getIndent(stepData.indent) + `<span class="explanation-comment">${escapeHtml("// " + stepData.explanation)}</span>\n`;
             }
+            const escapedCorrectCode = escapeHtml(stepData.correct);
+            codeToAdd += getIndent(stepData.indent) + escapedCorrectCode + '\n';
+            codeToAdd += getIndent(stepData.indent) + `<span class="explanation-comment">// +0 points (time expired)</span>\n\n`;
+
+            constructedCode += codeToAdd;
+            codeDisplayArea.innerHTML = constructedCode;
+            scrollCodeDisplay();
+
+            // Move to next step after delay
+            setTimeout(() => {
+                currentStep++;
+                displayStep();
+            }, 1500);
         }
 
         // SCORE HISTORY FUNCTIONS
@@ -1621,76 +1677,21 @@ const netStarsGained = starCount - initialStarsForLevelAttempt;
                     </div>
                 `}
             </div>
-        <div style="display: flex; gap: 12px; justify-content: center; align-items: center; flex-wrap: wrap; width: 100%;">
-            ${currentLevelIndex > 0 ? `
-                <button id="previous-btn" class="glass-btn">
-                    <span style="margin-right: 6px;">←</span> Previous Level
-                </button>
-            ` : ''}
-            <button id="reattempt-btn" class="glass-btn">
-                <span style="margin-right: 6px;">↻</span> Re-attempt
-            </button>
-            <button id="solve-differently-btn" class="glass-btn">
-                <span style="margin-right: 6px;">🔄</span> Solve Differently
-            </button>
-            <button id="share-btn" class="glass-btn" style="background: rgba(10, 132, 255, 0.2); border-color: var(--accent-primary);">
-                <span style="margin-right: 6px;">🔗</span> Share with Community
-            </button>
-            ${!isLastLevel ? `
-                <button id="next-btn" class="glass-btn">
-                    <span style="margin-right: 6px;">→</span> Next Level
-                </button>
-            ` : '<p style="margin-top: 10px; color: var(--star-color);">All levels complete!</p>'}
-        </div>
-    </div>
-`;
 
-// Add event handlers for the new buttons
+            <button id="reattempt-btn" class="glass-btn" style="font-size: 1.1em; padding: 14px 28px; min-width: 200px;">
+                <span style="margin-right: 8px;">↻</span> Re-attempt Challenge
+            </button>
+
+            <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--border-color); color: var(--text-muted-color); font-size: 0.85rem;">
+                <p style="font-style: italic;">Note: Re-attempts do not count towards your certificate. Only your first attempt grade is recorded.</p>
+            </div>
+        </div>
+    `;
+
+// Add event handler for re-attempt button
             document.getElementById('reattempt-btn')?.addEventListener('click', () => {
                 showReattemptMessage();
             });
-            
-            document.getElementById('solve-differently-btn')?.addEventListener('click', () => {
-                // Reset and restart with different approach
-                starCount = initialStarsForLevelAttempt;
-                updateStarDisplay();
-                saveStarCount();
-                initializeGame(currentLevelIndex);
-            });
-            
-            document.getElementById('share-btn')?.addEventListener('click', () => {
-                // Send message to parent to share the challenge
-                if (typeof parent !== 'undefined' && parent !== window) {
-                    parent.postMessage({
-                        action: 'shareChallenge'
-                    }, '*');
-                }
-            });
-
-            if (!isLastLevel) {
-                document.getElementById('next-btn')?.addEventListener('click', () => {
-                    goToLevelBegin(currentLevelIndex + 2); // +2 because next level (1-based)
-                });
-            }
-
-            if (currentLevelIndex > 0) {
-                document.getElementById('previous-btn')?.addEventListener('click', () => {
-                    goToLevelBegin(currentLevelIndex); // current index is 0-based, so this gives previous level in 1-based
-                });
-            }
-
-            document.getElementById('restart-btn')?.addEventListener('click', () => {
-                starCount = initialStarsForLevelAttempt;
-                updateStarDisplay();
-                saveStarCount();
-                initializeGame(currentLevelIndex);
-            });
-
-            if (!isLastLevel) {
-                document.getElementById('next-btn')?.addEventListener('click', () => {
-                    initializeGame(currentLevelIndex + 1);
-                });
-            }
         }
 
         function updateHintButtonState() {
@@ -2029,6 +2030,60 @@ document.addEventListener('mouseup', function(e) {
     }
     mouseDownOnNonInteractive = false;
 }, true);
+
+// === SCREENSHOT BLOCKING ===
+const screenshotBlockOverlay = document.getElementById('screenshot-block');
+
+// Detect screenshot attempts (keydown)
+document.addEventListener('keydown', (e) => {
+    // Detect common screenshot shortcuts
+    const isScreenshot = (
+        // Mac: Cmd+Shift+3, Cmd+Shift+4, Cmd+Shift+5
+        (e.metaKey && e.shiftKey && ['3', '4', '5'].includes(e.key)) ||
+        // Windows: PrintScreen, Alt+PrintScreen, Win+PrintScreen
+        (e.key === 'PrintScreen' || e.key === 'Print') ||
+        // Windows: Win+Shift+S (Snipping Tool)
+        (e.metaKey && e.shiftKey && e.key === 's')
+    );
+
+    if (isScreenshot) {
+        e.preventDefault();
+        showScreenshotBlock();
+    }
+});
+
+// Detect when window loses focus (might be screenshot tool)
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+        showScreenshotBlock();
+    }
+});
+
+function showScreenshotBlock() {
+    if (screenshotBlockOverlay) {
+        screenshotBlockOverlay.classList.add('active');
+        setTimeout(() => {
+            screenshotBlockOverlay.classList.remove('active');
+        }, 2000);
+    }
+}
+
+// === GIVE UP FUNCTIONALITY ===
+function giveUpChallenge() {
+    if (!confirm('Are you sure you want to give up? You will receive 0% on this attempt.')) {
+        return;
+    }
+
+    stopTimer();
+
+    // Set score to 0
+    totalPointsEarned = 0;
+    const currentChallenge = challengesData[currentLevelIndex];
+    totalPointsPossible = currentChallenge.sequence.length * 3;
+
+    // End the game immediately
+    endGame();
+}
 
     </script>
 
