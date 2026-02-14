@@ -1791,10 +1791,7 @@ const netStarsGained = starCount - initialStarsForLevelAttempt;
         function showReattemptMessage() {
     interactionArea.innerHTML = `
         <div style="width: 100%; text-align: center; padding: 40px;">
-            <h2 style="color: var(--accent-color); margin-bottom: 20px; font-size: 1.4em;">Re-attempt Level ${currentLevelIndex + 1}</h2>
-            <p style="color: var(--hint-color); font-style: italic; margin-bottom: 30px; font-size: 1.1em;">
-                No stars will be lost or gained during re-attempts
-            </p>
+            <h2 style="color: var(--accent-color); margin-bottom: 30px; font-size: 1.4em;">Re-attempt Level ${currentLevelIndex + 1}</h2>
             <button onclick="startReattempt()" class="glass-btn" style="font-size: 1.1em; padding: 12px 24px;">
                 <span style="margin-right: 8px;">▶</span> Begin Re-attempt
             </button>
