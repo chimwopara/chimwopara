@@ -15,7 +15,7 @@
             --border-color: rgba(55, 65, 81, 0.8); /* semi-transparent gray-700 */
             --text-color: #e5e7eb; /* gray-200 */
             --text-muted-color: #9ca3af; /* gray-400 */
-            --accent-color: #22d3ee; /* cyan-400 */
+            --accent-color: #B7D1E1; /* custom blue */
             --accent-hover-color: #67e8f9; /* cyan-300 */
             --hint-color: #6ee7b7; /* emerald-300 */
             --star-color: #facc15; /* yellow-400 */
@@ -774,21 +774,20 @@ button, input, select, textarea,
 
         <!-- Splash Screen Modal -->
         <div id="splash-screen" style="position: fixed; inset: 0; background: rgba(0, 0, 0, 0.9); display: flex; align-items: center; justify-content: center; z-index: 10001;">
-            <div style="background: var(--panel-bg-color); border: 2px solid var(--accent-color); border-radius: 20px; padding: 32px; max-width: 550px; text-align: center; max-height: 90vh; overflow-y: auto;">
-                <div style="font-size: 2.5rem; margin-bottom: 12px;">🎯</div>
-                <h2 id="splash-title" style="font-size: 1.4rem; font-weight: bold; margin-bottom: 8px; color: var(--accent-color);"></h2>
+            <div style="background: var(--panel-bg-color); border-radius: 20px; padding: 32px; max-width: 550px; text-align: center; max-height: 90vh; overflow-y: auto;">
+                <h2 id="splash-title" style="font-size: 1.4rem; font-weight: bold; margin-bottom: 8px; color: #B7D1E1;"></h2>
                 <p id="splash-goal" style="color: var(--text-muted-color); margin-bottom: 20px; font-size: 0.95rem; line-height: 1.5;"></p>
 
                 <div style="background: rgba(0, 0, 0, 0.2); padding: 20px; border-radius: 12px; margin-bottom: 20px; text-align: left;">
                     <h3 style="font-size: 1.1rem; font-weight: bold; margin-bottom: 12px; color: var(--text-color); text-align: center;">Challenge Rules</h3>
                     <div style="display: grid; gap: 8px; font-size: 0.85rem; color: var(--text-muted-color);">
-                        <div><strong style="color: var(--accent-color);">⏱</strong> 15 seconds per question</div>
+                        <div><strong style="color: #B7D1E1;">⏱</strong> 15 seconds per question</div>
                         <div><strong style="color: var(--success-color);">✓</strong> Correct answer: <strong>+3 points</strong></div>
                         <div><strong style="color: var(--error-color);">✗</strong> Wrong answer: Points reduce (3→1→0)</div>
                         <div><strong style="color: var(--hint-color);">💡</strong> Using hint: <strong>-50% points</strong> on that question</div>
                         <div><strong style="color: var(--text-color);">📊</strong> Total: <strong id="splash-total-points"></strong> points available</div>
                         <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border-color);">
-                            <strong style="color: var(--accent-color);">🏆 Certificate:</strong> Need <strong>90%+ on 1st attempt</strong>
+                            <strong style="color: #B7D1E1;">🏆 Certificate:</strong> Need <strong>90%+ on 1st attempt</strong>
                         </div>
                         <div style="font-size: 0.8rem; opacity: 0.8;">Re-attempts and giving up don't count for certificate</div>
                     </div>
@@ -798,8 +797,8 @@ button, input, select, textarea,
                     Choose the correct answer from 3 options below ⬇️
                 </p>
 
-                <button id="start-challenge-btn" style="width: 100%; padding: 14px 28px; background: var(--accent-color); border: none; border-radius: 10px; color: white; cursor: pointer; font-weight: 600; font-size: 1.1rem; transition: all 0.2s; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);">
-                    Start Challenge 🚀
+                <button id="start-challenge-btn" style="width: 100%; padding: 14px 28px; background: #B7D1E1; border: none; border-radius: 10px; color: white; cursor: pointer; font-weight: 600; font-size: 1.1rem; transition: all 0.2s; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);">
+                    Start Challenge
                 </button>
             </div>
         </div>
