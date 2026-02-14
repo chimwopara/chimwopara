@@ -1081,12 +1081,14 @@
             document.getElementById('topic-modal').classList.add('active');
 
             // Prevent body scroll when modal is open
+            document.documentElement.style.overflow = 'hidden';
             document.body.style.overflow = 'hidden';
         }
 
         function closeModal() {
             document.getElementById('topic-modal').classList.remove('active');
             // Re-enable body scroll
+            document.documentElement.style.overflow = '';
             document.body.style.overflow = '';
         }
 
@@ -1179,6 +1181,7 @@ Thank you!`
                     modal.classList.add('active');
 
                     // Prevent body scroll when modal is open
+                    document.documentElement.style.overflow = 'hidden';
                     document.body.style.overflow = 'hidden';
 
                     // Close topic modal
@@ -1199,6 +1202,7 @@ Thank you!`
             iframe.src = '';
 
             // Re-enable body scroll
+            document.documentElement.style.overflow = '';
             document.body.style.overflow = '';
 
             // Reload progress after challenge

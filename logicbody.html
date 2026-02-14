@@ -1123,15 +1123,15 @@ button, input, select, textarea,
 
             // Add timeout comment
             let codeToAdd = '';
-            codeToAdd += getIndent(stepData.indent) + `<span class="wrong-comment">/* ⏰ Time expired! */</span>\n`;
+            codeToAdd += getIndent(stepData.indent) + `<span class="wrong-comment">⏰ Time expired!</span>\n`;
 
             // Add the correct answer (formatted properly)
             if (stepData.explanation) {
-                codeToAdd += getIndent(stepData.indent) + `<span class="explanation-comment">${escapeHtml("// " + stepData.explanation)}</span>\n`;
+                codeToAdd += getIndent(stepData.indent) + `<span class="explanation-comment">📝 ${escapeHtml(stepData.explanation)}</span>\n`;
             }
             const escapedCorrectCode = escapeHtml(stepData.correct);
             codeToAdd += getIndent(stepData.indent) + escapedCorrectCode + '\n';
-            codeToAdd += getIndent(stepData.indent) + `<span class="explanation-comment">// +0 points (time expired)</span>\n\n`;
+            codeToAdd += getIndent(stepData.indent) + `<span class="explanation-comment">+0 points (time expired)</span>\n\n`;
 
             constructedCode += codeToAdd;
             codeDisplayArea.innerHTML = constructedCode;
@@ -1277,12 +1277,11 @@ if (typeof parent !== 'undefined' && parent !== window) {
 }
 
     initialStarsForLevelAttempt = starCount;
-    
-    // ONLY set attempts to 1 if this level has never been attempted before
-    if (!levelAttempts[currentLevelIndex]) {
-        levelAttempts[currentLevelIndex] = 1; // First time ever playing this level
-    }
-    // Do NOT increment attempts here - only on explicit re-attempt button click
+
+    // Calculate attempt number based on history in localStorage
+    const history = JSON.parse(localStorage.getItem('challengeAttemptHistory') || '[]');
+    const previousAttempts = history.filter(h => h.levelId === currentLevelIndex).length;
+    levelAttempts[currentLevelIndex] = previousAttempts + 1; // Set to next attempt number
     
     levelInProgress = true;
 
@@ -1439,11 +1438,15 @@ function incrementAttempts() {
     stopTimer();
 
     // Award points based on how many attempts it took
-    const pointsAwarded = currentStepPoints;
+    // If hint was used, reduce points by 50%
+    let pointsAwarded = currentStepPoints;
+    if (hintRevealed) {
+        pointsAwarded = Math.round(pointsAwarded * 0.5);
+    }
     totalPointsEarned += pointsAwarded;
     totalPointsPossible += 3;
 
-    console.log(`Correct! Awarded ${pointsAwarded}/3 points (Attempt ${currentStepAttempts + 1})`);
+    console.log(`Correct! Awarded ${pointsAwarded}/3 points (Attempt ${currentStepAttempts + 1})${hintRevealed ? ' [Hint used: -50%]' : ''}`);
     console.log(`Running total: ${totalPointsEarned}/${totalPointsPossible} points`);
 
     showFeedbackOverlay('correct');
@@ -1455,13 +1458,13 @@ function incrementAttempts() {
 
     let codeToAdd = '';
     if (stepData.explanation) {
-        codeToAdd += getIndent(stepData.indent) + `<span class="explanation-comment">${escapeHtml("// " + stepData.explanation)}</span>\n`;
+        codeToAdd += getIndent(stepData.indent) + `<span class="explanation-comment">📝 ${escapeHtml(stepData.explanation)}</span>\n`;
     }
     const escapedCorrectCode = escapeHtml(stepData.correct);
     codeToAdd += getIndent(stepData.indent) + escapedCorrectCode + '\n';
 
     // Add points indicator
-    const pointsDisplay = getIndent(stepData.indent) + `<span class="explanation-comment">// +${pointsAwarded} points</span>\n`;
+    const pointsDisplay = getIndent(stepData.indent) + `<span class="explanation-comment">+${pointsAwarded} points${hintRevealed ? ' (hint used: -50%)' : ''}</span>\n`;
     codeToAdd += pointsDisplay;
 
     constructedCode += codeToAdd;
@@ -1527,8 +1530,8 @@ function incrementAttempts() {
     // Add wrong answer comment to code
     if (reason && incorrectText) {
         let wrongCodeComment = '';
-        wrongCodeComment += getIndent(stepData.indent) + `<span class="wrong-comment">\n/* Wrong: ${escapeHtml(incorrectText)}</span>\n`;
-        wrongCodeComment += getIndent(stepData.indent) + `<span class="wrong-comment">   ${escapeHtml(reason)} */</span>\n\n`;
+        wrongCodeComment += getIndent(stepData.indent) + `<span class="wrong-comment">❌ Wrong: ${escapeHtml(incorrectText)}</span>\n`;
+        wrongCodeComment += getIndent(stepData.indent) + `<span class="wrong-comment">   ${escapeHtml(reason)}</span>\n\n`;
         constructedCode += wrongCodeComment;
         codeDisplayArea.innerHTML = constructedCode;
         scrollCodeDisplay();
@@ -1667,10 +1670,13 @@ if (!wasAlreadyCompleted) {
 const netStarsGained = starCount - initialStarsForLevelAttempt;
     const isReattempt = wasAlreadyCompleted;
 
+    const currentChallenge = challengesData[currentLevelIndex];
+    const challengeName = currentChallenge?.title || `Level ${currentLevelIndex + 1}`;
+
     interactionArea.innerHTML = `
         <div style="width: 100%; text-align: center; padding: 20px;">
-            <p style="font-weight: bold; font-size: 1.5em; margin-bottom: 15px; color: ${finalPercentage >= 90 ? 'var(--success-color)' : 'var(--error-color)'};">
-                ${finalPercentage >= 90 ? '🎉' : '📚'} Level ${currentLevelIndex + 1} Complete!
+            <p style="font-weight: bold; font-size: 1.5em; margin-bottom: 15px; color: var(--text-color);">
+                ${challengeName} Complete!
             </p>
 
             <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 12px; margin-bottom: 20px;">
@@ -1683,19 +1689,6 @@ const netStarsGained = starCount - initialStarsForLevelAttempt;
                 <div style="font-size: 0.9em; color: var(--text-muted-color);">
                     Attempt #${attemptNumber}
                 </div>
-                ${isCertificateEligible ? `
-                    <div style="margin-top: 15px; padding: 10px; background: rgba(5, 150, 105, 0.2); border: 1px solid var(--success-color); border-radius: 8px; color: var(--success-color); font-weight: bold;">
-                        ✓ Certificate Eligible (90%+ on first attempt)
-                    </div>
-                ` : finalPercentage >= 90 ? `
-                    <div style="margin-top: 15px; padding: 10px; background: rgba(220, 38, 38, 0.2); border: 1px solid var(--error-color); border-radius: 8px; color: var(--error-color);">
-                        Not certificate eligible (not first attempt)
-                    </div>
-                ` : `
-                    <div style="margin-top: 15px; padding: 10px; background: rgba(220, 38, 38, 0.2); border: 1px solid var(--error-color); border-radius: 8px; color: var(--error-color);">
-                        Need 90%+ for certificate eligibility
-                    </div>
-                `}
             </div>
 
             <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
@@ -1710,7 +1703,13 @@ const netStarsGained = starCount - initialStarsForLevelAttempt;
             </div>
 
             <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--border-color); color: var(--text-muted-color); font-size: 0.85rem;">
-                <p style="font-style: italic;">Note: Re-attempts do not count towards your certificate. Only your first attempt grade is recorded.</p>
+                <p style="font-style: italic; margin-bottom: 8px;">
+                    ${isCertificateEligible
+                        ? '✓ Certificate Eligible: You scored 90%+ on your first attempt!'
+                        : attemptNumber === 1
+                            ? 'Certificate requires 90%+ on first attempt. You can re-attempt to improve your score, but only your first attempt counts.'
+                            : 'Re-attempts do not count towards your certificate. Only your first attempt grade is recorded.'}
+                </p>
             </div>
         </div>
     `;
@@ -1785,8 +1784,7 @@ const netStarsGained = starCount - initialStarsForLevelAttempt;
 }
 
 function startReattempt() {
-    // Increment attempts counter only on re-attempts
-    incrementAttempts();
+    // Attempt number is automatically calculated in initializeGame based on history
     // Don't reset star count for re-attempts
     initializeGame(currentLevelIndex);
 }
