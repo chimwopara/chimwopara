@@ -512,20 +512,20 @@
                     </div>
                 </div>
                 
-                <a href="https://chat.whatsapp.com/Kl7wsqIjw0s0Z0o0MovW3m" target="_blank" class="block glass rounded-2xl p-6 mb-12 hover:border-green-500/50 transition-all group reveal reveal-delay-1">
+                <button onclick="openProjectReview()" class="block glass rounded-2xl p-6 mb-12 hover:border-indigo-500/50 transition-all group reveal reveal-delay-1 w-full text-left">
                     <div class="flex flex-col md:flex-row items-center gap-6">
-                        <div class="w-16 h-16 rounded-2xl bg-green-500/20 flex items-center justify-center text-green-400 text-3xl group-hover:scale-110 transition-transform">
-                            <i class="fa-brands fa-whatsapp"></i>
+                        <div class="w-16 h-16 rounded-2xl bg-indigo-500/20 flex items-center justify-center text-indigo-400 text-3xl group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-paper-plane"></i>
                         </div>
                         <div class="flex-1 text-center md:text-left">
-                            <h3 class="text-lg font-bold mb-1">Join the WhatsApp Community</h3>
-                            <p class="text-[--text-muted] text-sm">Share your GitHub Pages assignment links with classmates, get feedback, and connect with fellow learners.</p>
+                            <h3 class="text-lg font-bold mb-1">Submit Project for Review</h3>
+                            <p class="text-[--text-muted] text-sm">Share your GitHub Pages project link for review. Get feedback from instructors on your weekly assignments.</p>
                         </div>
-                        <div class="text-green-400 group-hover:translate-x-2 transition-transform">
+                        <div class="text-indigo-400 group-hover:translate-x-2 transition-transform">
                             <i class="fa-solid fa-arrow-right text-xl"></i>
                         </div>
                     </div>
-                </a>
+                </button>
                 
                 <div id="topics-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 reveal reveal-delay-2">
                     </div>
@@ -617,13 +617,6 @@
                 </div>
             </div>
                 </div>
-            
-            <div id="modal-footer" class="p-6 border-t border-[--border]">
-                <button id="complete-btn" onclick="markComplete()" class="w-full py-4 rounded-xl bg-emerald-500 text-white font-bold text-lg hover:bg-emerald-400 transition-colors flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-check-double"></i>
-                    Mark as Mastered
-                </button>
-            </div>
         </div>
     </div>
 
@@ -1075,35 +1068,32 @@
             const weekStart = (index * 2) + 1;
             const weekEnd = weekStart + 1;
             const isComplete = completedTopics.has(currentTopic.id);
-            
+
             document.getElementById('modal-week').textContent = `Week ${weekStart}–${weekEnd}`;
             document.getElementById('modal-title').textContent = currentTopic.title;
             document.getElementById('modal-lecture-thumb').src = currentTopic.thumb;
             document.getElementById('modal-debrief-thumb').src = currentTopic.debriefThumb;
             document.getElementById('modal-duration').textContent = currentTopic.duration;
-            
+
             const challengeStatus = document.getElementById('modal-challenge-status');
-            const completeBtn = document.getElementById('complete-btn');
-            const footer = document.getElementById('modal-footer');
-            
-            if(isComplete) {
-                challengeStatus.textContent = 'Completed ✓';
-                footer.style.display = 'none';
-            } else {
-                challengeStatus.textContent = 'Prove your skills';
-                footer.style.display = 'block';
-                completeBtn.innerHTML = '<i class="fa-solid fa-check-double"></i> Mark as Mastered';
-            }
+            challengeStatus.textContent = isComplete ? 'Completed ✓' : 'Prove your skills';
+
             document.getElementById('topic-modal').classList.add('active');
+
+            // Prevent body scroll when modal is open
+            document.body.style.overflow = 'hidden';
         }
 
-        function closeModal() { document.getElementById('topic-modal').classList.remove('active'); }
+        function closeModal() {
+            document.getElementById('topic-modal').classList.remove('active');
+            // Re-enable body scroll
+            document.body.style.overflow = '';
+        }
 
         async function markComplete() {
             if(currentTopic) {
                 completedTopics.add(currentTopic.id);
                 await saveProgress(currentTopic.id);
-                closeModal();
                 renderTopics();
                 updateProgress();
 
@@ -1123,13 +1113,41 @@
         });
         
         function showLockMessage() { alert('🔒 Complete the previous topic to unlock this one!'); }
-        function showTrialLockMessage() { 
+        function showTrialLockMessage() {
             const days = getTrialDaysRemaining();
-            alert(`⏳ This content unlocks in ${days} day${days !== 1 ? 's' : ''}.\n\nDuring your first week, focus on mastering Week 1. After that, you can progress at your own pace!`); 
+            alert(`⏳ This content unlocks in ${days} day${days !== 1 ? 's' : ''}.\n\nDuring your first week, focus on mastering Week 1. After that, you can progress at your own pace!`);
         }
         function playVideo() { alert('🎬 Video player would open in the full version!'); }
         function downloadNotes() { alert('📜 Notes PDF would download in the full version!'); }
-        function startChallenge() {
+
+        function openProjectReview() {
+            const auth = JSON.parse(localStorage.getItem('cwu_auth') || '{}');
+            const currentWeek = Math.min(completedTopics.size + 1, 26);
+
+            const subject = encodeURIComponent('Chim Wopara University Project');
+            const body = encodeURIComponent(
+`Hello,
+
+I would like to submit my project for review.
+
+Week Number: ${currentWeek}
+Student Email: ${auth.email || '[Your Email]'}
+
+Project Description:
+[Describe what you built for this week's assignment]
+
+GitHub Pages Link:
+[Paste your GitHub Pages URL here]
+
+Additional Notes:
+[Any specific questions or areas you'd like feedback on]
+
+Thank you!`
+            );
+
+            window.location.href = `mailto:support@wopara.com?subject=${subject}&body=${body}`;
+        }
+        async function startChallenge() {
             // Load weekly challenges from challenges.js
             if (typeof window.weeklyChallenges !== 'undefined' && window.weeklyChallenges.length > 0 && currentTopic) {
                 // Get the challenge for the current topic (currentTopic.id matches challenge id)
@@ -1148,12 +1166,20 @@
                     sessionStorage.setItem('currentChallengeData', JSON.stringify(challengeData));
                     sessionStorage.setItem('selectedLevel', currentTopic.id.toString());
 
+                    // Mark topic as completed when challenge is attempted
+                    if (!completedTopics.has(currentTopic.id)) {
+                        await markComplete();
+                    }
+
                     // Open in iframe overlay
                     const modal = document.getElementById('challenge-modal');
                     const iframe = document.getElementById('challenge-frame');
                     iframe.src = 'logicbody.html';
                     modal.style.display = 'flex';
                     modal.classList.add('active');
+
+                    // Prevent body scroll when modal is open
+                    document.body.style.overflow = 'hidden';
 
                     // Close topic modal
                     closeModal();
@@ -1171,6 +1197,10 @@
             modal.style.display = 'none';
             modal.classList.remove('active');
             iframe.src = '';
+
+            // Re-enable body scroll
+            document.body.style.overflow = '';
+
             // Reload progress after challenge
             loadProgress().then(() => {
                 renderTopics();
