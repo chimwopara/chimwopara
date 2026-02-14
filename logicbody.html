@@ -74,12 +74,17 @@
         body {
     font-family: var(--main-font-family);
     background: transparent; /* Transparent background for window compatibility */
-    color: var(--text-color); 
+    color: var(--text-color);
     margin: 0;
     padding: 0;
     overflow: hidden; /* Let the window handle scrolling */
     transition: color 0.3s ease, font-family 0.3s ease;
     cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
 }
 /* Glass Button Style matching index.html */
 .glass-btn {
@@ -228,22 +233,28 @@ input, textarea {
             font-weight: bold;
             font-size: 1.4em;
             display: block;
-            margin: 20px 0;
+            margin: 40px 0 30px 0;
             padding: 12px 0;
             border-bottom: 2px solid #B7D1E1;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
+
+        .goal-header:first-child {
+            margin-top: 10px;
+        }
+
         .line-number {
             display: inline-block;
-            width: 40px;
+            width: 35px;
             text-align: right;
             color: var(--hint-color);
             opacity: 0.6;
-            margin-right: 16px;
+            margin-right: 8px;
             cursor: pointer;
             user-select: none;
             transition: all 0.2s ease;
+            vertical-align: top;
         }
         .line-number:hover {
             opacity: 1;
@@ -2222,6 +2233,12 @@ document.addEventListener('mouseup', function(e) {
 // === SCREENSHOT BLOCKING ===
 const screenshotBlockOverlay = document.getElementById('screenshot-block');
 
+// Disable right-click context menu
+document.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+    showScreenshotBlock();
+});
+
 // Detect screenshot attempts (keydown)
 document.addEventListener('keydown', (e) => {
     // Detect common screenshot shortcuts
@@ -2231,20 +2248,42 @@ document.addEventListener('keydown', (e) => {
         // Windows: PrintScreen, Alt+PrintScreen, Win+PrintScreen
         (e.key === 'PrintScreen' || e.key === 'Print') ||
         // Windows: Win+Shift+S (Snipping Tool)
-        (e.metaKey && e.shiftKey && e.key === 's')
+        (e.metaKey && e.shiftKey && e.key === 's') ||
+        // Windows: Alt+PrintScreen
+        (e.altKey && (e.key === 'PrintScreen' || e.key === 'Print'))
     );
 
     if (isScreenshot) {
         e.preventDefault();
+        e.stopPropagation();
+        document.body.style.opacity = '0';
         showScreenshotBlock();
+        setTimeout(() => {
+            document.body.style.opacity = '1';
+        }, 1000);
     }
 });
 
 // Detect when window loses focus (might be screenshot tool)
 document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
+        document.body.style.opacity = '0';
         showScreenshotBlock();
+    } else {
+        setTimeout(() => {
+            document.body.style.opacity = '1';
+        }, 500);
     }
+});
+
+// Detect blur event (another screenshot detection)
+window.addEventListener('blur', () => {
+    document.body.style.opacity = '0';
+    setTimeout(() => {
+        if (!document.hidden) {
+            document.body.style.opacity = '1';
+        }
+    }, 500);
 });
 
 function showScreenshotBlock() {
@@ -2252,7 +2291,7 @@ function showScreenshotBlock() {
         screenshotBlockOverlay.classList.add('active');
         setTimeout(() => {
             screenshotBlockOverlay.classList.remove('active');
-        }, 2000);
+        }, 3000);
     }
 }
 

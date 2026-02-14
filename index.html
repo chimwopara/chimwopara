@@ -725,5 +725,29 @@
 
     <!-- ==================== JAVASCRIPT ==================== -->
     <script src="js/main.js"></script>
+
+    <!-- Screenshot Blocking -->
+    <script>
+        // Disable right-click
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
+
+        // Disable text selection
+        document.body.style.userSelect = 'none';
+        document.body.style.webkitUserSelect = 'none';
+
+        // Block screenshot shortcuts
+        document.addEventListener('keydown', (e) => {
+            const isScreenshot = (
+                (e.metaKey && e.shiftKey && ['3', '4', '5'].includes(e.key)) ||
+                (e.key === 'PrintScreen' || e.key === 'Print') ||
+                (e.metaKey && e.shiftKey && e.key === 's') ||
+                (e.altKey && (e.key === 'PrintScreen' || e.key === 'Print'))
+            );
+            if (isScreenshot) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        });
+    </script>
 </body>
 </html>

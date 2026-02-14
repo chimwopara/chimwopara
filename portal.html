@@ -671,7 +671,7 @@
     <script>
         // ========== CONFIGURATION ==========
         // PASTE YOUR DEPLOYED GOOGLE APPS SCRIPT URL HERE
-        const API_URL = "https://script.google.com/macros/s/AKfycbxvabLKN0fUlqtkDOw_royRC776GwXsuA8_o3Kw9Xw_GBK9vOz9ro-c8mVFPMGgrW7dRQ/exec"; 
+        const API_URL = "https://script.google.com/macros/s/AKfycbx00SaumDJLKfWu9n5nRWBwnj8R_auNAT70GF9Bl3d4KmK37pMgjFbG8mszv9Y92Fp9WA/exec"; 
 
         // ========== DATA ==========
         const curriculum = [
@@ -1262,5 +1262,29 @@ Thank you!`
 
     <!-- Load Weekly Challenges -->
     <script src="challenges.js"></script>
+
+    <!-- Screenshot Blocking -->
+    <script>
+        // Disable right-click
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
+
+        // Disable text selection
+        document.body.style.userSelect = 'none';
+        document.body.style.webkitUserSelect = 'none';
+
+        // Block screenshot shortcuts
+        document.addEventListener('keydown', (e) => {
+            const isScreenshot = (
+                (e.metaKey && e.shiftKey && ['3', '4', '5'].includes(e.key)) ||
+                (e.key === 'PrintScreen' || e.key === 'Print') ||
+                (e.metaKey && e.shiftKey && e.key === 's') ||
+                (e.altKey && (e.key === 'PrintScreen' || e.key === 'Print'))
+            );
+            if (isScreenshot) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        });
+    </script>
 </body>
 </html>
