@@ -1119,8 +1119,38 @@
         }
         function playVideo() { alert('🎬 Video player would open in the full version!'); }
         function downloadNotes() { alert('📜 Notes PDF would download in the full version!'); }
-        function startChallenge() { alert('🔥 Challenge interface would open in the full version!'); }
+        function startChallenge() {
+            // Load weekly challenges from challenges.js
+            if (typeof window.weeklyChallenges !== 'undefined' && window.weeklyChallenges.length > 0 && currentTopic) {
+                // Get the challenge for the current topic (currentTopic.id matches challenge id)
+                const weeklyChallenge = window.weeklyChallenges.find(c => c.id === currentTopic.id);
+
+                if (weeklyChallenge) {
+                    // Store challenge data for logicbody.html to use
+                    const challengeData = {
+                        challengesData: [weeklyChallenge],
+                        language: weeklyChallenge.language || 'Weekly Challenge',
+                        title: weeklyChallenge.title,
+                        id: weeklyChallenge.id,
+                        type: 'weekly'
+                    };
+
+                    sessionStorage.setItem('currentChallengeData', JSON.stringify(challengeData));
+                    sessionStorage.setItem('selectedLevel', currentTopic.id.toString());
+
+                    // Open logicbody.html in a new window or navigate
+                    window.open('logicbody.html', '_blank');
+                } else {
+                    alert('Challenge not available yet. Check back soon!');
+                }
+            } else {
+                alert('Weekly challenges are loading. Please try again in a moment.');
+            }
+        }
 
     </script>
+
+    <!-- Load Weekly Challenges -->
+    <script src="challenges.js"></script>
 </body>
 </html>
