@@ -224,11 +224,15 @@ input, textarea {
 }
         .explanation-comment { color: var(--hint-color); font-style: italic; }
         .goal-header {
-            color: var(--text-color);
+            color: #B7D1E1;
             font-weight: bold;
-            font-size: 1.3em;
+            font-size: 1.4em;
             display: block;
-            margin: 16px 0;
+            margin: 20px 0;
+            padding: 12px 0;
+            border-bottom: 2px solid #B7D1E1;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         .line-number {
             display: inline-block;
@@ -1330,7 +1334,13 @@ button, input, select, textarea,
     console.log('[logicbody] initializeGame called with levelIndex:', levelIndex);
     console.log('[logicbody] challengesData:', challengesData);
     console.log('[logicbody] challengesData length:', challengesData?.length);
-    
+
+    // Show give up button and timer display (in case they were hidden)
+    const giveUpBtn = document.getElementById('give-up-btn');
+    const timerDisplay = document.getElementById('timer-display');
+    if (giveUpBtn) giveUpBtn.style.display = 'block';
+    if (timerDisplay) timerDisplay.style.display = 'block';
+
     // Check if level was selected from index.html
     const selectedLevel = localStorage.getItem('selectedLevel');
     if (selectedLevel) {
@@ -1469,13 +1479,18 @@ if (typeof parent !== 'undefined' && parent !== window) {
 
             // Check if this is a goal header
             if (stepData.type === 'goal') {
+                console.log('[GOAL] Processing goal:', stepData.text);
                 // Add goal header to code display
-                constructedCode += `\n<span class="goal-header">${escapeHtml(stepData.text)}</span>\n\n`;
+                const goalHTML = `<div class="goal-header">${escapeHtml(stepData.text)}</div>`;
+                constructedCode += goalHTML;
+                console.log('[GOAL] constructedCode after adding goal:', constructedCode);
                 codeDisplayArea.innerHTML = constructedCode;
+                console.log('[GOAL] codeDisplayArea updated');
                 scrollCodeDisplay();
 
                 // Move to next step immediately
                 currentStep++;
+                console.log('[GOAL] Moving to next step:', currentStep);
                 displayStep();
                 return;
             }
@@ -1716,6 +1731,12 @@ function incrementAttempts() {
             // GRADING: Calculate final grade
             stopTimer(); // Ensure timer is stopped
 
+            // Hide give up button and timer display
+            const giveUpBtn = document.getElementById('give-up-btn');
+            const timerDisplay = document.getElementById('timer-display');
+            if (giveUpBtn) giveUpBtn.style.display = 'none';
+            if (timerDisplay) timerDisplay.style.display = 'none';
+
             const finalPercentage = totalPointsPossible > 0 ? (totalPointsEarned / totalPointsPossible) * 100 : 0;
             const isPassing = finalPercentage >= 90;
             const attemptNumber = levelAttempts[currentLevelIndex] || 1;
@@ -1905,9 +1926,12 @@ const netStarsGained = starCount - initialStarsForLevelAttempt;
             // Simplified for demo
         }
         function showReattemptMessage() {
+    const currentChallenge = challengesData[currentLevelIndex];
+    const challengeTitle = currentChallenge?.title || `Level ${currentLevelIndex + 1}`;
+
     interactionArea.innerHTML = `
         <div style="width: 100%; text-align: center; padding: 40px;">
-            <h2 style="color: var(--accent-color); margin-bottom: 30px; font-size: 1.4em;">Re-attempt Level ${currentLevelIndex + 1}</h2>
+            <h2 style="color: var(--accent-color); margin-bottom: 30px; font-size: 1.4em;">Re-attempt: ${challengeTitle}</h2>
             <button onclick="startReattempt()" class="glass-btn" style="font-size: 1.1em; padding: 12px 24px;">
                 <span style="margin-right: 8px;">▶</span> Begin Re-attempt
             </button>
