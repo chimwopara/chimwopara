@@ -534,6 +534,11 @@
         </main>
     </div>
 
+    <!-- Challenge Iframe Modal -->
+    <div id="challenge-modal" class="modal-backdrop flex items-center justify-center p-4" style="display: none;">
+        <iframe id="challenge-frame" src="" style="width: 95vw; height: 95vh; border: 2px solid var(--accent); border-radius: 16px; background: var(--bg);"></iframe>
+    </div>
+
     <div id="topic-modal" class="modal-backdrop flex items-center justify-center p-4">
         <div class="modal-content glass-strong rounded-3xl w-full max-w-6xl max-h-[90vh] overflow-y-auto">
             
@@ -896,11 +901,42 @@
             location.reload();
         }
 
-        function showPortal() {
+        async function showPortal() {
             document.getElementById('login-screen').classList.add('hidden');
             document.getElementById('portal-screen').classList.remove('hidden');
+            await loadProgress();
             renderTopics();
             updateProgress();
+        }
+
+        async function loadProgress() {
+            const auth = JSON.parse(localStorage.getItem('cwu_auth') || '{}');
+            if (!auth.email) return;
+
+            try {
+                const res = await fetch(`${API_URL}?action=get_progress&email=${encodeURIComponent(auth.email)}`);
+                const data = await res.json();
+                if (data.result === "success" && data.completed) {
+                    completedTopics = new Set(data.completed);
+                }
+            } catch (err) {
+                console.error('Failed to load progress:', err);
+            }
+        }
+
+        async function saveProgress(topicId) {
+            const auth = JSON.parse(localStorage.getItem('cwu_auth') || '{}');
+            if (!auth.email) return;
+
+            try {
+                const res = await fetch(`${API_URL}?action=save_progress&email=${encodeURIComponent(auth.email)}&topic_id=${topicId}`);
+                const data = await res.json();
+                if (data.result !== "success") {
+                    console.error('Failed to save progress:', data.message);
+                }
+            } catch (err) {
+                console.error('Failed to save progress:', err);
+            }
         }
 
         function isWithinTrialPeriod() {
@@ -931,30 +967,6 @@
             const grid = document.getElementById('topics-grid');
             const inTrial = isWithinTrialPeriod();
             const daysLeft = getTrialDaysRemaining();
-
-            // Show/hide trial banner
-            let banner = document.getElementById('trial-banner');
-            if (inTrial) {
-                if (!banner) {
-                    banner = document.createElement('div');
-                    banner.id = 'trial-banner';
-                    banner.className = 'glass rounded-2xl p-5 mb-8 border border-amber-500/30';
-                    grid.parentNode.insertBefore(banner, grid);
-                }
-                banner.innerHTML = `
-                    <div class="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
-                        <div class="w-12 h-12 rounded-xl bg-amber-500/20 flex items-center justify-center text-amber-400 text-xl shrink-0">
-                            <i class="fa-solid fa-hourglass-half"></i>
-                        </div>
-                        <div class="flex-1">
-                            <h3 class="font-semibold text-amber-300 mb-1">Week 1 — Getting Started</h3>
-                            <p class="text-sm text-[--text-muted]">You're in your first 7 days. Focus on mastering Week 1 content — the rest of the program unlocks in <strong class="text-[--text]">${daysLeft} day${daysLeft !== 1 ? 's' : ''}</strong>.</p>
-                        </div>
-                    </div>
-                `;
-            } else if (banner) {
-                banner.remove();
-            }
 
             grid.innerHTML = curriculum.map((topic, i) => {
                 const isComplete = completedTopics.has(topic.id);
@@ -1087,30 +1099,23 @@
 
         function closeModal() { document.getElementById('topic-modal').classList.remove('active'); }
 
-        function markComplete() {
+        async function markComplete() {
             if(currentTopic) {
                 completedTopics.add(currentTopic.id);
-                localStorage.setItem('cwu_progress', JSON.stringify([...completedTopics]));
+                await saveProgress(currentTopic.id);
                 closeModal();
                 renderTopics();
                 updateProgress();
-                
+
                 setTimeout(() => {
-                    document.getElementById('virtual-certificate').scrollIntoView({ 
-                        behavior: 'smooth', 
-                        block: 'center' 
+                    document.getElementById('virtual-certificate').scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
                     });
                 }, 300);
             }
         }
 
-        // INIT
-        document.addEventListener('DOMContentLoaded', () => {
-            const saved = localStorage.getItem('cwu_progress');
-            if (saved) completedTopics = new Set(JSON.parse(saved));
-            if (localStorage.getItem('cwu_auth')) showPortal();
-        });
-        
         // Key handlers
         document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
         document.getElementById('topic-modal').addEventListener('click', e => {
@@ -1143,8 +1148,15 @@
                     sessionStorage.setItem('currentChallengeData', JSON.stringify(challengeData));
                     sessionStorage.setItem('selectedLevel', currentTopic.id.toString());
 
-                    // Navigate to logicbody.html in the same window
-                    window.location.href = 'logicbody.html';
+                    // Open in iframe overlay
+                    const modal = document.getElementById('challenge-modal');
+                    const iframe = document.getElementById('challenge-frame');
+                    iframe.src = 'logicbody.html';
+                    modal.style.display = 'flex';
+                    modal.classList.add('active');
+
+                    // Close topic modal
+                    closeModal();
                 } else {
                     alert('Challenge not available yet. Check back soon!');
                 }
@@ -1152,6 +1164,43 @@
                 alert('Weekly challenges are loading. Please try again in a moment.');
             }
         }
+
+        function closeChallengeModal() {
+            const modal = document.getElementById('challenge-modal');
+            const iframe = document.getElementById('challenge-frame');
+            modal.style.display = 'none';
+            modal.classList.remove('active');
+            iframe.src = '';
+            // Reload progress after challenge
+            loadProgress().then(() => {
+                renderTopics();
+                updateProgress();
+            });
+        }
+
+        // Challenge modal click handler - warn about active challenge
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('cwu_auth')) showPortal();
+
+            const challengeModal = document.getElementById('challenge-modal');
+            if (challengeModal) {
+                challengeModal.addEventListener('click', (e) => {
+                    if (e.target === challengeModal) {
+                        const shouldClose = confirm('⚠️ You have an active challenge running!\n\nLeaving now will result in 0 points for the current question.\n\nDo you want to exit the challenge?');
+                        if (shouldClose) {
+                            closeChallengeModal();
+                        }
+                    }
+                });
+            }
+
+            // Listen for messages from challenge iframe
+            window.addEventListener('message', (event) => {
+                if (event.data.type === 'closeChallenge') {
+                    closeChallengeModal();
+                }
+            });
+        });
 
     </script>
 

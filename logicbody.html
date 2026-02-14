@@ -303,7 +303,7 @@ input, textarea {
         #give-up-btn {
             position: absolute;
             top: 8px;
-            left: 12px;
+            right: 80px;
             font-size: 0.75rem;
             color: var(--error-color);
             background: rgba(220, 38, 38, 0.1);
@@ -715,6 +715,26 @@ button, input, select, textarea,
         <!-- Screenshot Blocking Overlay -->
         <div id="screenshot-block">
             🚫 Screenshots are disabled during challenges
+        </div>
+
+        <!-- Give Up Confirmation Modal -->
+        <div id="give-up-modal" style="position: fixed; inset: 0; background: rgba(0, 0, 0, 0.8); display: none; align-items: center; justify-content: center; z-index: 10000;">
+            <div style="background: var(--panel-bg-color); border: 2px solid var(--error-color); border-radius: 16px; padding: 32px; max-width: 400px; text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 16px;">⚠️</div>
+                <h3 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 12px; color: var(--error-color);">Give Up Challenge?</h3>
+                <p style="color: var(--text-muted-color); margin-bottom: 24px; line-height: 1.6;">
+                    Giving up will end this attempt immediately.<br>
+                    You will receive <strong style="color: var(--error-color);">0% (0 points)</strong> for this attempt.
+                </p>
+                <div style="display: flex; gap: 12px; justify-content: center;">
+                    <button id="give-up-cancel" style="flex: 1; padding: 12px 24px; background: var(--glass-bg-color); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-color); cursor: pointer; font-weight: 500; transition: all 0.2s;">
+                        Continue Challenge
+                    </button>
+                    <button id="give-up-confirm" style="flex: 1; padding: 12px 24px; background: var(--error-color); border: none; border-radius: 8px; color: white; cursor: pointer; font-weight: 500; transition: all 0.2s;">
+                        Give Up
+                    </button>
+                </div>
+            </div>
         </div>
 
         <!-- Hint Container -->
@@ -1292,7 +1312,7 @@ if (typeof parent !== 'undefined' && parent !== window) {
 
     constructedCode = `// Goal: ${escapeHtml(currentChallenge.goal)}\n\n`;
     codeDisplayArea.innerHTML = constructedCode;
-    attemptsCounter.textContent = `Attempts: ${levelAttempts[currentLevelIndex]}`;
+    attemptsCounter.textContent = `Attempts: ${levelAttempts[currentLevelIndex]} • Click for history`;
     updateStarDisplay();
     hintContainer.style.display = 'flex';
     displayStep();
@@ -1391,7 +1411,7 @@ if (typeof parent !== 'undefined' && parent !== window) {
         }
 function incrementAttempts() {
     levelAttempts[currentLevelIndex] = (levelAttempts[currentLevelIndex] || 0) + 1;
-    attemptsCounter.textContent = `Attempts: ${levelAttempts[currentLevelIndex]}`;
+    attemptsCounter.textContent = `Attempts: ${levelAttempts[currentLevelIndex]} • Click for history`;
     sessionStorage.setItem('chimCodeLevelAttempts', JSON.stringify(levelAttempts));
 }
         // Handle option click
@@ -1678,9 +1698,16 @@ const netStarsGained = starCount - initialStarsForLevelAttempt;
                 `}
             </div>
 
-            <button id="reattempt-btn" class="glass-btn" style="font-size: 1.1em; padding: 14px 28px; min-width: 200px;">
-                <span style="margin-right: 8px;">↻</span> Re-attempt Challenge
-            </button>
+            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                <button id="reattempt-btn" class="glass-btn" style="font-size: 1.1em; padding: 14px 28px; min-width: 180px;">
+                    <span style="margin-right: 8px;">↻</span> Re-attempt
+                </button>
+                ${window.self !== window.top ? `
+                    <button id="return-portal-btn" class="glass-btn" style="font-size: 1.1em; padding: 14px 28px; min-width: 180px; background: rgba(99, 102, 241, 0.2); border-color: rgba(99, 102, 241, 0.4);">
+                        <span style="margin-right: 8px;">←</span> Return to Portal
+                    </button>
+                ` : ''}
+            </div>
 
             <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--border-color); color: var(--text-muted-color); font-size: 0.85rem;">
                 <p style="font-style: italic;">Note: Re-attempts do not count towards your certificate. Only your first attempt grade is recorded.</p>
@@ -1691,6 +1718,13 @@ const netStarsGained = starCount - initialStarsForLevelAttempt;
 // Add event handler for re-attempt button
             document.getElementById('reattempt-btn')?.addEventListener('click', () => {
                 showReattemptMessage();
+            });
+
+            // Add event handler for return to portal button (if in iframe)
+            document.getElementById('return-portal-btn')?.addEventListener('click', () => {
+                if (window.self !== window.top) {
+                    window.parent.postMessage({ type: 'closeChallenge' }, '*');
+                }
             });
         }
 
@@ -2070,20 +2104,33 @@ function showScreenshotBlock() {
 
 // === GIVE UP FUNCTIONALITY ===
 function giveUpChallenge() {
-    if (!confirm('Are you sure you want to give up? You will receive 0% on this attempt.')) {
-        return;
-    }
-
-    stopTimer();
-
-    // Set score to 0
-    totalPointsEarned = 0;
-    const currentChallenge = challengesData[currentLevelIndex];
-    totalPointsPossible = currentChallenge.sequence.length * 3;
-
-    // End the game immediately
-    endGame();
+    const modal = document.getElementById('give-up-modal');
+    modal.style.display = 'flex';
 }
+
+// Set up give up modal handlers
+document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('give-up-modal');
+    const cancelBtn = document.getElementById('give-up-cancel');
+    const confirmBtn = document.getElementById('give-up-confirm');
+
+    cancelBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    confirmBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+        stopTimer();
+
+        // Set score to 0
+        totalPointsEarned = 0;
+        const currentChallenge = challengesData[currentLevelIndex];
+        totalPointsPossible = currentChallenge.sequence.length * 3;
+
+        // End the game immediately
+        endGame();
+    });
+});
 
     </script>
 
