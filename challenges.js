@@ -12,6 +12,7 @@ window.weeklyChallenges = [
         concepts: "Excel basics, Claude AI integration, formulas, data manipulation, automation",
         language: "Excel/AI",
         sequence: [
+            { type: "goal", text: "Opening Applications" },
             {
                 correct: "Open Microsoft Excel and create a new blank workbook",
                 indent: 0,
@@ -30,6 +31,7 @@ window.weeklyChallenges = [
                     { text: "Open ChatGPT instead", reason: "This course focuses on Claude's capabilities with Excel" }
                 ]
             },
+            { type: "goal", text: "Setting Up Template" },
             {
                 correct: "Prompt Claude: 'Help me create a monthly budget template in Excel'",
                 indent: 0,
@@ -48,6 +50,7 @@ window.weeklyChallenges = [
                     { text: "Put headers in random cells", reason: "Row 1 is the standard location for column headers" }
                 ]
             },
+            { type: "goal", text: "Using Formulas" },
             {
                 correct: "Ask Claude: 'Give me a SUM formula to total my expenses'",
                 indent: 0,
@@ -66,6 +69,7 @@ window.weeklyChallenges = [
                     { text: "Type the formula in as plain text", reason: "Formulas must start with '=' to function properly" }
                 ]
             },
+            { type: "goal", text: "Data Validation" },
             {
                 correct: "Prompt Claude: 'How do I create a dropdown list in Excel?'",
                 indent: 0,
@@ -84,6 +88,7 @@ window.weeklyChallenges = [
                     { text: "Right-click and hope to find dropdown option", reason: "Data Validation is in the Data tab, not context menus" }
                 ]
             },
+            { type: "goal", text: "Advanced Features" },
             {
                 correct: "Ask Claude: 'Generate a VLOOKUP formula to match customer names to IDs'",
                 indent: 0,
@@ -113,6 +118,7 @@ window.weeklyChallenges = [
         concepts: "PowerPoint design, Word formatting, AI content generation, templates",
         language: "Office/AI",
         sequence: [
+            { type: "goal", text: "Planning with AI" },
             {
                 correct: "Open Claude and prompt: 'Create an outline for a 10-slide presentation about AI in business'",
                 indent: 0,
@@ -122,6 +128,7 @@ window.weeklyChallenges = [
                     { text: "Search Google for presentation ideas", reason: "Claude generates custom, tailored content instantly" }
                 ]
             },
+            { type: "goal", text: "Creating Presentation Structure" },
             {
                 correct: "Open PowerPoint and create a new blank presentation",
                 indent: 0,
@@ -149,6 +156,7 @@ window.weeklyChallenges = [
                     { text: "Copy paragraphs from Wikipedia", reason: "Claude creates original, concise bullet points perfect for slides" }
                 ]
             },
+            { type: "goal", text: "Applying Design" },
             {
                 correct: "Request: 'Suggest a color scheme for a professional tech presentation'",
                 indent: 0,
@@ -167,6 +175,7 @@ window.weeklyChallenges = [
                     { text: "Ignore color consistency", reason: "Consistent design looks professional and is easier to read" }
                 ]
             },
+            { type: "goal", text: "Creating Word Document" },
             {
                 correct: "Open Microsoft Word for the accompanying report",
                 indent: 0,
@@ -194,6 +203,7 @@ window.weeklyChallenges = [
                     { text: "Use all the same formatting", reason: "Visual hierarchy helps readers navigate your document" }
                 ]
             },
+            { type: "goal", text: "Professional Communication" },
             {
                 correct: "Ask Claude: 'Generate a professional email to send this presentation'",
                 indent: 0,
@@ -214,6 +224,7 @@ window.weeklyChallenges = [
         concepts: "GitHub registration, profile setup, security, SSH keys",
         language: "Git/GitHub",
         sequence: [
+            { type: "goal", text: "Creating Account" },
             {
                 correct: "Navigate to github.com in your web browser",
                 indent: 0,
@@ -232,6 +243,7 @@ window.weeklyChallenges = [
                     { text: "Search for repositories first", reason: "You need an account to interact with repositories" }
                 ]
             },
+            { type: "goal", text: "Account Credentials" },
             {
                 correct: "Enter your email address (use a professional email you check regularly)",
                 indent: 0,
@@ -259,6 +271,7 @@ window.weeklyChallenges = [
                     { text: "Use special characters and emojis", reason: "GitHub usernames must be alphanumeric and professional" }
                 ]
             },
+            { type: "goal", text: "Verification & Security" },
             {
                 correct: "Complete the puzzle verification to prove you're human",
                 indent: 0,
@@ -286,6 +299,7 @@ window.weeklyChallenges = [
                     { text: "Write your backup codes on a Post-it", reason: "Backup codes should be stored securely, not on your desk" }
                 ]
             },
+            { type: "goal", text: "Profile & SSH Setup" },
             {
                 correct: "Add a profile photo and bio in Settings → Profile",
                 indent: 0,
@@ -315,6 +329,7 @@ window.weeklyChallenges = [
         concepts: "IDE installation, extensions, themes, keyboard shortcuts, debugging",
         language: "Tools/IDEs",
         sequence: [
+            { type: "goal", text: "Installing VS Code" },
             {
                 correct: "Download VS Code from code.visualstudio.com",
                 indent: 0,
@@ -333,6 +348,7 @@ window.weeklyChallenges = [
                     { text: "Uncheck 'Add to PATH'", reason: "PATH integration allows opening VS Code from terminal" }
                 ]
             },
+            { type: "goal", text: "Essential Extensions" },
             {
                 correct: "Open VS Code and install the 'Live Server' extension",
                 indent: 0,
@@ -369,6 +385,7 @@ window.weeklyChallenges = [
                     { text: "Reject all AI coding tools", reason: "AI assistants are industry-standard productivity tools" }
                 ]
             },
+            { type: "goal", text: "Installing Xcode (Mac)" },
             {
                 correct: "For Mac users: Download Xcode from the Mac App Store",
                 indent: 0,
@@ -387,6 +404,7 @@ window.weeklyChallenges = [
                     { text: "Download tools from third-party sites", reason: "Use official Apple installation for security and compatibility" }
                 ]
             },
+            { type: "goal", text: "Testing Setup" },
             {
                 correct: "Create a test HTML file in VS Code to verify setup",
                 indent: 0,
@@ -416,6 +434,7 @@ window.weeklyChallenges = [
         concepts: "Terminal basics, file system navigation, bash commands, shortcuts",
         language: "Bash/Terminal",
         sequence: [
+            { type: "goal", text: "Opening Terminal" },
             {
                 correct: "Open Terminal (Mac: Cmd+Space, type 'Terminal') or (Windows: Git Bash)",
                 indent: 0,
@@ -425,6 +444,7 @@ window.weeklyChallenges = [
                     { text: "Open Command Prompt on Mac", reason: "Mac uses Terminal; Command Prompt is Windows-only" }
                 ]
             },
+            { type: "goal", text: "Navigation Commands" },
             {
                 correct: "Type: pwd (Print Working Directory)",
                 indent: 0,
@@ -470,6 +490,7 @@ window.weeklyChallenges = [
                     { text: "Type: up", reason: "The command is 'cd ..', not 'up'" }
                 ]
             },
+            { type: "goal", text: "File & Folder Operations" },
             {
                 correct: "Type: mkdir my-project (create a new directory)",
                 indent: 0,
@@ -497,6 +518,7 @@ window.weeklyChallenges = [
                     { text: "Type: rm old-folder (without -rf)", reason: "Folders need -rf flag; files use rm alone" }
                 ]
             },
+            { type: "goal", text: "Terminal Maintenance" },
             {
                 correct: "Type: clear (clear the terminal screen)",
                 indent: 0,
@@ -517,6 +539,7 @@ window.weeklyChallenges = [
         concepts: "Git init, commits, branches, push/pull, merge, repositories",
         language: "Git/GitHub",
         sequence: [
+            { type: "goal", text: "Initializing Local Repository" },
             {
                 correct: "Open Terminal and navigate to your project folder: cd ~/Documents/my-project",
                 indent: 0,
@@ -535,6 +558,7 @@ window.weeklyChallenges = [
                     { text: "Type: create git", reason: "Use 'git init' to initialize version control" }
                 ]
             },
+            { type: "goal", text: "Making First Commit" },
             {
                 correct: "Type: git status (check what files are untracked)",
                 indent: 0,
@@ -562,6 +586,7 @@ window.weeklyChallenges = [
                     { text: "Commit without a message", reason: "-m flag with message documents what changed" }
                 ]
             },
+            { type: "goal", text: "Connecting to GitHub" },
             {
                 correct: "Create a new repository on GitHub.com (click + → New repository)",
                 indent: 0,
@@ -589,6 +614,7 @@ window.weeklyChallenges = [
                     { text: "Skip adding remote", reason: "Without remote, you can't push to GitHub" }
                 ]
             },
+            { type: "goal", text: "Pushing & Branching" },
             {
                 correct: "Type: git push -u origin main (push your code to GitHub)",
                 indent: 0,
@@ -621,6 +647,7 @@ window.weeklyChallenges = [
         concepts: "Domain registrars, account setup, security, payment methods",
         language: "Web/Domains",
         sequence: [
+            { type: "goal", text: "Creating Account" },
             {
                 correct: "Navigate to porkbun.com in your browser",
                 indent: 0,
@@ -639,6 +666,7 @@ window.weeklyChallenges = [
                     { text: "Click 'Login' instead", reason: "You don't have an account yet" }
                 ]
             },
+            { type: "goal", text: "Account Setup" },
             {
                 correct: "Enter your email address (use one you check regularly)",
                 indent: 0,
@@ -657,6 +685,7 @@ window.weeklyChallenges = [
                     { text: "Use your pet's name", reason: "Personal info is easily guessed" }
                 ]
             },
+            { type: "goal", text: "Security & Payment" },
             {
                 correct: "Enable two-factor authentication in Account Settings",
                 indent: 0,
@@ -675,6 +704,7 @@ window.weeklyChallenges = [
                     { text: "Use someone else's card", reason: "Use your own payment method for legal ownership" }
                 ]
             },
+            { type: "goal", text: "Verification & Contact Info" },
             {
                 correct: "Verify your email address by clicking the confirmation link",
                 indent: 0,
@@ -693,6 +723,7 @@ window.weeklyChallenges = [
                     { text: "Leave contact info blank", reason: "Complete contact info is mandatory" }
                 ]
             },
+            { type: "goal", text: "Platform Familiarization" },
             {
                 correct: "Familiarize yourself with the domain search interface",
                 indent: 0,
@@ -722,6 +753,7 @@ window.weeklyChallenges = [
         concepts: "Domain search, TLDs, pricing, checkout, DNS basics",
         language: "Web/Domains",
         sequence: [
+            { type: "goal", text: "Domain Research" },
             {
                 correct: "Think of a domain name related to your project or brand",
                 indent: 0,
@@ -749,6 +781,7 @@ window.weeklyChallenges = [
                     { text: "Choose .xxx for a business site", reason: "TLD choice affects credibility - choose appropriately" }
                 ]
             },
+            { type: "goal", text: "Cart & Configuration" },
             {
                 correct: "Add your chosen domain to cart",
                 indent: 0,
@@ -785,6 +818,7 @@ window.weeklyChallenges = [
                     { text: "Ignore renewal settings", reason: "Control when and what gets renewed to manage costs" }
                 ]
             },
+            { type: "goal", text: "Checkout & Confirmation" },
             {
                 correct: "Review your cart total and proceed to checkout",
                 indent: 0,
@@ -823,6 +857,7 @@ window.weeklyChallenges = [
         concepts: "Domain transfers, EPP codes, registrar locks, DNS preservation, WHOIS",
         language: "Web/Domains",
         sequence: [
+            { type: "goal", text: "Preparing at Current Registrar" },
             {
                 correct: "Log into your current registrar (where the domain is now)",
                 indent: 0,
@@ -850,6 +885,7 @@ window.weeklyChallenges = [
                     { text: "Delete domain protection", reason: "Unlock, don't delete security features" }
                 ]
             },
+            { type: "goal", text: "Getting EPP Code" },
             {
                 correct: "Request the EPP code (authorization code/transfer code)",
                 indent: 0,
@@ -877,6 +913,7 @@ window.weeklyChallenges = [
                     { text: "Share the EPP code publicly", reason: "EPP codes are secrets - sharing them risks domain theft" }
                 ]
             },
+            { type: "goal", text: "Initiating Transfer at Porkbun" },
             {
                 correct: "Log into Porkbun and go to 'Transfer Domain'",
                 indent: 0,
@@ -895,6 +932,7 @@ window.weeklyChallenges = [
                     { text: "Enter your old registrar login", reason: "Porkbun needs the EPP code, not your old account credentials" }
                 ]
             },
+            { type: "goal", text: "Completing Transfer" },
             {
                 correct: "Complete payment (transfers typically cost the same as 1-year renewal)",
                 indent: 0,
@@ -924,6 +962,7 @@ window.weeklyChallenges = [
         concepts: "Prompt engineering, context, specificity, iterative refinement, AI capabilities",
         language: "AI/Prompting",
         sequence: [
+            { type: "goal", text: "Clear & Specific Prompts" },
             {
                 correct: "Start with a clear, specific goal instead of vague requests",
                 indent: 0,
@@ -942,6 +981,7 @@ window.weeklyChallenges = [
                     { text: "Assume AI knows your project", reason: "AI has no memory between sessions - always provide context" }
                 ]
             },
+            { type: "goal", text: "Format & Constraints" },
             {
                 correct: "Specify the format you want: 'Give me code with comments'",
                 indent: 0,
@@ -960,6 +1000,7 @@ window.weeklyChallenges = [
                     { text: "Install libraries AI mentions", reason: "State constraints upfront to avoid incompatible solutions" }
                 ]
             },
+            { type: "goal", text: "Learning & Examples" },
             {
                 correct: "Ask for step-by-step explanations: 'Explain each line of code'",
                 indent: 0,
@@ -978,6 +1019,7 @@ window.weeklyChallenges = [
                     { text: "Describe everything in abstract terms", reason: "Concrete examples are clearer than abstract descriptions" }
                 ]
             },
+            { type: "goal", text: "Iteration & Refinement" },
             {
                 correct: "Iterate and refine: 'Make it more concise' or 'Add error handling'",
                 indent: 0,
@@ -1005,6 +1047,7 @@ window.weeklyChallenges = [
                     { text: "Ignore what changed", reason: "Understanding changes teaches you better coding practices" }
                 ]
             },
+            { type: "goal", text: "Verification & Testing" },
             {
                 correct: "Test AI outputs yourself - don't assume they work",
                 indent: 0,
@@ -1025,6 +1068,7 @@ window.weeklyChallenges = [
         concepts: "File organization, relative paths, linking pages, favicon, assets folders",
         language: "Web/HTML",
         sequence: [
+            { type: "goal", text: "Project Structure Setup" },
             {
                 correct: "Create a root project folder: mkdir my-website",
                 indent: 0,
@@ -1052,6 +1096,7 @@ window.weeklyChallenges = [
                     { text: "Create pages in subfolders randomly", reason: "Keep main pages in root for simple URLs" }
                 ]
             },
+            { type: "goal", text: "Creating Asset Folders" },
             {
                 correct: "Create /css folder for stylesheets",
                 indent: 0,
@@ -1079,6 +1124,7 @@ window.weeklyChallenges = [
                     { text: "Create a new folder per image", reason: "All images go in one folder for easy management" }
                 ]
             },
+            { type: "goal", text: "Linking Files" },
             {
                 correct: "Link CSS with: <link rel='stylesheet' href='css/style.css'>",
                 indent: 0,
@@ -1106,6 +1152,7 @@ window.weeklyChallenges = [
                     { text: "Skip favicon entirely", reason: "Favicons make sites look professional" }
                 ]
             },
+            { type: "goal", text: "Testing Links" },
             {
                 correct: "Test all links locally before deploying",
                 indent: 0,
@@ -1126,6 +1173,7 @@ window.weeklyChallenges = [
         concepts: "DNS records, A records, CNAME, nameservers, propagation, TTL",
         language: "Web/DNS",
         sequence: [
+            { type: "goal", text: "Understanding DNS" },
             {
                 correct: "Understand: DNS translates domain names to IP addresses",
                 indent: 0,
@@ -1144,6 +1192,7 @@ window.weeklyChallenges = [
                     { text: "Make up an IP address", reason: "Use the exact IP provided by your hosting service" }
                 ]
             },
+            { type: "goal", text: "Configuring DNS Records" },
             {
                 correct: "Log into Porkbun and go to DNS settings for your domain",
                 indent: 0,
@@ -1180,6 +1229,7 @@ window.weeklyChallenges = [
                     { text: "Delete TTL field", reason: "TTL controls how long DNS info is cached" }
                 ]
             },
+            { type: "goal", text: "Testing & Verification" },
             {
                 correct: "Wait 5-10 minutes, then test: ping yourdomain.com",
                 indent: 0,
@@ -1198,6 +1248,7 @@ window.weeklyChallenges = [
                     { text: "Assume ping success means website works", reason: "DNS can work while web server has issues" }
                 ]
             },
+            { type: "goal", text: "Optimization & Global Check" },
             {
                 correct: "Once working, increase TTL to 3600 (1 hour) or higher",
                 indent: 0,
@@ -1227,6 +1278,7 @@ window.weeklyChallenges = [
         concepts: "Git deployment, static hosting, custom domains, gh-pages branch",
         language: "Git/Deployment",
         sequence: [
+            { type: "goal", text: "Creating Repository" },
             {
                 correct: "Create a repository named: yourusername.github.io",
                 indent: 0,
@@ -1245,6 +1297,7 @@ window.weeklyChallenges = [
                     { text: "Download as ZIP and re-upload", reason: "Git clone maintains version control" }
                 ]
             },
+            { type: "goal", text: "Adding Files & Deploying" },
             {
                 correct: "Add your index.html and other website files to the repo",
                 indent: 0,
@@ -1281,6 +1334,7 @@ window.weeklyChallenges = [
                     { text: "Manually upload via GitHub UI", reason: "Git push is faster and maintains version history" }
                 ]
             },
+            { type: "goal", text: "Verification & Updates" },
             {
                 correct: "Wait 1-2 minutes, then visit: https://yourusername.github.io",
                 indent: 0,
@@ -1299,6 +1353,7 @@ window.weeklyChallenges = [
                     { text: "Email files to GitHub", reason: "Use git push for all updates" }
                 ]
             },
+            { type: "goal", text: "Custom Domain Setup" },
             {
                 correct: "For custom domain: Add CNAME file with your domain name",
                 indent: 0,
@@ -1328,6 +1383,7 @@ window.weeklyChallenges = [
         concepts: "Continuous deployment, build commands, environment variables, forms",
         language: "Deployment/CI",
         sequence: [
+            { type: "goal", text: "Account & Git Setup" },
             {
                 correct: "Create an account at netlify.com",
                 indent: 0,
@@ -1355,6 +1411,7 @@ window.weeklyChallenges = [
                     { text: "Upload via FTP", reason: "Netlify uses Git, not FTP" }
                 ]
             },
+            { type: "goal", text: "Build Configuration" },
             {
                 correct: "Select your repository from the list",
                 indent: 0,
@@ -1382,6 +1439,7 @@ window.weeklyChallenges = [
                     { text: "Set to /src", reason: "Source code isn't deployed - built files are" }
                 ]
             },
+            { type: "goal", text: "Deployment & Verification" },
             {
                 correct: "Click 'Deploy site' and wait for deployment",
                 indent: 0,
@@ -1400,6 +1458,7 @@ window.weeklyChallenges = [
                     { text: "No URL until you add custom domain", reason: "Free subdomain works immediately" }
                 ]
             },
+            { type: "goal", text: "Custom Domain" },
             {
                 correct: "To add custom domain: Site settings → Domain management → Add custom domain",
                 indent: 0,
@@ -1429,6 +1488,7 @@ window.weeklyChallenges = [
         concepts: "CDN, SSL certificates, caching, DDoS protection, DNS proxy",
         language: "Web/Security",
         sequence: [
+            { type: "goal", text: "Account Setup" },
             {
                 correct: "Create a free account at cloudflare.com",
                 indent: 0,
@@ -1456,6 +1516,7 @@ window.weeklyChallenges = [
                     { text: "You must pay for CDN", reason: "CDN is included in free plan" }
                 ]
             },
+            { type: "goal", text: "DNS Configuration" },
             {
                 correct: "Wait while Cloudflare scans your DNS records",
                 indent: 0,
@@ -1483,6 +1544,7 @@ window.weeklyChallenges = [
                     { text: "Proxy status doesn't matter", reason: "Proxied enables Cloudflare features; DNS-only disables them" }
                 ]
             },
+            { type: "goal", text: "Nameserver Update" },
             {
                 correct: "Copy Cloudflare's nameservers (e.g., ns1.cloudflare.com)",
                 indent: 0,
@@ -1510,6 +1572,7 @@ window.weeklyChallenges = [
                     { text: "Restart computer to speed up", reason: "Propagation happens on global DNS servers" }
                 ]
             },
+            { type: "goal", text: "SSL Configuration" },
             {
                 correct: "Enable SSL: SSL/TLS → Overview → Set to 'Full' or 'Full (strict)'",
                 indent: 0,
@@ -1530,6 +1593,7 @@ window.weeklyChallenges = [
         concepts: "Firebase Console, Firebase CLI, Firestore, real-time database, deployment",
         language: "Firebase/Backend",
         sequence: [
+            { type: "goal", text: "Creating Firebase Project" },
             {
                 correct: "Go to console.firebase.google.com and create a Google account",
                 indent: 0,
@@ -1566,6 +1630,7 @@ window.weeklyChallenges = [
                     { text: "Setup completes instantly", reason: "Project creation takes 30-60 seconds" }
                 ]
             },
+            { type: "goal", text: "Installing Firebase CLI" },
             {
                 correct: "Install Firebase CLI: npm install -g firebase-tools",
                 indent: 0,
@@ -1584,6 +1649,7 @@ window.weeklyChallenges = [
                     { text: "Skip login", reason: "Must authenticate before using Firebase CLI" }
                 ]
             },
+            { type: "goal", text: "Initializing Project" },
             {
                 correct: "Navigate to your project folder: cd my-website",
                 indent: 0,
@@ -1611,6 +1677,7 @@ window.weeklyChallenges = [
                     { text: "Skip project selection", reason: "Must select project to deploy" }
                 ]
             },
+            { type: "goal", text: "Deploying Site" },
             {
                 correct: "Deploy with: firebase deploy",
                 indent: 0,
@@ -1631,6 +1698,7 @@ window.weeklyChallenges = [
         concepts: "OAuth, authentication, Firebase Auth, user sessions, security",
         language: "Auth/Firebase",
         sequence: [
+            { type: "goal", text: "Enabling Authentication" },
             {
                 correct: "In Firebase Console, go to Authentication → Get Started",
                 indent: 0,
@@ -1676,6 +1744,7 @@ window.weeklyChallenges = [
                     { text: "Changes apply automatically", reason: "Must click Save to activate" }
                 ]
             },
+            { type: "goal", text: "Adding Firebase SDK" },
             {
                 correct: "Add Firebase Auth SDK to HTML: <script src='firebase-auth.js'>",
                 indent: 0,
@@ -1694,6 +1763,7 @@ window.weeklyChallenges = [
                     { text: "Skip initialization", reason: "Must initialize before using Firebase features" }
                 ]
             },
+            { type: "goal", text: "Implementing Sign-In" },
             {
                 correct: "Create sign-in button: <button onclick='signInWithGoogle()'>",
                 indent: 0,
@@ -1712,6 +1782,7 @@ window.weeklyChallenges = [
                     { text: "Ask user for Google password", reason: "OAuth popup is secure; never ask for passwords" }
                 ]
             },
+            { type: "goal", text: "Managing Auth State" },
             {
                 correct: "Listen for auth state: firebase.auth().onAuthStateChanged(user => {...})",
                 indent: 0,

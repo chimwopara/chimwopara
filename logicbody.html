@@ -223,6 +223,33 @@ input, textarea {
     word-wrap: break-word;
 }
         .explanation-comment { color: var(--hint-color); font-style: italic; }
+        .goal-header {
+            color: var(--text-color);
+            font-weight: bold;
+            font-size: 1.3em;
+            display: block;
+            margin: 16px 0;
+        }
+        .line-number {
+            display: inline-block;
+            width: 40px;
+            text-align: right;
+            color: var(--hint-color);
+            opacity: 0.6;
+            margin-right: 16px;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.2s ease;
+        }
+        .line-number:hover {
+            opacity: 1;
+            color: var(--accent-color);
+            transform: scale(1.1);
+        }
+        .line-number.flagged {
+            color: var(--error-color);
+            opacity: 1;
+        }
         #attempts-counter {
             position: absolute;
             bottom: 8px;
@@ -745,6 +772,38 @@ button, input, select, textarea,
             </div>
         </div>
 
+        <!-- Splash Screen Modal -->
+        <div id="splash-screen" style="position: fixed; inset: 0; background: rgba(0, 0, 0, 0.9); display: flex; align-items: center; justify-content: center; z-index: 10001;">
+            <div style="background: var(--panel-bg-color); border: 2px solid var(--accent-color); border-radius: 20px; padding: 32px; max-width: 550px; text-align: center; max-height: 90vh; overflow-y: auto;">
+                <div style="font-size: 2.5rem; margin-bottom: 12px;">🎯</div>
+                <h2 id="splash-title" style="font-size: 1.4rem; font-weight: bold; margin-bottom: 8px; color: var(--accent-color);"></h2>
+                <p id="splash-goal" style="color: var(--text-muted-color); margin-bottom: 20px; font-size: 0.95rem; line-height: 1.5;"></p>
+
+                <div style="background: rgba(0, 0, 0, 0.2); padding: 20px; border-radius: 12px; margin-bottom: 20px; text-align: left;">
+                    <h3 style="font-size: 1.1rem; font-weight: bold; margin-bottom: 12px; color: var(--text-color); text-align: center;">Challenge Rules</h3>
+                    <div style="display: grid; gap: 8px; font-size: 0.85rem; color: var(--text-muted-color);">
+                        <div><strong style="color: var(--accent-color);">⏱</strong> 15 seconds per question</div>
+                        <div><strong style="color: var(--success-color);">✓</strong> Correct answer: <strong>+3 points</strong></div>
+                        <div><strong style="color: var(--error-color);">✗</strong> Wrong answer: Points reduce (3→1→0)</div>
+                        <div><strong style="color: var(--hint-color);">💡</strong> Using hint: <strong>-50% points</strong> on that question</div>
+                        <div><strong style="color: var(--text-color);">📊</strong> Total: <strong id="splash-total-points"></strong> points available</div>
+                        <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border-color);">
+                            <strong style="color: var(--accent-color);">🏆 Certificate:</strong> Need <strong>90%+ on 1st attempt</strong>
+                        </div>
+                        <div style="font-size: 0.8rem; opacity: 0.8;">Re-attempts and giving up don't count for certificate</div>
+                    </div>
+                </div>
+
+                <p style="font-size: 1rem; color: var(--text-color); margin-bottom: 20px; font-weight: 500;">
+                    Choose the correct answer from 3 options below ⬇️
+                </p>
+
+                <button id="start-challenge-btn" style="width: 100%; padding: 14px 28px; background: var(--accent-color); border: none; border-radius: 10px; color: white; cursor: pointer; font-weight: 600; font-size: 1.1rem; transition: all 0.2s; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);">
+                    Start Challenge 🚀
+                </button>
+            </div>
+        </div>
+
         <!-- Hint Container -->
         <div id="hint-container">
             <span id="hint-text" class="blurred"></span>
@@ -1013,6 +1072,7 @@ button, input, select, textarea,
         let starsLostThisLevel = 0;
         let wrongAnswersCount = 0;
         let hintsUsedCount = 0;
+        let currentLineNumber = 1;
 
         // GRADING SYSTEM VARIABLES
         let timerInterval = null;
@@ -1138,7 +1198,8 @@ button, input, select, textarea,
                 codeToAdd += getIndent(stepData.indent) + `<span class="explanation-comment">📝 ${escapeHtml(stepData.explanation)}</span>\n`;
             }
             const escapedCorrectCode = escapeHtml(stepData.correct);
-            codeToAdd += getIndent(stepData.indent) + escapedCorrectCode + '\n';
+            codeToAdd += `<span class="line-number" onclick="flagLine(${currentLineNumber})" data-line="${currentLineNumber}">${currentLineNumber}</span>` + getIndent(stepData.indent) + escapedCorrectCode + '\n';
+            currentLineNumber++;
             codeToAdd += getIndent(stepData.indent) + `<span class="explanation-comment">+0 points (time expired)</span>\n\n`;
 
             constructedCode += codeToAdd;
@@ -1209,6 +1270,28 @@ button, input, select, textarea,
             const cssVarName = varName.startsWith('--') ? varName : `--${varName}`;
             const value = getComputedStyle(document.documentElement).getPropertyValue(cssVarName).trim();
             return value;
+        }
+
+        // Flag line for reporting
+        function flagLine(lineNum) {
+            const lineEl = document.querySelector(`.line-number[data-line="${lineNum}"]`);
+            if (lineEl) {
+                if (lineEl.classList.contains('flagged')) {
+                    lineEl.classList.remove('flagged');
+                    console.log(`Unflagged line ${lineNum}`);
+                } else {
+                    lineEl.classList.add('flagged');
+                    console.log(`Flagged line ${lineNum} for reporting`);
+                    // Could send to backend here
+                    const flaggedLines = JSON.parse(localStorage.getItem('flaggedLines') || '[]');
+                    flaggedLines.push({
+                        challengeId: currentLevelIndex,
+                        lineNumber: lineNum,
+                        timestamp: new Date().toISOString()
+                    });
+                    localStorage.setItem('flaggedLines', JSON.stringify(flaggedLines));
+                }
+            }
         }
     function updateStarDisplay(animate = false, animationType = 'none') {
     // Send score update to fsLogic instead of local display
@@ -1317,13 +1400,33 @@ if (typeof parent !== 'undefined' && parent !== window) {
     sessionStorage.setItem('chimCodeSavedLevelIndex', currentLevelIndex.toString());
     sessionStorage.setItem('chimCodeLevelAttempts', JSON.stringify(levelAttempts));
 
-    constructedCode = `// Goal: ${escapeHtml(currentChallenge.goal)}\n\n`;
+    constructedCode = '';
+    currentLineNumber = 1;
     codeDisplayArea.innerHTML = constructedCode;
     attemptsCounter.textContent = `Attempts: ${levelAttempts[currentLevelIndex]} • Click for history`;
     updateStarDisplay();
     hintContainer.style.display = 'flex';
-    displayStep();
+
+    // Show splash screen with challenge info
+    showSplashScreen();
 }
+
+        function showSplashScreen() {
+            const currentChallenge = challengesData[currentLevelIndex];
+
+            // Count total questions (exclude goal headers)
+            const totalQuestions = currentChallenge.sequence.filter(s => s.type !== 'goal').length;
+            const totalPoints = totalQuestions * 3;
+
+            // Populate splash screen
+            document.getElementById('splash-title').textContent = currentChallenge.title;
+            document.getElementById('splash-goal').textContent = currentChallenge.goal;
+            document.getElementById('splash-total-points').textContent = totalPoints;
+
+            // Show the splash screen
+            const splashScreen = document.getElementById('splash-screen');
+            splashScreen.style.display = 'flex';
+        }
 
         // Display current step
         function displayStep() {
@@ -1355,6 +1458,29 @@ if (typeof parent !== 'undefined' && parent !== window) {
                 return;
             }
 
+            const stepData = currentChallenge.sequence[currentStep];
+            console.log('[logicbody] stepData:', stepData);
+            console.log('[logicbody] stepData.correct:', stepData?.correct);
+            console.log('[logicbody] stepData.distractors:', stepData?.distractors);
+
+            if (!stepData) {
+                console.error('[logicbody] stepData is undefined at currentStep:', currentStep);
+                return;
+            }
+
+            // Check if this is a goal header
+            if (stepData.type === 'goal') {
+                // Add goal header to code display
+                constructedCode += `\n<span class="goal-header">${escapeHtml(stepData.text)}</span>\n\n`;
+                codeDisplayArea.innerHTML = constructedCode;
+                scrollCodeDisplay();
+
+                // Move to next step immediately
+                currentStep++;
+                displayStep();
+                return;
+            }
+
             // GRADING: Reset for new question
             optionsLocked = false;
             hintRevealed = false;
@@ -1364,16 +1490,6 @@ if (typeof parent !== 'undefined' && parent !== window) {
             // Start timer for this step
             startTimer();
 
-            const stepData = currentChallenge.sequence[currentStep];
-            console.log('[logicbody] stepData:', stepData);
-            console.log('[logicbody] stepData.correct:', stepData?.correct);
-            console.log('[logicbody] stepData.distractors:', stepData?.distractors);
-            
-            if (!stepData) {
-                console.error('[logicbody] stepData is undefined at currentStep:', currentStep);
-                return;
-            }
-            
             const hintContent = stepData.explanation ? `Hint: ${stepData.explanation}` : '';
             hintText.textContent = hintContent;
             if (hintContent) {
@@ -1469,7 +1585,8 @@ function incrementAttempts() {
         codeToAdd += getIndent(stepData.indent) + `<span class="explanation-comment">📝 ${escapeHtml(stepData.explanation)}</span>\n`;
     }
     const escapedCorrectCode = escapeHtml(stepData.correct);
-    codeToAdd += getIndent(stepData.indent) + escapedCorrectCode + '\n';
+    codeToAdd += `<span class="line-number" onclick="flagLine(${currentLineNumber})" data-line="${currentLineNumber}">${currentLineNumber}</span>` + getIndent(stepData.indent) + escapedCorrectCode + '\n';
+    currentLineNumber++;
 
     // Add points indicator
     const pointsDisplay = getIndent(stepData.indent) + `<span class="explanation-comment">+${pointsAwarded} points${hintRevealed ? ' (hint used: -50%)' : ''}</span>\n`;
@@ -2143,6 +2260,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // End the game immediately
         endGame();
+    });
+
+    // Splash screen start button
+    const startChallengeBtn = document.getElementById('start-challenge-btn');
+    startChallengeBtn.addEventListener('click', () => {
+        document.getElementById('splash-screen').style.display = 'none';
+        displayStep();
     });
 });
 
