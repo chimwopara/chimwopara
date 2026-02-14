@@ -157,10 +157,17 @@ input, textarea {
             }
         }
 
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: var(--panel-bg-color); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--text-muted-color); }
+        /* Hide scrollbars */
+        ::-webkit-scrollbar { width: 0px; height: 0px; display: none; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: transparent; }
+        ::-webkit-scrollbar-thumb:hover { background: transparent; }
+
+        /* Firefox */
+        * { scrollbar-width: none; }
+
+        /* IE/Edge */
+        * { -ms-overflow-style: none; }
 
         /* Code Area & Attempts Counter */
         #code-display-container {
@@ -719,12 +726,13 @@ button, input, select, textarea,
 
         <!-- Give Up Confirmation Modal -->
         <div id="give-up-modal" style="position: fixed; inset: 0; background: rgba(0, 0, 0, 0.8); display: none; align-items: center; justify-content: center; z-index: 10000;">
-            <div style="background: var(--panel-bg-color); border: 2px solid var(--error-color); border-radius: 16px; padding: 32px; max-width: 400px; text-align: center;">
+            <div style="background: var(--panel-bg-color); border: 1px solid var(--border-color); border-radius: 16px; padding: 32px; max-width: 400px; text-align: center;">
                 <div style="font-size: 3rem; margin-bottom: 16px;">⚠️</div>
-                <h3 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 12px; color: var(--error-color);">Give Up Challenge?</h3>
+                <h3 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 12px; color: var(--text-color);">Give Up Challenge?</h3>
                 <p style="color: var(--text-muted-color); margin-bottom: 24px; line-height: 1.6;">
                     Giving up will end this attempt immediately.<br>
-                    You will receive <strong style="color: var(--error-color);">0% (0 points)</strong> for this attempt.
+                    You will receive <strong style="color: var(--error-color);">0% (0 points)</strong> for this attempt.<br><br>
+                    <strong>This week's skill will not be added to your certificate.</strong>
                 </p>
                 <div style="display: flex; gap: 12px; justify-content: center;">
                     <button id="give-up-cancel" style="flex: 1; padding: 12px 24px; background: var(--glass-bg-color); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-color); cursor: pointer; font-weight: 500; transition: all 0.2s;">
@@ -1618,6 +1626,17 @@ function incrementAttempts() {
             const history = JSON.parse(localStorage.getItem('challengeAttemptHistory') || '[]');
             history.push(attemptData);
             localStorage.setItem('challengeAttemptHistory', JSON.stringify(history));
+
+            // Notify parent window if certificate eligible (to add skill to certificate)
+            if (isCertificateEligible && window.self !== window.top) {
+                const topicId = sessionStorage.getItem('currentTopicId');
+                if (topicId) {
+                    window.parent.postMessage({
+                        type: 'markComplete',
+                        topicId: parseInt(topicId)
+                    }, '*');
+                }
+            }
 
             const isLastLevel = currentLevelIndex >= challengesData.length - 1;
             hintText.textContent = '';

@@ -253,14 +253,20 @@
             transform: scale(1) translateY(0);
         }
         
-        /* Scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: var(--bg); }
-        ::-webkit-scrollbar-thumb { 
-            background: var(--deep); 
+        /* Scrollbar - Hidden */
+        ::-webkit-scrollbar { width: 0px; display: none; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb {
+            background: transparent;
             border-radius: 4px;
         }
-        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+        ::-webkit-scrollbar-thumb:hover { background: transparent; }
+
+        /* Firefox */
+        * { scrollbar-width: none; }
+
+        /* IE/Edge */
+        * { -ms-overflow-style: none; }
         
         /* Login float animation */
         @keyframes gentle-float {
@@ -489,25 +495,27 @@
                         </div>
                     </div>
                     
-                    <div id="virtual-certificate" class="mt-6 p-6 bg-gradient-to-br from-amber-900/20 to-orange-900/20 rounded-xl border-2 border-amber-500/30 relative overflow-hidden">
-                        <div class="absolute top-2 left-2 w-8 h-8 border-t-2 border-l-2 border-amber-500/50"></div>
-                        <div class="absolute top-2 right-2 w-8 h-8 border-t-2 border-r-2 border-amber-500/50"></div>
-                        <div class="absolute bottom-2 left-2 w-8 h-8 border-b-2 border-l-2 border-amber-500/50"></div>
-                        <div class="absolute bottom-2 right-2 w-8 h-8 border-b-2 border-r-2 border-amber-500/50"></div>
-                        
-                        <div class="text-center mb-4">
-                            <p class="font-handwritten text-2xl text-amber-300/80">Certificate of Mastery</p>
-                            <h4 class="text-lg font-bold text-[--text]">Chim Wopara University</h4>
+                    <div id="virtual-certificate" class="mt-6 p-8 bg-white rounded-xl border-4 border-black relative overflow-hidden shadow-2xl">
+                        <div class="absolute top-3 left-3 w-12 h-12 border-t-4 border-l-4 border-black"></div>
+                        <div class="absolute top-3 right-3 w-12 h-12 border-t-4 border-r-4 border-black"></div>
+                        <div class="absolute bottom-3 left-3 w-12 h-12 border-b-4 border-l-4 border-black"></div>
+                        <div class="absolute bottom-3 right-3 w-12 h-12 border-b-4 border-r-4 border-black"></div>
+
+                        <div class="text-center mb-6">
+                            <img src="logo.png" alt="Chim Wopara University" class="w-20 h-20 mx-auto mb-4 object-contain">
+                            <p class="font-handwritten text-3xl text-gray-800 mb-2" style="font-family: 'Brush Script MT', cursive;">Certificate of Mastery</p>
+                            <h4 class="text-xl font-bold text-black tracking-wide">CHIM WOPARA UNIVERSITY</h4>
+                            <div class="w-32 h-1 bg-black mx-auto mt-2"></div>
                         </div>
-                        
-                        <p class="text-sm text-center text-[--text-muted] mb-4">Skills Earned:</p>
-                        
-                        <div id="certificate-skills" class="flex flex-wrap justify-center gap-2 min-h-[60px]">
-                            <p id="no-skills-message" class="text-xs text-[--text-muted] italic">Complete challenges to add skills here...</p>
+
+                        <p class="text-sm text-center text-gray-700 font-semibold mb-4 uppercase tracking-wider">Skills Earned:</p>
+
+                        <div id="certificate-skills" class="flex flex-wrap justify-center gap-2 min-h-[60px] mb-6">
+                            <p id="no-skills-message" class="text-xs text-gray-500 italic">Complete challenges to add skills here...</p>
                         </div>
-                        
-                        <div class="text-center mt-4 pt-4 border-t border-amber-500/20">
-                            <p class="text-xs text-[--text-muted]">Value: <span class="text-amber-400 font-bold">$500</span></p>
+
+                        <div class="text-center mt-6 pt-4 border-t-2 border-black">
+                            <p class="text-sm text-gray-700">Estimated Value: <span class="text-black font-bold text-lg">$500</span></p>
                         </div>
                     </div>
                 </div>
@@ -1168,10 +1176,8 @@ Thank you!`
                     sessionStorage.setItem('currentChallengeData', JSON.stringify(challengeData));
                     sessionStorage.setItem('selectedLevel', currentTopic.id.toString());
 
-                    // Mark topic as completed when challenge is attempted
-                    if (!completedTopics.has(currentTopic.id)) {
-                        await markComplete();
-                    }
+                    // Store topic ID for completion check after challenge
+                    sessionStorage.setItem('currentTopicId', currentTopic.id.toString());
 
                     // Open in iframe overlay
                     const modal = document.getElementById('challenge-modal');
@@ -1232,6 +1238,22 @@ Thank you!`
             window.addEventListener('message', (event) => {
                 if (event.data.type === 'closeChallenge') {
                     closeChallengeModal();
+                } else if (event.data.type === 'markComplete') {
+                    // Mark topic as complete when they achieve 90%+ on first attempt
+                    const topicId = event.data.topicId;
+                    if (topicId && !completedTopics.has(topicId)) {
+                        completedTopics.add(topicId);
+                        saveProgress(topicId).then(() => {
+                            updateProgress();
+                            // Scroll to certificate to show new skill
+                            setTimeout(() => {
+                                document.getElementById('virtual-certificate')?.scrollIntoView({
+                                    behavior: 'smooth',
+                                    block: 'center'
+                                });
+                            }, 500);
+                        });
+                    }
                 }
             });
         });
