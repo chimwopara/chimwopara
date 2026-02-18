@@ -143,16 +143,21 @@
             transition: width 0.3s;
         }
         .nav-links a:hover::after { width: 100%; }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
         .nav-login-icon {
             display: flex;
             align-items: center;
-            justify-content: center;
-            width: 38px;
+            gap: 6px;
+            padding: 0 14px;
             height: 38px;
-            border-radius: 50%;
+            border-radius: 10px;
             color: var(--text-secondary);
             text-decoration: none;
-            font-size: 1rem;
+            font-size: 0.9rem;
             transition: all 0.2s;
             border: 1px solid rgba(255, 255, 255, 0.15);
         }
@@ -160,6 +165,20 @@
             color: var(--text-primary);
             background: rgba(255, 255, 255, 0.1);
             border-color: rgba(255, 255, 255, 0.3);
+        }
+        .nav-login-text {
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        #nav-start-btn, #bottom-enroll-btn {
+            background: #16a34a;
+            border-color: #16a34a;
+            animation: enroll-blink 6s linear infinite;
+        }
+        #nav-start-btn:hover, #bottom-enroll-btn:hover {
+            background: #15803d;
+            border-color: #15803d;
+            box-shadow: 0 0 28px rgba(22, 163, 74, 0.45);
         }
         .btn-primary {
             display: inline-flex;
@@ -181,6 +200,23 @@
             background: transparent;
             box-shadow: 0 0 30px rgba(79, 143, 255, 0.3);
             transform: translateY(-1px);
+        }
+        #hero-enroll-btn {
+            background: #16a34a;
+            border-color: #16a34a;
+            animation: enroll-blink 2.4s linear infinite;
+        }
+        #hero-enroll-btn:hover {
+            background: #15803d;
+            border-color: #15803d;
+            box-shadow: 0 0 28px rgba(22, 163, 74, 0.45);
+        }
+        @keyframes enroll-blink {
+            0%, 84%, 100% { opacity: 1; }
+            87%            { opacity: 0.05; }
+            90%            { opacity: 1; }
+            93%            { opacity: 0.05; }
+            96%            { opacity: 1; }
         }
         .btn-ghost {
             display: inline-flex;
@@ -267,6 +303,15 @@
             line-height: 1.7;
         }
         .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .hero-satisfaction {
+            margin-top: 0.85rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .hero-satisfaction .fa-star { color: #fbbf24; font-size: 0.7rem; }
 
         /* 3D Hero visual */
         .hero-visual {
@@ -958,6 +1003,24 @@
             justify-content: center;
             gap: 6px;
         }
+        .pricing-review {
+            margin-top: 1.5rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+        .pricing-review-stars { color: #fbbf24; font-size: 0.75rem; margin-bottom: 0.6rem; letter-spacing: 1px; }
+        .pricing-review-text {
+            font-size: 0.82rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+        .pricing-review-author {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
         .pricing-image {
             display: flex;
             align-items: center;
@@ -1032,6 +1095,154 @@
         @media (max-width: 640px) {
             .curriculum-grid { grid-template-columns: 1fr; }
             section { padding: 60px 1rem; }
+        }
+
+        /* ==========================================
+           FUNNEL CAPTURE MODAL
+           ========================================== */
+        #funnel-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            animation: funnel-fade-in 0.2s ease;
+        }
+        @keyframes funnel-fade-in {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+        #funnel-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 2.5rem 2rem;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.35);
+            position: relative;
+            animation: funnel-slide-up 0.28s cubic-bezier(0.25,0.46,0.45,0.94);
+        }
+        @keyframes funnel-slide-up {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        #funnel-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #f3f4f6;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            color: #6b7280;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            transition: background 0.15s;
+        }
+        #funnel-close:hover { background: #e5e7eb; color: #111827; }
+        .funnel-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #16a34a, #15803d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.25rem;
+            color: #fff;
+            font-size: 1.3rem;
+        }
+        #funnel-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #111827;
+            margin: 0 0 0.5rem 0;
+            line-height: 1.25;
+        }
+        .funnel-sub {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin: 0 0 1.5rem 0;
+            line-height: 1.5;
+        }
+        .funnel-field {
+            margin-bottom: 1rem;
+        }
+        .funnel-field label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.35rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .funnel-field input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1.5px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            color: #111827;
+            background: #f9fafb;
+            outline: none;
+            transition: border-color 0.15s, box-shadow 0.15s;
+            box-sizing: border-box;
+        }
+        .funnel-field input:focus {
+            border-color: #16a34a;
+            box-shadow: 0 0 0 3px rgba(22,163,74,0.15);
+            background: #fff;
+        }
+        .funnel-field input::placeholder { color: #9ca3af; }
+        .funnel-error {
+            font-size: 0.82rem;
+            color: #dc2626;
+            margin: -0.25rem 0 0.75rem 0;
+        }
+        #funnel-submit {
+            width: 100%;
+            padding: 0.9rem;
+            background: linear-gradient(135deg, #16a34a, #15803d);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.25rem;
+            transition: opacity 0.15s, transform 0.15s;
+        }
+        #funnel-submit:hover  { opacity: 0.9; transform: translateY(-1px); }
+        #funnel-submit:active { transform: translateY(0); }
+        #funnel-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .funnel-privacy {
+            text-align: center;
+            font-size: 0.76rem;
+            color: #9ca3af;
+            margin: 1rem 0 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+        }
+        @media (max-width: 480px) {
+            #funnel-card { padding: 2rem 1.25rem; border-radius: 16px; }
+            #funnel-title { font-size: 1.3rem; }
         }
 
         /* 3D tilt on demo cards */

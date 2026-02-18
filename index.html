@@ -235,16 +235,15 @@
                 <img src="logo.png" alt="Chim Wopara University Logo" width="36" height="36">
                 <span>Chim Wopara University</span>
             </a>
-            <div class="nav-links">
-                <a href="#how-it-works">How It Works</a>
-                <a href="#demo">Experience It</a>
-                <a href="https://forms.fillout.com/t/35bB73fVpSus" target="_blank" class="btn-primary">
-                    <i class="fa-solid fa-graduation-cap"></i> Start Learning
+            <div class="nav-right">
+                <a href="https://forms.fillout.com/t/35bB73fVpSus" target="_blank" class="btn-primary" id="nav-start-btn" style="display:none;">
+                    <i class="fa-solid fa-graduation-cap"></i> Begin your transformation
+                </a>
+                <a href="portal.html" class="nav-login-icon" aria-label="Student Login">
+                    <i class="fa-solid fa-user"></i>
+                    <span class="nav-login-text">Log In</span>
                 </a>
             </div>
-            <a href="portal.html" class="nav-login-icon" aria-label="Student Login">
-                <i class="fa-solid fa-user"></i>
-            </a>
         </div>
     </nav>
 
@@ -254,23 +253,27 @@
             <div>
                 <div class="hero-badge reveal">
                     <span class="pulse-dot"></span>
-                    Designed for busy professionals
+                    Designed for <span id="audience-ticker"></span>
                 </div>
                 <h1 class="reveal reveal-delay-1">
                     Master AI.<br>
-                    <span class="line-2 text-gradient">Work smarter.</span>
+                    <span class="line-2"><span class="text-gradient">Work </span><span id="word-ticker"></span></span>
                 </h1>
                 <p class="subtitle reveal reveal-delay-2">
                     Learn AI for Word, Excel, PowerPoint, Websites and more. 52 weeks. One topic every two weeks. Keep pace without quitting your job.
                 </p>
                 <div class="hero-cta reveal reveal-delay-3">
-                    <a href="https://forms.fillout.com/t/35bB73fVpSus" target="_blank" class="btn-primary">
-                        <i class="fa-solid fa-graduation-cap"></i> Enroll Now
+                    <a href="https://forms.fillout.com/t/35bB73fVpSus" target="_blank" class="btn-primary" id="hero-enroll-btn">
+                        <i class="fa-solid fa-graduation-cap"></i> Begin your transformation
                     </a>
                     <a href="#demo" class="btn-ghost">
                         <i class="fa-solid fa-play"></i> See It In Action
                     </a>
                 </div>
+                <p class="hero-satisfaction reveal reveal-delay-3">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    &nbsp;100% student satisfaction
+                </p>
             </div>
 
             <!-- 3D Hero Visual -->
@@ -682,11 +685,18 @@
                         <li><i class="fa-solid fa-check"></i> Submit assignments via GitHub Pages</li>
                         <li><i class="fa-solid fa-check"></i> Certificate of completion ($500 value)</li>
                     </ul>
-                    <a href="https://forms.fillout.com/t/35bB73fVpSus" target="_blank" class="btn-primary">
-                        Enroll Now
+                    <a href="https://forms.fillout.com/t/35bB73fVpSus" target="_blank" class="btn-primary" id="bottom-enroll-btn">
+                        <i class="fa-solid fa-graduation-cap"></i> Begin your transformation
                     </a>
                     <div class="secure-note">
                         <i class="fa-solid fa-shield-halved"></i> Secure checkout · Powered by Stripe
+                    </div>
+                    <div class="pricing-review">
+                        <div class="pricing-review-stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                        <p class="pricing-review-text">"This program genuinely changed how I work. I went from dreading spreadsheets to building AI-powered dashboards in weeks."</p>
+                        <p class="pricing-review-author">— Miriam A., Operations Manager</p>
                     </div>
                 </div>
                 <div class="pricing-image reveal reveal-delay-2">
@@ -727,6 +737,255 @@
 
     <!-- ==================== JAVASCRIPT ==================== -->
     <script src="js/main.js"></script>
+
+    <!-- Cycling hero text + nav scroll observer -->
+    <script>
+        (function () {
+            var INTERVAL = 2400;
+            var DURATION = 480;
+            var ease = 'transform ' + DURATION + 'ms cubic-bezier(0.25,0.46,0.45,0.94)';
+
+            var GRADIENTS = [
+                'linear-gradient(135deg, #4f8fff, #a78bfa)',
+                'linear-gradient(135deg, #a78bfa, #f472b6)',
+                'linear-gradient(135deg, #f472b6, #fb923c)',
+                'linear-gradient(135deg, #fb923c, #fbbf24)',
+                'linear-gradient(135deg, #fbbf24, #34d399)',
+                'linear-gradient(135deg, #34d399, #22d3ee)',
+                'linear-gradient(135deg, #22d3ee, #60a5fa)',
+                'linear-gradient(135deg, #6366f1, #f472b6)',
+                'linear-gradient(135deg, #f87171, #fbbf24)',
+                'linear-gradient(135deg, #67e8f9, #a78bfa)'
+            ];
+
+            // Build a ticker and return a tick() function to call on each interval.
+            // Pass a gradients array to cycle the background-image on each word change.
+            function buildTicker(id, words, itemClass, gradients) {
+                var wrap = document.getElementById(id);
+                if (!wrap) return null;
+                wrap.innerHTML = '';
+                wrap.style.cssText += ';display:inline-block;overflow:hidden;position:relative;vertical-align:bottom;';
+
+                function makeSpan(text, isAbs) {
+                    var s = document.createElement('span');
+                    s.textContent = text;
+                    if (itemClass) s.className = itemClass;
+                    s.style.display = 'block';
+                    s.style.whiteSpace = 'nowrap';
+                    s.style.transition = ease;
+                    if (isAbs) {
+                        s.style.position = 'absolute';
+                        s.style.top = '0';
+                        s.style.left = '0';
+                        s.style.transform = 'translateY(-100%)';
+                    }
+                    return s;
+                }
+
+                var cur = makeSpan(words[0], false);
+                var nxt = makeSpan('', true);
+                wrap.appendChild(cur);
+                wrap.appendChild(nxt);
+
+                var idx = 0;
+                var gradIdx = 0;
+
+                function tick() {
+                    idx = (idx + 1) % words.length;
+                    nxt.style.transition = 'none';
+                    nxt.textContent = words[idx];
+                    // Advance gradient and apply via backgroundImage so background-clip:text
+                    // from the class is preserved (backgroundImage doesn't reset clip)
+                    if (gradients && gradients.length) {
+                        gradIdx = (gradIdx + 1) % gradients.length;
+                        nxt.style.backgroundImage = gradients[gradIdx];
+                    }
+                    nxt.style.transform = 'translateY(-100%)';
+                    nxt.offsetHeight; // force reflow
+                    nxt.style.transition = ease;
+                    cur.style.transform = 'translateY(100%)';
+                    nxt.style.transform = 'translateY(0)';
+                    setTimeout(function () {
+                        nxt.style.transition = 'none';
+                        nxt.style.position = 'relative';
+                        nxt.style.top = ''; nxt.style.left = ''; nxt.style.transform = '';
+                        cur.style.transition = 'none';
+                        cur.style.position = 'absolute';
+                        cur.style.top = '0'; cur.style.left = '0'; cur.style.transform = 'translateY(-100%)';
+                        var tmp = cur; cur = nxt; nxt = tmp;
+                    }, DURATION + 20);
+                }
+
+                requestAnimationFrame(function () {
+                    // Set initial gradient on the first visible span
+                    if (gradients && gradients.length) cur.style.backgroundImage = gradients[0];
+                    // Lock height to current word
+                    wrap.style.height = cur.offsetHeight + 'px';
+                    // Measure all words and lock width to the widest one
+                    var maxW = 0;
+                    words.forEach(function (word) {
+                        var probe = makeSpan(word, true);
+                        wrap.appendChild(probe);
+                        if (probe.offsetWidth > maxW) maxW = probe.offsetWidth;
+                        wrap.removeChild(probe);
+                    });
+                    wrap.style.width = maxW + 'px';
+                });
+                return tick;
+            }
+
+            var tickWord = buildTicker('word-ticker', ['smarter.', 'better.', 'faster.'], 'text-gradient', GRADIENTS);
+            var tickAud  = buildTicker('audience-ticker', ['busy professionals', 'busy people', 'intellectuals', 'innovators', 'hard workers', 'smart people'], '');
+
+            // Single shared interval — both fire at exactly the same moment
+            if (tickWord && tickAud) {
+                setInterval(function () { tickWord(); tickAud(); }, INTERVAL);
+            }
+
+            // Show nav "Start Learning" button only after hero Enroll Now scrolls out of view
+            var heroBtn = document.getElementById('hero-enroll-btn');
+            var navBtn  = document.getElementById('nav-start-btn');
+            if (heroBtn && navBtn && window.IntersectionObserver) {
+                new IntersectionObserver(function (entries) {
+                    navBtn.style.display = entries[0].isIntersecting ? 'none' : 'inline-flex';
+                }, { threshold: 0.1 }).observe(heroBtn);
+            }
+        })();
+    </script>
+
+    <!-- Funnel Capture Modal -->
+    <div id="funnel-overlay" style="display:none;" aria-modal="true" role="dialog" aria-labelledby="funnel-title">
+        <div id="funnel-card">
+            <button id="funnel-close" aria-label="Close">&times;</button>
+            <div class="funnel-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+            <h2 id="funnel-title">One step before you begin</h2>
+            <p class="funnel-sub">Enter your details and we'll send you everything you need to get started.</p>
+            <form id="funnel-form" novalidate>
+                <div class="funnel-field">
+                    <label for="funnel-name">Your first name</label>
+                    <input type="text" id="funnel-name" name="funnel-name" placeholder="e.g. James" autocomplete="given-name" required>
+                </div>
+                <div class="funnel-field">
+                    <label for="funnel-email">Your email address</label>
+                    <input type="email" id="funnel-email" name="funnel-email" placeholder="james@example.com" autocomplete="email" required>
+                </div>
+                <p id="funnel-error" class="funnel-error" style="display:none;"></p>
+                <button type="submit" id="funnel-submit">
+                    <i class="fa-solid fa-arrow-right"></i> Continue to enrol
+                </button>
+            </form>
+            <p class="funnel-privacy"><i class="fa-solid fa-lock"></i> Your details are private and never shared.</p>
+        </div>
+    </div>
+
+    <!-- Funnel Capture Script -->
+    <script>
+    (function () {
+        'use strict';
+
+        var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwMblU9qrACBsmvN9rqgJoPo1z7ZLJiigUWQuZzIc4iG_TKiSzUrZiN6relV4HyEMucdQ/exec';
+        var FILLOUT_URL = 'https://forms.fillout.com/t/35bB73fVpSus';
+
+        // ---- 1. Fetch city silently on page load ----
+        var userCity = '';
+        try {
+            fetch('https://ipapi.co/json/')
+                .then(function (r) { return r.json(); })
+                .then(function (d) { userCity = d.city || ''; })
+                .catch(function () {});
+        } catch (e) {}
+
+        // ---- 2. Intercept all enroll buttons ----
+        var overlay  = document.getElementById('funnel-overlay');
+        var card     = document.getElementById('funnel-card');
+        var closeBtn = document.getElementById('funnel-close');
+        var form     = document.getElementById('funnel-form');
+        var nameIn   = document.getElementById('funnel-name');
+        var emailIn  = document.getElementById('funnel-email');
+        var errMsg   = document.getElementById('funnel-error');
+        var submitBtn = document.getElementById('funnel-submit');
+
+        var activeSource = 'hero'; // tracks which button was clicked
+
+        function openModal(source) {
+            activeSource = source || 'hero';
+            overlay.style.display = 'flex';
+            errMsg.style.display = 'none';
+            form.reset();
+            setTimeout(function () { nameIn.focus(); }, 80);
+        }
+
+        function closeModal() {
+            overlay.style.display = 'none';
+        }
+
+        // Intercept hero, nav, and bottom buttons
+        ['hero-enroll-btn', 'nav-start-btn', 'bottom-enroll-btn'].forEach(function (id) {
+            var btn = document.getElementById(id);
+            if (!btn) return;
+            // Remove the href so native navigation doesn't fire
+            btn.removeAttribute('href');
+            btn.setAttribute('role', 'button');
+            btn.style.cursor = 'pointer';
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                openModal(id.replace('-enroll-btn', '').replace('-start-btn', 'nav'));
+            });
+        });
+
+        // Close on overlay click (outside card) or close button
+        overlay.addEventListener('click', function (e) {
+            if (e.target === overlay) closeModal();
+        });
+        closeBtn.addEventListener('click', closeModal);
+
+        // Close on Escape key
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && overlay.style.display !== 'none') closeModal();
+        });
+
+        // ---- 3. Form submit ----
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            var name  = nameIn.value.trim();
+            var email = emailIn.value.trim();
+
+            // Basic validation
+            if (!name) {
+                errMsg.textContent = 'Please enter your first name.';
+                errMsg.style.display = 'block';
+                nameIn.focus();
+                return;
+            }
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                errMsg.textContent = 'Please enter a valid email address.';
+                errMsg.style.display = 'block';
+                emailIn.focus();
+                return;
+            }
+
+            errMsg.style.display = 'none';
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving…';
+
+            // Fire-and-forget to Apps Script (avoids CORS preflight)
+            var params = 'action=save_funnel'
+                + '&name='   + encodeURIComponent(name)
+                + '&email='  + encodeURIComponent(email)
+                + '&city='   + encodeURIComponent(userCity)
+                + '&source=' + encodeURIComponent(activeSource);
+            new Image().src = SCRIPT_URL + '?' + params;
+
+            // Give the pixel 600 ms, then navigate regardless
+            setTimeout(function () {
+                closeModal();
+                window.open(FILLOUT_URL, '_blank');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fa-solid fa-arrow-right"></i> Continue to enrol';
+            }, 600);
+        });
+    })();
+    </script>
 
     <!-- Screenshot Blocking -->
     <script>
