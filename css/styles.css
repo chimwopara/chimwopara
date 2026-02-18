@@ -1230,6 +1230,30 @@
         #funnel-submit:hover  { opacity: 0.9; transform: translateY(-1px); }
         #funnel-submit:active { transform: translateY(0); }
         #funnel-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .funnel-terms-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            margin: 1rem 0 0.25rem;
+        }
+        .funnel-terms-row input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            margin-top: 2px;
+            flex-shrink: 0;
+            accent-color: #16a34a;
+            cursor: pointer;
+        }
+        .funnel-terms-row label {
+            font-size: 0.82rem;
+            color: #6b7280;
+            line-height: 1.5;
+            cursor: pointer;
+        }
+        .funnel-terms-row label a {
+            color: #16a34a;
+            text-decoration: underline;
+        }
         .funnel-privacy {
             text-align: center;
             font-size: 0.76rem;

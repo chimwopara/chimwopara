@@ -869,6 +869,10 @@
                     <label for="funnel-email">Your email address</label>
                     <input type="email" id="funnel-email" name="funnel-email" placeholder="james@example.com" autocomplete="email" required>
                 </div>
+                <div class="funnel-terms-row">
+                    <input type="checkbox" id="funnel-terms-check">
+                    <label for="funnel-terms-check">I agree to the <a href="terms.html" target="_blank">Terms and Conditions</a></label>
+                </div>
                 <p id="funnel-error" class="funnel-error" style="display:none;"></p>
                 <button type="submit" id="funnel-submit">
                     <i class="fa-solid fa-arrow-right"></i> Continue to enrol
@@ -889,9 +893,9 @@
         // ---- 1. Fetch city silently on page load ----
         var userCity = '';
         try {
-            fetch('https://ipapi.co/json/')
+            fetch('https://ipwho.is/')
                 .then(function (r) { return r.json(); })
-                .then(function (d) { userCity = d.city || ''; })
+                .then(function (d) { userCity = (d && d.city) ? d.city : ''; })
                 .catch(function () {});
         } catch (e) {}
 
@@ -902,8 +906,9 @@
         var form     = document.getElementById('funnel-form');
         var nameIn   = document.getElementById('funnel-name');
         var emailIn  = document.getElementById('funnel-email');
-        var errMsg   = document.getElementById('funnel-error');
+        var errMsg    = document.getElementById('funnel-error');
         var submitBtn = document.getElementById('funnel-submit');
+        var termsChk  = document.getElementById('funnel-terms-check');
 
         var activeSource = 'hero'; // tracks which button was clicked
 
@@ -961,6 +966,11 @@
                 errMsg.textContent = 'Please enter a valid email address.';
                 errMsg.style.display = 'block';
                 emailIn.focus();
+                return;
+            }
+            if (!termsChk.checked) {
+                errMsg.textContent = 'Please agree to the Terms and Conditions.';
+                errMsg.style.display = 'block';
                 return;
             }
 
