@@ -942,8 +942,9 @@
                 var navBrand = document.querySelector('.nav-brand');
                 function syncNavCta() {
                     var showBtn = !(heroInView || bottomInView);
-                    navBtn.style.display = showBtn ? 'inline-flex' : 'none';
-                    if (navBrand) navBrand.classList.toggle('expanded', showBtn);
+                    // Let main.js handle the smooth CSS fade, and correctly 
+                    // hide the university name when the enrol button appears:
+                    if (navBrand) navBrand.classList.toggle('expanded', !showBtn);
                 }
 
                 var ctaObserver = new IntersectionObserver(function (entries) {

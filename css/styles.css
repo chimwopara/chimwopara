@@ -2235,7 +2235,10 @@
 
         @media (max-width: 768px) {
             /* ---- Nav ---- */
-            #nav-start-btn { display: none !important; }
+            #nav-start-btn { 
+                padding: 8px 14px; 
+                font-size: 0.75rem; 
+            }
 
             /* Hero text: tighten padding, kill center-justify so badge pins to cards */
             .hero-inner > div:first-child {
