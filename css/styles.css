@@ -2237,8 +2237,13 @@
             /* ---- Nav ---- */
             #nav-start-btn { display: none !important; }
 
-            /* Hero text: tighten padding so badge sits close to cards above */
-            .hero-inner > div:first-child { padding: 1rem 1.25rem 1.5rem !important; overflow: visible; }
+            /* Hero text: tighten padding, kill center-justify so badge pins to cards */
+            .hero-inner > div:first-child {
+                padding: 1rem 1.25rem 1.5rem !important;
+                overflow: visible;
+                justify-content: flex-start !important;
+                height: auto !important;
+            }
             /* Keep nav clearance on card wall */
             .hero-visual { padding-top: 80px !important; }
             .scroll-hint { position: static; margin-top: 1.25rem; }
@@ -2246,6 +2251,7 @@
             /* ---- Hero: allow card wall to show, height = content only ---- */
             .hero {
                 height: auto;
+                align-items: flex-start;
                 overflow: visible;
             }
 
