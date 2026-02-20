@@ -1117,6 +1117,16 @@
         requestAnimationFrame(tick);
     })();
 
+    // ===== HERO CARD ROW — pause on hover =====
+    (function () {
+        document.querySelectorAll('.hero-card-row').forEach(function (row) {
+            var track = row.querySelector('.hero-card-track');
+            if (!track) return;
+            row.addEventListener('mouseenter', function () { track.style.animationPlayState = 'paused'; });
+            row.addEventListener('mouseleave', function () { track.style.animationPlayState = 'running'; });
+        });
+    })();
+
     // ===== NUDGE PULSE: all enrol buttons turn green every 7s =====
     (function () {
         var btnIds = ['hero-enroll-btn', 'nav-start-btn', 'bottom-enroll-btn'];
@@ -1171,42 +1181,45 @@
         });
     })();
 
-    // ===== AUTO-SCROLL HERO — Mac dock bounce tease (stays at y=0) =====
+    // ===== SCROLL HINT — bounce every 10s while idle in hero, first time only =====
     (function () {
-        var hint = document.querySelector('.scroll-hint');
+        var hint  = document.querySelector('.scroll-hint');
         var label = document.querySelector('.scroll-hint-label');
         if (!hint || !label) return;
 
-        var userScrolled = false;
-        var oneTime = function () {
-            userScrolled = true;
-            window.removeEventListener('wheel', oneTime);
-            window.removeEventListener('touchmove', oneTime);
-        };
-        window.addEventListener('wheel', oneTime, { passive: true });
-        window.addEventListener('touchmove', oneTime, { passive: true });
+        var everScrolled = false; // permanent — once true, hints stop forever
+        var intervalId   = null;
 
-        setTimeout(function () {
-            if (userScrolled || window.scrollY > 10) return;
+        function cancelHints() {
+            everScrolled = true;
+            if (intervalId) { clearInterval(intervalId); intervalId = null; }
+            window.removeEventListener('wheel',     cancelHints);
+            window.removeEventListener('touchmove', cancelHints);
+        }
+        window.addEventListener('wheel',     cancelHints, { passive: true });
+        window.addEventListener('touchmove', cancelHints, { passive: true });
+
+        function resetHint() {
+            hint.classList.remove('scroll-hint-auto');
+            label.textContent = 'Scroll to explore';
+        }
+
+        function runBounce() {
+            // Skip silently if user has scrolled or drifted off top
+            if (everScrolled || window.scrollY > 10) return;
 
             hint.classList.add('scroll-hint-auto');
             label.textContent = 'Scroll to explore';
 
-            // 2 equal smooth bounces
-            var amplitude = 65; // px
-            var duration = 1800; // ms total (900ms per bounce)
-            var start = performance.now();
+            var amplitude = 65;
+            var duration  = 1800;
+            var start     = performance.now();
 
             function bounceStep(now) {
-                if (userScrolled) { window.scrollTo(0, 0); resetHint(); return; }
-                var elapsed = now - start;
-                var t = Math.min(1, elapsed / duration);
-
-                // Pure sine — 2 equal arches, no decay
+                if (everScrolled) { window.scrollTo(0, 0); resetHint(); return; }
+                var t = Math.min(1, (now - start) / duration);
                 var y = Math.round(amplitude * Math.abs(Math.sin(2 * Math.PI * t)));
-
                 window.scrollTo(0, y);
-
                 if (t < 1) {
                     requestAnimationFrame(bounceStep);
                 } else {
@@ -1214,14 +1227,15 @@
                     resetHint();
                 }
             }
-
-            function resetHint() {
-                hint.classList.remove('scroll-hint-auto');
-                label.textContent = 'Scroll to explore';
-            }
-
             requestAnimationFrame(bounceStep);
-        }, 2500);
+        }
+
+        // Wait 10 s, fire first bounce, then repeat every 10 s
+        setTimeout(function () {
+            if (everScrolled) return;
+            runBounce();
+            intervalId = setInterval(runBounce, 10000);
+        }, 10000);
     })();
 
     // ===== FUNNEL PROGRESSIVE REVEAL =====
@@ -1353,7 +1367,9 @@
             syncBtns();
         });
 
-        video.muted = true;
+        // Default to unmuted intent — button shows "Tap to mute"
+        // playWithSound() will fall back to muted if browser blocks audio
+        video.muted = false;
         syncBtns();
     })();
 
