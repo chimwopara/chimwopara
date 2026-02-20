@@ -1239,6 +1239,8 @@
     })();
 
     // ===== FUNNEL PROGRESSIVE REVEAL =====
+    // Modal HTML lives after the <script> tag, so defer until DOM is ready
+    document.addEventListener('DOMContentLoaded', function () {
     (function () {
         var nameIn    = document.getElementById('funnel-name');
         var emailWrap = document.getElementById('funnel-email-wrap');
@@ -1257,7 +1259,6 @@
             if (!emailShown && nameIn.value.trim().length >= 2) {
                 emailShown = true;
                 emailWrap.classList.add('revealed');
-                setTimeout(function () { emailIn.focus(); }, 420);
             }
         });
 
@@ -1275,6 +1276,7 @@
             }
         });
     })();
+    }); // end DOMContentLoaded
 
     // ===== VIDEO: auto play/pause in-frame + mute/pause controls =====
     (function () {

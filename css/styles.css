@@ -23,6 +23,7 @@
 
         html { scroll-behavior: smooth; }
 
+        html { overflow-x: hidden; }
         body {
             font-family: var(--font-body);
             background: var(--bg);
@@ -2214,8 +2215,9 @@
             /* ---- Nav ---- */
             #nav-start-btn { display: none !important; }
 
-            /* Hero text: reduce bottom padding */
-            .hero-inner > div:first-child { padding-bottom: 1.5rem; overflow: visible; }
+            /* Hero text: tighten padding so badge sits close to cards above */
+            .hero-inner > div:first-child { padding: 1rem 1.25rem 1.5rem !important; overflow: visible; }
+            .hero-visual { padding-top: 0 !important; }
             .scroll-hint { position: static; margin-top: 1.25rem; }
 
             /* ---- Hero: allow card wall to show ---- */
