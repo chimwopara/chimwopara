@@ -18,21 +18,66 @@
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-    // ===== 3D HERO TILT =====
-    const hero3d = document.getElementById('hero-3d');
-    if (hero3d) {
-        const heroSection = document.querySelector('.hero');
-        heroSection.addEventListener('mousemove', (e) => {
-            const rect = heroSection.getBoundingClientRect();
-            const x = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-            const y = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
-            hero3d.style.animation = 'none';
-            hero3d.style.transform = `rotateX(${y * -8}deg) rotateY(${x * 8}deg)`;
-        });
-        heroSection.addEventListener('mouseleave', () => {
-            hero3d.style.animation = '';
-            hero3d.style.transform = '';
-        });
+    // ===== ORBIT SHOWCASE SCALE ON SCROLL =====
+    const orbitStage = document.getElementById('orbit-stage');
+    const orbitDevice = document.getElementById('hero-3d');
+    const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (orbitStage && orbitDevice && !reducedMotion) {
+        const MIN_SCALE = 0.08;
+        const MAX_SCALE = 1;
+        const HAND_OVERLAP = 38; // px the fingers overlap onto the iPad from each side
+
+        const handLeft  = document.querySelector('.orbit-hand-left');
+        const handRight = document.querySelector('.orbit-hand-right');
+
+        let currentProgress = 0;
+        let targetProgress = 0;
+        let animRaf = null;
+
+        const computeTarget = () => {
+            const rect = orbitStage.getBoundingClientRect();
+            const vh = window.innerHeight || document.documentElement.clientHeight;
+            const start = vh * 1.05;
+            const end = -rect.height * 0.1;
+            return Math.min(1, Math.max(0, (start - rect.top) / (start - end)));
+        };
+
+        const applyProgress = (p) => {
+            const scale = MIN_SCALE + (MAX_SCALE - MIN_SCALE) * p;
+            const lift  = Math.round((1 - p) * 120);
+            const tilt  = ((1 - p) * 22).toFixed(2);
+            orbitDevice.style.setProperty('--orbit-scale', scale.toFixed(4));
+            orbitDevice.style.setProperty('--orbit-lift',  `${lift}px`);
+            orbitDevice.style.setProperty('--orbit-tilt',  `${tilt}deg`);
+            // Hands overlap iPad edges so they look like they're gripping it
+            const halfVw = (50 * scale).toFixed(3);
+            const handPos = `calc(50% + ${halfVw}vw - ${HAND_OVERLAP}px)`;
+            if (handLeft)  orbitStage.style.setProperty('--hand-l', handPos);
+            if (handRight) orbitStage.style.setProperty('--hand-r', handPos);
+        };
+
+        const lerpLoop = () => {
+            const diff = targetProgress - currentProgress;
+            if (Math.abs(diff) < 0.0004) {
+                currentProgress = targetProgress;
+                applyProgress(currentProgress);
+                animRaf = null;
+                return;
+            }
+            currentProgress += diff * 0.14;
+            applyProgress(currentProgress);
+            animRaf = requestAnimationFrame(lerpLoop);
+        };
+
+        const requestOrbitSync = () => {
+            targetProgress = computeTarget();
+            if (!animRaf) animRaf = requestAnimationFrame(lerpLoop);
+        };
+
+        currentProgress = computeTarget();
+        applyProgress(currentProgress);
+        window.addEventListener('scroll', requestOrbitSync, { passive: true });
+        window.addEventListener('resize', requestOrbitSync);
     }
 
     // ===== WEBSITE BUILDER DEMO =====
@@ -116,6 +161,7 @@
     ];
 
     let activeActions = new Set();
+    const chipBtnMap = {};
     let virtualAccent = '#3b82f6';
     const actionGrid = document.getElementById('action-grid');
     const siteContainer = document.getElementById('site-container');
@@ -135,6 +181,7 @@
             btn.className = 'chip';
             btn.innerHTML = `<i class="fa-solid ${action.icon}"></i> ${action.label}`;
             btn.onclick = () => toggleAction(action, btn);
+            chipBtnMap[action.id] = btn;
             grid.appendChild(btn);
         });
         actionGrid.appendChild(grid);
@@ -525,3 +572,502 @@
 
     // Initialize empty state
     updateEmptyState();
+
+    // ===== TYPING ANIMATION: DEMO HEADING =====
+    (function () {
+        const typedEl = document.getElementById('demo-typed-text');
+        const caretEl = document.getElementById('demo-typed-caret');
+        if (!typedEl) return;
+        const TEXT = 'building blocks';
+        let done = false;
+        const obs = new IntersectionObserver(function (entries) {
+            if (entries[0].isIntersecting && !done) {
+                done = true;
+                obs.disconnect();
+                // Small delay so reveal animation has started first
+                setTimeout(function () {
+                    let i = 0;
+                    function step() {
+                        typedEl.textContent = TEXT.slice(0, i++);
+                        if (i <= TEXT.length) {
+                            setTimeout(step, 65);
+                        } else {
+                            if (caretEl) setTimeout(function () { caretEl.style.opacity = '0'; caretEl.style.transition = 'opacity 0.6s'; }, 1400);
+                        }
+                    }
+                    step();
+                }, 300);
+            }
+        }, { threshold: 0.72 });
+        obs.observe(document.getElementById('demo-h2') || typedEl);
+    })();
+
+    // ===== AUTO-PLAY: WEBSITE BUILDER =====
+    (function () {
+        const previewWindow = document.querySelector('.preview-window');
+        if (!previewWindow) return;
+
+        const autoSeq = actionCategories.flatMap(function (cat) { return cat.actions; });
+        const INTERVAL = Math.max(60, Math.floor(3000 / autoSeq.length));
+        let idx = 0;
+        let timer = null;
+        let started = false;
+        let paused = false;
+        let inView = false;
+
+        // Find the chip list scroll container
+        const chipList = document.querySelector('.chip-list') || document.querySelector('.action-chips');
+
+        function doubleBlink(btn, callback) {
+            if (!btn) { if (callback) callback(); return; }
+            btn.classList.add('active');
+            setTimeout(function () {
+                btn.classList.remove('active');
+                setTimeout(function () {
+                    btn.classList.add('active');
+                    setTimeout(function () {
+                        btn.classList.remove('active');
+                        if (callback) setTimeout(callback, 250);
+                    }, 280);
+                }, 280);
+            }, 280);
+        }
+
+        function scrollChipsToTop() {
+            if (chipList) chipList.scrollTop = 0;
+        }
+
+        function start() {
+            if (started) return;
+            started = true;
+            idx = 0;
+            resetDemo();
+            scrollChipsToTop();
+            doubleBlink(chipBtnMap[autoSeq[0].id], function () {
+                if (inView) timer = setTimeout(next, 350);
+                else paused = true;
+            });
+        }
+
+        function next() {
+            if (paused) return;
+            if (idx >= autoSeq.length) {
+                // Done — reset then scroll to top + double blink navbar hint
+                timer = setTimeout(function () {
+                    resetDemo();
+                    scrollChipsToTop();
+                    setTimeout(function () {
+                        doubleBlink(chipBtnMap[autoSeq[0].id]);
+                    }, 400);
+                }, 1800);
+                return;
+            }
+            var action = autoSeq[idx++];
+            if (!activeActions.has(action.id)) {
+                executeAction(action);
+                activeActions.add(action.id);
+                var btn = chipBtnMap[action.id];
+                if (btn) btn.classList.add('active');
+                // NO scrollIntoView — don't steal the user's scroll
+                updateEmptyState();
+            }
+            timer = setTimeout(next, INTERVAL);
+        }
+
+        new IntersectionObserver(function (entries) {
+            inView = entries[0].isIntersecting;
+            if (inView) {
+                if (!started) {
+                    start();
+                } else if (paused) {
+                    paused = false;
+                    timer = setTimeout(next, INTERVAL);
+                }
+            } else {
+                // User scrolled away — pause
+                if (started) {
+                    paused = true;
+                    clearTimeout(timer);
+                }
+            }
+        }, { threshold: 0.5 }).observe(previewWindow);
+    })();
+
+    // ===== AUTO-PLAY: OFFICE DEMO =====
+    (function () {
+        var officePreview = document.querySelector('.office-preview');
+        if (!officePreview) return;
+
+        var sequences = [
+            { app: 'word',        ids: ['report', 'bullet-points', 'email', 'rewrite-formal', 'summarize', 'grammar'] },
+            { app: 'excel',       ids: ['insights', 'chart-bar', 'pivot', 'formula', 'dashboard', 'trends'] },
+            { app: 'powerpoint',  ids: ['generate', 'design-modern', 'add-charts', 'speaker-notes', 'slide-thank-you', 'layout'] }
+        ];
+
+        var MS_PER_APP = 2000;
+        var appIdx = 0;
+        var actionIdx = 0;
+        var timer = null;
+        var started = false;
+        var paused = false;
+        var inView = false;
+
+        function findOfficeBtn(app, actionId) {
+            var groupId = { word: 'word-actions', excel: 'excel-actions', powerpoint: 'ppt-actions' };
+            var group = document.getElementById(groupId[app]);
+            if (!group) return null;
+            var found = null;
+            group.querySelectorAll('.office-chip').forEach(function (b) {
+                if (b.getAttribute('onclick') && b.getAttribute('onclick').indexOf("'" + actionId + "'") !== -1) found = b;
+            });
+            return found;
+        }
+
+        function scrollOfficeChipsToTop() {
+            var firstGroup = document.getElementById('word-actions');
+            if (firstGroup) {
+                var container = firstGroup.parentElement;
+                if (container) container.scrollTop = 0;
+            }
+        }
+
+        function doubleBlink(btn, callback) {
+            if (!btn) { if (callback) callback(); return; }
+            btn.classList.add('active');
+            setTimeout(function () {
+                btn.classList.remove('active');
+                setTimeout(function () {
+                    btn.classList.add('active');
+                    setTimeout(function () {
+                        btn.classList.remove('active');
+                        if (callback) setTimeout(callback, 250);
+                    }, 280);
+                }, 280);
+            }, 280);
+        }
+
+        function start() {
+            if (started) return;
+            started = true;
+            appIdx = 0;
+            actionIdx = 0;
+            resetOfficeDemo();
+            switchOfficeApp(sequences[0].app);
+            scrollOfficeChipsToTop();
+            timer = setTimeout(nextOffice, 600);
+        }
+
+        function nextOffice() {
+            if (paused) return;
+            var seq = sequences[appIdx];
+            if (!seq) {
+                // All done — scroll to top + double blink first Word action
+                scrollOfficeChipsToTop();
+                setTimeout(function () {
+                    var firstBtn = findOfficeBtn('word', sequences[0].ids[0]);
+                    doubleBlink(firstBtn);
+                }, 500);
+                return;
+            }
+            if (actionIdx >= seq.ids.length) {
+                appIdx++;
+                actionIdx = 0;
+                if (appIdx < sequences.length) {
+                    switchOfficeApp(sequences[appIdx].app);
+                    timer = setTimeout(nextOffice, 500);
+                } else {
+                    // Done — scroll to top + blink first
+                    scrollOfficeChipsToTop();
+                    setTimeout(function () {
+                        switchOfficeApp(sequences[0].app);
+                        setTimeout(function () {
+                            var firstBtn = findOfficeBtn('word', sequences[0].ids[0]);
+                            doubleBlink(firstBtn);
+                        }, 300);
+                    }, 800);
+                }
+                return;
+            }
+            var msPerAction = Math.floor(MS_PER_APP / seq.ids.length);
+            var actionId = seq.ids[actionIdx++];
+            var btn = findOfficeBtn(seq.app, actionId);
+            if (seq.app === 'word')       triggerWordAction(actionId, btn);
+            else if (seq.app === 'excel') triggerExcelAction(actionId, btn);
+            else                          triggerPptAction(actionId, btn);
+            timer = setTimeout(nextOffice, msPerAction);
+        }
+
+        new IntersectionObserver(function (entries) {
+            inView = entries[0].isIntersecting;
+            if (inView) {
+                if (!started) {
+                    start();
+                } else if (paused) {
+                    paused = false;
+                    timer = setTimeout(nextOffice, 300);
+                }
+            } else {
+                if (started) {
+                    paused = true;
+                    clearTimeout(timer);
+                }
+            }
+        }, { threshold: 0.5 }).observe(officePreview);
+    })();
+
+    // ===== CURRICULUM — SEQUENTIAL HEADER + TOPIC REVEAL =====
+    (function () {
+        var grid = document.getElementById('curriculum-grid');
+        if (!grid) return;
+        var cards = Array.from(grid.querySelectorAll('.curriculum-card'));
+        var done = false;
+
+        function animateHeader(h4, delay) {
+            h4.style.cssText = 'opacity:0;transform:translateY(18px);font-size:clamp(1.4rem,3vw,2rem);text-transform:none;letter-spacing:0;text-align:center;font-family:var(--font-display);font-weight:800;transition:none;margin-bottom:1.5rem;color:inherit;';
+            setTimeout(function () {
+                h4.style.transition = 'opacity 0.42s ease, transform 0.42s cubic-bezier(0.16,1,0.3,1)';
+                h4.style.opacity = '1';
+                h4.style.transform = 'none';
+                setTimeout(function () {
+                    h4.style.transition = 'all 0.65s cubic-bezier(0.16,1,0.3,1)';
+                    h4.style.fontSize = '';
+                    h4.style.textTransform = '';
+                    h4.style.letterSpacing = '';
+                    h4.style.textAlign = '';
+                    h4.style.fontFamily = '';
+                    h4.style.fontWeight = '';
+                    h4.style.marginBottom = '';
+                    setTimeout(function () { h4.classList.add('curr-h4-done'); h4.removeAttribute('style'); }, 680);
+                }, 480);
+            }, delay);
+        }
+
+        function runCurriculum() {
+            if (done) return;
+            done = true;
+            var stagger = 420;
+            cards.forEach(function (card, i) {
+                var h4 = card.querySelector('h4');
+                if (h4) animateHeader(h4, i * stagger);
+            });
+            var itemDelay = (cards.length - 1) * stagger + 480 + 680 + 120;
+            setTimeout(function () {
+                grid.querySelectorAll('.curr-li').forEach(function (li, i) {
+                    setTimeout(function () { li.classList.add('curr-visible'); }, i * 45);
+                });
+            }, itemDelay);
+        }
+
+        new IntersectionObserver(function (entries) {
+            if (entries[0].isIntersecting) runCurriculum();
+        }, { threshold: 0.12 }).observe(grid);
+    })();
+
+    // ===== HIRE SECTION — AURORA + STARS =====
+    (function () {
+        var hireSection = document.getElementById('hire');
+        var canvas = document.getElementById('hire-aurora');
+        var sky    = document.querySelector('.hire-sky');
+        if (!hireSection || !canvas) return;
+
+        // Stars
+        if (sky) {
+            for (var s = 0; s < 90; s++) {
+                var star = document.createElement('div');
+                star.className = 'hire-star';
+                var sz = Math.random() * 1.8 + 0.4;
+                star.style.cssText = [
+                    'width:' + sz + 'px',
+                    'height:' + sz + 'px',
+                    'left:' + (Math.random() * 100).toFixed(2) + '%',
+                    'top:' + (Math.random() * 85).toFixed(2) + '%',
+                    '--tw-dur:' + (2.2 + Math.random() * 4).toFixed(2) + 's',
+                    '--tw-del:-' + (Math.random() * 6).toFixed(2) + 's',
+                    '--tw-max:' + (0.3 + Math.random() * 0.65).toFixed(2)
+                ].join(';');
+                sky.appendChild(star);
+            }
+        }
+
+        // Aurora canvas
+        var ctx = canvas.getContext('2d');
+        var mouse = { x: 0.5, y: 0.5 };
+        var rafId = null;
+        var t = 0;
+        var blobs = [
+            { x: 0.18, y: 0.55, r: 0.55, c: [79,143,255],  sp: 0.28, ph: 0   },
+            { x: 0.72, y: 0.30, r: 0.50, c: [167,139,250], sp: 0.20, ph: 1.3 },
+            { x: 0.50, y: 0.75, r: 0.45, c: [34,211,153],  sp: 0.24, ph: 2.5 },
+            { x: 0.08, y: 0.20, r: 0.38, c: [244,114,182], sp: 0.17, ph: 0.7 },
+            { x: 0.88, y: 0.60, r: 0.42, c: [251,191,36],  sp: 0.21, ph: 1.9 },
+            { x: 0.40, y: 0.15, r: 0.36, c: [56,189,248],  sp: 0.32, ph: 3.1 }
+        ];
+
+        function resize() {
+            canvas.width  = hireSection.offsetWidth;
+            canvas.height = hireSection.offsetHeight;
+        }
+        resize();
+        new ResizeObserver(resize).observe(hireSection);
+
+        function drawAurora() {
+            var W = canvas.width, H = canvas.height;
+            ctx.clearRect(0, 0, W, H);
+            ctx.fillStyle = '#03060f';
+            ctx.fillRect(0, 0, W, H);
+            ctx.globalCompositeOperation = 'screen';
+            blobs.forEach(function (b) {
+                var bx = (b.x + Math.sin(t * b.sp + b.ph) * 0.22 + (mouse.x - 0.5) * 0.14) * W;
+                var by = (b.y + Math.cos(t * b.sp * 0.65 + b.ph) * 0.17 + (mouse.y - 0.5) * 0.10) * H;
+                var br = b.r * Math.min(W, H);
+                var g  = ctx.createRadialGradient(bx, by, 0, bx, by, br);
+                g.addColorStop(0,    'rgba(' + b.c + ',0.26)');
+                g.addColorStop(0.45, 'rgba(' + b.c + ',0.10)');
+                g.addColorStop(1,    'rgba(' + b.c + ',0)');
+                ctx.fillStyle = g;
+                ctx.fillRect(0, 0, W, H);
+            });
+            ctx.globalCompositeOperation = 'source-over';
+            t += 0.0035;
+            rafId = requestAnimationFrame(drawAurora);
+        }
+
+        new IntersectionObserver(function (entries) {
+            if (entries[0].isIntersecting) { if (!rafId) drawAurora(); }
+            else { cancelAnimationFrame(rafId); rafId = null; }
+        }, { threshold: 0 }).observe(hireSection);
+
+        hireSection.addEventListener('mousemove', function (e) {
+            var r = hireSection.getBoundingClientRect();
+            mouse.x = (e.clientX - r.left) / r.width;
+            mouse.y = (e.clientY - r.top)  / r.height;
+        });
+        hireSection.addEventListener('mouseleave', function () { mouse.x = 0.5; mouse.y = 0.5; });
+    })();
+
+    // ===== HOW IT WORKS — SEQUENTIAL REVEAL =====
+    (function () {
+        var grid = document.getElementById('how-grid');
+        if (!grid) return;
+        var cards = grid.querySelectorAll('.how-card');
+        var done = false;
+
+        function revealSequence() {
+            if (done) return;
+            done = true;
+            cards.forEach(function (card, i) {
+                setTimeout(function () {
+                    card.querySelectorAll('.how-seq-header').forEach(function (el) {
+                        el.classList.add('how-visible');
+                    });
+                    // After the last card header, reveal all body text together
+                    if (i === cards.length - 1) {
+                        setTimeout(function () {
+                            grid.querySelectorAll('.how-seq-body').forEach(function (el) {
+                                el.classList.add('how-visible');
+                            });
+                        }, 650);
+                    }
+                }, i * 750);
+            });
+        }
+
+        new IntersectionObserver(function (entries) {
+            if (entries[0].isIntersecting) revealSequence();
+        }, { threshold: 0.25 }).observe(grid);
+    })();
+
+    // ===== HIRE ME — STATS COUNT-UP =====
+    (function () {
+        var statsEl = document.getElementById('hire-stats');
+        if (!statsEl) return;
+        var bizEl = document.getElementById('stat-biz');
+        var yrsEl = document.getElementById('stat-yrs');
+        var done = false;
+
+        function countUp(el, target, suffix, duration) {
+            var start = performance.now();
+            (function step(now) {
+                var t = Math.min(1, (now - start) / duration);
+                var eased = 1 - Math.pow(1 - t, 4); // ease-out quart — feels slow then stops
+                el.textContent = Math.round(eased * target) + suffix;
+                if (t < 1) requestAnimationFrame(step);
+            })(start);
+        }
+
+        new IntersectionObserver(function (entries) {
+            if (entries[0].isIntersecting && !done) {
+                done = true;
+                if (bizEl) countUp(bizEl, 100, '+', 3200);
+                if (yrsEl) countUp(yrsEl, 5,   '+', 2400);
+            }
+        }, { threshold: 0.5 }).observe(statsEl);
+    })();
+
+    // ===== PRICE COUNTDOWN $2499 → $499 =====
+    (function () {
+        var priceEl = document.getElementById('price-display');
+        var pricingCard = priceEl && priceEl.closest('.pricing-card');
+        if (!priceEl || !pricingCard) return;
+        var done = false;
+
+        function countDown(from, to, duration) {
+            var startTime = performance.now();
+            (function step(now) {
+                var t = Math.min(1, (now - startTime) / duration);
+                var eased = t * t; // ease-in: slow start, fast finish
+                var val = Math.round(from - (from - to) * eased);
+                priceEl.textContent = '$' + val.toLocaleString();
+                if (t < 1) requestAnimationFrame(step);
+                else priceEl.textContent = '$499';
+            })(startTime);
+        }
+
+        new IntersectionObserver(function (entries) {
+            if (entries[0].isIntersecting && !done) {
+                done = true;
+                priceEl.textContent = '$2,499';
+                setTimeout(function () { countDown(2499, 499, 1800); }, 600);
+            }
+        }, { threshold: 0.5 }).observe(pricingCard);
+    })();
+
+    // ===== 30-MINUTE COUNTDOWN WITH MILLISECONDS =====
+    (function () {
+        var timeEl = document.getElementById('pcd-time');
+        if (!timeEl) return;
+        var TOTAL_MS = 30 * 60 * 1000; // 30 minutes
+        var startTs = Date.now();
+
+        function pad2(n) { return n < 10 ? '0' + n : '' + n; }
+        function pad3(n) { return n < 100 ? (n < 10 ? '00' : '0') + n : '' + n; }
+
+        function tick() {
+            var elapsed = Date.now() - startTs;
+            var remaining = Math.max(0, TOTAL_MS - elapsed);
+            var mins = Math.floor(remaining / 60000);
+            var secs = Math.floor((remaining % 60000) / 1000);
+            var ms   = remaining % 1000;
+            timeEl.innerHTML = pad2(mins) + ':' + pad2(secs) + '<span class="pcd-ms">.' + pad3(ms) + '</span>';
+            if (remaining > 0) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+    })();
+
+    // ===== NUDGE PULSE: all enrol buttons turn green every 7s =====
+    (function () {
+        var btnIds = ['hero-enroll-btn', 'nav-start-btn', 'bottom-enroll-btn'];
+        var INTERVAL = 7000;
+        var DURATION = 2000;
+
+        function nudge() {
+            btnIds.forEach(function (id) {
+                var btn = document.getElementById(id);
+                if (!btn || btn.style.display === 'none') return;
+                btn.classList.add('btn-nudge');
+                setTimeout(function () { btn.classList.remove('btn-nudge'); }, DURATION);
+            });
+        }
+
+        setInterval(nudge, INTERVAL);
+    })();
