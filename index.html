@@ -842,13 +842,28 @@
                 setInterval(function () { tickWord(); tickAud(); }, INTERVAL);
             }
 
-            // Show nav "Start Learning" button only after hero Enroll Now scrolls out of view
+            // Show nav CTA only when neither hero nor pricing CTA is in view
             var heroBtn = document.getElementById('hero-enroll-btn');
+            var bottomBtn = document.getElementById('bottom-enroll-btn');
             var navBtn  = document.getElementById('nav-start-btn');
-            if (heroBtn && navBtn && window.IntersectionObserver) {
-                new IntersectionObserver(function (entries) {
-                    navBtn.style.display = entries[0].isIntersecting ? 'none' : 'inline-flex';
-                }, { threshold: 0.1 }).observe(heroBtn);
+            if (heroBtn && bottomBtn && navBtn && window.IntersectionObserver) {
+                var heroInView = false;
+                var bottomInView = false;
+
+                function syncNavCta() {
+                    navBtn.style.display = (heroInView || bottomInView) ? 'none' : 'inline-flex';
+                }
+
+                var ctaObserver = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
+                        if (entry.target === heroBtn) heroInView = entry.isIntersecting;
+                        if (entry.target === bottomBtn) bottomInView = entry.isIntersecting;
+                    });
+                    syncNavCta();
+                }, { threshold: 0.1 });
+
+                ctaObserver.observe(heroBtn);
+                ctaObserver.observe(bottomBtn);
             }
         })();
     </script>
