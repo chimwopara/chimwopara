@@ -1255,12 +1255,15 @@
 
         window._funnelReset = function () { emailShown = false; stepsShown = false; };
 
-        nameIn.addEventListener('input', function () {
+        function checkName() {
             if (!emailShown && nameIn.value.trim().length >= 2) {
                 emailShown = true;
                 emailWrap.classList.add('revealed');
             }
-        });
+        }
+        nameIn.addEventListener('input',  checkName);
+        nameIn.addEventListener('keyup',  checkName);
+        nameIn.addEventListener('change', checkName);
 
         emailIn.addEventListener('input', function () {
             if (!stepsShown && emailIn.value.includes('@')) {

@@ -2248,11 +2248,14 @@
             .hero-visual { padding-top: 80px !important; }
             .scroll-hint { position: static; margin-top: 1.25rem; }
 
-            /* ---- Hero: allow card wall to show, height = content only ---- */
+            /* ---- Hero: block layout removes all flex-stretch behaviour ---- */
             .hero {
-                height: auto;
-                align-items: flex-start;
+                display: block !important;
+                height: auto !important;
                 overflow: visible;
+            }
+            .hero-inner {
+                height: auto !important;
             }
 
             /* Card wall appears ABOVE hero text on mobile */
