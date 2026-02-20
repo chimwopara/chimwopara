@@ -295,6 +295,10 @@
             line-height: 1.05;
             margin-bottom: 1.5rem;
         }
+        .hero h1 .line-1 {
+            display: inline-block;
+            white-space: nowrap;
+        }
         .hero h1 .line-2 {
             display: inline-flex;
             align-items: center;
