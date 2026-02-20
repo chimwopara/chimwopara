@@ -24,7 +24,7 @@
     const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (orbitStage && orbitDevice && !reducedMotion) {
         const MIN_SCALE = 0.08;
-        const MAX_SCALE = 1;
+        const MAX_SCALE = 0.82;
         const HAND_OVERLAP = 38; // px the fingers overlap onto the iPad from each side
 
         const handLeft  = document.querySelector('.orbit-hand-left');
@@ -64,7 +64,7 @@
                 animRaf = null;
                 return;
             }
-            currentProgress += diff * 0.14;
+            currentProgress += diff * 0.40;
             applyProgress(currentProgress);
             animRaf = requestAnimationFrame(lerpLoop);
         };
@@ -845,21 +845,44 @@
         function runCurriculum() {
             if (done) return;
             done = true;
+            var isMobile = window.innerWidth <= 768;
             var stagger = 420;
             cards.forEach(function (card, i) {
                 var h4 = card.querySelector('h4');
                 if (h4) animateHeader(h4, i * stagger);
+                if (isMobile) {
+                    // Mobile: reveal this card's items right after its header finishes
+                    var cardItemDelay = i * stagger + 480 + 680 + 80;
+                    var cardItems = card.querySelectorAll('.curr-li');
+                    setTimeout(function () {
+                        cardItems.forEach(function (li, j) {
+                            setTimeout(function () { li.classList.add('curr-visible'); }, j * 50);
+                        });
+                    }, cardItemDelay);
+                }
             });
-            var itemDelay = (cards.length - 1) * stagger + 480 + 680 + 120;
-            setTimeout(function () {
-                grid.querySelectorAll('.curr-li').forEach(function (li, i) {
-                    setTimeout(function () { li.classList.add('curr-visible'); }, i * 45);
-                });
-            }, itemDelay);
+            if (!isMobile) {
+                // Desktop: reveal all items in one batch after all headers finish
+                var itemDelay = (cards.length - 1) * stagger + 480 + 680 + 120;
+                setTimeout(function () {
+                    grid.querySelectorAll('.curr-li').forEach(function (li, i) {
+                        setTimeout(function () { li.classList.add('curr-visible'); }, i * 45);
+                    });
+                }, itemDelay);
+            }
         }
 
-        new IntersectionObserver(function (entries) {
-            if (entries[0].isIntersecting) runCurriculum();
+        var currObs = new IntersectionObserver(function (entries) {
+            if (entries[0].isIntersecting) {
+                runCurriculum();
+            } else if (!done) {
+                // Left before animation finished — reset so it plays again on return
+                cards.forEach(function (card) {
+                    var h4 = card.querySelector('h4');
+                    if (h4) { h4.classList.remove('curr-h4-done'); h4.removeAttribute('style'); }
+                });
+                grid.querySelectorAll('.curr-li').forEach(function (li) { li.classList.remove('curr-visible'); });
+            }
         }, { threshold: 0.12 }).observe(grid);
     })();
 
@@ -955,13 +978,21 @@
         function revealSequence() {
             if (done) return;
             done = true;
+            var isMobile = window.innerWidth <= 768;
             cards.forEach(function (card, i) {
                 setTimeout(function () {
                     card.querySelectorAll('.how-seq-header').forEach(function (el) {
                         el.classList.add('how-visible');
                     });
-                    // After the last card header, reveal all body text together
-                    if (i === cards.length - 1) {
+                    if (isMobile) {
+                        // Mobile: reveal each card's body text right after its own header
+                        setTimeout(function () {
+                            card.querySelectorAll('.how-seq-body').forEach(function (el) {
+                                el.classList.add('how-visible');
+                            });
+                        }, 420);
+                    } else if (i === cards.length - 1) {
+                        // Desktop: reveal all body text together after last header
                         setTimeout(function () {
                             grid.querySelectorAll('.how-seq-body').forEach(function (el) {
                                 el.classList.add('how-visible');
@@ -977,36 +1008,48 @@
         }, { threshold: 0.25 }).observe(grid);
     })();
 
-    // ===== HIRE ME — STATS COUNT-UP =====
+    // ===== HIRE ME — STATS COUNT-UP (pause/resume) =====
     (function () {
         var statsEl = document.getElementById('hire-stats');
         if (!statsEl) return;
         var bizEl = document.getElementById('stat-biz');
         var yrsEl = document.getElementById('stat-yrs');
-        var done = false;
+        var started = false;
+        var isVisible = false;
 
         function countUp(el, target, suffix, duration) {
-            var start = performance.now();
-            (function step(now) {
-                var t = Math.min(1, (now - start) / duration);
-                var eased = 1 - Math.pow(1 - t, 4); // ease-out quart — feels slow then stops
+            var activeTime = 0;
+            var lastActive = null;
+            function step(now) {
+                if (isVisible) {
+                    if (lastActive === null) lastActive = now;
+                    activeTime += now - lastActive;
+                    lastActive = now;
+                } else {
+                    lastActive = null;
+                }
+                var t = Math.min(1, activeTime / duration);
+                var eased = 1 - Math.pow(1 - t, 4);
                 el.textContent = Math.round(eased * target) + suffix;
                 if (t < 1) requestAnimationFrame(step);
-            })(start);
+            }
+            requestAnimationFrame(step);
         }
 
         new IntersectionObserver(function (entries) {
-            if (entries[0].isIntersecting && !done) {
-                done = true;
+            isVisible = entries[0].isIntersecting;
+            if (isVisible && !started) {
+                started = true;
                 if (bizEl) countUp(bizEl, 100, '+', 3200);
                 if (yrsEl) countUp(yrsEl, 5,   '+', 2400);
             }
-        }, { threshold: 0.5 }).observe(statsEl);
+        }, { threshold: 0.4 }).observe(statsEl);
     })();
 
-    // ===== PRICE COUNTDOWN $2499 → $499 =====
+    // ===== PRICE COUNTDOWN $999 → $499 =====
     (function () {
-        var priceEl = document.getElementById('price-display');
+        var priceEl   = document.getElementById('price-display');
+        var priceWas  = document.getElementById('price-was');
         var pricingCard = priceEl && priceEl.closest('.pricing-card');
         if (!priceEl || !pricingCard) return;
         var done = false;
@@ -1015,29 +1058,49 @@
             var startTime = performance.now();
             (function step(now) {
                 var t = Math.min(1, (now - startTime) / duration);
-                var eased = t * t; // ease-in: slow start, fast finish
+                var eased = t * t; // ease-in
                 var val = Math.round(from - (from - to) * eased);
                 priceEl.textContent = '$' + val.toLocaleString();
-                if (t < 1) requestAnimationFrame(step);
-                else priceEl.textContent = '$499';
+                if (t < 1) {
+                    requestAnimationFrame(step);
+                } else {
+                    priceEl.textContent = '$499';
+                    // Reveal the strikethrough $999 only once countdown finishes
+                    if (priceWas) priceWas.classList.add('revealed');
+                }
             })(startTime);
         }
 
         new IntersectionObserver(function (entries) {
             if (entries[0].isIntersecting && !done) {
                 done = true;
-                priceEl.textContent = '$2,499';
-                setTimeout(function () { countDown(2499, 499, 1800); }, 600);
+                priceEl.textContent = '$999';
+                countDown(999, 499, 10000);
             }
         }, { threshold: 0.5 }).observe(pricingCard);
     })();
 
-    // ===== 30-MINUTE COUNTDOWN WITH MILLISECONDS =====
+    // ===== 30-MINUTE COUNTDOWN WITH MILLISECONDS (persists across refreshes) =====
     (function () {
         var timeEl = document.getElementById('pcd-time');
         if (!timeEl) return;
         var TOTAL_MS = 30 * 60 * 1000; // 30 minutes
-        var startTs = Date.now();
+        var KEY = 'cwu_cd_start';
+
+        // Restore or initialise start timestamp
+        var stored = localStorage.getItem(KEY);
+        var startTs;
+        if (stored) {
+            var parsed = parseInt(stored, 10);
+            // Use stored time only if the countdown hasn't fully expired
+            if (!isNaN(parsed) && (Date.now() - parsed) < TOTAL_MS) {
+                startTs = parsed;
+            }
+        }
+        if (!startTs) {
+            startTs = Date.now();
+            localStorage.setItem(KEY, startTs);
+        }
 
         function pad2(n) { return n < 10 ? '0' + n : '' + n; }
         function pad3(n) { return n < 100 ? (n < 10 ? '00' : '0') + n : '' + n; }
@@ -1063,11 +1126,269 @@
         function nudge() {
             btnIds.forEach(function (id) {
                 var btn = document.getElementById(id);
-                if (!btn || btn.style.display === 'none') return;
+                if (!btn || btn.style.display === 'none' || (btn.id === 'nav-start-btn' && !btn.classList.contains('nav-btn-visible'))) return;
                 btn.classList.add('btn-nudge');
                 setTimeout(function () { btn.classList.remove('btn-nudge'); }, DURATION);
             });
         }
 
         setInterval(nudge, INTERVAL);
+    })();
+
+    // ===== MOBILE HAMBURGER MENU =====
+    (function () {
+        var hamburger = document.getElementById('nav-hamburger');
+        var drawer    = document.getElementById('mobile-drawer');
+        var overlay   = document.getElementById('mobile-drawer-overlay');
+        var closeBtn  = document.getElementById('mobile-drawer-close');
+        if (!hamburger || !drawer || !overlay) return;
+
+        function openDrawer() {
+            drawer.classList.add('open');
+            overlay.classList.add('open');
+            hamburger.classList.add('open');
+            hamburger.setAttribute('aria-expanded', 'true');
+            drawer.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeDrawer() {
+            drawer.classList.remove('open');
+            overlay.classList.remove('open');
+            hamburger.classList.remove('open');
+            hamburger.setAttribute('aria-expanded', 'false');
+            drawer.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+        }
+
+        hamburger.addEventListener('click', openDrawer);
+        if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+        overlay.addEventListener('click', closeDrawer);
+        drawer.querySelectorAll('a').forEach(function (a) {
+            a.addEventListener('click', closeDrawer);
+        });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeDrawer();
+        });
+    })();
+
+    // ===== AUTO-SCROLL HERO — Mac dock bounce tease (stays at y=0) =====
+    (function () {
+        var hint = document.querySelector('.scroll-hint');
+        var label = document.querySelector('.scroll-hint-label');
+        if (!hint || !label) return;
+
+        var userScrolled = false;
+        var oneTime = function () {
+            userScrolled = true;
+            window.removeEventListener('wheel', oneTime);
+            window.removeEventListener('touchmove', oneTime);
+        };
+        window.addEventListener('wheel', oneTime, { passive: true });
+        window.addEventListener('touchmove', oneTime, { passive: true });
+
+        setTimeout(function () {
+            if (userScrolled || window.scrollY > 10) return;
+
+            hint.classList.add('scroll-hint-auto');
+            label.textContent = 'Scroll to explore';
+
+            // 2 equal smooth bounces
+            var amplitude = 65; // px
+            var duration = 1800; // ms total (900ms per bounce)
+            var start = performance.now();
+
+            function bounceStep(now) {
+                if (userScrolled) { window.scrollTo(0, 0); resetHint(); return; }
+                var elapsed = now - start;
+                var t = Math.min(1, elapsed / duration);
+
+                // Pure sine — 2 equal arches, no decay
+                var y = Math.round(amplitude * Math.abs(Math.sin(2 * Math.PI * t)));
+
+                window.scrollTo(0, y);
+
+                if (t < 1) {
+                    requestAnimationFrame(bounceStep);
+                } else {
+                    window.scrollTo(0, 0);
+                    resetHint();
+                }
+            }
+
+            function resetHint() {
+                hint.classList.remove('scroll-hint-auto');
+                label.textContent = 'Scroll to explore';
+            }
+
+            requestAnimationFrame(bounceStep);
+        }, 2500);
+    })();
+
+    // ===== FUNNEL PROGRESSIVE REVEAL =====
+    (function () {
+        var nameIn    = document.getElementById('funnel-name');
+        var emailWrap = document.getElementById('funnel-email-wrap');
+        var emailIn   = document.getElementById('funnel-email');
+        var termsWrap = document.getElementById('funnel-terms-wrap');
+        var submitBtn = document.getElementById('funnel-submit');
+        var stepsEl   = document.getElementById('funnel-steps-section');
+        if (!nameIn || !emailWrap || !emailIn) return;
+
+        var emailShown  = false;
+        var stepsShown  = false;
+
+        window._funnelReset = function () { emailShown = false; stepsShown = false; };
+
+        nameIn.addEventListener('input', function () {
+            if (!emailShown && nameIn.value.trim().length >= 2) {
+                emailShown = true;
+                emailWrap.classList.add('revealed');
+                setTimeout(function () { emailIn.focus(); }, 420);
+            }
+        });
+
+        emailIn.addEventListener('input', function () {
+            if (!stepsShown && emailIn.value.includes('@')) {
+                stepsShown = true;
+                if (termsWrap) termsWrap.classList.add('revealed');
+                if (submitBtn) submitBtn.classList.add('revealed');
+                if (stepsEl) {
+                    stepsEl.style.display = '';
+                    requestAnimationFrame(function () {
+                        requestAnimationFrame(function () { stepsEl.style.opacity = '1'; });
+                    });
+                }
+            }
+        });
+    })();
+
+    // ===== VIDEO: auto play/pause in-frame + mute/pause controls =====
+    (function () {
+        var muteBtn   = document.getElementById('unmute-hint');
+        var pauseBtn  = document.getElementById('video-pause-btn');
+        var controls  = muteBtn && muteBtn.parentElement; // .video-controls
+        var video     = document.getElementById('hero-video');
+        var orbitSection = document.getElementById('orbit-showcase');
+        if (!muteBtn || !pauseBtn || !video || !orbitSection) return;
+
+        // Sync all button labels to current state
+        function syncBtns() {
+            // Mute button
+            if (video.muted) {
+                muteBtn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i> Tap to unmute';
+                muteBtn.setAttribute('aria-label', 'Unmute video');
+            } else {
+                muteBtn.innerHTML = '<i class="fa-solid fa-volume-high"></i> Tap to mute';
+                muteBtn.setAttribute('aria-label', 'Mute video');
+            }
+            // Pause button
+            if (video.paused) {
+                pauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+                pauseBtn.setAttribute('aria-label', 'Play video');
+            } else {
+                pauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+                pauseBtn.setAttribute('aria-label', 'Pause video');
+            }
+        }
+
+        // Try to play with audio; fall back to muted if browser blocks it
+        function playWithSound() {
+            video.volume = 1;
+            video.removeAttribute('muted');
+            video.muted = false;
+            var p = video.play();
+            if (p && typeof p.then === 'function') {
+                p.then(function () { syncBtns(); })
+                 .catch(function () {
+                     video.muted = true;
+                     video.play().catch(function () {});
+                     syncBtns();
+                 });
+            } else { syncBtns(); }
+        }
+
+        // Toggle mute (shared by button click and video tap)
+        function toggleMute() {
+            if (video.muted) {
+                video.volume = 1;
+                video.removeAttribute('muted');
+                video.muted = false;
+                video.play().catch(function () { video.muted = true; });
+            } else {
+                video.muted = true;
+            }
+            syncBtns();
+        }
+
+        // Auto play/pause + mute on visibility changes
+        new IntersectionObserver(function (entries) {
+            if (entries[0].isIntersecting) {
+                if (controls) controls.classList.add('visible');
+                playWithSound();
+            } else {
+                if (controls) controls.classList.remove('visible');
+                video.pause();
+                video.muted = true;
+                syncBtns();
+            }
+        }, { threshold: 0.15 }).observe(orbitSection);
+
+        // Tapping anywhere on video toggles mute
+        video.addEventListener('click', toggleMute);
+
+        // Mute button
+        muteBtn.addEventListener('click', function (e) {
+            e.stopPropagation(); // don't double-fire from video click
+            toggleMute();
+        });
+
+        // Pause/play button
+        pauseBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            if (video.paused) {
+                video.play().catch(function () {});
+            } else {
+                video.pause();
+            }
+            syncBtns();
+        });
+
+        video.muted = true;
+        syncBtns();
+    })();
+
+    // ===== NAV THREE-STATE: name ↔ enrol button based on scroll =====
+    (function () {
+        var heroBtn   = document.getElementById('hero-enroll-btn');
+        var bottomBtn = document.getElementById('bottom-enroll-btn');
+        var navBtn    = document.getElementById('nav-start-btn');
+        var navBrand  = document.querySelector('.site-nav .nav-brand');
+        if (!heroBtn || !bottomBtn || !navBtn || !navBrand) return;
+
+        var heroInView   = true;  // start assuming hero is visible
+        var bottomInView = false;
+
+        function sync() {
+            var showEnrolBtn = !heroInView && !bottomInView;
+            if (showEnrolBtn) {
+                navBtn.classList.add('nav-btn-visible');
+                navBrand.classList.remove('expanded');
+            } else {
+                navBtn.classList.remove('nav-btn-visible');
+                navBrand.classList.add('expanded');
+            }
+        }
+
+        new IntersectionObserver(function (entries) {
+            heroInView = entries[0].isIntersecting;
+            sync();
+        }, { threshold: 0, rootMargin: '0px' }).observe(heroBtn);
+
+        new IntersectionObserver(function (entries) {
+            bottomInView = entries[0].isIntersecting;
+            sync();
+        }, { threshold: 0, rootMargin: '0px' }).observe(bottomBtn);
+
+        // Initial state: show name
+        navBrand.classList.add('expanded');
     })();
