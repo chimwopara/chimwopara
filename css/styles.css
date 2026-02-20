@@ -2236,8 +2236,16 @@
         @media (max-width: 768px) {
             /* ---- Nav ---- */
             #nav-start-btn { 
+                display: none; 
+            }
+            #nav-start-btn.nav-btn-visible {
+                display: inline-flex;
                 padding: 8px 14px; 
                 font-size: 0.75rem; 
+            }
+            /* Reduce padding on mobile to give text more room */
+            nav.site-nav {
+                padding: 0 1.25rem;
             }
 
             /* Hero text: tighten padding, kill center-justify so badge pins to cards */
