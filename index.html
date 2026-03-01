@@ -172,6 +172,8 @@
             transform: translate(-50%, -50%);
             pointer-events: none;
             z-index: 31;
+            width: 256px;
+            height: 256px;
         }
 
         @keyframes spin {
@@ -283,6 +285,10 @@
                 width: 180px;
                 height: 180px;
             }
+            .curved-text-svg-inner {
+                width: 180px;
+                height: 180px;
+            }
         }
     </style>
 </head>
@@ -376,6 +382,12 @@
                 <div id="games-grid" class="flex flex-nowrap gap-6 pb-4 px-6 scrollbar-hide">
                     <!-- Projects will be dynamically inserted here -->
                 </div>
+            </div>
+
+            <!-- Orphans in Tech -->
+            <div class="mb-8 fade-in-up">
+                <h2 class="text-3xl font-bold mb-4 px-6">Orphans in Tech</h2>
+                <p class="text-[#B7D1E1]/70 px-6 mb-6 max-w-3xl">Here we will display companies that chose to empower orphans that have been extensively trained up to the <a href="https://wopara.com" target="_blank" rel="noopener noreferrer" class="underline text-[#B7D1E1] hover:text-white transition-colors">Wopara Standard</a>.</p>
             </div>
 
             <!-- My Companies -->
