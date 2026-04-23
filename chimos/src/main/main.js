@@ -4853,22 +4853,9 @@ function handleCredentialResponse(response) {
         localStorage.setItem('fs_user_logged_in', 'true');
         localStorage.setItem('fs_user_profile', JSON.stringify(profile));
 
-// *** ADDED LOGIC: Check if terms have been accepted ***
-const hasAcceptedTerms = localStorage.getItem('fs_terms_accepted');
+// Proceed directly after sign-in
+        enableUIAfterSignin();
 
-if (!hasAcceptedTerms) {
-    // New user - close dropdown and show terms
-    const dropdown = document.getElementById('logo-dropdown');
-    if (dropdown) {
-        dropdown.classList.remove('active');
-        logoDropdownVisible = false;
-    }
-    showTermsForAcceptance();
-} else {
-    // Returning user - keep dropdown open, just proceed
-    enableUIAfterSignin();
-}
-        
     } catch (error) {
         console.error('Google Sign-in error:', error);
     }
@@ -6929,30 +6916,8 @@ function temporaryUnlock() {
     // Remove dev unlock button since we're now signed in
     removeDevUnlockButton();
 
-    // *** ADDED LOGIC: Check if terms have been accepted ***
-    const hasAcceptedTerms = localStorage.getItem('fs_terms_accepted');
-
-    if (!hasAcceptedTerms) {
-        // New user - close dropdown and show terms
-        setTimeout(() => {
-            const dropdown = document.getElementById('logo-dropdown');
-            if (dropdown) {
-                dropdown.classList.remove('active');
-            }
-            logoDropdownVisible = false;
-        }, 10);
-        showTermsForAcceptance();
-    } else {
-        // Returning user - check if this is first time after terms acceptance
-        const hasSeenSystemWindow = localStorage.getItem('fs_seen_system_window');
-        if (!hasSeenSystemWindow) {
-            localStorage.setItem('fs_seen_system_window', 'true');
-            enableUIAfterSignin();
-        } else {
-            // Just enable UI without showing system window
-            enableUIAfterSignin();
-        }
-    }
+    // Proceed directly after sign-in
+    enableUIAfterSignin();
 }
 function openSupportSection() {
     // Close logo dropdown
@@ -7656,13 +7621,8 @@ window.addEventListener('resize', function() {
 // Check login status first
 const isLoggedIn = checkUserLoginStatus();
 
-// Check for first visit and show onboarding
-if (checkFirstVisit()) {
-    // Small delay to ensure page is fully loaded
-    setTimeout(() => {
-        showOnboardingVideo();
-    }, 1000);
-} else if (!isLoggedIn) {
+// Check login status and redirect if needed
+if (!isLoggedIn) {
     // Returning user but not signed in - force signin
     setTimeout(() => {
         forceSigninFlow();
