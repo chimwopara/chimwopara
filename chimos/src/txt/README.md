@@ -1,2 +1,0 @@
-# chimapps
- Collection of projects

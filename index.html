@@ -2,630 +2,596 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Wopara Website Building Service</title>
-    <meta name="description" content="We build beautiful, professional websites for non-profits, creatives, and businesses. Simple monthly pricing, no surprises.">
-    <meta name="author" content="Wopara Group">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://wopara.com/services">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chim Wopara - Visionary Product Architect & AI Innovator</title>
+    <meta name="description" content="Explore the diverse portfolio of Chim Wopara, a product building genius with extensive experience in web and app development, AI integration, interactive entertainment, and business solutions.">
+    <meta name="keywords" content="Chim Wopara, Portfolio, AI Developer, Full Stack Developer, Product Builder, Edmonton Developer, Python, Swift, C++, JavaScript, React, AI Projects">
+    <meta name="author" content="Chim Wopara">
     <link rel="icon" href="assets/logo/logo.png" type="image/png">
-    <link rel="apple-touch-icon" href="assets/logo/logo.png">
-
-    <meta property="og:title" content="Wopara Website Building Service">
-    <meta property="og:description" content="We build beautiful, professional websites for non-profits, creatives, and businesses.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://wopara.com/services">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="theme-color" content="#070b14">
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
-
+    <script>
+        // Suppress Tailwind CDN development warning
+        const originalWarn = console.warn;
+        console.warn = function(...args) {
+            if (args[0] && typeof args[0] === 'string' && args[0].includes('cdn.tailwindcss.com')) return;
+            originalWarn.apply(console, args);
+        };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-        :root {
-            --bg: #070b14;
-            --bg-card: #0d1321;
-            --bg-card-hover: #111827;
-            --border: rgba(136, 196, 255, 0.08);
-            --border-hover: rgba(136, 196, 255, 0.18);
-            --text-primary: #e8f0fe;
-            --text-secondary: rgba(200, 220, 255, 0.55);
-            --text-muted: rgba(200, 220, 255, 0.3);
-            --accent: #4f8fff;
-            --accent-purple: #a78bfa;
-            --accent-warm: #ff6b4a;
-            --accent-green: #34d399;
-            --font-display: 'Syne', sans-serif;
-            --font-body: 'DM Sans', sans-serif;
-        }
-
-        html { scroll-behavior: smooth; overflow-x: hidden; }
         body {
-            font-family: var(--font-body);
-            background: var(--bg);
-            color: var(--text-primary);
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            line-height: 1.6;
+            font-family: 'Inter', sans-serif;
+            background-color: #1B2330; /* Chimdark */
+            color: #B7D1E1; /* Chimlight */
         }
-
-        /* Grain */
-        body::after {
+        @keyframes animate-gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .hero-bg {
+            position: relative;
+            background-color: #1B2330;
+            overflow: hidden;
+        }
+        .hero-bg::before {
             content: '';
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 9999;
-            opacity: 0.025;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-            background-size: 200px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse 80% 50% at 20% 30%, rgba(63, 82, 104, 0.8) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 70% at 80% 20%, rgba(183, 209, 225, 0.3) 0%, transparent 40%),
+                radial-gradient(ellipse 70% 60% at 70% 80%, rgba(63, 82, 104, 0.6) 0%, transparent 45%),
+                radial-gradient(ellipse 50% 80% at 10% 90%, rgba(183, 209, 225, 0.25) 0%, transparent 35%),
+                radial-gradient(ellipse 90% 40% at 50% 50%, rgba(63, 82, 104, 0.5) 0%, transparent 50%),
+                radial-gradient(ellipse 40% 60% at 90% 60%, rgba(183, 209, 225, 0.2) 0%, transparent 40%),
+                radial-gradient(ellipse 60% 50% at 30% 70%, rgba(27, 35, 48, 0.9) 0%, transparent 45%);
+            filter: blur(40px);
+            z-index: 0;
         }
-
-        /* Ambient */
-        .ambient { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
-        .ab { position: absolute; border-radius: 50%; filter: blur(130px); opacity: 0.055; }
-        .ab1 { width: 700px; height: 700px; background: #4f8fff; top: -200px; left: -200px; }
-        .ab2 { width: 500px; height: 500px; background: #a78bfa; top: 30%; right: -180px; }
-        .ab3 { width: 400px; height: 400px; background: #ff6b4a; bottom: 0; left: 25%; }
-
-        /* Wrap */
-        .wrap {
+        .hero-bg > * {
             position: relative;
             z-index: 1;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 24px;
         }
-
-        /* ===== NAV ===== */
-        nav {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 28px 0;
-        }
-        .nav-brand {
-            display: flex; align-items: center; gap: 10px;
-            text-decoration: none; color: var(--text-primary);
-        }
-        .nav-brand img { width: 28px; height: 28px; border-radius: 6px; }
-        .nav-brand-text {
-            font-family: var(--font-display);
-            font-size: 0.9rem; font-weight: 700; letter-spacing: -0.01em;
-        }
-        .nav-brand-text span { color: var(--text-muted); font-weight: 400; }
-        .nav-back {
-            font-size: 0.8rem; color: var(--text-muted); text-decoration: none;
-            display: flex; align-items: center; gap: 6px;
-            transition: color 0.2s;
-        }
-        .nav-back:hover { color: var(--text-secondary); }
-        .nav-back svg { width: 14px; height: 14px; }
-
-        /* ===== HERO ===== */
-        .hero {
-            padding: 80px 0 64px;
-            max-width: 620px;
-        }
-        .hero-eyebrow {
-            display: inline-flex; align-items: center; gap: 7px;
-            font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em;
-            text-transform: uppercase; color: var(--text-muted);
-            margin-bottom: 20px;
-        }
-        .hero-eyebrow::before {
-            content: ''; width: 20px; height: 1px; background: var(--border-hover);
-        }
-        h1 {
-            font-family: var(--font-display);
-            font-size: clamp(2.4rem, 5vw, 3.8rem);
-            font-weight: 800; letter-spacing: -0.04em; line-height: 1.05;
-            margin-bottom: 20px;
-        }
-        .text-gradient {
-            background: linear-gradient(135deg, #4f8fff 0%, #a78bfa 50%, #ff6b4a 100%);
-            -webkit-background-clip: text; background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .hero-sub {
-            font-size: 1rem; color: var(--text-secondary);
-            line-height: 1.7; max-width: 400px; margin-bottom: 32px;
-        }
-        .btn-primary {
-            display: inline-flex; align-items: center; gap: 8px;
-            background: var(--accent); color: #fff;
-            font-family: var(--font-body); font-size: 0.9rem; font-weight: 600;
-            padding: 13px 28px; border-radius: 8px;
-            text-decoration: none; transition: opacity 0.2s, transform 0.2s;
-            border: none; cursor: pointer;
-        }
-        .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
-        .btn-ghost {
-            display: inline-flex; align-items: center; gap: 8px;
-            background: transparent; color: var(--text-secondary);
-            font-family: var(--font-body); font-size: 0.9rem; font-weight: 500;
-            padding: 13px 20px; border-radius: 8px;
-            text-decoration: none; transition: color 0.2s;
-            border: 1px solid var(--border);
-        }
-        .btn-ghost:hover { color: var(--text-primary); border-color: var(--border-hover); }
-        .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
-
-        .hero-stats {
-            display: flex; gap: 28px; margin-top: 36px; padding-top: 28px;
-            border-top: 1px solid var(--border);
-        }
-        .stat-val {
-            font-family: var(--font-display); font-size: 1.5rem; font-weight: 700;
-            color: var(--text-primary); letter-spacing: -0.03em;
-        }
-        .stat-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
-
-
-        /* ===== SECTION SHARED ===== */
-        .section-label {
-            font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
-            text-transform: uppercase; color: var(--text-muted);
-            display: flex; align-items: center; gap: 10px;
-            margin-bottom: 40px;
-        }
-        .section-label::after {
-            content: ''; flex: 1; height: 1px; background: var(--border);
-        }
-
-        /* ===== PORTFOLIO ===== */
-        .portfolio-section { padding: 72px 0; }
-        .portfolio-section h2 {
-            font-family: var(--font-display);
-            font-size: clamp(1.8rem, 4vw, 2.6rem);
-            font-weight: 800; letter-spacing: -0.03em;
-            margin-bottom: 12px;
-        }
-        .portfolio-section .intro {
-            font-size: 1rem; color: var(--text-secondary); max-width: 500px;
-            margin-bottom: 40px;
-        }
-
-        .portfolio-categories { display: flex; flex-direction: column; gap: 40px; }
-
-        .portfolio-cat-label {
-            font-family: var(--font-display);
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .portfolio-cat-label::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--border);
-        }
-
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-        }
-        .portfolio-item {
+        .hero-image-bg {
             position: relative;
-            border-radius: 10px;
+            background-image: url('assets/system/hero.png');
+            background-size: cover;
+            background-position: center;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        .project-card {
+            background: rgba(63, 82, 104, 0.35); /* Chimdeep with transparency */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); /* For Safari */
+            border: 1px solid rgba(183, 209, 225, 0.2); /* Chimlight with transparency */
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            will-change: transform;
+        }
+        .project-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 20px 30px rgba(183, 209, 225, 0.1);
+        }
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .filter-btn.active {
+            background-color: #B7D1E1; /* Chimlight */
+            color: #1B2330; /* Chimdark */
+        }
+         .cta-button {
+            transition: all 0.3s ease;
+        }
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+        .footer-bg {
+            position: relative;
+            background-image: url('assets/system/hero.png');
+            background-size: cover;
+            background-position: center;
+        }
+        .footer-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-color: rgba(27, 35, 48, 0.85); /* Dark overlay for readability */
+        }
+        .glassy-card {
+            background: rgba(63, 82, 104, 0.35);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(183, 209, 225, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            padding: 2rem;
+            border-radius: 1rem;
+        }
+        /* Hide scrollbar but keep horizontal functionality only */
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            overflow-x: scroll;
+            overflow-y: hidden !important;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .project-card-horizontal {
+            min-width: 300px;
+            max-width: 300px;
+            overflow: hidden !important;
+        }
+        .project-card.project-card-horizontal:hover {
+            transform: scale(1.02);
+        }
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+            -webkit-box-orient: vertical;
             overflow: hidden;
-            border: 1px solid var(--border);
-            background: var(--bg-card);
+        }
+        /* About Section Collage Styles */
+        .about-collage {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            margin: 1rem auto;
             display: flex;
-            flex-direction: column;
-            text-decoration: none;
-            color: inherit;
-            transition: transform 0.25s, border-color 0.25s;
+            justify-content: center;
+            align-items: center;
         }
-        .portfolio-item:hover { transform: translateY(-3px); border-color: var(--border-hover); }
-        .portfolio-item img {
+        .curved-text-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+        .curved-text-svg-inner {
+            position: absolute;
+            top: 51%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 31;
+            width: 256px;
+            height: 256px;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .about-orbit-container {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 110px;
-            object-fit: contain;
-            display: block;
-            padding: 14px 16px 10px;
-        }
-        .portfolio-item-name {
-            padding: 10px 12px 11px;
-            font-family: var(--font-display);
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--text-secondary);
-            letter-spacing: 0.02em;
-            border-top: 1px solid var(--border);
+            height: 100%;
+            animation: spin 35s linear infinite;
         }
 
-        /* ===== PRICING ===== */
-        .pricing-section { padding: 72px 0 80px; }
-        .pricing-section .heading {
-            text-align: center; margin-bottom: 56px;
-        }
-        .pricing-section h2 {
-            font-family: var(--font-display);
-            font-size: clamp(1.8rem, 4vw, 2.8rem);
-            font-weight: 800; letter-spacing: -0.03em; margin-bottom: 12px;
-        }
-        .pricing-section .sub {
-            font-size: 1rem; color: var(--text-secondary);
+        .about-central-image {
+            width: 256px;
+            height: 256px;
+            border-radius: 50%;
+            object-fit: cover;
+            position: relative;
+            z-index: 30;
+            border: 4px solid #3f5268;
         }
 
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            align-items: start;
+        .about-surrounding-image {
+            position: absolute;
+            transition: all 0.3s ease;
+            z-index: 32;
+            display: block; /* Make the <a> tag a block for positioning */
+        }
+        .about-surrounding-image img {
+            width: 100%;
+            height: 100%;
         }
 
-        .plan-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 28px 24px 24px;
-            display: flex; flex-direction: column; gap: 0;
-            transition: border-color 0.2s, transform 0.2s;
+        .about-surrounding-image:hover {
+            filter: brightness(1.2);
+            transform: scale(1.3) !important;
+            z-index: 35 !important;
         }
-        .plan-card:hover {
-            border-color: var(--border-hover);
-            transform: translateY(-3px);
-        }
-        .plan-card.featured {
-            border-color: rgba(79, 143, 255, 0.3);
-            background: linear-gradient(160deg, rgba(79,143,255,0.06) 0%, var(--bg-card) 60%);
-        }
-        .plan-card.featured:hover { border-color: rgba(79, 143, 255, 0.5); }
 
-        .plan-badge {
-            display: inline-block;
-            font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em;
-            text-transform: uppercase; padding: 3px 9px; border-radius: 20px;
-            margin-bottom: 20px; align-self: flex-start;
+        .about-surrounding-image-1 { /* Github */
+            width: 50px; height: 50px;
+            top: calc(50% - 180px - 25px);
+            left: calc(50% - 25px);
+            animation: counter-spin-1 35s linear infinite;
         }
-        .badge-blue { background: rgba(79,143,255,0.12); color: var(--accent); border: 1px solid rgba(79,143,255,0.2); }
-        .badge-green { background: rgba(52,211,153,0.1); color: #34d399; border: 1px solid rgba(52,211,153,0.2); }
-        .badge-purple { background: rgba(167,139,250,0.1); color: var(--accent-purple); border: 1px solid rgba(167,139,250,0.2); }
-        .badge-orange { background: rgba(255,107,74,0.1); color: var(--accent-warm); border: 1px solid rgba(255,107,74,0.2); }
+        .about-surrounding-image-2 { /* Instagram */
+            width: 55px; height: 55px;
+            top: calc(50% - 90px - 27.5px);
+            left: calc(50% + 140px - 27.5px);
+            animation: counter-spin-2 33s linear infinite;
+        }
+        .about-surrounding-image-3 { /* TikTok */
+            width: 50px; height: 50px;
+            top: calc(50% + 90px - 25px);
+            left: calc(50% + 145px - 25px);
+            animation: counter-spin-3 38s linear infinite;
+        }
+        .about-surrounding-image-4 { /* WhatsApp */
+            width: 52px; height: 52px;
+            top: calc(50% + 170px - 26px);
+            left: calc(50% - 100px - 26px);
+            animation: counter-spin-4 32s linear infinite;
+        }
+        .about-surrounding-image-5 { /* UAlberta */
+            width: 55px; height: 55px;
+            top: calc(50% + 95px - 27.5px);
+            left: calc(50% - 160px - 27.5px);
+            animation: counter-spin-5 36s linear infinite;
+        }
+        .about-surrounding-image-6 { /* YouTube */
+            width: 50px; height: 50px;
+            top: calc(50% - 100px - 25px);
+            left: calc(50% - 150px - 25px);
+            animation: counter-spin-6 34s linear infinite;
+        }
+        .about-surrounding-image-7 { /* Facebook */
+            width: 50px; height: 50px;
+            top: calc(50% - 150px - 25px);
+            left: calc(50% + 100px - 25px);
+            animation: counter-spin-7 37s linear infinite;
+        }
+        .about-surrounding-image-8 { /* LinkedIn */
+            width: 52px; height: 52px;
+            top: calc(50% + 165px - 26px);
+            left: calc(50% + 20px - 26px);
+            animation: counter-spin-8 39s linear infinite;
+        }
 
-        .plan-name {
-            font-family: var(--font-display);
-            font-size: 1.1rem; font-weight: 700; letter-spacing: -0.02em;
-            margin-bottom: 6px;
-        }
-        .plan-price {
-            font-family: var(--font-display);
-            font-size: 2rem; font-weight: 800; letter-spacing: -0.04em;
-            color: var(--text-primary); margin: 16px 0 4px;
-        }
-        .plan-price sup { font-size: 1rem; font-weight: 600; vertical-align: top; margin-top: 6px; margin-right: 1px; }
-        .plan-period { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 20px; }
-        .plan-desc {
-            font-size: 0.82rem; color: var(--text-secondary);
-            line-height: 1.65; flex: 1; margin-bottom: 24px;
-        }
-        .plan-cta {
-            display: block; text-align: center;
-            padding: 11px 20px; border-radius: 8px;
-            font-size: 0.85rem; font-weight: 600;
-            text-decoration: none; transition: all 0.2s;
-        }
-        .plan-cta-solid {
-            background: var(--accent); color: #fff;
-        }
-        .plan-cta-solid:hover { opacity: 0.85; }
-        .plan-cta-outline {
-            background: transparent; color: var(--text-secondary);
-            border: 1px solid var(--border);
-        }
-        .plan-cta-outline:hover { border-color: var(--border-hover); color: var(--text-primary); }
+        @keyframes counter-spin-1 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+        @keyframes counter-spin-2 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+        @keyframes counter-spin-3 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+        @keyframes counter-spin-4 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+        @keyframes counter-spin-5 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+        @keyframes counter-spin-6 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+        @keyframes counter-spin-7 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+        @keyframes counter-spin-8 { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
 
-        .plan-divider { height: 1px; background: var(--border); margin: 20px 0; }
-
-        /* ===== PROCESS ===== */
-        .process-section { padding: 40px 0 80px; }
-        .process-section h2 {
-            font-family: var(--font-display);
-            font-size: clamp(1.6rem, 3.5vw, 2.2rem);
-            font-weight: 800; letter-spacing: -0.03em; margin-bottom: 40px;
-        }
-        .steps {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
-        }
-        .step {
-            background: var(--bg-card); border: 1px solid var(--border);
-            border-radius: 12px; padding: 24px;
-        }
-        .step-num {
-            font-family: var(--font-display); font-size: 0.7rem; font-weight: 700;
-            letter-spacing: 0.1em; color: var(--text-muted); text-transform: uppercase;
-            margin-bottom: 12px;
-        }
-        .step-title {
-            font-family: var(--font-display); font-size: 1rem; font-weight: 700;
-            letter-spacing: -0.01em; margin-bottom: 8px;
-        }
-        .step-desc { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; }
-
-        /* ===== FOOTER ===== */
-        footer {
-            border-top: 1px solid var(--border);
-            padding: 28px 0 36px;
-            display: flex; align-items: center; justify-content: space-between;
-            gap: 16px; flex-wrap: wrap;
-        }
-        .footer-copy { font-size: 0.78rem; color: var(--text-muted); }
-        .footer-links { display: flex; gap: 20px; }
-        .footer-links a {
-            font-size: 0.78rem; color: var(--text-muted);
-            text-decoration: none; transition: color 0.2s;
-        }
-        .footer-links a:hover { color: var(--text-secondary); }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 900px) {
-            .portfolio-grid { grid-template-columns: repeat(3, 1fr); }
-            .pricing-grid { grid-template-columns: repeat(2, 1fr); }
-            .steps { grid-template-columns: 1fr 1fr; }
-        }
-        @media (max-width: 600px) {
-            .hero { padding: 56px 0 40px; }
-            .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
-            .pricing-grid { grid-template-columns: 1fr; }
-            .steps { grid-template-columns: 1fr; }
-            footer { flex-direction: column; align-items: flex-start; }
+        /* Responsive adjustments for about collage */
+        @media (max-width: 768px) {
+            .about-collage {
+                width: 300px;
+                height: 300px;
+            }
+            .about-central-image {
+                width: 180px;
+                height: 180px;
+            }
+            .curved-text-svg-inner {
+                width: 180px;
+                height: 180px;
+            }
         }
     </style>
 </head>
-<body>
+<body class="text-[#B7D1E1]">
 
-    <div class="ambient" aria-hidden="true">
-        <div class="ab ab1"></div>
-        <div class="ab ab2"></div>
-        <div class="ab ab3"></div>
+    <!-- Launch Overlay -->
+    <div id="launch-overlay" class="fixed inset-0 z-[100] flex items-center justify-center cursor-pointer" style="background: rgba(27, 35, 48, 0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);">
+        <div class="text-center">
+            <img src="assets/logo/logo.png" alt="Chim Wopara Logo" class="h-16 w-auto mx-auto mb-6">
+            <p class="text-[#B7D1E1]/80 text-xl mb-2">Last updated</p>
+            <p id="last-updated-date" class="text-[#B7D1E1] text-4xl font-bold"></p>
+        </div>
     </div>
 
-    <div class="wrap">
+    <main class="pt-0">
 
-        <!-- Nav -->
-        <nav>
-            <a href="/services" class="nav-brand">
-                <img src="assets/logo/logo.png" alt="Wopara" width="28" height="28">
-                <span class="nav-brand-text">Wopara <span>Website Building</span></span>
-            </a>
-            <a href="https://wopara.com" class="nav-back">
-                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Wopara Group
-            </a>
-        </nav>
-
-        <!-- Hero -->
-        <section class="hero">
-            <div class="hero-content">
-                <div class="hero-eyebrow">Wopara Services</div>
-                <h1>We build websites <span class="text-gradient">that work.</span></h1>
-                <p class="hero-sub">From non-profits to growing businesses, every site is built with care, built to last, and priced honestly.</p>
-                <div class="hero-cta">
-                    <a href="#pricing" class="btn-primary">See pricing</a>
-                    <a href="#portfolio" class="btn-ghost">View our work</a>
-                </div>
-                <div class="hero-stats">
-                    <div>
-                        <div class="stat-val">20+</div>
-                        <div class="stat-label">Sites built</div>
+        <!-- Hero Section -->
+        <section class="py-20 hero-image-bg overflow-hidden">
+            <div class="container mx-auto px-6 hero-content">
+                <div class="grid grid-cols-1 md:grid-cols-2 items-center gap-12 fade-in-up">
+                    <!-- Orbiting Icons on the left -->
+                    <div class="about-collage">
+                        <img src="assets/me/chim.png" alt="Profile photo of Chim Wopara" class="about-central-image">
+                        <!-- Curved text inside bottom of photo -->
+                        <svg class="curved-text-svg-inner" viewBox="0 0 256 256" width="256" height="256">
+                            <defs>
+                                <path id="inner-curve" d="M 30,192 Q 128,248 226,192" fill="transparent"/>
+                            </defs>
+                            <text fill="rgba(183, 209, 225, 0.8)" font-size="10" letter-spacing="0.5" font-weight="400">
+                                <textPath href="#inner-curve" startOffset="50%" text-anchor="middle">
+                                    Tap icons to discover more
+                                </textPath>
+                            </text>
+                        </svg>
+                        <div class="about-orbit-container">
+                            <a href="https://github.com/chimwopara" target="_blank" rel="noopener noreferrer" class="about-surrounding-image about-surrounding-image-1"><img src="assets/links/github.png" alt="GitHub"></a>
+                            <a href="https://www.instagram.com/chimwopara" target="_blank" rel="noopener noreferrer" class="about-surrounding-image about-surrounding-image-2"><img src="assets/links/instagram.png" alt="Instagram"></a>
+                            <a href="https://www.tiktok.com/@chimwopara?_t=ZS-8zXMw9gpRDO&_r=1" target="_blank" rel="noopener noreferrer" class="about-surrounding-image about-surrounding-image-3"><img src="assets/links/tiktok.png" alt="TikTok"></a>
+                            <a href="https://chat.whatsapp.com/Bn75K4eoSVvLUOylfu9Urt?mode=ems_copy_c" target="_blank" rel="noopener noreferrer" class="about-surrounding-image about-surrounding-image-4"><img src="assets/links/whatsapp.png" alt="WhatsApp"></a>
+                            <a href="https://ualberta.ca" target="_blank" rel="noopener noreferrer" class="about-surrounding-image about-surrounding-image-5"><img src="assets/links/ualberta.png" alt="UAlberta"></a>
+                            <a href="https://youtube.com/@chimwopara?si=rMgMJHTLgJJzwL_D" target="_blank" rel="noopener noreferrer" class="about-surrounding-image about-surrounding-image-6"><img src="assets/links/youtube.png" alt="YouTube"></a>
+                            <a href="https://www.facebook.com/profile.php?id=61579876920080" target="_blank" rel="noopener noreferrer" class="about-surrounding-image about-surrounding-image-7"><img src="assets/links/facebook.png" alt="Facebook"></a>
+                            <a href="https://www.linkedin.com/in/wopara/" target="_blank" rel="noopener noreferrer" class="about-surrounding-image about-surrounding-image-8"><img src="assets/links/linkedin.png" alt="LinkedIn"></a>
+                        </div>
                     </div>
-                    <div>
-                        <div class="stat-val">4</div>
-                        <div class="stat-label">Pricing tiers</div>
-                    </div>
-                    <div>
-                        <div class="stat-val">100%</div>
-                        <div class="stat-label">Done for you</div>
+                    <!-- Glassy card on the right -->
+                    <div class="glassy-card text-center md:text-left">
+                        <h2 class="text-3xl font-bold mb-4 text-[#B7D1E1]">Hi,</h2>
+                        <p class="text-[#B7D1E1]/80 mb-6">I'm Chim Wopara, and i create enterprise solutions with my strong background in Economics, Business and Computer Science.</p>
+                        <div class="mt-8 flex flex-col md:flex-row md:flex-wrap xl:flex-nowrap gap-4 w-full">
+    <a href="https://wopara.com/" target="_blank" rel="noopener noreferrer" aria-label="Wopara Group" class="flex-1 min-w-0 bg-[#3f5268]/40 backdrop-blur-md border border-[#B7D1E1]/20 hover:bg-[#3f5268]/60 text-[#B7D1E1] font-bold py-4 px-6 lg:px-7 xl:px-8 rounded-full cta-button text-lg transition-all duration-300 text-center">
+        <span class="inline md:hidden xl:inline">Wopara Group</span>
+        <span class="hidden md:inline xl:hidden text-3xl leading-none" aria-hidden="true">🎓</span>
+    </a>
+    <button onclick="openContactModal()" aria-label="Talk to me" class="flex-1 min-w-0 bg-[#3f5268]/40 backdrop-blur-md border border-[#B7D1E1]/20 hover:bg-[#3f5268]/60 text-[#B7D1E1] font-bold py-4 px-6 lg:px-7 xl:px-8 rounded-full cta-button text-lg transition-all duration-300 text-center">
+        <span class="inline md:hidden xl:inline">Talk to me</span>
+        <span class="hidden md:inline xl:hidden text-3xl leading-none" aria-hidden="true">📧</span>
+    </button>
+    <a href="https://forms.fillout.com/t/35bB73fVpSus" target="_blank" rel="noopener noreferrer" aria-label="Payment Portal" class="flex-1 min-w-0 bg-[#3f5268]/40 backdrop-blur-md border border-[#B7D1E1]/20 hover:bg-[#3f5268]/60 text-[#B7D1E1] font-bold py-4 px-6 lg:px-7 xl:px-8 rounded-full cta-button text-lg transition-all duration-300 text-center flex items-center justify-center">
+        <span class="inline md:hidden xl:inline">Payment Portal</span>
+        <span class="hidden md:inline xl:hidden text-3xl leading-none" aria-hidden="true">💳</span>
+    </a>
+</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Portfolio -->
-        <section class="portfolio-section" id="portfolio">
-            <div class="section-label">Portfolio</div>
-            <h2>Some of <span class="text-gradient">our work</span></h2>
-            <p class="intro">A sample of sites we have built across industries and budgets.</p>
+        <!-- Projects Sections -->
+        <section id="projects" class="py-20 hero-bg">
 
-            <div class="portfolio-categories">
-
-                <!-- Non-Profit -->
-                <div>
-                    <div class="portfolio-cat-label">Non-Profit</div>
-                    <div class="portfolio-grid">
-                        <a href="https://ivanafoundation.org" target="_blank" class="portfolio-item">
-                            <img src="assets/portfolio/ivana.png" alt="Ivana Foundation" loading="lazy">
-                            <div class="portfolio-item-name">Ivana Foundation</div>
-                        </a>
-                        <a href="#" class="portfolio-item">
-                            <img src="assets/portfolio/godsembassy.png" alt="God's Embassy" loading="lazy">
-                            <div class="portfolio-item-name">God's Embassy</div>
-                        </a>
-                        <a href="https://yegelearning.com" target="_blank" class="portfolio-item">
-                            <img src="assets/portfolio/yege.png" alt="Yege Learning" loading="lazy">
-                            <div class="portfolio-item-name">Yege Learning</div>
-                        </a>
-                        <a href="https://danielsenterprise.com" target="_blank" class="portfolio-item">
-                            <img src="assets/portfolio/dane.png" alt="Daniel's Enterprise" loading="lazy">
-                            <div class="portfolio-item-name">Daniel's Enterprise</div>
-                        </a>
-                    </div>
+            <!--  Business Partnerships (Websites) -->
+            <div class="mb-16 fade-in-up">
+                <h2 class="text-3xl font-bold mb-6 px-6"> Business Partnerships</h2>
+                <div id="websites-grid" class="flex flex-nowrap gap-6 pb-4 px-6 scrollbar-hide">
+                    <!-- Projects will be dynamically inserted here -->
                 </div>
-
-                <!-- Business -->
-                <div>
-                    <div class="portfolio-cat-label">Business</div>
-                    <div class="portfolio-grid">
-                        <a href="https://nairatraffic.com" target="_blank" class="portfolio-item">
-                            <img src="assets/portfolio/nairatraffic.png" alt="NairaTraffic" loading="lazy">
-                            <div class="portfolio-item-name">NairaTraffic</div>
-                        </a>
-                        <a href="https://pautacos.com" target="_blank" class="portfolio-item">
-                            <img src="assets/portfolio/pautacos.png" alt="Pautacos" loading="lazy">
-                            <div class="portfolio-item-name">Pautacos</div>
-                        </a>
-                        <a href="https://goodsline.com" target="_blank" class="portfolio-item">
-                            <img src="assets/portfolio/goodsline.png" alt="Goodsline" loading="lazy">
-                            <div class="portfolio-item-name">Goodsline</div>
-                        </a>
-                        <a href="https://lenslore.ca" target="_blank" class="portfolio-item">
-                            <img src="assets/portfolio/lenslore.png" alt="Lenslore" loading="lazy">
-                            <div class="portfolio-item-name">Lenslore</div>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Creative -->
-                <div>
-                    <div class="portfolio-cat-label">Creative</div>
-                    <div class="portfolio-grid">
-                        <a href="https://wopara.com/chimwopara/fashion" target="_blank" class="portfolio-item">
-                            <img src="assets/portfolio/cw.png" alt="Chim Wopara" loading="lazy">
-                            <div class="portfolio-item-name">Chim Wopara</div>
-                        </a>
-                        <a href="#" class="portfolio-item">
-                            <img src="assets/portfolio/runneth.png" alt="Runneth" loading="lazy">
-                            <div class="portfolio-item-name">Runneth</div>
-                        </a>
-                        <a href="#" class="portfolio-item">
-                            <img src="assets/portfolio/plummett.png" alt="Plummet" loading="lazy">
-                            <div class="portfolio-item-name">Plummet</div>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Tech & App -->
-                <div>
-                    <div class="portfolio-cat-label">Tech & App</div>
-                    <div class="portfolio-grid">
-                        <a href="/services/chimos/src/main" class="portfolio-item">
-                            <img src="assets/portfolio/chimos.png" alt="Chimos" loading="lazy">
-                            <div class="portfolio-item-name">Chimos</div>
-                        </a>
-                        <a href="https://devgameshow.com" target="_blank" class="portfolio-item">
-                            <img src="assets/portfolio/dgs.png" alt="DevGameShow" loading="lazy">
-                            <div class="portfolio-item-name">DevGameShow</div>
-                        </a>
-                        <a href="https://clubbelong.com" target="_blank" class="portfolio-item">
-                            <img src="assets/portfolio/cb.png" alt="ClubBelong" loading="lazy">
-                            <div class="portfolio-item-name">ClubBelong</div>
-                        </a>
-                        <a href="https://fromsupply.com" target="_blank" class="portfolio-item">
-                            <img src="assets/portfolio/fs.png" alt="FromSupply" loading="lazy">
-                            <div class="portfolio-item-name">FromSupply</div>
-                        </a>
-                    </div>
-                </div>
-
             </div>
+
+            <!-- Xcode iPhone Apps -->
+            <div class="mb-16 fade-in-up">
+                <h2 class="text-3xl font-bold mb-6 px-6">Xcode iPhone Apps</h2>
+                <div id="apps-grid" class="flex flex-nowrap gap-6 pb-4 px-6 scrollbar-hide">
+                    <!-- Projects will be dynamically inserted here -->
+                </div>
+            </div>
+
+            <!-- HTML, CSS and JavaScript Games -->
+            <div class="mb-16 fade-in-up">
+                <h2 class="text-3xl font-bold mb-6 px-6">HTML, CSS and JavaScript Games</h2>
+                <div id="games-grid" class="flex flex-nowrap gap-6 pb-4 px-6 scrollbar-hide">
+                    <!-- Projects will be dynamically inserted here -->
+                </div>
+            </div>
+
+            <!-- Orphans in Tech -->
+            <div class="mb-8 fade-in-up">
+                <h2 class="text-3xl font-bold mb-4 px-6">Orphans in Tech</h2>
+                <p class="text-[#B7D1E1]/70 px-6 mb-6 max-w-3xl">Here we will display companies that chose to empower orphans that have been extensively trained up to the <a href="https://wopara.com" target="_blank" rel="noopener noreferrer" class="underline text-[#B7D1E1] hover:text-white transition-colors">Wopara Standard</a>.</p>
+            </div>
+
+            <!-- My Companies -->
+            <div class="mb-8 fade-in-up">
+                <h2 class="text-3xl font-bold mb-6 px-6">My Companies</h2>
+                <div id="myprojects-grid" class="flex flex-nowrap gap-6 pb-4 px-6 scrollbar-hide">
+                    <!-- Projects will be dynamically inserted here -->
+                </div>
+            </div>
+
+            <p class="text-[#B7D1E1]/60 text-sm mt-12 text-center px-6">Some projects are not disclosed here</p>
         </section>
+        
+        <!-- Contact Overlay Modal -->
+        <div id="contact-modal" onclick="closeContactModal()" class="fixed inset-0 z-[90] hidden items-center justify-center" style="background: rgba(27, 35, 48, 0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);">
+            <div class="text-center p-6" onclick="event.stopPropagation()">
+                <h2 class="text-4xl font-bold mb-8 text-[#B7D1E1]">Let's talk</h2>
+                <div class="flex flex-col gap-4 max-w-md mx-auto">
+                    <button onclick="sendHireEmail()" class="bg-[#3f5268] hover:bg-[#B7D1E1] hover:text-[#1B2330] text-[#B7D1E1] font-bold py-4 px-8 rounded-lg text-lg transition-all duration-300">
+                        Hire me for a project
+                    </button>
+                    <button onclick="sendPartnerEmail()" class="bg-[#3f5268] hover:bg-[#B7D1E1] hover:text-[#1B2330] text-[#B7D1E1] font-bold py-4 px-8 rounded-lg text-lg transition-all duration-300">
+                        Partner with me on a project
+                    </button>
+                    <button onclick="sendOtherEmail()" class="bg-[#3f5268] hover:bg-[#B7D1E1] hover:text-[#1B2330] text-[#B7D1E1] font-bold py-4 px-8 rounded-lg text-lg transition-all duration-300">
+    Other inquiries
+</button>
 
-        <!-- Pricing -->
-        <section class="pricing-section" id="pricing">
-            <div class="heading">
-                <div class="section-label" style="justify-content: center;">Pricing</div>
-                <h2>How complex is <span class="text-gradient">your website?</span></h2>
-                <p class="sub">Pick the tier that fits. No hidden fees, no surprise invoices.</p>
-            </div>
-
-            <div class="pricing-grid">
-
-                <!-- Non Profit -->
-                <div class="plan-card">
-                    <span class="plan-badge badge-green">Non Profit</span>
-                    <div class="plan-name">Non Profit</div>
-                    <div class="plan-price"><sup>~$</sup>20</div>
-                    <div class="plan-period">per month</div>
-                    <div class="plan-divider"></div>
-                    <p class="plan-desc">Share your mission and vision at the best possible quality. Let's make the world a better place together.</p>
-                    <a href="https://forms.fillout.com/t/35bB73fVpSus" target="_blank" class="plan-cta plan-cta-outline">Get Started</a>
-                </div>
-
-                <!-- Professional -->
-                <div class="plan-card">
-                    <span class="plan-badge badge-blue">Professional</span>
-                    <div class="plan-name">Professional</div>
-                    <div class="plan-price"><sup>~$</sup>60</div>
-                    <div class="plan-period">per month</div>
-                    <div class="plan-divider"></div>
-                    <p class="plan-desc">Simple, responsive, and easy to use. This will bring your dream portfolio to life, complete with photos, videos, links, and a quick response time.</p>
-                    <a href="https://forms.fillout.com/t/35bB73fVpSus" target="_blank" class="plan-cta plan-cta-outline">Get Started</a>
-                </div>
-
-                <!-- Beautiful -->
-                <div class="plan-card featured">
-                    <span class="plan-badge badge-purple">Beautiful</span>
-                    <div class="plan-name">Beautiful</div>
-                    <div class="plan-price"><sup>~$</sup>200</div>
-                    <div class="plan-period">per month</div>
-                    <div class="plan-divider"></div>
-                    <p class="plan-desc">Advanced and perfectly tuned to match you. You see yourself as creative and have high standards. Every idea you have will be executed exactly how you want it.</p>
-                    <a href="https://forms.fillout.com/t/35bB73fVpSus" target="_blank" class="plan-cta plan-cta-solid">Get Started</a>
-                </div>
-
-                <!-- Business -->
-                <div class="plan-card">
-                    <span class="plan-badge badge-orange">Business</span>
-                    <div class="plan-name">Business</div>
-                    <div class="plan-price"><sup>~$</sup>700</div>
-                    <div class="plan-period">per month</div>
-                    <div class="plan-divider"></div>
-                    <p class="plan-desc">Industry-standard SEO, sales conversion-focused design. We will get your website ranking in Google and AI search, with custom onboarding and shopping features built for impact.</p>
-                    <a href="https://forms.fillout.com/t/35bB73fVpSus" target="_blank" class="plan-cta plan-cta-outline">Get Started</a>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- Process -->
-        <section class="process-section">
-            <div class="section-label">How it works</div>
-            <h2>From idea <span class="text-gradient">to live site</span></h2>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-num">Step 01</div>
-                    <div class="step-title">Tell us what you need</div>
-                    <p class="step-desc">Fill out a short form describing your project, goals, and the tier you have in mind. No technical knowledge required.</p>
-                </div>
-                <div class="step">
-                    <div class="step-num">Step 02</div>
-                    <div class="step-title">We design and build</div>
-                    <p class="step-desc">We handle everything: design, development, and content setup. You will get a preview before anything goes live.</p>
-                </div>
-                <div class="step">
-                    <div class="step-num">Step 03</div>
-                    <div class="step-title">You go live</div>
-                    <p class="step-desc">Once you approve, your site launches. We stay on monthly to keep it updated and running smoothly.</p>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- Footer -->
-        <footer>
-            <span class="footer-copy">&copy; 2026 Wopara Group. All rights reserved.</span>
-            <div class="footer-links">
-                <a href="https://wopara.com">Wopara Group</a>
-                <a href="https://wopara.com/terms.html">Terms</a>
-                <a href="https://wopara.com/privacy.html">Privacy</a>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-bg border-t border-[#3f5268]">
+        <div class="container mx-auto px-6 py-12 relative z-10">
+
+            <div class="text-center text-[#B7D1E1]/60 text-sm">
+                <p>&copy; <span id="year"></span> Chim Wopara Enterprises. All Rights Reserved.</p>
+                <p class="mt-2">
+                    <a href="src/system/terms.html#privacy" class="hover:text-[#B7D1E1]">Privacy Policy</a>
+                    <span class="mx-2">&middot;</span>
+                    <a href="src/system/terms.html#terms" class="hover:text-[#B7D1E1]">Terms of Service</a>
+                </p>
             </div>
-        </footer>
+        </div>
+    </footer>
+    
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- DATA ---
+            const projects = [
+                { name: "Ivana Foundation", date: "February 2026", description: "Non profit organization for Making great differences in little ways. Restoring hope through Christ-centered compassion in the hardest places.", category: "websites", image: "assets/portfolio/ivana.png", url: "https://ivanafoundation.org" },
+                { name: "YegeLearning.com", date: "February 2026", description: "Yege Learning is built for students who need more than worksheets and grades.", category: "websites", image: "assets/portfolio/yege.png", url: "https://yegelearning.com" },
+                { name: "Daniel's Enterprise", date: "January 2026", description: "A kingdom-based platform raising, training and empowering individuals with the right set of tools for their next opportunities.", category: "websites", image: "assets/portfolio/dane.png", url: "https://danielsenterprise.com" },
+                { name: "FlatPurse Business", date: "June 2025 - September 2025", description: "Front-end development using HTML, CSS, and JavaScript for a business-focused web application.", category: "websites", image: "assets/portfolio/flatpurse.png", url: "https://www.linkedin.com/company/flatpurse/posts/?feedView=all" },
+                { name: "Prastfarms.com", date: "April 2023 - November 2023", description: "Full-stack platform for creating, editing, and monitoring investments using Google App Scripts, Sheets, HTML, CSS, and JavaScript.", category: "websites", image: "assets/portfolio/prast.png", url: "https://prastfarms.com" },
+                { name: "Lenslore.ca", date: "July 2025 - August 2025", description: "A personal portfolio and sales leads website with great SEO, mail presets, and a PDF generator.", category: "websites", image: "assets/portfolio/lenslore.png", url: "https://lenslore.ca" },
+                { name: "culyeimmigrationservices.com", date: "September 2025 - October 2025", description: "Complete website redesign for an immigration company, integrating a Stripe payment system with secure backend functions.", category: "websites", image: "assets/portfolio/culye.png", url: "https://culyeimmigrationservices.com" },
+                { name: "bodidris.org", date: "August 2025 - September 2025", description: "Personal portfolio and sales leads website with great SEO and mail presets.", category: "websites", image: "assets/portfolio/bod.png", url: "https://bodidris.org" },
+                { name: "God's Embassy Church App", date: "November 2024 - February 2025", description: "An innovative app for a more personal church experience, fostering community and engagement.", category: "apps", image: "assets/portfolio/godsembassy.png" },
+                { name: "234Stones", date: "Nov 2023 - Present", description: "Jewelry store for which I designed branding and led marketing campaigns to drive sales.", category: "apps", image: "assets/portfolio/stones.png" },
+                { name: "MinuteDash.org", date: "January 2026", description: "Story based 2d, 3d, pov maze multiplayer game.", category: "games", image: "assets/portfolio/md.png", url: "https://minutedash.org" },
+                { name: "Falling Cards", date: "2025", description: "Maths game for increasing arithmetics skills.", category: "games", image: "assets/portfolio/falling.png", url: "https://chimwopara.github.io/fallingcards/" },
+                { name: "Naija Whot", date: "July 2025", description: "Multiplayer nigerian whot styles game.", category: "games", image: "assets/portfolio/whot.png", url: "https://chimwopara.github.io/whotwhot/" },
+                { name: "Chim Maze", date: "2025", description: "A flappy bird style game with a twist for academic purposes.", category: "games", image: "assets/portfolio/maze.png", url: "https://chimwopara.github.io/chimmaze/" },
+                { name: "Chim Type", date: "2025", description: "Typing game to increase speed of typing without looking at keyboard with guided gestures.", category: "games", image: "assets/portfolio/chimtype.png" },
+                { name: "Dev Game Show", date: "November 2025", description: "AI developers gameshow.", category: "myprojects", image: "assets/portfolio/dgs.png", url: "https://devgameshow.com" },
+                { name: "Fromsupply", date: "January 2023", description: "AI Concierge service.", category: "myprojects", image: "assets/portfolio/fs.png", url: "https://fromsupply.com" },
+                { name: "Pautacos", date: "September 2025", description: "Health focused chef network.", category: "myprojects", image: "assets/portfolio/pautacos.png", url: "https://pautacos.com" },
+                { name: "Wopara", date: "June 2025", description: "AI literacy company.", category: "myprojects", image: "assets/portfolio/cw.png", url: "https://wopara.com" },
+                { name: "Clubbelong", date: "November 2025", description: "Interactive livestreams and interactive movies.", category: "myprojects", image: "assets/portfolio/cb.png", url: "https://clubbelong.com" },
+                { name: "Chimos", date: "May 2025", description: "Custom operating systems simulator.", category: "myprojects", image: "assets/portfolio/chimos.png", url: "https://chimwopara.com/chimos/src/main/index.html" },
+                { name: "Nairatraffic", date: "January 2026", description: "Best path arbitrage finder.", category: "myprojects", image: "assets/portfolio/nairatraffic.png", url: "https://nairatraffic.com" },
+                { name: "Goodsline", date: "Summer 2025", description: "Search for products sentiment and popularity graphs across the internet.", category: "myprojects", image: "assets/portfolio/goodsline.png", url: "https://goodsline.com" },
+                { name: "Chimos", date: "June 2023 - Present", description: "A marketplace for enterprise apps that uses a reserves system to encourage productivity.", category: "myprojects", image: "assets/portfolio/chimos.png", url: "https://chimwopara.com/chimos/src/main/index.html" },
+                { name: "Chim Wopara Clothing", date: "May 2022", description: "Designed a culturally-inspired clothing brand, handling everything from concept to visual identity.", category: "myprojects", image: "assets/portfolio/cw.png" },
+                { name: "Acters", date: "Feb 2024 - Present", description: "Script writing for a movie playable on my interactive media platform.", category: "myprojects", image: "assets/portfolio/acters.png" },
+                { name: "Structured Prompts and Logic", date: "Mar 2024 - Present", description: "The world's first universal context-based prompt programming syntax language; allowing users to represent any piece of code in a structured prompt.", category: "myprojects", image: "assets/portfolio/prompts.png" },
+                { name: "Falling Cards", date: "Apr 2024 - Present", description: "An interactive game that teaches users how to manage scarce resources and perform quick maths under pressure.", category: "games", image: "assets/portfolio/falling.png", url: "https://chimwopara.github.io/fallingcards/" },
+                { name: "GunvGun", date: "Aug 2024 - Present", description: "A fun 2D multiplayer game with scarce resources, inflation, and other economic principles.", category: "games", image: "assets/portfolio/gunvgun.png" },
+                { name: "Runneth", date: "Aug 2024 - Present", description: "A 3D Roblox multiplayer game with scarce resources, inflation, and other economic principles.", category: "games", image: "assets/portfolio/runneth.png" },
+                { name: "Plummet", date: "Aug 2024 - Present", description: "Another 3D Roblox multiplayer game focused on survival, scarcity, and economic principles.", category: "games", image: "assets/portfolio/plummett.png" },
+                { name: "Chim Type", date: "Jan 2025 - Present", description: "A website for learning to type faster, designed for people that require speed with keyboards to excel.", category: "games", image: "assets/portfolio/chimtype.png" },
+                { name: "Chim Maze", date: "Feb 2025 - Present", description: "A gamified learning platform that lets users test their ability to recall information by playing games with their own notes.", category: "games", image: "assets/portfolio/maze.png", url: "https://chimwopara.github.io/chimmaze/" },
+                { name: "Fs Logic Code", date: "Apr 2025", description: "An educational platform for learning to code using a points system and option boxes to build muscle memory.", category: "websites", image: "assets/portfolio/fs.png" },
+                { name: "Fs Mall", date: "May 2025", description: "A high-end shopping platform for domestic products, prioritizing a luxurious gift-giving and delivery experience.", category: "websites", image: "assets/portfolio/fs.png" },
+                { name: "Chim Farms", date: "May 2025", description: "Encouraging foreign direct investment into agriculture via blockchain-represented assets and real-time 3D farm monitoring.", category: "myprojects", image: "assets/portfolio/fs.png" },
+                { name: "Chimron Calls", date: "May 2025", description: "An AI solution that enables inbound AI customer support calls and outbound AI lead follow-up calls.", category: "myprojects", image: "assets/portfolio/chimron.png" },
+                { name: "Fs Browser", date: "May 2025", description: "AI software that analyzes 5 years of social feedback on products to create relevancy and sentiment graphs.", category: "myprojects", image: "assets/portfolio/fs.png" },
+                { name: "Pautacos.com", date: "June 2025", description: "Created media and website for a food delivery network that handles payments, logistics, and discovery.", category: "websites", image: "assets/portfolio/pautacos.png", url: "https://pautacos.com" },
+                { name: "Devgameshow.com", date: "July 2025", description: "Created media and website for a tech game show, managing payments, logistics, and content delivery.", category: "websites", image: "assets/portfolio/dgs.png", url: "https://devgameshow.com" },
+                { name: "Whot Whot", date: "Aug 2025", description: "A digital version of the legacy Nigerian card game 'Naija Whot Whot' with multiplayer and single-player modes, using Firebase for server-side functions.", category: "games", image: "assets/portfolio/whot.png", url: "https://chimwopara.github.io/whotwhot/" },
+                { name: "Eventspot", date: "2025", description: "A platform for discovering and sharing local events, connecting communities through shared experiences.", category: "myprojects", image: "assets/portfolio/fs.png", url: "https://chimwopara.github.io/eventspot/" },
+                { name: "MCP Servant", date: "2025", description: "Automated job and grant application tool that generates a tailored resume and cover letter for each opportunity at low cost, maximizing reach with minimal effort.", category: "myprojects", image: "assets/portfolio/fs.png" },
+                { name: "HomeMUA", date: "2025", description: "A marketplace connecting professional makeup artists with clients for at-home beauty services, bringing the salon experience to your door.", category: "myprojects", image: "assets/portfolio/fs.png" },
+                { name: "Dr Morgan", date: "2025", description: "Brand and website for a professional consultancy company, communicating expertise and driving client engagement.", category: "websites", image: "assets/portfolio/fs.png" },
+            ];
 
-    </div>
+            // --- RENDER ALL PROJECTS ---
+            function renderAllProjects() {
+                const categories = ['websites', 'apps', 'games', 'myprojects'];
+                
+                categories.forEach(category => {
+                    const grid = document.getElementById(`${category}-grid`);
+                    if (!grid) return;
+                    
+                    grid.innerHTML = '';
+                    const filteredProjects = projects.filter(p => p.category === category);
+                    
+                    filteredProjects.forEach((project, index) => {
+                        const isLink = !!project.url;
+                        const card = isLink ? document.createElement('a') : document.createElement('div');
+                        if (isLink) {
+                            card.href = project.url;
+                            card.target = '_blank';
+                            card.rel = 'noopener noreferrer';
+                        }
+                        card.className = `project-card project-card-horizontal rounded-xl overflow-hidden fade-in-up flex flex-col flex-shrink-0`;
+                        card.innerHTML = `
+                            <img src="${project.image}" alt="${project.name}" class="w-full h-40 object-cover" loading="lazy" decoding="async">
+                            <div class="p-4 flex flex-col">
+                                <h3 class="text-base font-bold mb-1">${project.name}</h3>
+                                <p class="text-xs text-[#B7D1E1]/80 mb-2 line-clamp-3">${project.description}</p>
+                                <p class="text-xs text-[#B7D1E1] font-medium mt-auto">${project.date}</p>
+                            </div>
+                        `;
+                        grid.appendChild(card);
+                    });
+                });
+                
+                observeElements();
+            }
 
+            // --- CONTACT MODAL FUNCTIONS ---
+            window.openContactModal = function() {
+                document.getElementById('contact-modal').classList.remove('hidden');
+                document.getElementById('contact-modal').classList.add('flex');
+            }
+
+            window.closeContactModal = function() {
+                document.getElementById('contact-modal').classList.add('hidden');
+                document.getElementById('contact-modal').classList.remove('flex');
+            }
+
+            window.sendHireEmail = function() {
+                const email = 'chim' + '@' + 'chimwopara.com';
+                const subject = encodeURIComponent('Hire Request: Project Inquiry');
+                const body = encodeURIComponent('Hi Chim,\n\nI would like to hire you for a project.\n\nProject details:\n\n\n\nI understand you will get back to me within 24 hours.\n\nThank you!');
+                window.location.href = 'mail' + 'to:' + email + '?subject=' + subject + '&body=' + body;
+            }
+
+            window.sendPartnerEmail = function() {
+                const email = 'chim' + '@' + 'chimwopara.com';
+                const subject = encodeURIComponent('Partnership Inquiry');
+                const body = encodeURIComponent('Hi Chim,\n\nI would like to partner with you on a project.\n\nPartnership details:\n\n\n\nI understand you will get back to me within 24 hours.\n\nThank you!');
+                window.location.href = 'mail' + 'to:' + email + '?subject=' + subject + '&body=' + body;
+            }
+
+            window.sendOtherEmail = function() {
+                const email = 'chim' + '@' + 'chimwopara.com';
+                const subject = encodeURIComponent('General Inquiry');
+                const body = encodeURIComponent('Hi Chim,\n\n\n\nI understand you will get back to me within 24 hours.\n\nThank you!');
+                window.location.href = 'mail' + 'to:' + email + '?subject=' + subject + '&body=' + body;
+            }
+
+            // --- SCROLL ANIMATIONS ---
+            function observeElements() {
+                const elementsToAnimate = document.querySelectorAll('.fade-in-up');
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                        }
+                    });
+                }, { threshold: 0.1 });
+                elementsToAnimate.forEach(el => observer.observe(el));
+            }
+
+            // --- INITIALIZATION ---
+            document.getElementById('year').textContent = new Date().getFullYear();
+            
+            // Set last updated date dynamically
+            const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            const now = new Date();
+            document.getElementById('last-updated-date').textContent = months[now.getMonth()] + ' ' + now.getFullYear();
+            
+            renderAllProjects();
+            observeElements();
+
+            // --- LAUNCH OVERLAY ---
+            const launchOverlay = document.getElementById('launch-overlay');
+            const dismissOverlay = () => {
+                launchOverlay.style.opacity = '0';
+                launchOverlay.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => {
+                    launchOverlay.style.display = 'none';
+                }, 500);
+            };
+            launchOverlay.addEventListener('click', dismissOverlay);
+            setTimeout(dismissOverlay, 1000);
+        });
+    </script>
 </body>
 </html>
