@@ -77,7 +77,7 @@ const productScenes = {
  'Stopwatch': [C(70,46,27)+P('M63 8H77M70 8V19M94 22l8-8M99 13l6 6'), P('M70 46V25'), '0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}']
 };
 function productVisual(project) {
- const scene = productScenes[project.name];
+ const scene = productScenes[project.visualName || project.name];
  if (!scene) throw new Error('Add a dedicated SVG scene for ' + project.name);
  const slug = 'product-' + project.name.toLowerCase().replace(/[^a-z0-9]+/g,'-');
  return `<svg class="product-svg" data-product-scene="${slug}" viewBox="0 0 140 86" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><style>@keyframes ${slug}{${scene[2]}}.${slug}{animation:${slug} 5.6s ease-in-out infinite;transform-origin:70px 43px}</style>${scene[0]}<g class="product-motion ${slug}">${scene[1]}</g></svg>`;

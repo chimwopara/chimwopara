@@ -170,3 +170,14 @@ if (browserIndex >= 0 && browserPosition >= 0) {
  const [browser] = projects.splice(browserIndex, 1);
  projects.splice(Math.min(browserPosition, projects.length), 0, browser);
 }
+
+// Public product names carry the Wopara brand; source identities remain stable.
+const currentWoparaProducts = new Set(['Forex', 'Verify', 'Mazey', 'Chim Type', 'Whot Whot']);
+projects.forEach(project => {
+ const isWoparaProduct = ['machine', 'spaceship', 'ecosystem', 'woparagames'].includes(project.category) || currentWoparaProducts.has(project.name);
+ project.visualName = project.name;
+ if (isWoparaProduct && !project.name.startsWith('Wopara ')) {
+  project.name = 'Wopara ' + project.name;
+ }
+ if (project.launchLabel && isWoparaProduct) project.launchLabel = 'Open ' + project.name;
+});
