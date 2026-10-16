@@ -206,3 +206,12 @@ body>footer{padding:15px 0}.footer-top{padding:20px 0}
 #about,#projects,#fashion,#research{scroll-margin-top:88px}
 #portfolio-tabs{scroll-margin-top:0}
 @media(max-width:700px){.portfolio-tabs{gap:10px;justify-content:space-between;padding:13px 15px}.portfolio-tabs button{font-size:10px;padding:9px 0}.tab-panel>.section,.tab-panel>.about{width:calc(100% - 40px)}.civic-interest>p{font-size:14px}#about,#projects,#fashion,#research{scroll-margin-top:65px}}
+.case-title{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:12px}
+.case-title h3{font-size:29px;font-weight:500;letter-spacing:-.9px;line-height:1.2;overflow-wrap:anywhere;min-width:0}
+.product-svg{width:124px;height:76px;flex:0 0 124px;color:var(--blue)}
+.product-svg .svg-muted{opacity:.3}
+@media(max-width:700px){.product-svg{width:95px;height:65px;flex-basis:95px}.case-title h3{font-size:26px}}
+@media(prefers-reduced-motion:reduce){.product-svg *{animation:none!important;stroke-dashoffset:0!important}}
+.product-svg .product-motion{animation-play-state:paused}
+.is-in-view .product-svg .product-motion{animation-play-state:running}
+@media(prefers-reduced-motion:reduce){.product-svg .product-motion{animation:none!important}}

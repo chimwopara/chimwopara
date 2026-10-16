@@ -147,3 +147,26 @@ projects.forEach(project => {
  const hay = [project.name, project.description, ...project.features].join(' ');
  project.capabilities = capabilityGroups.filter(group => group.words.test(hay)).map(group => group.id);
 });
+
+// Current naming and scope corrections (October 16, 2026).
+const browserPosition = projects.findIndex(project => project.name === 'Fs Browser');
+for (let i = projects.length - 1; i >= 0; i--) {
+ const project = projects[i];
+ if (project.name === 'Wopara Spaceship' || project.name === 'Runneth' ||
+     (project.name === 'Plummet' && project.category === 'games') ||
+     project.name === 'Fs Mall' || project.name === 'Fs Browser') {
+  projects.splice(i, 1);
+ }
+}
+const productRenames = { Nairatraffic: 'Forex', 'Family Verifier': 'Verify' };
+projects.forEach(project => {
+ if (productRenames[project.name]) project.name = productRenames[project.name];
+ if (project.name === 'Forex') project.launchLabel = 'Open Forex';
+});
+// Browser already has the current implementation profile. Retire its duplicate
+// historical Fs Browser concept rather than duplicating the same product.
+const browserIndex = projects.findIndex(project => project.name === 'Browser');
+if (browserIndex >= 0 && browserPosition >= 0) {
+ const [browser] = projects.splice(browserIndex, 1);
+ projects.splice(Math.min(browserPosition, projects.length), 0, browser);
+}

@@ -69,15 +69,19 @@ function layoutProjectCards() {
  projectList.style.height = Math.max(...heights) - gap + 'px';
 }
 const projectCardObserver = new ResizeObserver(scheduleProjectLayout);
+const productMotionObserver = new IntersectionObserver(entries => {
+ entries.forEach(entry => entry.target.classList.toggle('is-in-view', entry.isIntersecting));
+}, { rootMargin: '80px' });
 window.addEventListener('resize', scheduleProjectLayout);
 document.fonts.ready.then(scheduleProjectLayout);
 function renderProjects() {
  projectCardObserver.disconnect();
+ productMotionObserver.disconnect();
  const filtered = projects.filter(p => (projectCategory === 'all' || p.category === projectCategory) && (activeCapability === 'all' || p.capabilities.includes(activeCapability)) && (!projectQuery || [p.name, p.description, p.build, labels[p.category], ...p.features, ...p.stack].join(' ').toLowerCase().includes(projectQuery)));
  document.querySelector('#project-list').replaceChildren(...filtered.map(p => {
   const row = document.createElement('article'); row.className = 'project-case';
   row.innerHTML = `<div class="case-top"><span class="eyebrow">${escapeHTML(p.catalogType || labels[p.category])}</span><span class="case-number">${String(projects.indexOf(p)+1).padStart(2,'0')}</span></div>
-    <h3>${escapeHTML(p.name)}</h3><p class="case-purpose">${escapeHTML(p.description)}</p>${p.context ? `<p class="case-context">${escapeHTML(p.context)}</p>` : ""}
+    <div class="case-title"><h3>${escapeHTML(p.name)}</h3>${productVisual(p)}</div><p class="case-purpose">${escapeHTML(p.description)}</p>${p.context ? `<p class="case-context">${escapeHTML(p.context)}</p>` : ""}
     <h4>What you can do</h4>${renderFeatureList(p, 'case-features')}
     ${p.example ? `<div class="case-example"><h4>Example use</h4><p>${escapeHTML(p.example)}</p></div>` : ""}<div class="case-engineering"><h4>Engineering considerations</h4><p>${escapeHTML(p.challenge)}</p></div>
     <details class="case-build"><summary>How it was built <span>+</span></summary><p>${escapeHTML(p.build)}</p>${p.note ? `<p class="small muted">${escapeHTML(p.note)}</p>` : ''}</details>
@@ -91,7 +95,7 @@ function renderProjects() {
  empty.textContent = 'No projects match. Try another search or category.';
  document.querySelector('#project-list').append(empty);
 }
- projectList.querySelectorAll('.project-case').forEach(card => projectCardObserver.observe(card));
+ projectList.querySelectorAll('.project-case').forEach(card =>  { projectCardObserver.observe(card); productMotionObserver.observe(card); });
  scheduleProjectLayout();
  document.querySelector('#project-status').textContent = `${filtered.length} matching entries · ${activeCapability === 'all' ? 'All features' : capabilityGroups.find(group => group.id === activeCapability).label}`;
 }
