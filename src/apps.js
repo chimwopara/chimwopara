@@ -137,25 +137,5 @@ const builtApps = [
    'Smaller, quieter behaviour on phones.'
   ],
   stack: ['JavaScript', 'SVG', 'CSS', 'FastAPI', 'Stripe', 'Firebase Auth']
- },
- {
-  name: 'Wopara Port',
-  type: 'Work',
-  overview: [
-   'Wopara Port is where students work for paying companies. In the Gap year program a company sets a brief each month, teams compete to deliver it, and the company pays the best team.',
-   'Port also holds the tools a team needs to deliver for a client.'
-  ],
-  inside: [
-   ['Monthly briefs', 'Ten projects across the Gap year program, each with its own team, its own pot of reserves and its own payout. A member whose share is unpaid is paused until it is.'],
-   ['Domains, hosting and email', 'Tools for setting up the domain, hosting and email a client owns, with checks on the health of a live site.'],
-   ['Sites and embeds', 'New sites, existing sites and embeddable pieces that can be placed on a client\'s own page.'],
-   ['Duty free', 'Software that has nothing to do with Wopara, sold outright in money and delivered as a zip.']
-  ],
-  capabilities: [
-   'Payouts divided between the full members of the winning team.',
-   'Server-enforced access, so a paused member cannot edit.',
-   'Prices worked out on the server from the choices made.'
-  ],
-  stack: ['JavaScript', 'FastAPI', 'Firestore', 'Stripe', 'ResellerClub']
  }
 ];
