@@ -104,3 +104,12 @@ document.addEventListener('click', event => {
 window.addEventListener('hashchange', tabFromLocation);
 window.addEventListener('popstate', tabFromLocation);
 tabFromLocation();
+
+// Reveal on scroll, as on the Wopara landing page. Content stays visible if the observer is unavailable.
+function revealOnScroll() {
+ const items = document.querySelectorAll('.section-heading, .about-copy, .initiative, .project-case, .fashion-card, .research-row, .civic-interest > p, .contact-title, .contact-bottom');
+ if (!('IntersectionObserver' in window) || matchMedia('(max-width:640px)').matches) return;
+ const io = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } }), { threshold: .08 });
+ items.forEach(el => { el.classList.add('rv'); io.observe(el); });
+}
+revealOnScroll();
