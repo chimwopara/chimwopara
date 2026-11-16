@@ -7,59 +7,62 @@
 <title>Chim Wopara — Products, systems & a few other things</title>
 <meta name="description" content="The independent work of Chim Wopara. Explore websites, apps, games, research and fashion at the intersection of economics, business and computer science.">
 <link rel="icon" type="image/png" sizes="512x512" href="assets/logo/wopara-white.png">
-<link rel="stylesheet" href="src/style.css?v=5">
+<link rel="stylesheet" href="src/style.css?v=7">
 <script src="src/portfolio-data.js?v=3" defer></script>
 <script src="src/apps.js?v=4" defer></script>
-<script src="src/site.js?v=6" defer></script>
+<script src="src/site.js?v=7" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="header wrap">
-<a class="wordmark" href="#" aria-label="Chim Wopara home"><img class="site-logo" src="assets/logo/wopara-white.png" alt="Wopara logo" width="48" height="48"></a>
-<nav aria-label="Main navigation"><a href="#projects">What I’ve built</a><a href="#about">About</a><a href="#interests">Community efforts</a><a href="#contact">Get in touch ↗</a></nav>
+<header class="header" id="header">
+<a class="mark" href="#" aria-label="Chim Wopara home"><img class="mark-dark" src="assets/logo/wopara-white.png" alt="" width="26" height="26"><img class="mark-light" src="assets/logo/logo.png" alt="" width="26" height="26"></a>
+<nav class="pills" aria-label="Windows"><button type="button" data-win="community" aria-haspopup="dialog" aria-expanded="false">Community</button><button type="button" data-win="research" aria-haspopup="dialog" aria-expanded="false">My research</button><button type="button" class="pill-blue" data-win="inquire" aria-haspopup="dialog" aria-expanded="false">Inquire</button></nav>
 </header>
 <main id="main">
 <section class="hero wrap">
 <div class="hero-image"><img src="assets/me/chim.png" alt="Chim Wopara smiling, wearing sunglasses and a blue shirt" width="992" height="1056" fetchpriority="high"></div>
 <div class="hero-top eyebrow"><span>Software / Business / Culture</span><span>Based in Edmonton, Canada</span></div>
-<div class="hero-copy"><p class="hero-intro">Building companies.<br>Making things that matter to me.</p><h1>CHIM<br>WOPARA</h1></div>
+<div class="hero-copy"><p class="hero-intro">AI Strategy Consultant | Senior Project Manager | AI Educator</p><h1>CHIM<br>WOPARA</h1></div>
 <div class="hero-bottom"><p>Developer, entrepreneur,<br>and a few other things.</p><span class="eyebrow">An independent perspective.</span></div>
 </section>
-<div class="portfolio-tabs" id="portfolio-tabs" role="tablist" aria-label="Explore my portfolio">
-<button id="tab-about" role="tab" aria-controls="panel-about" aria-selected="false" tabindex="-1" data-panel="about">About me</button>
-<button id="tab-projects" role="tab" aria-controls="panel-projects" aria-selected="true" tabindex="0" data-panel="projects">What I’ve built</button>
-<button id="tab-interests" role="tab" aria-controls="panel-interests" aria-selected="false" tabindex="-1" data-panel="interests">Community efforts</button>
-<button id="tab-research" role="tab" aria-controls="panel-research" aria-selected="false" tabindex="-1" data-panel="research">My research</button>
-</div>
-<div class="tab-panel" id="panel-about" role="tabpanel" aria-labelledby="tab-about" tabindex="0" hidden><section id="about" class="about">
-<div class="wrap about-grid"><div><p class="eyebrow">About</p><h2>Economics. <br>Business. <br>Computer science.</h2></div><div class="about-copy"><p>My background sits at the intersection of economics, business, and computer science. My work follows the same curiosity.</p><p>I create enterprise solutions, build my own companies, and make room for experiments in games, design, and culture.</p><a class="text-link" href="https://wopara.com/" target="_blank" rel="noopener noreferrer">Explore Wopara Group ↗</a><div class="initiative"><span class="eyebrow">Orphans in Tech</span><p>A place for companies empowering orphans trained to the Wopara Standard.</p></div></div></div>
-</section></div>
-<div class="tab-panel" id="panel-projects" role="tabpanel" aria-labelledby="tab-projects" tabindex="0"><section id="projects" class="work wrap section">
-<div class="section-heading"><div><p class="eyebrow">Selected projects</p><h2>What I’ve built.</h2></div></div>
+<section id="projects" class="work section">
+<div class="section-heading"><h2>What I’ve built.</h2></div>
 <div id="project-list"></div>
-</section></div>
-<div class="tab-panel" id="panel-interests" role="tabpanel" aria-labelledby="tab-interests" tabindex="0" hidden><section class="section civic-interest wrap">
-<div class="section-heading"><div><p class="eyebrow">Community</p><h2>Wopara Port.</h2></div></div>
-<p>Where students work for paying companies. In the Gap year program a company sets a brief each month, teams compete to deliver it, and the company pays the best team. Earnings beyond a student’s program fees are donated to Orphans in Tech.</p>
-</section><section id="fashion" class="section wrap">
-<div class="section-heading"><div><p class="eyebrow">Clothing & objects</p><h2>Chim Wopara Clothing.</h2></div><div><p>COMB — Culture On My Back<br>CFTW — Culture From The West</p><p class="small muted">Made-to-order pieces. Color, magnetic structure, and a little experimentation.</p></div></div>
+</section>
+<section id="contact" class="contact"><div class="wrap"><p class="eyebrow">Contact</p><a class="contact-title" href="mailto:chim@chimwopara.com">Let’s talk.<span>↗</span></a><div class="contact-bottom"><a href="mailto:chim@chimwopara.com">chim@chimwopara.com</a><div><a href="mailto:chim@chimwopara.com?subject=Project%20inquiry">Start a project ↗</a><a href="mailto:chim@chimwopara.com?subject=Partnership%20inquiry">Partner with me ↗</a></div></div></div></section>
+</main>
+<footer class="wrap"><div class="footer-top"><a class="wordmark" href="#">Chim Wopara</a><div class="socials"><a href="https://github.com/chimwopara">GitHub ↗</a><a href="https://www.linkedin.com/in/wopara/">LinkedIn ↗</a><a href="https://www.instagram.com/mrwopara">Instagram ↗</a><a href="https://youtube.com/@chimwopara">YouTube ↗</a><a href="https://www.tiktok.com/@chimwopara">TikTok ↗</a><a href="https://www.facebook.com/profile.php?id=61579876920080">Facebook ↗</a><a href="https://chat.whatsapp.com/Bn75K4eoSVvLUOylfu9Urt?mode=ems_copy_c">WhatsApp ↗</a></div></div><div class="footer-bottom small muted"><span>© <span id="year"></span> Chim Wopara Enterprises</span><div><a href="src/system/terms.html#privacy">Privacy</a><a href="src/system/terms.html#terms">Terms</a><a href="#">Back to top ↑</a></div></div></footer>
+
+<div id="win-back" hidden></div>
+<aside class="win" id="win-community" role="dialog" aria-modal="true" aria-label="Community" tabindex="-1"><button type="button" class="win-x" data-win-close><span class="d"></span>Close</button><div class="win-scroll"><h2 class="win-h">Community</h2>
+<section class="win-card"><h3>Wopara Port</h3><p>Where students work for paying companies. In the Gap year program a company sets a brief each month, teams compete to deliver it, and the company pays the best team. Earnings beyond a student’s program fees are donated to Orphans in Tech.</p></section>
+<section class="win-card"><h3>Orphans in Tech</h3><p>A place for companies empowering orphans trained to the Wopara Standard.</p></section>
+<section class="win-card" id="fashion"><h3>Chim Wopara Clothing</h3><p>COMB: Culture On My Back<br>CFTW: Culture From The West</p><p>Made-to-order pieces. Color, magnetic structure, and a little experimentation.</p>
 <div class="filters" id="fashion-filters" role="group" aria-label="Filter fashion">
 <button data-category="all" aria-pressed="true">All objects</button><button data-category="tops" aria-pressed="false">Tops</button><button data-category="bottoms" aria-pressed="false">Bottoms</button><button data-category="outerwear" aria-pressed="false">Outerwear</button><button data-category="footwear" aria-pressed="false">Footwear</button><button data-category="headwear" aria-pressed="false">Headwear</button><button data-category="bags" aria-pressed="false">Bags</button>
 </div>
 <div class="fashion-grid" id="fashion-grid"></div>
 <p class="small muted">One-of-one pieces with an NFC chip and serial number. Color themes: Mariana, Mandarin, Botanica, Cosmic, and Opaline.</p>
-</section><section class="section civic-interest wrap">
-<div class="section-heading"><div><p class="eyebrow">Civic</p><h2>Stronger Alberta.</h2></div><a class="text-link" href="https://strongeralberta.ca/" target="_blank" rel="noopener noreferrer">Visit strongeralberta.ca ↗</a></div>
-<p>A campaign against Alberta separatism, exploring the economic risks of leaving Canada, referendum news, history, and ways to get involved.</p>
 </section>
-</div>
-<div class="tab-panel" id="panel-research" role="tabpanel" aria-labelledby="tab-research" tabindex="0" hidden><section id="research" class="research wrap section">
-<div class="section-heading"><div><p class="eyebrow">Papers & books</p><h2>Research</h2></div><p>Research in economics, markets,<br>governance, and incentives.</p></div>
-<div id="research-list"></div>
-</section></div>
-<section id="contact" class="contact"><div class="wrap"><p class="eyebrow">Contact</p><a class="contact-title" href="mailto:chim@chimwopara.com">Let’s talk.<span>↗</span></a><div class="contact-bottom"><a href="mailto:chim@chimwopara.com">chim@chimwopara.com</a><div><a href="mailto:chim@chimwopara.com?subject=Project%20inquiry">Start a project ↗</a><a href="mailto:chim@chimwopara.com?subject=Partnership%20inquiry">Partner with me ↗</a></div></div></div></section>
-</main>
-<footer class="wrap"><div class="footer-top"><a class="wordmark" href="#">Chim Wopara</a><div class="socials"><a href="https://github.com/chimwopara">GitHub ↗</a><a href="https://www.linkedin.com/in/wopara/">LinkedIn ↗</a><a href="https://www.instagram.com/mrwopara">Instagram ↗</a><a href="https://youtube.com/@chimwopara">YouTube ↗</a><a href="https://www.tiktok.com/@chimwopara">TikTok ↗</a><a href="https://www.facebook.com/profile.php?id=61579876920080">Facebook ↗</a><a href="https://chat.whatsapp.com/Bn75K4eoSVvLUOylfu9Urt?mode=ems_copy_c">WhatsApp ↗</a></div></div><div class="footer-bottom small muted"><span>© <span id="year"></span> Chim Wopara Enterprises</span><div><a href="src/system/terms.html#privacy">Privacy</a><a href="src/system/terms.html#terms">Terms</a><a href="#">Back to top ↑</a></div></div></footer>
+<section class="win-card"><h3>Stronger Alberta</h3><p>A campaign against Alberta separatism, exploring the economic risks of leaving Canada, referendum news, history, and ways to get involved.</p><a class="text-link" href="https://strongeralberta.ca/" target="_blank" rel="noopener noreferrer">Visit strongeralberta.ca ↗</a></section>
+</div></aside>
+<aside class="win" id="win-research" role="dialog" aria-modal="true" aria-label="My research" tabindex="-1"><button type="button" class="win-x" data-win-close><span class="d"></span>Close</button><div class="win-scroll"><h2 class="win-h">My research</h2><p class="win-lede">Research in economics, markets, governance, and incentives.</p><div id="research-list"></div></div></aside>
+<aside class="win" id="win-inquire" role="dialog" aria-modal="true" aria-label="Inquire" tabindex="-1"><button type="button" class="win-x" data-win-close><span class="d"></span>Close</button><div class="win-scroll"><h2 class="win-h">Inquire</h2>
+<div class="inq-stage"><img class="inq-photo" src="assets/inquire/chim.png" alt="Chim Wopara" width="400" height="400"><div class="inq-ring">
+<a class="inq-ic" style="left:43.75%;top:1.75%;width:12.5%" href="https://github.com/chimwopara" target="_blank" rel="noopener" title="GitHub"><img src="assets/inquire/github.png" alt="GitHub"></a>
+<a class="inq-ic" style="left:79.5%;top:22.13%;width:13.75%" href="https://www.instagram.com/mrwopara" target="_blank" rel="noopener" title="Instagram"><img src="assets/inquire/instagram.png" alt="Instagram"></a>
+<a class="inq-ic" style="left:79.87%;top:64.5%;width:13%" href="mailto:chim@wopara.com" title="Mail"><img src="assets/inquire/mail.png" alt="Mail"></a>
+<a class="inq-ic" style="left:43.5%;top:85.5%;width:13%" href="https://www.linkedin.com/in/wopara" target="_blank" rel="noopener" title="LinkedIn"><img src="assets/inquire/linkedin.png" alt="LinkedIn"></a>
+<a class="inq-ic" style="left:7.13%;top:64.5%;width:13%" href="https://wa.me/18259676432" target="_blank" rel="noopener" title="WhatsApp"><img src="assets/inquire/whatsapp.png" alt="WhatsApp"></a>
+<a class="inq-ic" style="left:7.13%;top:22.5%;width:13%" href="sms:+18259676432" title="iMessage"><img src="assets/inquire/imessage.png" alt="iMessage"></a>
+</div></div>
+<section class="win-card inq-card"><h3>Hi,</h3><p>I’m Chim Wopara, and I built the Wopara Platform to transform the minds of our future leaders across different fields.</p><a class="inq-btn" href="https://wopara.com" target="_blank" rel="noopener">wopara.com</a></section>
+<form id="inq-form" class="win-card" novalidate>
+<h3>Your details</h3><div class="inq-fields"><input class="inq-inp" type="text" id="inq-name" placeholder="Full name" autocomplete="name" required><input class="inq-inp" type="email" id="inq-email" placeholder="Email address" autocomplete="email" required></div>
+<h3>What’s this about?</h3><textarea class="inq-inp" id="inq-desc" rows="4" placeholder="Tell us what you’re inquiring about"></textarea>
+<input type="text" id="inq-web" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+<button type="submit" class="inq-send" id="inq-send">Send</button><p class="inq-err" id="inq-err" role="alert"></p><p class="inq-sent" id="inq-sent" role="status"></p>
+</form></div></aside>
 <dialog id="item-dialog" aria-labelledby="dialog-title"><button class="dialog-close" aria-label="Close details">×</button><div id="dialog-content"></div></dialog>
 <noscript><p class="wrap">Enable JavaScript to explore the full project and fashion collections. Contact <a href="mailto:chim@chimwopara.com">chim@chimwopara.com</a> for details.</p></noscript>
 </body>

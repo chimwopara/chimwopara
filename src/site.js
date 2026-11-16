@@ -56,63 +56,76 @@ renderApps(); renderFashion();
 
 
 
-// Tabs share section addresses with header links and support browser history.
-const portfolioTabs = [...document.querySelectorAll('.portfolio-tabs [role="tab"]')];
-const sectionPanels = { about: 'about', projects: 'projects', interests: 'interests', fashion: 'interests', research: 'research' };
-function activatePortfolioTab(name) {
- portfolioTabs.forEach(tab => {
-  const active = tab.dataset.panel === name;
-  tab.setAttribute('aria-selected', String(active));
-  tab.tabIndex = active ? 0 : -1;
-  document.querySelector('#panel-' + tab.dataset.panel).hidden = !active;
- });
+// Side windows: Community, My research and Inquire slide in from the edge, one at a time.
+const winBack = document.querySelector('#win-back');
+const winButtons = [...document.querySelectorAll('.pills [data-win]')];
+let openWin = null, winOpener = null;
+function setWin(name, on, snap) {
+ const win = document.querySelector('#win-' + name); if (!win) return;
+ if (snap) win.classList.add('snap');
+ win.classList.toggle('open', on);
+ if (snap) { void win.offsetWidth; win.classList.remove('snap'); }
+ winButtons.forEach(b => { if (b.dataset.win === name) b.setAttribute('aria-expanded', String(on)); });
 }
-function tabFromLocation() {
- const section = location.hash.slice(1);
- if (sectionPanels[section]) activatePortfolioTab(sectionPanels[section]);
+function openWindow(name, opener) {
+ if (openWin === name) return closeWindow();
+ if (openWin) setWin(openWin, false, true);
+ winOpener = opener || winOpener; openWin = name;
+ winBack.hidden = false; void winBack.offsetWidth; winBack.classList.add('open');
+ document.documentElement.classList.add('win-open');
+ setWin(name, true);
+ const win = document.querySelector('#win-' + name);
+ win.querySelector('.win-scroll').scrollTop = 0;
+ setTimeout(() => { if (openWin === name) win.focus({ preventScroll: true }); }, 60);
 }
-function selectPortfolioTab(tab, scroll = true) {
- activatePortfolioTab(tab.dataset.panel);
- if (location.hash !== '#' + tab.dataset.panel) history.pushState(null, '', '#' + tab.dataset.panel);
- if (scroll) {
-  // The tab row is sticky, so scrolling it into view does nothing once it is stuck: go to the top of the new page instead.
-  const panel = document.querySelector('#panel-' + tab.dataset.panel);
-  const top = panel.getBoundingClientRect().top + window.scrollY - 84;
-  window.scrollTo({ top: Math.max(0, top), behavior: 'instant' });
- }
+function closeWindow() {
+ if (!openWin) return;
+ const name = openWin; openWin = null;
+ setWin(name, false); winBack.classList.remove('open');
+ document.documentElement.classList.remove('win-open');
+ setTimeout(() => { if (!openWin) winBack.hidden = true; }, 520);
+ if (winOpener && winOpener.focus) winOpener.focus({ preventScroll: true });
 }
-portfolioTabs.forEach((tab, index) => {
- tab.addEventListener('click', () => selectPortfolioTab(tab));
- tab.addEventListener('keydown', event => {
-  let next;
-  if (event.key === 'ArrowRight') next = (index + 1) % portfolioTabs.length;
-  if (event.key === 'ArrowLeft') next = (index + portfolioTabs.length - 1) % portfolioTabs.length;
-  if (event.key === 'Home') next = 0;
-  if (event.key === 'End') next = portfolioTabs.length - 1;
-  if (next === undefined) return;
-  event.preventDefault();
-  portfolioTabs[next].focus();
-  selectPortfolioTab(portfolioTabs[next], false);
- });
+winButtons.forEach(b => b.addEventListener('click', () => openWindow(b.dataset.win, b)));
+document.querySelectorAll('[data-win-close]').forEach(b => b.addEventListener('click', closeWindow));
+winBack.addEventListener('click', closeWindow);
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && openWin && !dialog.open) closeWindow(); });
+// Addresses: #community, #research and #inquire open their window; #fashion opens Community.
+const windowHashes = { community: 'community', interests: 'community', fashion: 'community', research: 'research', inquire: 'inquire' };
+function openFromHash() { const name = windowHashes[location.hash.slice(1)]; if (name && openWin !== name) openWindow(name); }
+openFromHash();
+window.addEventListener('hashchange', openFromHash);
+
+// The header's capsules turn dark-on-light once the dark hero is behind us.
+const header = document.querySelector('#header');
+new IntersectionObserver(([entry]) => header.classList.toggle('on-light', !entry.isIntersecting), { rootMargin: '-60px 0px 0px 0px', threshold: 0 }).observe(document.querySelector('.hero'));
+
+// Inquire sends the same note Wopara's Inquire does, through Wopara's mail.
+const inqForm = document.querySelector('#inq-form');
+let inqSending = false;
+inqForm.addEventListener('submit', async event => {
+ event.preventDefault(); if (inqSending) return;
+ const name = inqForm.querySelector('#inq-name').value.trim(), email = inqForm.querySelector('#inq-email').value.trim(), desc = inqForm.querySelector('#inq-desc').value.trim();
+ const err = inqForm.querySelector('#inq-err'), sent = inqForm.querySelector('#inq-sent'), button = inqForm.querySelector('#inq-send');
+ err.textContent = ''; sent.textContent = '';
+ if (!name) { err.textContent = 'Add your name.'; inqForm.querySelector('#inq-name').focus(); return; }
+ if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { err.textContent = 'Enter a valid email address.'; inqForm.querySelector('#inq-email').focus(); return; }
+ if (!desc) { err.textContent = 'Tell us what you’re inquiring about.'; inqForm.querySelector('#inq-desc').focus(); return; }
+ inqSending = true; button.disabled = true; const label = button.textContent; button.textContent = 'Sending...';
+ try {
+  const response = await fetch('https://wopara.com/mail/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+   body: JSON.stringify({ name, email, subject: 'Message from ' + name + ' via chimwopara.com', message: desc, uid: '', website: inqForm.querySelector('#inq-web').value || '' }) });
+  const result = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(result.detail || 'That did not send. Try again.');
+  sent.textContent = 'Sent. A confirmation is on its way to ' + email + ', and we will reply there.';
+  inqForm.querySelector('#inq-desc').value = '';
+ } catch (failure) { err.textContent = failure.message || 'That did not send. Try again.'; }
+ inqSending = false; button.disabled = false; button.textContent = label;
 });
-document.addEventListener('click', event => {
- const link = event.target.closest('a[href^="#"]');
- if (!link) return;
- const section = link.getAttribute('href').slice(1);
- const panel = sectionPanels[section];
- if (!panel) return;
- event.preventDefault();
- activatePortfolioTab(panel);
- if (location.hash !== '#' + section) history.pushState(null, '', '#' + section);
- (document.getElementById(section) || document.querySelector('#portfolio-tabs')).scrollIntoView({ block: 'start' });
-});
-window.addEventListener('hashchange', tabFromLocation);
-window.addEventListener('popstate', tabFromLocation);
-tabFromLocation();
 
 // Reveal on scroll, as on the Wopara landing page. Content stays visible if the observer is unavailable.
 function revealOnScroll() {
- const items = document.querySelectorAll('.section-heading, .about-copy, .initiative, .project-case, .fashion-card, .research-row, .civic-interest > p, .contact-title, .contact-bottom');
+ const items = document.querySelectorAll('.section-heading, .project-case, .fashion-card, .research-row, .contact-title, .contact-bottom');
  if (!('IntersectionObserver' in window) || matchMedia('(max-width:640px)').matches) return;
  const io = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } }), { threshold: .08 });
  items.forEach(el => { el.classList.add('rv'); io.observe(el); });
