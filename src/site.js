@@ -74,7 +74,12 @@ function tabFromLocation() {
 function selectPortfolioTab(tab, scroll = true) {
  activatePortfolioTab(tab.dataset.panel);
  if (location.hash !== '#' + tab.dataset.panel) history.pushState(null, '', '#' + tab.dataset.panel);
- if (scroll) document.querySelector('#portfolio-tabs').scrollIntoView({ block: 'start' });
+ if (scroll) {
+  // The tab row is sticky, so scrolling it into view does nothing once it is stuck: go to the top of the new page instead.
+  const panel = document.querySelector('#panel-' + tab.dataset.panel);
+  const top = panel.getBoundingClientRect().top + window.scrollY - 84;
+  window.scrollTo({ top: Math.max(0, top), behavior: 'instant' });
+ }
 }
 portfolioTabs.forEach((tab, index) => {
  tab.addEventListener('click', () => selectPortfolioTab(tab));
