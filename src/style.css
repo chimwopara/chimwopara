@@ -179,7 +179,7 @@ html.win-open .header{padding-right:calc(var(--win-w) + 14px + 4.5%)}
 /* Inquire */
 .inq-stage{position:relative;width:min(100%,300px);aspect-ratio:1/1;margin:14px auto 4px}
 .inq-stage:before{content:"";position:absolute;left:50%;top:50%;width:64%;aspect-ratio:1/1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(0,113,227,.2),rgba(0,113,227,0) 70%);filter:blur(24px)}
-.inq-photo{position:absolute;left:50%;top:50%;width:64%;aspect-ratio:1/1;transform:translate(-50%,-50%);border-radius:46% 54% 56% 44%/56% 46% 54% 44%;object-fit:cover;object-position:center 20%;animation:inq-morph 9s ease-in-out infinite;z-index:1}
+.inq-photo{position:absolute;left:50%;top:50%;width:64%;height:auto;aspect-ratio:1/1;transform:translate(-50%,-50%);border-radius:46% 54% 56% 44%/56% 46% 54% 44%;object-fit:cover;object-position:center 20%;animation:inq-morph 9s ease-in-out infinite;z-index:1}
 .inq-ring{position:absolute;inset:0;z-index:2;animation:inq-spin 35s linear infinite}
 .inq-ic{position:absolute;aspect-ratio:1/1;animation:inq-cspin 35s linear infinite}
 .inq-ic img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 6px 12px rgba(0,0,0,.22));transition:transform .3s}
