@@ -70,7 +70,7 @@ function openWindow(name, opener) {
  if (openWin === name) return closeWindow();
  if (openWin) setWin(openWin, false, true);
  winOpener = opener || winOpener; openWin = name;
- document.documentElement.classList.add('win-open');
+ document.documentElement.classList.remove('win-closing'); document.documentElement.classList.add('win-open');
  setWin(name, true);
  const win = document.querySelector('#win-' + name);
  win.querySelector('.win-scroll').scrollTop = 0;
@@ -80,7 +80,8 @@ function closeWindow() {
  if (!openWin) return;
  const name = openWin; openWin = null;
  setWin(name, false);
- document.documentElement.classList.remove('win-open');
+ document.documentElement.classList.add('win-closing'); document.documentElement.classList.remove('win-open');
+ setTimeout(() => { if (!openWin) document.documentElement.classList.remove('win-closing'); }, 520);
  if (winOpener && winOpener.focus) winOpener.focus({ preventScroll: true });
 }
 winButtons.forEach(b => b.addEventListener('click', () => openWindow(b.dataset.win, b)));

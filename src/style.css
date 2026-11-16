@@ -159,8 +159,13 @@ html.win-open #win-frame{opacity:1;right:calc(var(--win-w) + 14px)}
 #win-grip:before{content:"";position:absolute;left:50%;top:14%;bottom:14%;width:2px;transform:translateX(-50%);border-radius:2px;background:rgba(255,255,255,.28);transition:background .15s}
 #win-grip:hover:before,#win-grip.on:before{background:var(--blue)}
 html.win-open #win-grip{display:block}
+html.win-open #win-grip{animation:grip-in .5s var(--w-in)}
+html.win-closing #win-grip{display:block;pointer-events:none;animation:grip-out .5s var(--w-out) forwards}
+@keyframes grip-in{from{transform:translateX(calc(var(--win-w) + 16px))}to{transform:none}}
+@keyframes grip-out{from{transform:none}to{transform:translateX(calc(var(--win-w) + 16px))}}
 html.win-drag{user-select:none;cursor:col-resize}
 html.win-drag body,html.win-drag .header,html.win-drag .win,html.win-drag #win-frame{transition:none!important}
+html.win-drag #win-grip{animation:none!important}
 body{transition:margin-right .5s var(--w-out)}
 html.win-open body{margin-right:calc(var(--win-w) + 14px)}
 .win{position:fixed;top:8px;right:8px;bottom:8px;width:var(--win-w);z-index:50;display:flex;flex-direction:column;background:#fff;color:var(--text);border-radius:22px;overflow:hidden;visibility:hidden;transform:translateX(calc(100% + 16px));transition:transform .5s var(--w-out),visibility 0s .5s;outline:none}
