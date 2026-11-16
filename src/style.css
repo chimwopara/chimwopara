@@ -353,3 +353,15 @@ path.a-line{fill:none;stroke:#e5e5ea}
 .client-body p{color:var(--muted);font-size:1rem;line-height:1.5}
 .client-body .text-link{margin-top:6px;align-self:flex-start}
 @media(max-width:760px){.client-grid{grid-template-columns:1fr}.seg{top:80px}}
+
+/* ---------- Card preview: photo, title, one line, Learn more and Open ---------- */
+.app-case{grid-template-columns:1fr;grid-template-areas:"photo" "top" "h3" "sum" "act" "more"}
+.app-case>.card-photo{grid-area:photo}.app-case>.case-sum{grid-area:sum}
+.card-photo{margin:0 0 clamp(20px,2.6vw,32px);border-radius:clamp(18px,2.4vw,28px);overflow:hidden;background:#fff;aspect-ratio:16/9;box-shadow:0 0 0 1px rgba(0,0,0,.06)}
+.card-photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+.card-photo svg{display:block;width:100%;height:100%}
+.case-sum{max-width:62ch;margin-top:12px;font-size:clamp(1.05rem,1.6vw,1.3rem);line-height:1.4;letter-spacing:-.012em;color:var(--muted)}
+.card-more .app-overview{margin-top:clamp(28px,3.4vw,44px)}
+.seg-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(14px,2vw,24px);align-items:start}
+.seg-cards>.app-case:has(.card-more.on){grid-column:1 / -1}
+@media(max-width:900px){.seg-cards{grid-template-columns:1fr}}

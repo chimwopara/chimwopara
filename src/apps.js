@@ -2,6 +2,7 @@
 const builtApps = [
  {
   art: "platform",
+  photo: "assets/shots/hero-opaline.jpg",
   open: "https://wopara.com/platform",
   name: "Wopara Platform",
   type: "Platform",
@@ -32,6 +33,7 @@ const builtApps = [
  },
  {
   art: "apps",
+  photo: "assets/shots/hero-movie.jpg",
   open: "https://wopara.com/platform",
   name: "Wopara Platform Apps",
   type: "Platform apps",
@@ -61,6 +63,7 @@ const builtApps = [
  },
  {
   art: "guide",
+  photo: "assets/shots/hero-guide.jpg",
   open: "https://wopara.com/",
   name: "Wopara Platform Guide",
   type: "Platform guide",
@@ -89,6 +92,7 @@ const builtApps = [
  },
  {
   art: "campus",
+  photo: "assets/shots/campus-class-notes.jpg",
   open: "https://wopara.com/campus",
   name: "Wopara Platform Campus",
   type: "Platform campus",
@@ -111,6 +115,7 @@ const builtApps = [
  },
  {
   art: "store",
+  photo: "assets/shots/store-games.jpg",
   open: "https://wopara.com/media/games",
   name: "Wopara Platform Store",
   type: "Platform store",
@@ -138,6 +143,7 @@ const builtApps = [
  },
  {
   art: "landing",
+  photo: "assets/shots/landing-page.jpg",
   open: "https://wopara.com/",
   name: "Wopara Landing Page",
   type: "Landing page",

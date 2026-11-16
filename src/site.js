@@ -18,10 +18,11 @@ function appCards() {
   const id = 'more-' + index;
   row.innerHTML = `<div class="case-top"><span class="eyebrow">${escapeHTML(app.type)}</span><span class="case-number">${String(index + 1).padStart(2, '0')}</span></div>
    <h3>${escapeHTML(app.name)}</h3>
-   <div class="app-overview">${app.overview.map(paragraph => `<p class="case-purpose">${escapeHTML(paragraph)}</p>`).join('')}</div>
-   <div class="card-art" aria-hidden="false">${cardArt[app.art] || ''}</div>
+   <p class="case-sum">${escapeHTML((app.overview[0].match(/^.*?[.:](?=\s|$)/) || [app.overview[0]])[0].replace(/:$/, '.'))}</p>
+   <div class="card-photo">${app.photo ? `<img src="${escapeHTML(app.photo)}" alt="${escapeHTML(app.name)}" loading="lazy" decoding="async">` : (cardArt[app.art] || '')}</div>
    <div class="card-actions"><a class="card-btn open" href="${escapeHTML(app.open)}" target="_blank" rel="noopener">Open<span aria-hidden="true">↗</span></a><button type="button" class="card-btn more" aria-expanded="false" aria-controls="${id}"><span class="lbl">Learn more</span><span class="chev" aria-hidden="true"></span></button></div>
    <div class="card-more" id="${id}" inert><div class="card-more-in">
+   <div class="app-overview">${app.overview.map(paragraph => `<p class="case-purpose">${escapeHTML(paragraph)}</p>`).join('')}</div>
    <h4>Inside</h4>
    <div class="app-inside">${app.inside.map(([name, description, shots]) => `<section class="app-part"><h5>${escapeHTML(name)}</h5><p>${escapeHTML(description)}</p>${shots && shots.length ? `<div class="shots">${shots.map((src, k) => `<button type="button" data-shot="${escapeHTML(src)}" data-alt="${escapeHTML(name)}" aria-label="Enlarge ${escapeHTML(name)} ${k + 1}"><img src="${escapeHTML(src)}" alt="${escapeHTML(name)}" loading="lazy" decoding="async"></button>`).join('')}</div>` : ''}</section>`).join('')}</div>
    <h4>Capabilities</h4><ul class="case-features">${app.capabilities.map(item => `<li>${escapeHTML(item)}</li>`).join('')}</ul>
