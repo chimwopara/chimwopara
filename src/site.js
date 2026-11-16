@@ -90,6 +90,10 @@ function renderWork() {
  };
  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(spy); } }, { passive: true });
  show('mine', false);
+ // On a wide screen the switch stands in the header beside the logo; on a phone it stays above the list.
+ const seg = host.querySelector('.seg'), logo = document.querySelector('#header .mark'), wide = matchMedia('(min-width:821px)');
+ const place = () => { if (wide.matches) { if (seg.parentNode !== logo.parentNode) logo.after(seg); seg.classList.add('in-head'); } else { if (seg.parentNode !== host) host.prepend(seg); seg.classList.remove('in-head'); } };
+ place(); try { wide.addEventListener('change', place); } catch (e) { wide.addListener(place); }
 }
 function setupFilters(id, callback) {
  document.querySelector(id).addEventListener('click', event => {
