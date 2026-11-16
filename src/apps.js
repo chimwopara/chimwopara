@@ -1,6 +1,8 @@
 // What I've built, grouped the way Wopara is organised. Each entry is described once, with what is inside it.
 const builtApps = [
  {
+  art: "platform",
+  open: "https://wopara.com/platform",
   name: "Wopara Platform",
   type: "Platform",
   overview: [
@@ -29,6 +31,8 @@ const builtApps = [
   stack: ["JavaScript", "Firebase Auth", "Firestore", "Cloud Storage", "Daily", "Web Push", "Stripe", "Paystack", "Brevo"]
  },
  {
+  art: "apps",
+  open: "https://wopara.com/platform",
   name: "Wopara Platform Apps",
   type: "Platform apps",
   overview: [
@@ -56,6 +60,8 @@ const builtApps = [
   stack: ["JavaScript", "Yjs", "CodeMirror 6", "DuckDB-WASM", "Pyodide", "Canvas 2D", "Web Audio", "IndexedDB", "Firestore"]
  },
  {
+  art: "guide",
+  open: "https://wopara.com/",
   name: "Wopara Platform Guide",
   type: "Platform guide",
   overview: [
@@ -64,8 +70,8 @@ const builtApps = [
   ],
   inside: [
    ["Actions across Wopara", "A product makes itself drivable by publishing what is open and registering the actions it can perform. The server turns that into an instruction block and offers one generic page action, and the client runs it, tags the result and logs it. If a result is ambiguous, the Guide asks which. A reply that claims to have done something with no action behind it is caught and retried. Verified outcomes feed back into the next prompt, so failures are owned rather than glossed over."],
-   ["Wopara Browser", "A browser inside the Guide, generated from a standalone engine and loaded on demand. It identifies the subject of a page or search through a server-side Wikipedia lookup, shows the people, places and things involved with their public profiles and links, and offers to dig deeper only for subjects it cannot identify. Results include the closest matching people already on Wopara."],
-   ["Forex Traffic", "A live currency tool for finding the best rate between two currencies. Its New area scans a pair and opens analysis tabs for routes, rates, market, economics, strategy, signals, policy, scenarios and forecast, backed by a pure compute engine, with Recents, Alerts and Market beside it. A rate alert emails the user when a pair crosses a target they set. It began as the standalone NairaTraffic app and is now part of the Guide."],
+   ["Wopara Browser", "A browser inside the Guide, generated from a standalone engine and loaded on demand. It identifies the subject of a page or search through a server-side Wikipedia lookup, shows the people, places and things involved with their public profiles and links, and offers to dig deeper only for subjects it cannot identify. Results include the closest matching people already on Wopara.", ["assets/shots/guide-browser.jpg"]],
+   ["Forex Traffic", "A live currency tool for finding the best rate between two currencies. Its New area scans a pair and opens analysis tabs for routes, rates, market, economics, strategy, signals, policy, scenarios and forecast, backed by a pure compute engine, with Recents, Alerts and Market beside it. A rate alert emails the user when a pair crosses a target they set. It began as the standalone NairaTraffic app and is now part of the Guide.", ["assets/shots/guide-forex.jpg"]],
    ["Voice", "Say its name anywhere and a plain call begins. A call ends after a minute of silence, the wake word is ignored when it appears mid-sentence as talk about the Guide rather than to it, and the microphone is used only after the user agrees. Spoken lessons and calls feed the same memory as typed ones."],
    ["Persona and memory", "Each Guide has a name, gender, personality, role, age and look, and the persona is built into every reply. Its age matches the user's by default and it knows their birthday. It learns about the user while learning is switched on, shows what it remembers, and forgets on request. It also keeps a task ledger with a return-after-absence rule, so a request made last week is still open."],
    ["Delivery", "Replies land as one to three messages with typing pauses at human speeds, slower before dawn. Account emails are written in the Guide's voice with its photo and name in the header, and reminders arrive by Web Push and by email. A Guide can @mention, email and text people on the user's behalf, and opt-outs are honoured."],
@@ -82,6 +88,8 @@ const builtApps = [
   stack: ["JavaScript", "FastAPI", "Cloud Run", "Google Vertex AI", "DeepSeek", "Web Push", "Web Speech", "Firestore", "Brevo"]
  },
  {
+  art: "campus",
+  open: "https://wopara.com/campus",
   name: "Wopara Platform Campus",
   type: "Platform campus",
   overview: [
@@ -89,7 +97,7 @@ const builtApps = [
    "A class is a single page with the lecture video at the top, interactive notes beneath it, and a challenge at the foot. Grades and certificates follow the work."
   ],
   inside: [
-   ["Classes and notes", "Notes are data rendered by a small engine. Each class mixes animated SVG, zoomed screenshots with arrows and circles, and interactive pieces that can be checked, picked, ordered, matched, sorted, connected, revealed and swiped, and each piece is scored. The curriculum is defined once and every class keeps an identifier, so grades follow a class through renames."],
+   ["Classes and notes", "Notes are data rendered by a small engine. Each class mixes animated SVG, zoomed screenshots with arrows and circles, and interactive pieces that can be checked, picked, ordered, matched, sorted, connected, revealed and swiped, and each piece is scored. The curriculum is defined once and every class keeps an identifier, so grades follow a class through renames.", ["assets/shots/campus-class-notes.jpg"]],
    ["Live lessons", "The Guide plans a class, designs the slides and teaches it live in Present, with questions typed or spoken answered as it goes. Every action goes through the real menus, music made for the class pauses when it stops, and the lecture replays from its notes."],
    ["Grades", "A Grades button in every Campus window morphs the dropdown into a progress bar for every class a student has visited. Scores are kept per piece (first, best and last attempt) on the device, even signed out, then merged to the account with the higher value winning. A bar is green by default, gold when every piece is done and the first attempts averaged 90 percent or more, complete when a retry lifts the best to 90, and red below 50."],
    ["Challenges", "Each class ends with a challenge: a goal and a sequence of steps where the right action must be picked from believable wrong ones. Every wrong choice carries the reason it fails and every right one an explanation, so a mistake teaches. The weekly set mixes tools and prompting, such as building an automated budget workbook with AI-assisted formulas, formatting and checks."]
@@ -102,6 +110,8 @@ const builtApps = [
   stack: ["JavaScript", "SVG animation", "Firestore", "FastAPI", "Stripe", "Paystack"]
  },
  {
+  art: "store",
+  open: "https://wopara.com/media/games",
   name: "Wopara Platform Store",
   type: "Platform store",
   overview: [
@@ -109,7 +119,7 @@ const builtApps = [
    "The games are built without a game engine, using Three.js, Canvas and plain JavaScript, with Firestore for multiplayer and a Wopara pill that stays out of the way of the game."
   ],
   inside: [
-   ["Games", "Browser games published through the Store, with an arcade floor and a pause screen that carries the pill. While a game screen is up the Guide's own furniture stands down and the game's panel takes its place."],
+   ["Games", "Browser games published through the Store, with an arcade floor and a pause screen that carries the pill. While a game screen is up the Guide's own furniture stands down and the game's panel takes its place.", ["assets/shots/store-games.jpg"]],
    ["Plummet", "A 3D multiplayer farm-island game built with Three.js. A farm holds a crew of up to three, and everyone wears a pressure suit with a per-player stripe. Proximity voice and video run over a WebRTC mesh in which Firestore carries only the handshake, volume follows distance with a squared falloff, and a player's camera appears as a texture inside their helmet visor. The world is seeded and deterministic, with alien flora and fauna, and a test harness boots the real game against a stand-in network."],
    ["YEG Life", "A Sims-style hangout on the real map of Edmonton, built from OpenStreetMap through a pipeline that projects a district into 2.5-metre tiles. Nothing is invented: geometry, names, routes and numbers come from real data. The University of Alberta district alone has 947 building footprints, 1,743 streets and paths and 124 surveyed trees, with landmarks given their real look. Twenty-six real bus route directions run on real geometry between real stops, the Capital and Metro lines have a station scene with an animated train, and a district loads only when the player walks or rides into it. Interiors are templates with furniture to use, and shopfronts are built from the real tenants."],
    ["Rule of Law", "A government simulator with a pure, deterministic model that runs a quarter at a time. It has 70 laws in six chapters, 14 regime families, 52 countries with approximate figures, 14 blueprints and ten factions, and a hand-drawn globe for founding a new land. Elections, coups, uprisings and a press that flatters under censorship push back, a reform can be written in plain words and read by a parser, and a daily crisis is drawn from 25 templates. A history mode starts in 1926 and lets turning points go the other way, and a harness runs every country for twenty years with 23 directional checks."],
@@ -127,6 +137,8 @@ const builtApps = [
   stack: ["Three.js", "WebRTC", "Canvas 2D", "JavaScript", "Firestore", "OpenStreetMap"]
  },
  {
+  art: "landing",
+  open: "https://wopara.com/",
   name: "Wopara Landing Page",
   type: "Landing page",
   overview: [
@@ -134,12 +146,12 @@ const builtApps = [
    "It is one file of plain JavaScript that builds the whole page, with no framework, in the page's own container-query layout."
   ],
   inside: [
-   ["The page", "A hero with a live 3D stage of laptops, the Wopara way, a grid of the kinds of work done each month, a gifting section with the flag of every country, and the section where companies post a project. The layout follows the width of the page rather than the screen, so it fits beside one or two open windows."],
-   ["Enrolment", "A checkout window that docks beside the page and resizes by its edge, with the width remembered. It covers the programs, experience, earnings, allowance, certificate, support for Orphans in tech and Wopara Cloud, and it totals the bill as options change. The server works out the same price from its own table, then makes a Stripe bill that is due in seven days, and a webhook marks it paid. A cohort has team pots: each month every student is debited the same share, a team's reserves are spent and divided equally, a refill is requested when the pot runs out, and what is left returns to the organizations that funded it. A member whose share is unpaid is paused, and the server, not the interface, enforces it."],
+   ["The page", "A hero with a live 3D stage of laptops, the Wopara way, a grid of the kinds of work done each month, a gifting section with the flag of every country, and the section where companies post a project. The layout follows the width of the page rather than the screen, so it fits beside one or two open windows.", ["assets/shots/landing-page.jpg", "assets/shots/landing-work.jpg"]],
+   ["Enrolment", "A checkout window that docks beside the page and resizes by its edge, with the width remembered. It covers the programs, experience, earnings, allowance, certificate, support for Orphans in tech and Wopara Cloud, and it totals the bill as options change. The server works out the same price from its own table, then makes a Stripe bill that is due in seven days, and a webhook marks it paid. A cohort has team pots: each month every student is debited the same share, a team's reserves are spent and divided equally, a refill is requested when the pot runs out, and what is left returns to the organizations that funded it. A member whose share is unpaid is paused, and the server, not the interface, enforces it.", ["assets/shots/landing-enrol.jpg"]],
    ["Sign-in", "Google sign-in that checks the account against programs, organizations, reserves and Cloud, and returns an account that is not part of Wopara to the page with a card that explains why. A check that cannot be made lets the person in."],
-   ["Setup", "A full-screen first run in the manner of a new device: username and photo, the Guide, the look, and preferences that drive class recommendations. A preview mode saves nothing."],
+   ["Setup", "A full-screen first run in the manner of a new device: username and photo, the Guide, the look, and preferences that drive class recommendations. A preview mode saves nothing.", ["assets/shots/landing-setup-b.jpg"]],
    ["Boot skeleton", "An outline of the page that stands in while it loads, traced from the page as it last looked, refitted to the window geometry and predicted from the saved layout, so a reload is one fade rather than pieces arriving."],
-   ["Flags", "Every country's flag, 195 of them, in one sprite file, drifting past in three rows."]
+   ["Flags", "Every country's flag, 195 of them, in one sprite file, drifting past in three rows.", ["assets/shots/landing-flags.jpg"]]
   ],
   capabilities: [
    "Prices computed on the server from the same table as the checkout.",

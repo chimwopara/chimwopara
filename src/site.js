@@ -3,7 +3,7 @@ const dialog = document.querySelector('#item-dialog');
 function showDetails(item) {
  const heading = `<img src="${escapeHTML(item.image)}" alt="${escapeHTML(item.name)}"><p class="eyebrow">${escapeHTML(item.collection)}</p><h2 id="dialog-title">${escapeHTML(item.name)}</h2>`;
  const content = `<p>${escapeHTML(item.type + ' · ' + item.sync + (item.sketch ? ' · Concept sketch' : ''))}</p><p>${escapeHTML(item.price)} · Made to order</p><a class="text-link" href="mailto:chim@chimwopara.com?subject=${encodeURIComponent('Fashion inquiry: ' + item.name)}">Inquire about this piece ↗</a>`;
- document.querySelector('#dialog-content').innerHTML = heading + content;
+ dialog.classList.remove('shot'); document.querySelector('#dialog-content').innerHTML = heading + content;
  dialog.showModal();
  dialog.scrollTop = 0;
  document.body.style.overflow = 'hidden';
@@ -15,13 +15,28 @@ dialog.addEventListener('click', event => { if (event.target === dialog) { const
 function renderApps() {
  document.querySelector('#project-list').replaceChildren(...builtApps.map((app, index) => {
   const row = document.createElement('article'); row.className = 'project-case app-case';
+  const id = 'more-' + index;
   row.innerHTML = `<div class="case-top"><span class="eyebrow">${escapeHTML(app.type)}</span><span class="case-number">${String(index + 1).padStart(2, '0')}</span></div>
    <h3>${escapeHTML(app.name)}</h3>
    <div class="app-overview">${app.overview.map(paragraph => `<p class="case-purpose">${escapeHTML(paragraph)}</p>`).join('')}</div>
+   <div class="card-art" aria-hidden="false">${cardArt[app.art] || ''}</div>
+   <div class="card-actions"><a class="card-btn open" href="${escapeHTML(app.open)}" target="_blank" rel="noopener">Open<span aria-hidden="true">↗</span></a><button type="button" class="card-btn more" aria-expanded="false" aria-controls="${id}"><span class="lbl">Learn more</span><span class="chev" aria-hidden="true"></span></button></div>
+   <div class="card-more" id="${id}" inert><div class="card-more-in">
    <h4>Inside</h4>
-   <div class="app-inside">${app.inside.map(([name, description]) => `<section class="app-part"><h5>${escapeHTML(name)}</h5><p>${escapeHTML(description)}</p></section>`).join('')}</div>
+   <div class="app-inside">${app.inside.map(([name, description, shots]) => `<section class="app-part"><h5>${escapeHTML(name)}</h5><p>${escapeHTML(description)}</p>${shots && shots.length ? `<div class="shots">${shots.map((src, k) => `<button type="button" data-shot="${escapeHTML(src)}" data-alt="${escapeHTML(name)}" aria-label="Enlarge ${escapeHTML(name)} ${k + 1}"><img src="${escapeHTML(src)}" alt="${escapeHTML(name)}" loading="lazy" decoding="async"></button>`).join('')}</div>` : ''}</section>`).join('')}</div>
    <h4>Capabilities</h4><ul class="case-features">${app.capabilities.map(item => `<li>${escapeHTML(item)}</li>`).join('')}</ul>
-   <div class="case-stack"><h4>Technical stack</h4><ul class="stack-list">${app.stack.map(tech => `<li>${escapeHTML(tech)}</li>`).join('')}</ul></div>`;
+   <div class="case-stack"><h4>Technical stack</h4><ul class="stack-list">${app.stack.map(tech => `<li>${escapeHTML(tech)}</li>`).join('')}</ul></div></div></div>`;
+  const button = row.querySelector('.card-btn.more'), more = row.querySelector('.card-more');
+  button.addEventListener('click', () => {
+   const on = button.getAttribute('aria-expanded') !== 'true';
+   button.setAttribute('aria-expanded', String(on)); button.querySelector('.lbl').textContent = on ? 'Show less' : 'Learn more';
+   more.classList.toggle('on', on); if (on) more.removeAttribute('inert'); else more.setAttribute('inert', '');
+  });
+  row.addEventListener('click', event => {
+   const shot = event.target.closest('button[data-shot]'); if (!shot) return;
+   document.querySelector('#dialog-content').innerHTML = `<img src="${escapeHTML(shot.dataset.shot)}" alt="${escapeHTML(shot.dataset.alt)}"><h2 id="dialog-title">${escapeHTML(shot.dataset.alt)}</h2>`;
+   dialog.classList.add('shot'); dialog.showModal(); dialog.scrollTop = 0; document.body.style.overflow = 'hidden';
+  });
   return row;
  }));
 }
