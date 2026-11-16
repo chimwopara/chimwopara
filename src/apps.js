@@ -161,3 +161,17 @@ const builtApps = [
   stack: ["JavaScript", "SVG", "CSS container queries", "FastAPI", "Stripe", "Firebase Auth"]
  }
 ];
+
+// Work made for other companies.
+const clientWork = [
+ { name: "Ivana Foundation", date: "February 2026", description: "A website for a non profit organization restoring hope through Christ-centered compassion in the hardest places.", image: "assets/portfolio/ivana.png", url: "https://ivanafoundation.org" },
+ { name: "YegeLearning.com", date: "February 2026", description: "A website for a learning company built for students who need more than worksheets and grades.", image: "assets/portfolio/yege.png", url: "https://yegelearning.com" },
+ { name: "Daniel's Enterprise", date: "January 2026", description: "A platform for a kingdom-based enterprise that raises, trains and equips people for their next opportunities.", image: "assets/portfolio/dane.png", url: "https://danielsenterprise.ca" },
+ { name: "Culye Immigration Services", date: "September 2025 - October 2025", description: "A complete website redesign for an immigration company, with a Stripe payment system and secure backend functions.", image: "assets/portfolio/culye.png", url: "https://culyeimmigrationservices.com" },
+ { name: "bodidris.org", date: "August 2025 - September 2025", description: "A personal portfolio and sales leads website with search optimisation and mail presets.", image: "assets/portfolio/bod.png", url: "https://bodidris.org" },
+ { name: "Lenslore.ca", date: "July 2025 - August 2025", description: "A portfolio and sales leads website with search optimisation, mail presets and a PDF generator.", image: "assets/portfolio/lenslore.png", url: "https://lenslore.ca" },
+ { name: "FlatPurse Business", date: "June 2025 - September 2025", description: "Front-end development in HTML, CSS and JavaScript for a business-focused web application.", image: "assets/portfolio/flatpurse.png", url: "https://www.linkedin.com/company/flatpurse/posts/?feedView=all" },
+ { name: "God's Embassy Church App", date: "November 2024 - February 2025", description: "An app for a more personal church experience, built to grow community and engagement.", image: "assets/portfolio/godsembassy.png" },
+ { name: "234Stones", date: "November 2023 - Present", description: "A jewelry store for which I designed the branding and led the marketing campaigns that drive sales.", image: "assets/portfolio/stones.png" },
+ { name: "Prastfarms.com", date: "April 2023 - November 2023", description: "A full-stack platform for creating, editing and monitoring investments, built on Google Apps Script, Sheets, HTML, CSS and JavaScript.", image: "assets/portfolio/prast.png", url: "https://prastfarms.com" }
+];

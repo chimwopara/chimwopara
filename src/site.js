@@ -12,8 +12,8 @@ dialog.querySelector('.dialog-close').addEventListener('click', () => dialog.clo
 dialog.addEventListener('close', () => { document.body.style.overflow = ''; });
 dialog.addEventListener('click', event => { if (event.target === dialog) { const r = dialog.getBoundingClientRect(); if(event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) dialog.close(); } });
 
-function renderApps() {
- document.querySelector('#project-list').replaceChildren(...builtApps.map((app, index) => {
+function appCards() {
+ return builtApps.map((app, index) => {
   const row = document.createElement('article'); row.className = 'project-case app-case';
   const id = 'more-' + index;
   row.innerHTML = `<div class="case-top"><span class="eyebrow">${escapeHTML(app.type)}</span><span class="case-number">${String(index + 1).padStart(2, '0')}</span></div>
@@ -38,7 +38,57 @@ function renderApps() {
    dialog.classList.add('shot'); dialog.showModal(); dialog.scrollTop = 0; document.body.style.overflow = 'hidden';
   });
   return row;
- }));
+ });
+}
+function clientCards() {
+ return clientWork.map(c => {
+  const card = document.createElement('article'); card.className = 'client-card';
+  card.innerHTML = `<div class="client-art"><img src="${escapeHTML(c.image)}" alt="${escapeHTML(c.name)}" loading="lazy" decoding="async"></div>
+   <div class="client-body"><span class="eyebrow">${escapeHTML(c.date)}</span><h3>${escapeHTML(c.name)}</h3><p>${escapeHTML(c.description)}</p>${c.url ? `<a class="text-link" href="${escapeHTML(c.url)}" target="_blank" rel="noopener">Visit<span aria-hidden="true"> ↗</span></a>` : ''}</div>`;
+  return card;
+ });
+}
+// Two lists. The one chosen opens first; at its end the other follows on its own.
+function renderWork() {
+ const host = document.querySelector('#project-list');
+ const SEG = { mine: 'For my company', clients: 'For other companies' };
+ host.innerHTML = `<div class="seg" role="group" aria-label="Work">${Object.keys(SEG).map(k => `<button type="button" data-seg="${k}" aria-pressed="false">${SEG[k]}</button>`).join('')}</div>
+  <div class="seg-lists"><section class="seg-panel" id="seg-mine" data-k="mine"><div class="seg-in"><div class="seg-cards"></div><div class="seg-end" aria-hidden="true"></div></div></section>
+  <section class="seg-panel" id="seg-clients" data-k="clients"><div class="seg-in"><div class="client-grid"></div><div class="seg-end" aria-hidden="true"></div></div></section></div>`;
+ host.querySelector('#seg-mine .seg-cards').append(...appCards());
+ host.querySelector('#seg-clients .client-grid').append(...clientCards());
+ const panels = { mine: host.querySelector('#seg-mine'), clients: host.querySelector('#seg-clients') };
+ const buttons = [...host.querySelectorAll('[data-seg]')];
+ const lists = host.querySelector('.seg-lists');
+ let first = 'mine', io = null, arm = 0;
+ const other = k => k === 'mine' ? 'clients' : 'mine';
+ const setOn = (k, on) => { panels[k].classList.toggle('on', on); if (on) panels[k].removeAttribute('inert'); else panels[k].setAttribute('inert', ''); };
+ const mark = k => buttons.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.seg === k)));
+ function show(k, scroll) {
+  first = k; lists.style.setProperty('--first', k === 'mine' ? '0' : '1');
+  panels[k].style.order = '0'; panels[other(k)].style.order = '1'; panels[k].classList.remove('second'); panels[other(k)].classList.add('second');
+  setOn(k, true); setOn(other(k), false); mark(k);
+  if (io) io.disconnect(); clearTimeout(arm);
+  // Watch the end of the open list once it has finished opening, so the other follows only when the reader gets there.
+  arm = setTimeout(() => {
+   if ('IntersectionObserver' in window) {
+    io = new IntersectionObserver(entries => { if (entries.some(e => e.isIntersecting) && first === k) { setOn(other(k), true); io.disconnect(); } }, { rootMargin: '0px 0px 40px 0px' });
+    io.observe(panels[k].querySelector('.seg-end'));
+   } else setOn(other(k), true);
+  }, 700);
+  if (scroll) host.scrollIntoView({ block: 'start' });
+ }
+ buttons.forEach(b => b.addEventListener('click', () => show(b.dataset.seg, true)));
+ // While both are open, the button follows the list the reader is in.
+ let ticking = false;
+ const spy = () => {
+  ticking = false;
+  if (!(panels.mine.classList.contains('on') && panels.clients.classList.contains('on'))) return;
+  const y = innerHeight * .45, hit = ['mine', 'clients'].find(k => { const r = panels[k].getBoundingClientRect(); return r.top <= y && r.bottom > y; });
+  if (hit) mark(hit);
+ };
+ addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(spy); } }, { passive: true });
+ show('mine', false);
 }
 function setupFilters(id, callback) {
  document.querySelector(id).addEventListener('click', event => {
@@ -67,7 +117,7 @@ const research = [
 ];
 document.querySelector('#research-list').innerHTML = research.map(([title, description], i) => `<article class="research-row"><span>0${i+1}</span><h3>${title}</h3><p>${description}</p></article>`).join('');
 document.querySelector('#year').textContent = new Date().getFullYear();
-renderApps(); renderFashion();
+renderWork(); renderFashion();
 
 
 

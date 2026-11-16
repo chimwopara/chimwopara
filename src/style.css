@@ -329,3 +329,27 @@ path.a-line{fill:none;stroke:#e5e5ea}
 @keyframes ld-win{0%,8%{transform:translate(332px,0)}38%,62%{transform:translate(172px,0)}92%,100%{transform:translate(332px,0)}}
 @keyframes ld-grip{0%,40%{opacity:0}46%,56%{opacity:.9}62%,100%{opacity:0}}
 @media(prefers-reduced-motion:reduce){.card-art svg *{animation:none!important}.card-art .ap-k1{opacity:1}.card-art .ld-win{transform:translate(172px,0)}.card-art .st-e{height:20px;y:84px}}
+
+/* ---------- Two lists: for my company, for other companies ---------- */
+.seg{display:flex;justify-content:center;gap:8px;margin:0 auto clamp(24px,3vw,40px);position:sticky;top:84px;z-index:5;width:max-content;max-width:100%;padding:6px;border-radius:980px;background:rgba(245,245,247,.86);-webkit-backdrop-filter:blur(20px) saturate(1.4);backdrop-filter:blur(20px) saturate(1.4)}
+.seg button{border:0;background:transparent;color:var(--text);padding:10px 20px;border-radius:980px;font:inherit;font-size:.98rem;line-height:1.2;letter-spacing:-.01em;cursor:pointer;transition:background .25s,color .25s}
+.seg button:hover{background:rgba(0,0,0,.06)}
+.seg button[aria-pressed="true"]{background:var(--text);color:#fff}
+.seg button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.seg-lists{display:flex;flex-direction:column}
+.seg-panel{display:grid;grid-template-rows:0fr;visibility:hidden;transition:grid-template-rows .6s cubic-bezier(.65,0,.35,1),visibility 0s .6s}
+.seg-panel.on{grid-template-rows:1fr;visibility:visible;transition:grid-template-rows .6s cubic-bezier(.65,0,.35,1),visibility 0s}
+.seg-in{overflow:hidden;min-height:0}
+.seg-panel.second .seg-in{padding-top:clamp(40px,5vw,72px)}
+.seg-cards{display:flex;flex-direction:column;gap:clamp(18px,2vw,28px)}
+.seg-end{height:1px}
+.client-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(14px,2vw,24px)}
+.client-card{display:flex;flex-direction:column;background:var(--surface);border-radius:clamp(24px,3vw,36px);overflow:hidden}
+.client-art{aspect-ratio:16/10;background:#fff;margin:10px 10px 0;border-radius:calc(clamp(24px,3vw,36px) - 10px);overflow:hidden;display:flex;align-items:center;justify-content:center}
+.client-art img{display:block;width:100%;height:100%;object-fit:contain;object-position:center}
+.client-body{display:flex;flex-direction:column;gap:8px;padding:clamp(20px,2.4vw,32px)}
+.client-body .eyebrow{color:var(--muted)}
+.client-body h3{font-size:clamp(1.4rem,2.2vw,1.85rem);font-weight:600;letter-spacing:-.03em;line-height:1.15}
+.client-body p{color:var(--muted);font-size:1rem;line-height:1.5}
+.client-body .text-link{margin-top:6px;align-self:flex-start}
+@media(max-width:760px){.client-grid{grid-template-columns:1fr}.seg{top:80px}}
