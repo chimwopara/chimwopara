@@ -1,7 +1,7 @@
 /* The design language of the Wopara landing page: white and #f5f5f7 grounds, SF type, tight large headings, rounded cards, pill buttons, one blue. The hero keeps its own dark treatment. */
 :root{--bg:#fff;--surface:#f5f5f7;--text:#1d1d1f;--muted:#6e6e73;--blue:#0071e3;--link:#0066cc;--tint:#e8f0fb;--line:rgba(0,0,0,.14);--font:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Inter,"Segoe UI",Roboto,Arial,sans-serif}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:76px}
+html{scroll-behavior:smooth;scroll-padding-top:76px;background:var(--bg)}
 body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:17px;line-height:1.47;-webkit-font-smoothing:antialiased}
 h1,h2,h3,h4,h5,p,figure,ul{margin:0}
 a{color:inherit;text-decoration:none}
@@ -26,8 +26,8 @@ button:focus-visible,.header :focus-visible{outline:none}
 .mark,.pills button{--cap:rgba(255,255,255,.16);--ink:#fff;background:var(--cap);color:var(--ink);-webkit-backdrop-filter:blur(34px) saturate(1.5);backdrop-filter:blur(34px) saturate(1.5);transition:background .25s,color .25s,box-shadow .25s}
 .header.on-light .mark,.header.on-light .pills button{--cap:rgba(245,245,247,.78);--ink:#1d1d1f;box-shadow:0 1px 10px rgba(0,0,0,.08)}
 .mark{display:grid;place-items:center;width:44px;height:44px;border-radius:50%}
-.mark img{grid-area:1/1;width:26px;height:26px;object-fit:contain;transition:opacity .25s}
-.mark-light{opacity:0}.header.on-light .mark-dark{opacity:0}.header.on-light .mark-light{opacity:1}
+.mark img{grid-area:1/1;width:26px;height:26px;object-fit:contain;transition:filter .25s}
+.header.on-light .mark img{filter:brightness(0)}
 .pills{display:flex;gap:6px}
 .pills button{border:0;padding:12px 20px;border-radius:980px;font-size:.95rem;line-height:1}
 .pills button:hover{--cap:rgba(255,255,255,.28)}
@@ -150,11 +150,13 @@ dialog .eyebrow{color:var(--muted)}
 @media(max-width:640px){.rv{opacity:1!important;transform:none!important;transition:none!important}.contact-bottom>div a{padding:11px 20px}.footer-bottom a{margin:0 18px 0 0}}
 @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
 
-/* ---------- Side windows: slide in from the edge, as on Wopara ---------- */
-:root{--w-in:cubic-bezier(.65,0,.35,1);--w-out:cubic-bezier(.65,0,.35,1)}
-#win-back{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.32);opacity:0;pointer-events:none;transition:opacity .5s var(--w-out)}
-#win-back.open{opacity:1;pointer-events:auto;transition-timing-function:var(--w-in)}
-.win{position:fixed;top:8px;right:8px;bottom:8px;width:min(540px,calc(100vw - 16px));z-index:50;display:flex;flex-direction:column;background:#fff;color:var(--text);border-radius:22px;overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.28);visibility:hidden;transform:translateX(calc(100% + 16px));transition:transform .5s var(--w-out),visibility 0s .5s;outline:none}
+/* ---------- Side windows: docked beside the page, which makes room for them, as on Wopara ---------- */
+:root{--w-in:cubic-bezier(.65,0,.35,1);--w-out:cubic-bezier(.65,0,.35,1);--win-w:min(540px,calc(100vw - 16px))}
+#win-back{position:fixed;inset:0;z-index:-1;background:#000;opacity:0;pointer-events:none;transition:opacity .5s var(--w-out)}
+#win-back.open{opacity:1;pointer-events:auto}
+body{transition:margin-right .5s var(--w-out)}
+html.win-open body{margin-right:calc(var(--win-w) + 14px)}
+.win{position:fixed;top:8px;right:8px;bottom:8px;width:var(--win-w);z-index:50;display:flex;flex-direction:column;background:#fff;color:var(--text);border-radius:22px;overflow:hidden;visibility:hidden;transform:translateX(calc(100% + 16px));transition:transform .5s var(--w-out),visibility 0s .5s;outline:none}
 .win.open{visibility:visible;transform:none;transition:transform .5s var(--w-in),visibility 0s}
 .win.snap{transition:none!important}
 .win-x{position:absolute;top:11px;left:14px;z-index:3;display:inline-flex;align-items:center;gap:9px;height:36px;padding:0 15px 0 12px;border-radius:999px;border:0;background:var(--surface);color:var(--text);font-size:.86rem;font-weight:600}
@@ -169,11 +171,10 @@ dialog .eyebrow{color:var(--muted)}
 .win-card p+p{margin-top:10px}
 .win-card .text-link{margin-top:12px}
 .win-card .small{font-size:.88rem}
-html.win-open{overflow:hidden}
-html.win-open .header{padding-right:calc(min(540px,100vw - 16px) + 24px)}
-@media(max-width:700px){html.win-open .header{padding-right:16px}}
-@media(max-width:700px){.win{top:0;right:0;bottom:0;left:0;width:auto;border-radius:0;transform:translateY(100%)}.win.open{transform:none}.win-scroll{padding:64px 16px 24px}}
-@media(prefers-reduced-motion:reduce){.win,#win-back{transition:none!important}}
+html.win-open .header{padding-right:calc(var(--win-w) + 14px + 4.5%)}
+@media(max-width:1100px){:root{--win-w:min(480px,calc(100vw - 16px))}}
+@media(max-width:700px){html.win-open{overflow:hidden}html.win-open body{margin-right:0}html.win-open .header{padding-right:16px}#win-back{display:none}.win{top:0;right:0;bottom:0;left:0;width:auto;border-radius:0;transform:translateY(100%)}.win.open{transform:none}.win-scroll{padding:64px 16px 24px}}
+@media(prefers-reduced-motion:reduce){.win,#win-back,body,.header{transition:none!important}}
 
 /* Inquire */
 .inq-stage{position:relative;width:min(100%,300px);aspect-ratio:1/1;margin:14px auto 4px}
