@@ -152,8 +152,14 @@ dialog .eyebrow{color:var(--muted)}
 
 /* ---------- Side windows: docked beside the page, which makes room for them, as on Wopara ---------- */
 :root{--w-in:cubic-bezier(.65,0,.35,1);--w-out:cubic-bezier(.65,0,.35,1);--win-w:min(540px,calc(100vw - 16px))}
-#win-back{position:fixed;inset:0;z-index:-1;background:#000;opacity:0;pointer-events:none;transition:opacity .5s var(--w-out)}
-#win-back.open{opacity:1;pointer-events:auto}
+#win-frame{position:fixed;top:8px;left:8px;right:8px;bottom:8px;z-index:48;border-radius:18px;box-shadow:0 0 0 200vmax #000;pointer-events:none;opacity:0;transition:right .5s var(--w-out),opacity .5s var(--w-out)}
+html.win-open #win-frame{opacity:1;right:calc(var(--win-w) + 14px)}
+#win-grip{display:none;position:fixed;top:0;bottom:0;left:calc(100vw - var(--win-w) - 7px);width:14px;z-index:60;cursor:col-resize;touch-action:none}
+#win-grip:before{content:"";position:absolute;left:50%;top:14%;bottom:14%;width:2px;transform:translateX(-50%);border-radius:2px;background:rgba(255,255,255,.28);transition:background .15s}
+#win-grip:hover:before,#win-grip.on:before{background:var(--blue)}
+html.win-open #win-grip{display:block}
+html.win-drag{user-select:none;cursor:col-resize}
+html.win-drag body,html.win-drag .header,html.win-drag .win,html.win-drag #win-frame{transition:none!important}
 body{transition:margin-right .5s var(--w-out)}
 html.win-open body{margin-right:calc(var(--win-w) + 14px)}
 .win{position:fixed;top:8px;right:8px;bottom:8px;width:var(--win-w);z-index:50;display:flex;flex-direction:column;background:#fff;color:var(--text);border-radius:22px;overflow:hidden;visibility:hidden;transform:translateX(calc(100% + 16px));transition:transform .5s var(--w-out),visibility 0s .5s;outline:none}
@@ -171,10 +177,10 @@ html.win-open body{margin-right:calc(var(--win-w) + 14px)}
 .win-card p+p{margin-top:10px}
 .win-card .text-link{margin-top:12px}
 .win-card .small{font-size:.88rem}
-html.win-open .header{padding-right:calc(var(--win-w) + 14px + 4.5%)}
+html.win-open .header{z-index:49;padding-right:calc(var(--win-w) + 14px + 4.5%)}
 @media(max-width:1100px){:root{--win-w:min(480px,calc(100vw - 16px))}}
-@media(max-width:700px){html.win-open{overflow:hidden}html.win-open body{margin-right:0}html.win-open .header{padding-right:16px}#win-back{display:none}.win{top:0;right:0;bottom:0;left:0;width:auto;border-radius:0;transform:translateY(100%)}.win.open{transform:none}.win-scroll{padding:64px 16px 24px}}
-@media(prefers-reduced-motion:reduce){.win,#win-back,body,.header{transition:none!important}}
+@media(max-width:700px){html.win-open{overflow:hidden}html.win-open body{margin-right:0}html.win-open .header{padding-right:16px}#win-frame,#win-grip{display:none!important}.win{top:0;right:0;bottom:0;left:0;width:auto;border-radius:0;transform:translateY(100%)}.win.open{transform:none}.win-scroll{padding:64px 16px 24px}}
+@media(prefers-reduced-motion:reduce){.win,#win-frame,body,.header{transition:none!important}}
 
 /* Inquire */
 .inq-stage{position:relative;width:min(100%,300px);aspect-ratio:1/1;margin:14px auto 4px}

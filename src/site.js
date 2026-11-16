@@ -57,7 +57,6 @@ renderApps(); renderFashion();
 
 
 // Side windows: Community, My research and Inquire slide in from the edge, one at a time.
-const winBack = document.querySelector('#win-back');
 const winButtons = [...document.querySelectorAll('.pills [data-win]')];
 let openWin = null, winOpener = null;
 function setWin(name, on, snap) {
@@ -71,7 +70,6 @@ function openWindow(name, opener) {
  if (openWin === name) return closeWindow();
  if (openWin) setWin(openWin, false, true);
  winOpener = opener || winOpener; openWin = name;
- winBack.hidden = false; void winBack.offsetWidth; winBack.classList.add('open');
  document.documentElement.classList.add('win-open');
  setWin(name, true);
  const win = document.querySelector('#win-' + name);
@@ -81,15 +79,24 @@ function openWindow(name, opener) {
 function closeWindow() {
  if (!openWin) return;
  const name = openWin; openWin = null;
- setWin(name, false); winBack.classList.remove('open');
+ setWin(name, false);
  document.documentElement.classList.remove('win-open');
- setTimeout(() => { if (!openWin) winBack.hidden = true; }, 520);
  if (winOpener && winOpener.focus) winOpener.focus({ preventScroll: true });
 }
 winButtons.forEach(b => b.addEventListener('click', () => openWindow(b.dataset.win, b)));
 document.querySelectorAll('[data-win-close]').forEach(b => b.addEventListener('click', closeWindow));
-winBack.addEventListener('click', closeWindow);
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && openWin && !dialog.open) closeWindow(); });
+// The grip on the window's left edge resizes it; the width is kept for next time.
+const winGrip = document.querySelector('#win-grip'), root = document.documentElement;
+try { const saved = parseInt(localStorage.getItem('chim.win.w'), 10); if (saved >= 360) root.style.setProperty('--win-w', saved + 'px'); } catch (e) {}
+winGrip.addEventListener('pointerdown', event => {
+ event.preventDefault(); winGrip.setPointerCapture(event.pointerId); winGrip.classList.add('on'); root.classList.add('win-drag');
+ let width = 0;
+ const move = e => { width = Math.round(Math.max(360, Math.min(innerWidth - e.clientX - 8, innerWidth - 340))); root.style.setProperty('--win-w', width + 'px'); };
+ const stop = () => { winGrip.removeEventListener('pointermove', move); winGrip.removeEventListener('pointerup', stop); winGrip.removeEventListener('pointercancel', stop); winGrip.classList.remove('on'); root.classList.remove('win-drag');
+  if (width) { try { localStorage.setItem('chim.win.w', String(width)); } catch (e) {} } };
+ winGrip.addEventListener('pointermove', move); winGrip.addEventListener('pointerup', stop); winGrip.addEventListener('pointercancel', stop);
+});
 // Addresses: #community, #research and #inquire open their window; #fashion opens Community.
 const windowHashes = { community: 'community', interests: 'community', fashion: 'community', research: 'research', inquire: 'inquire' };
 function openFromHash() { const name = windowHashes[location.hash.slice(1)]; if (name && openWin !== name) openWindow(name); }
