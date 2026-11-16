@@ -3,6 +3,7 @@ const builtApps = [
  {
   art: "platform",
   open: "https://wopara.com/platform",
+  photo: "assets/shots/hero-platform.jpg",
   name: "Wopara Platform",
   type: "Platform",
   overview: [
@@ -33,6 +34,7 @@ const builtApps = [
  {
   art: "apps",
   open: "https://wopara.com/platform",
+  photo: "assets/shots/hero-apps.jpg",
   name: "Wopara Platform Apps",
   type: "Platform apps",
   overview: [
@@ -62,6 +64,7 @@ const builtApps = [
  {
   art: "guide",
   open: "https://wopara.com/",
+  photo: "assets/shots/hero-guide.jpg",
   name: "Wopara Platform Guide",
   type: "Platform guide",
   overview: [
