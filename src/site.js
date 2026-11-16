@@ -44,7 +44,7 @@ function clientCards() {
  return clientWork.map(c => {
   const card = document.createElement('article'); card.className = 'client-card';
   card.innerHTML = `<div class="client-art"><img src="${escapeHTML(c.image)}" alt="${escapeHTML(c.name)}" loading="lazy" decoding="async"></div>
-   <div class="client-body"><span class="eyebrow">${escapeHTML(c.date)}</span><h3>${escapeHTML(c.name)}</h3><p>${escapeHTML(c.description)}</p>${c.url ? `<a class="text-link" href="${escapeHTML(c.url)}" target="_blank" rel="noopener">Visit<span aria-hidden="true"> ↗</span></a>` : ''}</div>`;
+   <div class="client-body">${c.date ? `<span class="eyebrow">${escapeHTML(c.date)}</span>` : ''}<h3>${escapeHTML(c.name)}</h3><p>${escapeHTML(c.description)}</p>${c.url ? `<a class="text-link" href="${escapeHTML(c.url)}" target="_blank" rel="noopener">Visit<span aria-hidden="true"> ↗</span></a>` : ''}</div>`;
   return card;
  });
 }

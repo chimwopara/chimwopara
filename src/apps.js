@@ -164,6 +164,13 @@ const builtApps = [
 
 // Work made for other companies.
 const clientWork = [
+ { name: "Dr. Morgan", description: "A website for a leadership futurist who builds leadership systems and institutional frameworks for governments, universities and enterprises.", image: "assets/portfolio/drmorgan.jpg", url: "https://drmorgan.ai" },
+ { name: "Busayo Disu", description: "A website for a cultural mediator, storyteller, speaker, author and filmmaker in Alberta.", image: "assets/portfolio/busayodisu.jpg", url: "https://busayodisu.com" },
+ { name: "Classistant", description: "A product site for a service that reads a student's syllabi, builds their calendar and texts them before deadlines and grades go wrong.", image: "assets/portfolio/classistant.jpg", url: "https://classistant.ca" },
+ { name: "VisAssistant", description: "A product site for a service that collects visa applicants' documents over WhatsApp and checks them against this year's rules for immigration firms.", image: "assets/portfolio/visassistant.jpg", url: "https://visassistant.com" },
+ { name: "Stronger Alberta", description: "A campaign website against Alberta separatism, with the economic facts, referendum news, history and ways to get involved.", image: "assets/portfolio/strongeralberta.jpg", url: "https://strongeralberta.ca" },
+ { name: "Brylex Restoration", description: "A website for an Alberta restoration company covering disaster recovery, asbestos abatement and mould remediation.", image: "assets/portfolio/brylex.jpg", url: "https://www.brylex.ca" },
+ { name: "PRAST", description: "A website for PRAST, the architecture of nature and business.", image: "assets/portfolio/prastgroup.jpg", url: "https://prastgroup.com" },
  { name: "Ivana Foundation", date: "February 2026", description: "A website for a non profit organization restoring hope through Christ-centered compassion in the hardest places.", image: "assets/portfolio/ivana.png", url: "https://ivanafoundation.org" },
  { name: "YegeLearning.com", date: "February 2026", description: "A website for a learning company built for students who need more than worksheets and grades.", image: "assets/portfolio/yege.png", url: "https://yegelearning.com" },
  { name: "Daniel's Enterprise", date: "January 2026", description: "A platform for a kingdom-based enterprise that raises, trains and equips people for their next opportunities.", image: "assets/portfolio/dane.png", url: "https://danielsenterprise.ca" },
@@ -171,7 +178,5 @@ const clientWork = [
  { name: "bodidris.org", date: "August 2025 - September 2025", description: "A personal portfolio and sales leads website with search optimisation and mail presets.", image: "assets/portfolio/bod.png", url: "https://bodidris.org" },
  { name: "Lenslore.ca", date: "July 2025 - August 2025", description: "A portfolio and sales leads website with search optimisation, mail presets and a PDF generator.", image: "assets/portfolio/lenslore.png", url: "https://lenslore.ca" },
  { name: "FlatPurse Business", date: "June 2025 - September 2025", description: "Front-end development in HTML, CSS and JavaScript for a business-focused web application.", image: "assets/portfolio/flatpurse.png", url: "https://www.linkedin.com/company/flatpurse/posts/?feedView=all" },
- { name: "God's Embassy Church App", date: "November 2024 - February 2025", description: "An app for a more personal church experience, built to grow community and engagement.", image: "assets/portfolio/godsembassy.png" },
- { name: "234Stones", date: "November 2023 - Present", description: "A jewelry store for which I designed the branding and led the marketing campaigns that drive sales.", image: "assets/portfolio/stones.png" },
  { name: "Prastfarms.com", date: "April 2023 - November 2023", description: "A full-stack platform for creating, editing and monitoring investments, built on Google Apps Script, Sheets, HTML, CSS and JavaScript.", image: "assets/portfolio/prast.png", url: "https://prastfarms.com" }
 ];
